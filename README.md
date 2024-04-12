@@ -2,7 +2,7 @@
 
 ## Microservice Structure
 
-![Package Structure](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/MS-Pkg-Structure.jpg)
+![Package Structure](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/MS-Pkg-Structure.jpg)
 
 ### What the Template Provides out of the box
 
@@ -37,13 +37,13 @@
 
 ### Step 1.1 - Getting Started
 
-1. git clone [https://github.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10.git](https://github.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10.git)
-2. cd ms-springboot-324-java-22-jakarta-ee-10
+1. git clone [https://github.com/arafkarsh/ms-springboot-324-ai.git](https://github.com/arafkarsh/ms-springboot-324-ai.git)
+2. cd ms-springboot-324-ai
 
 ###  Step 1.2 - Compile (Once your code is ready) 
 
 #### 1.2.1 Compile the Code
-Run the "compile" from ms-springboot-324-java-22-jakarta-ee-10
+Run the "compile" from ms-springboot-324-ai
 1. compile OR ./compile (Runs in Linux and Mac OS)
 2. mvn clean; mvn -e package; (All Platforms)
 3. Use the IDE Compile options
@@ -70,10 +70,10 @@ Without generated application.properties file the service will NOT be running. T
 2. Execute the curl commands directly (from the test script)
 
 #### $ run Result 
-![Run Results](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/MS-Run-Result.jpg)
+![Run Results](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/MS-Run-Result.jpg)
 
 #### MS Cache Swagger UI Docs for Testing
-![Swagger Docs](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/MS-Cache-Swagger-UI.jpg)
+![Swagger Docs](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/MS-Cache-Swagger-UI.jpg)
 
 ### Step 1.4 - Testing the APIs Using Swagger API Docs or Postman
 
@@ -86,26 +86,26 @@ ServiceEventListener.java in the package documentation io.fusion.air.microservic
 production environment. 
 
 #### Step 1.4.1: Copy the Auth Token
-![Authorize Request](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/ms-cache-with-Test-Tokens.jpg)
+![Authorize Request](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ms-cache-with-Test-Tokens.jpg)
 
 #### Step 1.4.2: Click on the Authorize Button (Top Left the Swagger UI)
 
-![Authorize Request](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/ms-cache-with-Test-Tokens-2.jpg)
+![Authorize Request](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ms-cache-with-Test-Tokens-2.jpg)
 
 #### Step 1.4.3: Enter the Token and Click Authorize
 
-![Authorize Request](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/ms-cache-with-Test-Tokens-3.jpg)
+![Authorize Request](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ms-cache-with-Test-Tokens-3.jpg)
 
 ### Step 1.5 -  Import Swagger API Docs Into Postman
 
 #### Step 1.5.1: Swagger Open API 3.0 Docs JSON Format
-![Swagger JSON](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/Import-API-into-Postman-0.jpg)
+![Swagger JSON](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/Import-API-into-Postman-0.jpg)
 
 #### Step 1.5.2: Import Into Postman - Set the Link
-![Postman Import](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/Import-API-Into-Postman-1.jpg)
+![Postman Import](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/Import-API-Into-Postman-1.jpg)
 
 #### Step 1.5.3: Import Into Postman - Confirm
-![Postman Import](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/Import-API-into-Postman-2.jpg)
+![Postman Import](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/Import-API-into-Postman-2.jpg)
 
 ## 2. CRUD Operations Demo & Error Handling
 
@@ -113,60 +113,60 @@ production environment.
 
 #### 2.1.1 GET Query Execution and Fallback Data
 
-![Crud Get](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/crud/crud-1-get-fallback.jpg)
+![Crud Get](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-1-get-fallback.jpg)
 
 #### 2.1.2 POST Create Data - Product 1
-![Crud Post-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/crud/crud-2-post-prod-1-A.jpg)
+![Crud Post-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-2-post-prod-1-A.jpg)
 
 #### 2.1.3 POST Create Data - Product 1 : Result
-![Crud Post-2](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/crud/crud-2-post-prod-1-B.jpg)
+![Crud Post-2](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-2-post-prod-1-B.jpg)
 
 #### 2.1.4 POST Create Data - Product 2 
-![Crud Post-3](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/crud/crud-3-post-prod-2.jpg)
+![Crud Post-3](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-3-post-prod-2.jpg)
 
 #### 2.1.5 POST Create Data - Product 3
-![Crud Post-4](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/crud/crud-4-post-prod-3.jpg)
+![Crud Post-4](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-4-post-prod-3.jpg)
 
 #### 2.1.6 GET All the Data (Created in Steps 2.2 - 2.5)
-![Crud Get-6](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/crud/crud-5-get-from-db.jpg)
+![Crud Get-6](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-5-get-from-db.jpg)
 
 #### 2.1.7 GET Single Record
-![Crud Get-7](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/crud/crud-6-get-from-db.jpg)
+![Crud Get-7](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-6-get-from-db.jpg)
 
 #### 2.1.8 PUT Update the Product Price
-![Crud Get-8](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/crud/crud-7-put-update-price.jpg)
+![Crud Get-8](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-7-put-update-price.jpg)
 
 #### 2.1.9 PUT Update the Product - DeActivate the Product > Set isActive Flag = False
-![Crud Get-9](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/crud/crud-8-put-deactivate.jpg)
+![Crud Get-9](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-8-put-deactivate.jpg)
 
 #### 2.1.10 State of the Records after Inserts and Updates
-![Crud Get-10](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/crud/crud-9-db-records.jpg)
+![Crud Get-10](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-9-db-records.jpg)
 
 ### 2.2 Error Handling
 
 #### 2.2.1 Error Handling - Invalid Input
-![Error-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/crud/crud-error-1-post-invalid-input-A.jpg)
+![Error-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-error-1-post-invalid-input-A.jpg)
 
 #### 2.2.2 Error Handling - Invalid Input - Result
-![Error-2](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/crud/crud-error-1-post-invalid-input-B.jpg)
+![Error-2](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-error-1-post-invalid-input-B.jpg)
 
 #### 2.2.3 Error Handling - Invalid Input - Field Validations
-![Error-3](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/crud/crud-error-2-post-invalid-input-A.jpg)
+![Error-3](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-error-2-post-invalid-input-A.jpg)
 
 #### 2.2.4 Error Handling - Invalid Input - Field Validations - Result
-![Error-4](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/crud/crud-error-2-post-invalid-input-B.jpg)
+![Error-4](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-error-2-post-invalid-input-B.jpg)
 
-#### 2.2.5 Error Handling - Version Mismatch based o JPA @Version Annotation
-![Error-5](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/crud/crud-error-3-post-Version-Mismatch-B.jpg)
+#### 2.2.5 Error Handling - Version Mismatch based on JPA @Version Annotation
+![Error-5](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-error-3-post-Version-Mismatch-B.jpg)
 
 
 ### 2.3 Log Management 
 
 #### 2.3.1 Log Success Messages
-![Log-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/log/Log-Messages-1.jpg)
+![Log-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/log/Log-Messages-1.jpg)
 
 #### 2.3.2 Log Failure Messages
-![Log-2](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/log/Log-Messages-2.jpg)
+![Log-2](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/log/Log-Messages-2.jpg)
 
 ## 3. Configure the Template: Setup Org, Service, & Container Name, Versions, API Path in app.props.tmpl
 
@@ -188,7 +188,7 @@ Update the Properties Template
    server.version=0.4.0
 
 Sample Property File Template
-![Property File](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-java-22-jakarta-ee-10/master/diagrams/MS-Property-File.jpg)
+![Property File](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/MS-Property-File.jpg)
 
 When you change the version in POM.xml, update that info in src/main/resources/app.props.tmpl - server.version property also.
 
@@ -224,7 +224,7 @@ Setup the Docker Hub or any other Container Registry
 2. stats (show container stats)
 
 
-(C) Copyright 2021-23 : Apache 2 License : Author: Araf Karsh Hamid
+(C) Copyright 2024 : Apache 2 License : Author: Araf Karsh Hamid
 
 <pre>
  * Licensed under the Apache License, Version 2.0 (the "License");
