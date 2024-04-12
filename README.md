@@ -170,8 +170,8 @@ production environment.
 
 ## 3. Configure the Template: Setup Org, Service, & Container Name, Versions, API Path in app.props.tmpl
 
-1. git clone https://github.com/arafkarsh/ms-springboot-310-java-17-jakarta-ee-10.git
-2. cd ms-springboot-310-java-17-jakarta-ee-10
+1. git clone https://github.com/arafkarsh/ms-springboot-324-ai.git
+2. cd ms-springboot-324-ai
 
 Update the Properties Template
 

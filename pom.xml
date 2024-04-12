@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>io.fusion.air</groupId>
-	<artifactId>ms-cache-service</artifactId>
-	<version>0.6.1</version>
+	<groupId>io.fusion.air.ai</groupId>
+	<artifactId>ms-ai-service</artifactId>
+	<version>0.1.0</version>
 	<packaging>jar</packaging>
-	<name>msCacheService</name>
-	<description>Microservice Cache Kafka Template</description>
+	<name>msAIService</name>
+	<description>Microservice AI Template</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -53,7 +53,6 @@
 		<jakarta.servlet.version>6.0.0</jakarta.servlet.version>
 		<jakarta.persistence.version>3.1.0</jakarta.persistence.version>
 
-
 		<!-- Spring Libraries ============================================== -->
 		<spring.boot.version>3.2.4</spring.boot.version>
 		<spring.cloud.version>2023.0.1</spring.cloud.version>
@@ -64,6 +63,9 @@
 
 		<!-- Open API v3 - Swagger UI ===================================== -->
 		<openapi.version>1.7.0</openapi.version>
+
+		<!-- LangChain4J API  ============================================= -->
+		<langchain4j.version>0.27.1</langchain4j.version>
 
 	</properties>
 
@@ -93,6 +95,34 @@
 	</repositories>
 
 	<dependencies>
+		<!-- ================================================================= -->
+		<!-- LangChain4J  -->
+		<!-- ================================================================= -->
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j</artifactId>
+			<version>${langchain4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j-azure-open-ai</artifactId>
+			<version>${langchain4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j-mistral-ai</artifactId>
+			<version>${langchain4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j-azure-ai-search</artifactId>
+			<version>${langchain4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j-embeddings-all-minilm-l6-v2-q</artifactId>
+			<version>${langchain4j.version}</version>
+		</dependency>
 
 		<!-- ================================================================= -->
 		<!-- Jakarta EE Frameworks (Required  from Java 17 onwards) -->
