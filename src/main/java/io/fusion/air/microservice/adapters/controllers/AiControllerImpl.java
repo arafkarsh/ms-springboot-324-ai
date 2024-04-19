@@ -15,7 +15,9 @@
  */
 package io.fusion.air.microservice.adapters.controllers;
 
+import dev.langchain4j.model.chat.ChatLanguageModel;
 import io.fusion.air.microservice.ai.AiAssistant;
+import io.fusion.air.microservice.domain.exceptions.DataNotFoundException;
 import io.fusion.air.microservice.domain.models.core.StandardResponse;
 import io.fusion.air.microservice.server.controllers.AbstractController;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,6 +31,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.annotation.RequestScope;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -60,13 +66,17 @@ public class AiControllerImpl extends AbstractController {
 	private String OPENAI_API_KEY;
 	// private ChatLanguageModel model = OpenAiChatModel.withApiKey(OPENAI_API_KEY);
 
-	// @Autowired
-	// private Assistant assistant;
-
+	private final ChatLanguageModel chatLanguageModel;
 	private final AiAssistant aiAssitant;
 
-	public AiControllerImpl(AiAssistant _aiAssistant) {
-		aiAssitant = _aiAssistant;
+	/**
+	 * Auto Wire the Language Model and Assistant
+	 * @param _chatLanguageModel
+	 * @param _aiAssistant
+	 */
+	public AiControllerImpl(ChatLanguageModel _chatLanguageModel, AiAssistant _aiAssistant) {
+		this.chatLanguageModel = _chatLanguageModel;
+		this.aiAssitant = _aiAssistant;
 	}
 
 	/**
@@ -84,12 +94,27 @@ public class AiControllerImpl extends AbstractController {
 	@PostMapping("/chat")
 	public ResponseEntity<StandardResponse> createProduct( @RequestBody String _msg) {
 		log.info("|"+name()+"|Chat Request to AI... "+_msg);
-		log.info("Open_API_KEY = "+OPENAI_API_KEY);
+		// log.info("Open_API_KEY = "+OPENAI_API_KEY);
 		StandardResponse stdResponse = createSuccessResponse("AI Response");
-		// String response = " Some Response... "; // model.generate(_msg);
 		String response = aiAssitant.chat(_msg);
 		stdResponse.setPayload(response);
 		return ResponseEntity.ok(stdResponse);
 	}
 
+	@GetMapping("/chat")
+	public ResponseEntity<StandardResponse> model(@RequestParam(value = "message", defaultValue = "Hello") String _msg) {
+		log.info("|" + name() + "|Chat Request to AI... " + _msg);
+		String response = chatLanguageModel.generate(_msg);
+		if(response != null) {
+			String[] rows = response.split("\n");
+			StandardResponse stdResponse = createSuccessResponse("AI Response");
+			LinkedHashMap<String, Object> data = new LinkedHashMap<String, Object>();
+			data.put("Request", _msg);
+			data.put("Response", rows);
+			stdResponse.setPayload(data);
+			return ResponseEntity.ok(stdResponse);
+			// return chatLanguageModel.generate(_msg);
+		}
+		throw new DataNotFoundException("Unable to retrieve data... !");
+	}
  }

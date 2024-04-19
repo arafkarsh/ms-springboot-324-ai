@@ -1,30 +1,38 @@
 # =======================================================================
-# MS-Cache Service Properties
+# Spring Service Properties
 # =======================================================================
 build.number=6
-build.date=Wed Apr 3 20:58:47 IST 2024
+build.date=Fri Apr 19 13:21:49 IST 2024
 # =======================================================================
 # Service Name & API Details -  Version, Path
 # =======================================================================
 service.org=orgname
-service.name=MS-Cache
-service.api.name=ms-cache
+service.name=Spring AI
+service.api.name=ms-ai
 service.api.prefix=api
 service.api.version=v1
-service.api.error.prefix=13
-service.container=ms-cache-service
-#service.api.repository=https://github.com/MetaArivu/${service.container}
-service.api.repository=https://github.com/MetaArivu/ms-cache-kafka-quickstart
+service.api.error.prefix=17
+service.container=ms-ai-service
+#service.api.repository=https://github.com/arafkarsh/${service.container}
+service.api.repository=https://github.com/arafkarsh/ms-springboot-324-ai
 service.api.path=/${service.api.name}/${service.api.prefix}/${service.api.version}
 service.url=http://www.metarivu.com/
 service.license=Apache 2 License
 # =======================================================================
 # Microservice Server Properties
 # =======================================================================
-server.port=9091
-server.version=0.6.1
+server.port=19090
+server.version=0.1.0
 server.restart=false
 server.resources.url=${service.url}${service.api.path}
+# =======================================================================
+# LangChain4J Properties
+# =======================================================================
+langchain4j.open-ai.chat-model.api-key=${OPENAI_API_KEY}
+langchain4j.open-ai.chat-model.log-requests = true
+langchain4j.open-ai.chat-model.log-responses = true
+logging.level.dev.langchain4j = DEBUG
+logging.level.dev.ai4j.openai4j = DEBUG
 # ------------------------------------------------------------------------
 # Security & JWT Token  (Type 1 = secret key, 2 = public / private key)
 # ------------------------------------------------------------------------
