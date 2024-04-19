@@ -15,8 +15,6 @@
  */
 package io.fusion.air.microservice.adapters.controllers;
 
-import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.openai.OpenAiChatModel;
 import io.fusion.air.microservice.ai.AiAssistant;
 import io.fusion.air.microservice.domain.models.core.StandardResponse;
 import io.fusion.air.microservice.server.controllers.AbstractController;
@@ -26,23 +24,17 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.annotation.RequestScope;
 
-import dev.langchain4j.memory.ChatMemory;
-import dev.langchain4j.memory.chat.MessageWindowChatMemory;
-import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.service.AiServices;
-
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
 
 /**
- * LangChain Controller for the Service
+ * Ai Controller for the Service
  *
  * Only Selected Methods will be secured in this packaged - which are Annotated with
  * @AuthorizationRequired
@@ -58,8 +50,8 @@ import static org.slf4j.LoggerFactory.getLogger;
 // "/ms-ai/api/v1"
 @RequestMapping("${service.api.path}/ai")
 @RequestScope
-@Tag(name = "AI", description = "Ex. io.f.a.m.adapters.controllers.LangChainControllerImpl")
-public class LangChainControllerImpl extends AbstractController {
+@Tag(name = "AI", description = "Ex. io.f.a.m.adapters.controllers.AiControllerImpl")
+public class AiControllerImpl extends AbstractController {
 
 	// Set Logger -> Lookup will automatically determine the class name.
 	private static final Logger log = getLogger(lookup().lookupClass());
@@ -73,7 +65,7 @@ public class LangChainControllerImpl extends AbstractController {
 
 	private final AiAssistant aiAssitant;
 
-	public LangChainControllerImpl(AiAssistant _aiAssistant) {
+	public AiControllerImpl(AiAssistant _aiAssistant) {
 		aiAssitant = _aiAssistant;
 	}
 
