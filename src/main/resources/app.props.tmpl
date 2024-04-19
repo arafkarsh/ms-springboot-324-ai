@@ -20,6 +20,14 @@ server.port=19090
 server.version=0.1.0
 server.restart=false
 server.resources.url=${service.url}${service.api.path}
+# =======================================================================
+# LangChain4J Properties
+# =======================================================================
+langchain4j.open-ai.chat-model.api-key=${OPENAI_API_KEY}
+langchain4j.open-ai.chat-model.log-requests = true
+langchain4j.open-ai.chat-model.log-responses = true
+logging.level.dev.langchain4j = DEBUG
+logging.level.dev.ai4j.openai4j = DEBUG
 # ------------------------------------------------------------------------
 # Security & JWT Token  (Type 1 = secret key, 2 = public / private key)
 # ------------------------------------------------------------------------

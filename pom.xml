@@ -19,7 +19,7 @@
 	<!-- =================================================================== -->
 	<properties>
 		<!-- Java Version ================================================== -->
-		<java.version>22</java.version>
+		<java.version>21</java.version>
 
 		<!-- Maven ========================================================= -->
 		<maven.compiler.target>${java.version}</maven.compiler.target>
@@ -85,13 +85,11 @@
 			<id>spring-milestones</id>
 			<name>Spring Milestones</name>
 			<url>https://repo.spring.io/milestone</url>
-
 		</repository>
 		<repository>
 			<id>public</id>
 			<url>http://maven.nuxeo.org/nexus/content/repositories/public/</url>
 		</repository>
-
 	</repositories>
 
 	<dependencies>
@@ -100,9 +98,42 @@
 		<!-- ================================================================= -->
 		<dependency>
 			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j-open-ai-spring-boot-starter</artifactId>
+			<version>${langchain4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j-spring-boot-starter</artifactId>
+			<version>${langchain4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j-embeddings-all-minilm-l6-v2</artifactId>
+			<version>${langchain4j.version}</version>
+		</dependency>
+		<!--
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
 			<artifactId>langchain4j</artifactId>
 			<version>${langchain4j.version}</version>
 		</dependency>
+		<dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-open-ai</artifactId>
+			<version>${langchain4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-embeddings-all-minilm-l6-v2</artifactId>
+			<version>${langchain4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-document-parser-apache-pdfbox</artifactId>
+			<version>${langchain4j.version}</version>
+        </dependency>
 		<dependency>
 			<groupId>dev.langchain4j</groupId>
 			<artifactId>langchain4j-azure-open-ai</artifactId>
@@ -123,6 +154,7 @@
 			<artifactId>langchain4j-embeddings-all-minilm-l6-v2-q</artifactId>
 			<version>${langchain4j.version}</version>
 		</dependency>
+		-->
 
 		<!-- ================================================================= -->
 		<!-- Jakarta EE Frameworks (Required  from Java 17 onwards) -->
