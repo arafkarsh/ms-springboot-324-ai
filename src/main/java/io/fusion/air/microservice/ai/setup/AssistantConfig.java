@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai;
+package io.fusion.air.microservice.ai.setup;
 
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Configuration;
 public class AssistantConfig {
 
     /**
-     * This chat memory will be used by an {@link AiAssistant}
+     * This chat memory will be used by an {@link HAL9000}
      */
     @Bean
     public ChatMemory chatMemory() {

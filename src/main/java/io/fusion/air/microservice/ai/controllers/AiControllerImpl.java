@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.adapters.controllers;
+package io.fusion.air.microservice.ai.controllers;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
-import io.fusion.air.microservice.ai.AiAssistant;
+import io.fusion.air.microservice.ai.setup.HAL9000;
 import io.fusion.air.microservice.domain.exceptions.DataNotFoundException;
 import io.fusion.air.microservice.domain.models.core.StandardResponse;
 import io.fusion.air.microservice.server.controllers.AbstractController;
@@ -32,9 +32,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.annotation.RequestScope;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -67,16 +65,16 @@ public class AiControllerImpl extends AbstractController {
 	// private ChatLanguageModel model = OpenAiChatModel.withApiKey(OPENAI_API_KEY);
 
 	private final ChatLanguageModel chatLanguageModel;
-	private final AiAssistant aiAssitant;
+	private final HAL9000 aiAssitant;
 
 	/**
 	 * Auto Wire the Language Model and Assistant
 	 * @param _chatLanguageModel
-	 * @param _aiAssistant
+	 * @param _HAL9000
 	 */
-	public AiControllerImpl(ChatLanguageModel _chatLanguageModel, AiAssistant _aiAssistant) {
+	public AiControllerImpl(ChatLanguageModel _chatLanguageModel, HAL9000 _HAL9000) {
 		this.chatLanguageModel = _chatLanguageModel;
-		this.aiAssitant = _aiAssistant;
+		this.aiAssitant = _HAL9000;
 	}
 
 	/**

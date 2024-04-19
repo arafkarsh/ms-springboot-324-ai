@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai;
+package io.fusion.air.microservice.ai.setup;
 
 import dev.langchain4j.agent.tool.Tool;
 import org.springframework.stereotype.Component;
@@ -29,7 +29,7 @@ import java.time.LocalTime;
 public class AssistantTools {
 
     /**
-     * This tool is available to {@link AiAssistant}
+     * This tool is available to {@link HAL9000}
      */
     @Tool
     public String currentTime() {
