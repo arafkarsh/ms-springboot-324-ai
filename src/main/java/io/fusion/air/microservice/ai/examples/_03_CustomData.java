@@ -35,7 +35,7 @@ public class _03_CustomData {
         processFile(request1,  "bramayugam.txt");
         String request2 = """
                 Elaborate the key ideas behind the movie.
-                Elaborate the main events in the movie and its significance.
+                Elaborate each stage (in bullet points) in the movie and its significance.
                 What was the movie rating?
                 """;
         processFile(request2,  "vaaliban.txt");

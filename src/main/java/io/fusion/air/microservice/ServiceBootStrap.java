@@ -15,6 +15,8 @@
  */
 package io.fusion.air.microservice;
 
+import dev.langchain4j.model.chat.ChatLanguageModel;
+import io.fusion.air.microservice.ai.utils.AiBeans;
 import jakarta.annotation.PostConstruct;
 // import javax.servlet.MultipartConfigElement;
 // import jakarta.servlet.MultipartConfigElement;
@@ -234,19 +236,17 @@ public class ServiceBootStrap {
 					System.out.println("User: ");
 					String userQuery = scanner.nextLine();
 					System.out.println("==================================================");
-
-					if ("exit".equalsIgnoreCase(userQuery)) {
+					if ("exit".equalsIgnoreCase(userQuery) || "quit".equalsIgnoreCase(userQuery)) {
 						break;
 					}
-
-					String agentAnswer = processUserQuery(userQuery);
-					System.out.println("Response: >>> \n" + agentAnswer);
+					String response = processUserQuery(userQuery);
+					System.out.println("HAL9K: >>> \n" + response);
 				}
 			}
 		}
 		private String processUserQuery(String query) {
-			// Here you would have the logic to process the query
-			return "Processed: " + query;
+			ChatLanguageModel model = new AiBeans().createChatLanguageModel();
+			return model.generate(query);
 		}
 	}
 

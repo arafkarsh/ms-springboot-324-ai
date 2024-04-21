@@ -22,7 +22,9 @@ import dev.langchain4j.data.document.splitter.DocumentSplitters;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.image.ImageModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
+import dev.langchain4j.model.openai.OpenAiImageModel;
 import dev.langchain4j.retriever.EmbeddingStoreRetriever;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.store.embedding.EmbeddingStore;
@@ -75,8 +77,37 @@ public class AiBeans {
     public ChatLanguageModel createChatLanguageModel(String _model) {
        return OpenAiChatModel.builder()
                 .apiKey(AiConstants.OPENAI_API_KEY)
+                // Higher the Temperature, Higher the Randomness.
+                // For Accurate deterministic results keep the temperature low
                 .temperature(0.0)
                 .timeout(ofSeconds(60))
+                 // AI Models are defined in AiConstants -  GPT_4_TURBO, GPT_3_5_TURBO
+                .modelName(_model)
+                .logRequests(true)
+                .logResponses(true)
+                .build();
+    }
+
+    /**
+     * Returns the Image Model
+     * @param _model
+     * @return
+     */
+    @Bean
+    public ImageModel createImageModel() {
+        return createImageModel(AiConstants.DALL_E_3);
+    }
+
+    /**
+     * Returns the Image Model
+     * @param _model
+     * @return
+     */
+    public ImageModel createImageModel(String _model) {
+        return OpenAiImageModel.builder()
+                .apiKey(AiConstants.OPENAI_API_KEY)
+                .timeout(ofSeconds(60))
+                // AI Models are defined in AiConstants -  DALL_E_3, DALL_E_2
                 .modelName(_model)
                 .logRequests(true)
                 .logResponses(true)
@@ -113,11 +144,10 @@ public class AiBeans {
      */
     public ConversationalRetrievalChain createConversationalRetrievalChain(String _fileName) {
         EmbeddingModel embeddingModel = new AllMiniLmL6V2EmbeddingModel();
-
         EmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
 
         EmbeddingStoreIngestor ingestor = EmbeddingStoreIngestor.builder()
-                .documentSplitter(DocumentSplitters.recursive(3000, 0))
+                .documentSplitter(DocumentSplitters.recursive(5000, 0))
                 .embeddingModel(embeddingModel)
                 .embeddingStore(embeddingStore)
                 .build();

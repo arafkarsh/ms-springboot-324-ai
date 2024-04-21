@@ -15,14 +15,8 @@
  */
 package io.fusion.air.microservice.ai.examples;
 
-import dev.langchain4j.memory.chat.MessageWindowChatMemory;
-import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.openai.OpenAiChatModel;
-import dev.langchain4j.service.AiServices;
-
-import static java.time.Duration.ofSeconds;
-
 import io.fusion.air.microservice.ai.setup.HAL9000;
+import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 
 import java.time.LocalDateTime;
@@ -37,7 +31,7 @@ public class _02_ComplexWorld {
 
     public static void main(String[] args) {
         // Create the Ai Assistant
-        HAL9000 hal9k = createHAL9000(AiConstants.GPT_3_5_TURBO);
+        HAL9000 hal9k = new AiBeans().createHAL9000(AiConstants.GPT_3_5_TURBO);
         // Run the Test Cases
         complexWorld1(hal9k);
         complexWorld2(hal9k);
@@ -45,11 +39,19 @@ public class _02_ComplexWorld {
         // validateCalc();
     }
 
+    /**
+     * Example 1
+     * @param hal9k
+     */
     public static void complexWorld1(HAL9000 hal9k) {
         interact(hal9k, "What is the square root of 144233377?");
         interact(hal9k, "Capitalize every third letter except the sixth letter: abcdefghjiklmnop");
     }
 
+    /**
+     * Example 2
+     * @param hal9k
+     */
     public static void complexWorld2(HAL9000 hal9k) {
         interact(hal9k, "What are the hours between 06:00 on 7 Feb 1970 and 11:00 on 02 Jun 1980?");
         interact(hal9k, "What is the sum of all the digits in the previous question? Is that a Prime Number?");
@@ -58,10 +60,19 @@ public class _02_ComplexWorld {
         System.out.println("--------------------------------------------------------------");
     }
 
+    /**
+     * Example 3
+     * @param hal9k
+     */
     public static void complexWorld3(HAL9000 hal9k) {
         interact(hal9k, "Explain French Revolution in details with critical events.");
     }
 
+    /**
+     * Interact with HAL9000 Ai Assistant
+     * @param hal9k
+     * @param userMessage
+     */
     private static void interact(HAL9000 hal9k, String userMessage) {
         System.out.println("[Human]: " + userMessage);
         String response = hal9k.chat(userMessage);
@@ -69,6 +80,9 @@ public class _02_ComplexWorld {
         System.out.println("--------------------------------------------------------------");
     }
 
+    /**
+     * Validate the Hours Calculation
+     */
     private static void validateCalc() {
         LocalDateTime startTime = LocalDateTime.of(1970, 2, 7, 6, 0);
         LocalDateTime endTime = LocalDateTime.of(1980, 6, 2, 11, 0);
@@ -89,28 +103,10 @@ public class _02_ComplexWorld {
     }
 
     /**
-     * Create HAL9000 Ai Assistant
-     *
-     * @param _model
+     * Sum Digits
+     * @param number
      * @return
      */
-    private static HAL9000 createHAL9000(String _model) {
-        ChatLanguageModel chatLanguageModel = OpenAiChatModel.builder()
-                .apiKey(AiConstants.OPENAI_API_KEY)
-                .temperature(0.0)
-                .timeout(ofSeconds(60))
-                .modelName(_model)
-                .logRequests(true)
-                .logResponses(true)
-                .build();
-
-        return AiServices.builder(HAL9000.class)
-                .chatLanguageModel(chatLanguageModel)
-                .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
-                // .tools(tool)
-                .build();
-    }
-
     private static long sumOfDigits(long number) {
         long sum = 0;
         while (number > 0) {
@@ -120,6 +116,11 @@ public class _02_ComplexWorld {
         return sum;
     }
 
+    /**
+     * Find Prime
+     * @param number
+     * @return
+     */
     private static boolean isPrime(long number) {
         if (number <= 1) {
             return false;

@@ -36,7 +36,7 @@ public class _01_HelloWorld {
     public static void main(String[] args) {
         helloWorld();
         conversationChat();
-        conversationChatWithMemory(AiConstants.GPT_4_TURBO);
+        conversationChatWithMemory(AiConstants.GPT_3_5_TURBO);
     }
 
     public static void helloWorld() {

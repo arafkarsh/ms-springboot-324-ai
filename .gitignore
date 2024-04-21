@@ -11,6 +11,9 @@ src/docker/Dockerfile-r
 ### Dont Commit Private Keys
 privateKey.pem
 
+### GPT Images
+downloaded_image.jpg
+
 ### STS ###
 .apt_generated
 .classpath
