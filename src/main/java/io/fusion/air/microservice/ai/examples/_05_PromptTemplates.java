@@ -18,11 +18,15 @@ package io.fusion.air.microservice.ai.examples;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.input.Prompt;
 import dev.langchain4j.model.input.PromptTemplate;
+import dev.langchain4j.model.input.structured.StructuredPromptProcessor;
+import io.fusion.air.microservice.ai.examples.models.StructuredRecipePrompt;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static java.util.Arrays.asList;
 
 /**
  * @author: Araf Karsh Hamid
@@ -32,21 +36,50 @@ import java.util.Map;
 public class _05_PromptTemplates {
 
     public static void main(String[] args) {
+        // simplePrompt();
+        structuredPrompt();
+    }
 
+    /**
+     * Simple Prompt
+     */
+    public static void simplePrompt() {
+        // Checkout the ChatLanguageModel Implementation details in AiBeans.java
         ChatLanguageModel model = new AiBeans()
                 .createChatLanguageModel(AiConstants.GPT_3_5_TURBO);
 
         String template = "Create a recipe for a {{DishType}} with the following ingredients: {{Ingredients}}";
         PromptTemplate promptTemplate = PromptTemplate.from(template);
 
-        Map<String, Object> variables = new HashMap<>();
-        variables.put("DishType", "oven dish");
-        variables.put("Ingredients", "cucumber, potato, tomato, red meat, olives, olive oil");
+        Map<String, Object> params = new HashMap<>();
+        params.put("DishType", "oven dish");
+        params.put("Ingredients", "cucumber, potato, tomato, red meat, olives, olive oil");
 
-        Prompt prompt = promptTemplate.apply(variables);
+        Prompt prompt = promptTemplate.apply(params);
 
         System.out.println("Request:  >>> \n"+prompt.text());
         String response = model.generate(prompt.text());
         System.out.println("Response: >>> \n"+response);
+    }
+
+    /**
+     * Structured Prompt Example
+     *
+     * @see AiBeans
+     * @see StructuredRecipePrompt
+     */
+    public static void structuredPrompt() {
+        ChatLanguageModel model = new AiBeans()
+                .createChatLanguageModel(AiConstants.GPT_3_5_TURBO);
+        StructuredRecipePrompt recipePrompt = new StructuredRecipePrompt(
+                "oven dish",
+                asList("cucumber", "potato", "tomato", "red meat", "olives", "olive oil")
+        );
+        Prompt prompt = StructuredPromptProcessor.toPrompt(recipePrompt);
+        System.out.println("Request:  >>> \n"+prompt.text());
+        System.out.println("-------------------------------------------------------------");
+        String response = model.generate(prompt.text());
+        System.out.println("Response: >>> \n"+response);
+        System.out.println("-------------------------------------------------------------");
     }
 }

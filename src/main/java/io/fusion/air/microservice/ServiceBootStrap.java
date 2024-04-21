@@ -17,6 +17,7 @@ package io.fusion.air.microservice;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 import jakarta.annotation.PostConstruct;
 // import javax.servlet.MultipartConfigElement;
 // import jakarta.servlet.MultipartConfigElement;
@@ -231,11 +232,13 @@ public class ServiceBootStrap {
 		@Override
 		public void run(String... args) {
 			try (Scanner scanner = new Scanner(System.in)) {
+				System.out.println("==========================================================================================");
+				System.out.println("Ask your questions to HAL 9000. Type exit or quit, to quit the Prompt.");
 				while (true) {
-					System.out.println("==================================================");
-					System.out.println("User: ");
+					System.out.println("------------------------------------------------------------------------------------------");
+					System.out.print("User: >>> ");
 					String userQuery = scanner.nextLine();
-					System.out.println("==================================================");
+					System.out.println("==========================================================================================");
 					if ("exit".equalsIgnoreCase(userQuery) || "quit".equalsIgnoreCase(userQuery)) {
 						break;
 					}
@@ -245,7 +248,8 @@ public class ServiceBootStrap {
 			}
 		}
 		private String processUserQuery(String query) {
-			ChatLanguageModel model = new AiBeans().createChatLanguageModel();
+			ChatLanguageModel model = new AiBeans()
+					.createChatLanguageModel(AiConstants.GPT_3_5_TURBO, false, false);
 			return model.generate(query);
 		}
 	}

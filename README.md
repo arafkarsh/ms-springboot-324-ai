@@ -1,6 +1,9 @@
-# Microservice Cache / Kafka Template
+# Ai - Springboot / Langchain4J Examples
 
-## Microservice Structure
+## Quick Test after starting the SpringBoot App
+![Ai Prompt](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/Ai-Prompt.jpg)
+
+## Package Structure
 
 ![Package Structure](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/MS-Pkg-Structure.jpg)
 
