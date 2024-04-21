@@ -30,6 +30,7 @@ public class AiConstants {
     public static final String GPT_4_32K          = "gpt-4-32k";
     // INPUT = 	$0.0005 / 1K tokens    OUTPUT = $0.0015 / 1K tokens
     public static final String GPT_3_5_TURBO   = "gpt-3.5-turbo-0125";
+
     // $0.040 / image, Standard 1024×1024
     public static final String DALL_E_3            = "dall-e-3";
     // $0.020 / image, 1024×1024
