@@ -18,6 +18,8 @@ package io.fusion.air.microservice;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
+import io.fusion.air.microservice.ai.utils.CustomDataAnalyzer;
+import io.fusion.air.microservice.ai.utils.ImageBuilder;
 import jakarta.annotation.PostConstruct;
 // import javax.servlet.MultipartConfigElement;
 // import jakarta.servlet.MultipartConfigElement;
@@ -242,15 +244,21 @@ public class ServiceBootStrap {
 					if ("exit".equalsIgnoreCase(userQuery) || "quit".equalsIgnoreCase(userQuery)) {
 						break;
 					}
-					String response = processUserQuery(userQuery);
-					System.out.println("HAL9K: >>> \n" + response);
+					if(userQuery.startsWith("IMAGE: ")) {
+						String query = userQuery.replaceAll("IMAGE:", "");
+						ImageBuilder.downloadImage(ImageBuilder.createImage(query));
+						continue;
+					} else if(userQuery.startsWith("CUSTOM: ")) {
+						String query = userQuery.replaceAll("CUSTOM:", "");
+						CustomDataAnalyzer.processFile(query);
+						continue;
+					} else {
+						String response = CustomDataAnalyzer.processUserQuery(userQuery);
+						System.out.println("--[HAL9000]---------------------------------------------------------------------------");
+						System.out.println(response);
+					}
 				}
 			}
-		}
-		private String processUserQuery(String query) {
-			ChatLanguageModel model = new AiBeans()
-					.createChatLanguageModel(AiConstants.GPT_3_5_TURBO, false, false);
-			return model.generate(query);
 		}
 	}
 

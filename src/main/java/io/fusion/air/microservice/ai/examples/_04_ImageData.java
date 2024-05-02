@@ -15,21 +15,7 @@
  */
 package io.fusion.air.microservice.ai.examples;
 
-import dev.langchain4j.data.image.Image;
-import dev.langchain4j.model.image.ImageModel;
-import dev.langchain4j.model.output.Response;
-
-import io.fusion.air.microservice.ai.utils.AiBeans;
-import io.fusion.air.microservice.ai.utils.AiConstants;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.MalformedURLException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.net.URL;
+import io.fusion.air.microservice.ai.utils.ImageBuilder;
 
 /**
  * Create a Dynamic Image based on the User Input
@@ -42,44 +28,19 @@ public class _04_ImageData {
 
     public static void main(String[] args) {
 
-        ImageModel model = new AiBeans().createImageModel(AiConstants.DALL_E_3);
-        Response<Image> response = model.generate("""
+        String kerala = """
                 Kerala landscape, with backwaters, boats and on the one side of the river
                 bank leading into the forest with elephants and deer and the other side with
                 Dancers in Kathakali costumes along with chendamelam.
-                """);
+                """;
 
-        if (response.content().url() != null) {
-            System.out.println("Image URL: " + response.content().url());
-            try {
-                downloadImage(response.content().url().toString(), "downloaded_image.jpg");
-            } catch (IOException e) {
-                System.out.println("No image was returned.");
-                throw new RuntimeException(e);
-            }
-        } else {
-            System.out.println("No image was returned.");
-        }
-    }
+        String conf = """
+                Create a Conference hall with speaker talking about Data Mesh technology.
+                Screen contains an Architecture diagram of Data Mesh. 
+                Around 20-30 participants curious about the Data Mesh Concept. 
+                The Speaker is wearing a Red T-Shirt, completely bald with a thick beard. 
+                """;
 
-    /**
-     * Download the image
-     * @param imageUrl
-     * @param fileName
-     * @throws IOException
-     */
-    private static void downloadImage(String imageUrl, String fileName) throws IOException {
-        URL url = new URL(imageUrl);
-        Path targetPath = Paths.get(fileName).toAbsolutePath();
-
-        try (InputStream in = url.openStream();
-             OutputStream out = new FileOutputStream(targetPath.toString())) {
-            byte[] buffer = new byte[4096];
-            int bytesRead;
-            while ((bytesRead = in.read(buffer)) != -1) {
-                out.write(buffer, 0, bytesRead);
-            }
-            System.out.println("Image has been downloaded successfully to " + targetPath);
-        }
+        ImageBuilder.downloadImage(ImageBuilder.createImage(conf));
     }
 }

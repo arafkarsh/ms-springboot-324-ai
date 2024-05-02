@@ -17,6 +17,7 @@ package io.fusion.air.microservice.ai.examples;
 
 import dev.langchain4j.chain.ConversationalRetrievalChain;
 import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.CustomDataAnalyzer;
 
 /**
  * @author: Araf Karsh Hamid
@@ -32,25 +33,15 @@ public class _03_CustomData {
             What was the rating?
             Elaborate the Characters in the movie.
             """;
-        processFile(request1,  "bramayugam.txt");
+        CustomDataAnalyzer.processFile(request1,  "bramayugam.txt");
+
         String request2 = """
                 Elaborate the key ideas behind the movie.
                 Elaborate each stage (in bullet points) in the movie and its significance.
                 What was the movie rating?
                 """;
-        processFile(request2,  "vaaliban.txt");
+        CustomDataAnalyzer.processFile(request2,  "vaaliban.txt");
 
         System.exit(0);
-    }
-
-    public static void processFile(String _request, String _fileName) {
-        ConversationalRetrievalChain chain = new AiBeans()
-                .createConversationalRetrievalChain(_fileName);
-        String response = chain.execute(_request);
-        System.out.println("--[Human]----------------------------------------------------------");
-        System.out.println(_request);
-        System.out.println("--[HAL9000]-------------------------------------------------------");
-        System.out.println(response);
-        System.out.println("-------------------------------------------------------------------");
     }
 }

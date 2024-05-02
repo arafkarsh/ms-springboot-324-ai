@@ -66,7 +66,7 @@ public class AiBeans {
      */
     @Bean
     public ChatLanguageModel createChatLanguageModel() {
-        return createChatLanguageModel(AiConstants.GPT_3_5_TURBO, true, true);
+        return createChatLanguageModel(AiConstants.GPT_3_5_TURBO, false, false);
     }
 
     /**
@@ -99,7 +99,6 @@ public class AiBeans {
 
     /**
      * Returns the Image Model
-     * @param _model
      * @return
      */
     @Bean
@@ -118,8 +117,8 @@ public class AiBeans {
                 .timeout(ofSeconds(60))
                 // AI Models are defined in AiConstants -  DALL_E_3, DALL_E_2
                 .modelName(_model)
-                .logRequests(true)
-                .logResponses(true)
+                .logRequests(false)
+                .logResponses(false)
                 .build();
     }
 
