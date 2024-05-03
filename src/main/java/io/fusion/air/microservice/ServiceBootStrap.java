@@ -235,12 +235,20 @@ public class ServiceBootStrap {
 		public void run(String... args) {
 			try (Scanner scanner = new Scanner(System.in)) {
 				System.out.println("==========================================================================================");
-				System.out.println("Ask your questions to HAL 9000. Type exit or quit, to quit the Prompt.");
+				System.out.println("Ask your questions to HAL 9000.");
+				System.out.println("To create an image, prefix the text with IMAGE:");
+				System.out.println("To Analyze & Search Custom Data, prefix the text with CUSTOM:");
+				System.out.println("Type exit or quit, to quit the Prompt.");
+
 				while (true) {
 					System.out.println("------------------------------------------------------------------------------------------");
 					System.out.print("User: >>> ");
 					String userQuery = scanner.nextLine();
 					System.out.println("==========================================================================================");
+					if(userQuery == null) {
+						System.out.println("Pass 1");
+						break;
+					}
 					if ("exit".equalsIgnoreCase(userQuery) || "quit".equalsIgnoreCase(userQuery)) {
 						break;
 					}
