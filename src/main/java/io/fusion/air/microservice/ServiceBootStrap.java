@@ -245,8 +245,8 @@ public class ServiceBootStrap {
 					System.out.print("User: >>> ");
 					String userQuery = scanner.nextLine();
 					System.out.println("==========================================================================================");
-					if(userQuery == null) {
-						System.out.println("Pass 1");
+					if(userQuery == null || userQuery.length() == 0) {
+						System.out.println("Quiting HAL9000 Standard Input... ..");
 						break;
 					}
 					if ("exit".equalsIgnoreCase(userQuery) || "quit".equalsIgnoreCase(userQuery)) {
