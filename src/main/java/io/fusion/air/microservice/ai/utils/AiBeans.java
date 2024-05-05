@@ -75,7 +75,7 @@ public class AiBeans {
      * @return
      */
     public ChatLanguageModel createChatLanguageModel(String _model) {
-        return createChatLanguageModel(_model, true, true);
+        return createChatLanguageModel(_model, false, false);
     }
 
     /**
@@ -83,7 +83,7 @@ public class AiBeans {
      * @param _model
      * @return
      */
-    public ChatLanguageModel createChatLanguageModel(String _model, boolean _res, boolean _req) {
+    public ChatLanguageModel createChatLanguageModel(String _model, boolean _req, boolean _res) {
        return OpenAiChatModel.builder()
                 .apiKey(AiConstants.OPENAI_API_KEY)
                 // Higher the Temperature, Higher the Randomness.
@@ -93,7 +93,7 @@ public class AiBeans {
                  // AI Models are defined in AiConstants -  GPT_4_TURBO, GPT_3_5_TURBO
                 .modelName(_model)
                 .logRequests(_req)
-                .logResponses(_req)
+                .logResponses(_res)
                 .build();
     }
 

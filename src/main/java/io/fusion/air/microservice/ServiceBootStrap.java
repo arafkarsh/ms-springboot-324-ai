@@ -16,10 +16,7 @@
 package io.fusion.air.microservice;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
-import io.fusion.air.microservice.ai.utils.AiBeans;
-import io.fusion.air.microservice.ai.utils.AiConstants;
-import io.fusion.air.microservice.ai.utils.CustomDataAnalyzer;
-import io.fusion.air.microservice.ai.utils.ImageBuilder;
+import io.fusion.air.microservice.ai.utils.*;
 import jakarta.annotation.PostConstruct;
 // import javax.servlet.MultipartConfigElement;
 // import jakarta.servlet.MultipartConfigElement;
@@ -238,6 +235,10 @@ public class ServiceBootStrap {
 				System.out.println("Ask your questions to HAL 9000.");
 				System.out.println("To create an image, prefix the text with IMAGE:");
 				System.out.println("To Analyze & Search Custom Data, prefix the text with CUSTOM:");
+				System.out.println("To Get Structured data use [P1 for Recipe, [P2 for Movies etc.. ");
+				System.out.println("Prompt Examples:");
+				System.out.println("Recipe = [P1: oven dish, cucumber, potato, tomato, red meat, olives, olive oil");
+				System.out.println("Movies = [P2: <todo>");
 				System.out.println("Type exit or quit, to quit the Prompt.");
 
 				while (true) {
@@ -259,6 +260,9 @@ public class ServiceBootStrap {
 					} else if(userQuery.startsWith("CUSTOM: ")) {
 						String query = userQuery.replaceAll("CUSTOM:", "");
 						CustomDataAnalyzer.processFile(query);
+						continue;
+					} else if(userQuery.startsWith("[P")) {
+						TemplateManager.structuredTemplate(userQuery);
 						continue;
 					} else {
 						String response = CustomDataAnalyzer.processUserQuery(userQuery);
