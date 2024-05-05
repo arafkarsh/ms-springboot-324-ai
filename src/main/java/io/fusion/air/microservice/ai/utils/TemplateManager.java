@@ -61,7 +61,7 @@ public class TemplateManager {
         if("[P1".equalsIgnoreCase(template)) {
             String[] data = prompt.split(",");
             String dish = data[0];
-            String ingredients = prompt.replaceAll(dish, "");
+            String ingredients = prompt.replaceAll(dish+",", "").trim();
             structuredRecipePrompt(dish, ingredients);
         } else {
             System.out.println("No Template found!!! ........... ");
