@@ -13,13 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai.utils;
+package io.fusion.air.microservice.ai.services;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.input.Prompt;
 import dev.langchain4j.model.input.PromptTemplate;
 import dev.langchain4j.model.input.structured.StructuredPromptProcessor;
 import io.fusion.air.microservice.ai.examples.models.StructuredRecipePrompt;
+import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -142,6 +144,39 @@ public class TemplateManager {
         System.out.println("Request:  >>> \n"+prompt.text());
         String response = model.generate(prompt.text());
         System.out.println("Response: >>> \n"+response);
+    }
+
+    /**
+     * Movie Template
+     *
+     * @return
+     */
+    public static PromptTemplate createMoviePrompt() {
+        // Complex Template
+        String template = """
+                        Create a review of the cinema {{movieName}}. 
+                        Structure your answer in the following way:
+                
+                        Movie name: ...
+                        Movie Rating: ...
+                        Description: ...
+                
+                        Characters:
+                        - ...
+                        - ...
+                
+                        Key Events:
+                        - ...
+                        - ...
+                
+                        Review Conclusion: ...
+                """;
+        PromptTemplate promptTemplate = PromptTemplate.from(template);
+        // Apply Template to the Prompt
+        // Map<String, Object> params = new HashMap<>();
+        // params.put("movie", _movieName);
+         // promptTemplate.apply(params);
+        return promptTemplate;
     }
 
     /**

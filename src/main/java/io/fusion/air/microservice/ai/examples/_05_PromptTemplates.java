@@ -15,7 +15,7 @@
  */
 package io.fusion.air.microservice.ai.examples;
 
-import io.fusion.air.microservice.ai.utils.TemplateManager;
+import io.fusion.air.microservice.ai.services.TemplateManager;
 
 
 /**

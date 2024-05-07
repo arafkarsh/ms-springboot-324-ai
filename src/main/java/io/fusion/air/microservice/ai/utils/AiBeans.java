@@ -36,6 +36,7 @@ import dev.langchain4j.model.embedding.EmbeddingModel;
 import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.loadDocument;
 
 // Custom
+import io.fusion.air.microservice.ai.services.TemplateManager;
 import io.fusion.air.microservice.ai.setup.HAL9000;
 // Spring
 import org.springframework.context.annotation.Bean;
@@ -171,6 +172,38 @@ public class AiBeans {
                 .build();
     }
 
+    /**
+     * Multi Document
+     * @return
+     */
+    public ConversationalRetrievalChain createMovieDatabaseChain() {
+        EmbeddingModel embeddingModel = new AllMiniLmL6V2EmbeddingModel();
+        EmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
+
+        EmbeddingStoreIngestor ingestor = EmbeddingStoreIngestor.builder()
+                .documentSplitter(DocumentSplitters.recursive(5000, 0))
+                .embeddingModel(embeddingModel)
+                .embeddingStore(embeddingStore)
+                .build();
+
+        Document document1 = loadDocument(toPath("static/data/bramayugam.txt"), new TextDocumentParser());
+        ingestor.ingest(document1);
+        Document document2 = loadDocument(toPath("static/data/vaaliban.txt"), new TextDocumentParser());
+        ingestor.ingest(document2);
+
+        return ConversationalRetrievalChain.builder()
+                .chatLanguageModel(createChatLanguageModel())
+                .retriever(EmbeddingStoreRetriever.from(embeddingStore, embeddingModel))
+                // .promptTemplate(TemplateManager.createMoviePrompt()) // you can override default prompt template
+                // .chatMemory() // you can override default chat memory
+                .build();
+    }
+
+    /**
+     * Load Data File Path
+     * @param fileName
+     * @return
+     */
     private static Path toPath(String fileName) {
         try {
             ClassPathResource dataFile = new ClassPathResource(fileName);

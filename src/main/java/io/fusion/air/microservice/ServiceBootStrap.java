@@ -15,8 +15,9 @@
  */
 package io.fusion.air.microservice;
 
-import dev.langchain4j.model.chat.ChatLanguageModel;
-import io.fusion.air.microservice.ai.utils.*;
+import io.fusion.air.microservice.ai.services.CustomDataAnalyzer;
+import io.fusion.air.microservice.ai.services.ImageBuilder;
+import io.fusion.air.microservice.ai.services.TemplateManager;
 import jakarta.annotation.PostConstruct;
 // import javax.servlet.MultipartConfigElement;
 // import jakarta.servlet.MultipartConfigElement;
@@ -39,7 +40,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -47,7 +47,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
-import org.springframework.util.unit.DataSize;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -208,7 +207,7 @@ public class ServiceBootStrap {
 	}
 
 	/**
-	 * CommandLineRunner Prints all the Beans defined ...
+	 * ConsoleRunner Prints all the Beans defined ...
 	 * @param ctx
 	 * @return
 	 */
@@ -222,56 +221,6 @@ public class ServiceBootStrap {
 				log.debug(beanName);
 			}
 		};
-	}
-
-	@Component
-	public static class ConsoleRunner implements CommandLineRunner {
-		private static final Logger log = LoggerFactory.getLogger(ConsoleRunner.class);
-
-		@Override
-		public void run(String... args) {
-			try (Scanner scanner = new Scanner(System.in)) {
-				System.out.println("==========================================================================================");
-				System.out.println("Ask your questions to HAL 9000.");
-				System.out.println("To create an image, prefix the text with IMAGE:");
-				System.out.println("To Analyze & Search Custom Data, prefix the text with CUSTOM:");
-				System.out.println("To Get Structured data use [P1 for Recipe, [P2 for Movies etc.. ");
-				System.out.println("Prompt Examples:");
-				System.out.println("Recipe = [P1: oven dish, cucumber, potato, tomato, red meat, olives, olive oil");
-				System.out.println("Movies = [P2: <todo>");
-				System.out.println("Type exit or quit, to quit the Prompt.");
-
-				while (true) {
-					System.out.println("------------------------------------------------------------------------------------------");
-					System.out.print("User: >>> ");
-					String userQuery = scanner.nextLine();
-					System.out.println("==========================================================================================");
-					if(userQuery == null || userQuery.length() == 0) {
-						System.out.println("Quiting HAL9000 Standard Input... ..");
-						break;
-					}
-					if ("exit".equalsIgnoreCase(userQuery) || "quit".equalsIgnoreCase(userQuery)) {
-						break;
-					}
-					if(userQuery.startsWith("IMAGE: ")) {
-						String query = userQuery.replaceAll("IMAGE:", "");
-						ImageBuilder.downloadImage(ImageBuilder.createImage(query));
-						continue;
-					} else if(userQuery.startsWith("CUSTOM: ")) {
-						String query = userQuery.replaceAll("CUSTOM:", "");
-						CustomDataAnalyzer.processFile(query);
-						continue;
-					} else if(userQuery.startsWith("[P")) {
-						TemplateManager.structuredTemplate(userQuery);
-						continue;
-					} else {
-						String response = CustomDataAnalyzer.processUserQuery(userQuery);
-						System.out.println("--[HAL9000]---------------------------------------------------------------------------");
-						System.out.println(response);
-					}
-				}
-			}
-		}
 	}
 
 	/**

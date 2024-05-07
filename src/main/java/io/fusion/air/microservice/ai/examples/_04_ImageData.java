@@ -15,7 +15,7 @@
  */
 package io.fusion.air.microservice.ai.examples;
 
-import io.fusion.air.microservice.ai.utils.ImageBuilder;
+import io.fusion.air.microservice.ai.services.ImageBuilder;
 
 /**
  * Create a Dynamic Image based on the User Input

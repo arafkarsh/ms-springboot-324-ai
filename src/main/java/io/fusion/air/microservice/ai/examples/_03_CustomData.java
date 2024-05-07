@@ -15,9 +15,7 @@
  */
 package io.fusion.air.microservice.ai.examples;
 
-import dev.langchain4j.chain.ConversationalRetrievalChain;
-import io.fusion.air.microservice.ai.utils.AiBeans;
-import io.fusion.air.microservice.ai.utils.CustomDataAnalyzer;
+import io.fusion.air.microservice.ai.services.CustomDataAnalyzer;
 
 /**
  * @author: Araf Karsh Hamid
@@ -33,14 +31,20 @@ public class _03_CustomData {
             What was the rating?
             Elaborate the Characters in the movie.
             """;
-        CustomDataAnalyzer.processFile(request1,  "bramayugam.txt");
+        // CustomDataAnalyzer.processFile(request1,  "bramayugam.txt");
 
         String request2 = """
-                Elaborate the key ideas behind the movie.
+                Elaborate the key ideas behind the movie Malaikotai Vaaliban.
                 Elaborate each stage (in bullet points) in the movie and its significance.
                 What was the movie rating?
                 """;
-        CustomDataAnalyzer.processFile(request2,  "vaaliban.txt");
+        // CustomDataAnalyzer.processFile(request2,  "vaaliban.txt");
+
+        // Multi File Analysis
+        CustomDataAnalyzer.processMultiFiles("Malaikotai Vaaliban");
+
+        CustomDataAnalyzer.processMultiFiles("Bramayugam");
+
 
         System.exit(0);
     }

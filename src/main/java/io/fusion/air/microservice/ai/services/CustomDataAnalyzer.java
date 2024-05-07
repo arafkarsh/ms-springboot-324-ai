@@ -13,10 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai.utils;
+package io.fusion.air.microservice.ai.services;
 
 import dev.langchain4j.chain.ConversationalRetrievalChain;
 import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.input.Prompt;
+import dev.langchain4j.model.input.PromptTemplate;
+import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Custom Data Analyzer
@@ -54,6 +61,28 @@ public class CustomDataAnalyzer {
         System.out.println("--[Human]----------------------------------------------------------");
         System.out.println(_request);
         System.out.println("--[HAL9000]-------------------------------------------------------");
+        System.out.println(response);
+        System.out.println("-------------------------------------------------------------------");
+    }
+
+    /**
+     * Process the Data from Multiple Files
+     *
+     * @param _request
+     */
+    public static void processMultiFiles(String _request) {
+        ConversationalRetrievalChain chain = new AiBeans()
+                .createMovieDatabaseChain();
+
+        System.out.println("--[Human]----------------------------------------------------------");
+        System.out.println(_request);
+        System.out.println("--[HAL9000]-------------------------------------------------------");
+
+        PromptTemplate promptTemplate = TemplateManager.createMoviePrompt();
+        Map<String, Object> params = new HashMap<>();
+        params.put("movieName", _request);
+        Prompt prompt = promptTemplate.apply(params);
+        String response = chain.execute(prompt.text());
         System.out.println(response);
         System.out.println("-------------------------------------------------------------------");
     }
