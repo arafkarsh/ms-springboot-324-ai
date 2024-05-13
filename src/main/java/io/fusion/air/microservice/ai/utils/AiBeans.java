@@ -39,6 +39,7 @@ import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.load
 import io.fusion.air.microservice.ai.services.TemplateManager;
 import io.fusion.air.microservice.ai.setup.HAL9000;
 // Spring
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -65,7 +66,8 @@ public class AiBeans {
      * Returns Chat Language Model with Default Model GPT 3.5 Turbo
      * @return
      */
-    @Bean
+    // @Bean
+    @Qualifier("ChatLangugeModelGPT")
     public ChatLanguageModel createChatLanguageModel() {
         return createChatLanguageModel(AiConstants.GPT_3_5_TURBO, false, false);
     }

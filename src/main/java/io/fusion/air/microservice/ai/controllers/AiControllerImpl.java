@@ -17,6 +17,7 @@ package io.fusion.air.microservice.ai.controllers;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import io.fusion.air.microservice.ai.setup.HAL9000;
+import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.domain.exceptions.DataNotFoundException;
 import io.fusion.air.microservice.domain.models.core.StandardResponse;
 import io.fusion.air.microservice.server.controllers.AbstractController;
@@ -26,6 +27,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -64,16 +66,15 @@ public class AiControllerImpl extends AbstractController {
 	private String OPENAI_API_KEY;
 	// private ChatLanguageModel model = OpenAiChatModel.withApiKey(OPENAI_API_KEY);
 
-	private final ChatLanguageModel chatLanguageModel;
+	@Qualifier("ChatLangugeModelGPT")
+	private final ChatLanguageModel chatLanguageModel = new AiBeans().createChatLanguageModel();
 	private final HAL9000 aiAssitant;
 
 	/**
 	 * Auto Wire the Language Model and Assistant
-	 * @param _chatLanguageModel
 	 * @param _HAL9000
 	 */
-	public AiControllerImpl(ChatLanguageModel _chatLanguageModel, HAL9000 _HAL9000) {
-		this.chatLanguageModel = _chatLanguageModel;
+	public AiControllerImpl(HAL9000 _HAL9000) {
 		this.aiAssitant = _HAL9000;
 	}
 
@@ -94,7 +95,8 @@ public class AiControllerImpl extends AbstractController {
 		log.info("|"+name()+"|Chat Request to AI... "+_msg);
 		// log.info("Open_API_KEY = "+OPENAI_API_KEY);
 		StandardResponse stdResponse = createSuccessResponse("AI Response");
-		String response = aiAssitant.chat(_msg);
+		// String response = aiAssitant.chat(_msg);
+		String response = chatLanguageModel.generate(_msg);
 		stdResponse.setPayload(response);
 		return ResponseEntity.ok(stdResponse);
 	}
