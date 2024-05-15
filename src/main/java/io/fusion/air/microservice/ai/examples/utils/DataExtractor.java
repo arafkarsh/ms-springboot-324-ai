@@ -16,6 +16,7 @@
 package io.fusion.air.microservice.ai.examples.utils;
 
 import dev.langchain4j.service.UserMessage;
+import io.fusion.air.microservice.ai.examples.models.Person;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -32,6 +33,7 @@ import java.time.LocalTime;
  */
 public interface DataExtractor {
 
+    // Number Extractor
     @UserMessage("Extract number from {{it}}")
     public int extractInt(String text);
 
@@ -50,6 +52,7 @@ public interface DataExtractor {
     @UserMessage("Extract number from {{it}}")
     public BigDecimal extractBigDecimal(String text);
 
+    // Date & Time Extractor
     @UserMessage("Extract date from {{it}}")
     public LocalDate extractDateFrom(String text);
 
@@ -58,4 +61,8 @@ public interface DataExtractor {
 
     @UserMessage("Extract date and time from {{it}}")
     public LocalDateTime extractDateTimeFrom(String text);
+
+    // POJO Extractor
+    @UserMessage("Extract information about a person from {{it}}")
+    public Person extractPersonFrom(String text);
 }

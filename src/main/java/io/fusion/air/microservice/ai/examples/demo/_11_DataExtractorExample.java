@@ -17,6 +17,7 @@ package io.fusion.air.microservice.ai.examples.demo;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.service.AiServices;
+import io.fusion.air.microservice.ai.examples.models.Person;
 import io.fusion.air.microservice.ai.examples.utils.DataExtractor;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 
@@ -67,5 +68,13 @@ public class _11_DataExtractorExample {
 
         AiBeans.printResult(request, sb.toString());
 
+        // POJO Person Extractor
+        request = """
+                In 1968, amidst the fading echoes of Independence Day, 
+                a child named John arrived under the calm evening sky. 
+                This newborn, bearing the surname Doe, marked the start of a new journey.""";
+
+        Person person = extractor.extractPersonFrom(request);
+        AiBeans.printResult(request, person.toString());
     }
 }
