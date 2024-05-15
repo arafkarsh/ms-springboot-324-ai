@@ -18,12 +18,17 @@ package io.fusion.air.microservice.ai.examples.demo;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.service.AiServices;
 import io.fusion.air.microservice.ai.examples.models.Person;
+import io.fusion.air.microservice.ai.examples.models.Recipe;
+import io.fusion.air.microservice.ai.examples.models.StructuredRecipePrompt;
+import io.fusion.air.microservice.ai.examples.utils.Chef;
 import io.fusion.air.microservice.ai.examples.utils.DataExtractor;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+
+import static java.util.Arrays.asList;
 
 /**
  * Data Extractor
@@ -39,11 +44,10 @@ import java.time.LocalTime;
  */
 public class _11_DataExtractorExample {
 
-    public static void main(String[] args) {
+    public static ChatLanguageModel model = new AiBeans().createChatLanguageModel();
+    public static DataExtractor extractor = AiServices.create(DataExtractor.class, model);
 
-        ChatLanguageModel model = new AiBeans().createChatLanguageModel();
-        DataExtractor extractor = AiServices.create(DataExtractor.class, model);
-
+    public static void numberExtractor() {
         // Extract Numbers
         String request = """
                     After countless millennia of computation, the supercomputer Deep Thought 
@@ -52,10 +56,12 @@ public class _11_DataExtractorExample {
 
         int intNumber = extractor.extractInt(request);
         AiBeans.printResult(request, "Number = "+intNumber);
+    }
 
+    public static void DateTimeExtractor() {
         // Extract Date and Time
         StringBuilder sb = new StringBuilder();
-        request = """
+        String request = """
                     The tranquility pervaded the evening of 1968, just fifteen minutes 
                     shy of midnight, following the celebrations of Independence Day.""";
 
@@ -67,14 +73,39 @@ public class _11_DataExtractorExample {
         sb.append("DateTime = ").append(dateTime);
 
         AiBeans.printResult(request, sb.toString());
+    }
 
+    public static void pojoExtractor() {
         // POJO Person Extractor
-        request = """
+        String request = """
                 In 1968, amidst the fading echoes of Indian Independence Day, 
                 a child named John arrived under the calm evening sky. 
                 This newborn, bearing the surname Doe, marked the start of a new journey.""";
 
         Person person = extractor.extractPersonFrom(request);
         AiBeans.printResult(request, person.toString());
+    }
+
+    public static void complexPojoExtractor() {
+        Chef chef = AiServices.create(Chef.class, model);
+        Recipe recipe = chef.createRecipeFrom("cucumber", "tomato", "feta", "onion", "olives", "lemon");
+        System.out.println(recipe);
+
+        StructuredRecipePrompt recipe2 = new StructuredRecipePrompt("oven dish",
+                asList("cucumber", "tomato", "feta", "onion", "olives", "potatoes") );
+
+        Recipe anotherRecipe = chef.createRecipe(recipe2);
+        System.out.println(anotherRecipe);
+    }
+
+    public static void main(String[] args) {
+        // Extract Numbers
+        numberExtractor();
+        // Extract Date and Time
+        DateTimeExtractor();
+        // POJO Person Extractor
+         pojoExtractor();;
+        // Complex Pojo Extractor with Descriptions (rules)
+        complexPojoExtractor();
     }
 }
