@@ -32,12 +32,13 @@ import java.util.List;
  */
 public class _08_FewShotExample {
 
-    public static void main(String[] args) {
+    private static ChatLanguageModel model = new AiBeans().createChatLanguageModel();
+    private static List<ChatMessage> fewShotHistory = new ArrayList<>();
 
-        ChatLanguageModel model = new AiBeans().createChatLanguageModel();
-
-        List<ChatMessage> fewShotHistory = new ArrayList<>();
-
+    /**
+     * Build the Context - Few Shot Message Context with Custom Action
+     */
+    public static void buildContext() {
         // Adding positive feedback example to history
         fewShotHistory.add(UserMessage.from(
                 "I love the new update! The interface is very user-friendly and the new features are amazing!"));
@@ -61,14 +62,33 @@ public class _08_FewShotExample {
                 .from("The new feature is not working as expected. It’s causing data loss."));
         fewShotHistory.add(AiMessage.from(
                 "Action: open new ticket - data loss by new feature\nReply:We apologize for the inconvenience caused. Your feedback is crucial to us, and we have reported this issue to our technical team. They are working on it on priority. We will keep you updated on the progress and notify you once the issue is resolved. Thank you for your patience and support."));
+    }
 
-        // Adding real user's message
-        ChatMessage customerComplaint = UserMessage
-                .from("How can your app be so slow? Please do something about it!");
-        fewShotHistory.add(customerComplaint);
-
+    /**
+     * Send the Message
+     * @param _request
+     */
+    public static String sendChatMessage(String _request) {
+        // Adding user message
+        ChatMessage request = UserMessage.from(_request);
+        fewShotHistory.add(request);
+        // Response from Ai
         Response<AiMessage> response = model.generate(fewShotHistory);
         // Print Result
-        AiBeans.printResult(customerComplaint.text(), response.content().text());
+        AiBeans.printResult(request.text(), response.content().text());
+        return response.content().text();
+    }
+
+    public static void main(String[] args) {
+        // Build Chat Context
+        buildContext();
+        // Message 1
+        sendChatMessage("How can your app be so slow? Please do something about it!");
+        // Message 2
+        sendChatMessage("The app is fantastic!");
+        // Message 3
+        sendChatMessage("Simplified my daily tasks! Good work team.");
+        // Message 4
+        sendChatMessage("App Crashes twice or thrice in a week. Stability is not that good.");
     }
 }
