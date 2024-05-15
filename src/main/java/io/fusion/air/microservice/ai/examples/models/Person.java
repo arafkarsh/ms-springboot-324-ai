@@ -15,6 +15,7 @@
  */
 package io.fusion.air.microservice.ai.examples.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.fusion.air.microservice.utils.Utils;
@@ -38,6 +39,7 @@ public class Person {
     @JsonProperty
     private String lastName;
     @JsonProperty
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     /**

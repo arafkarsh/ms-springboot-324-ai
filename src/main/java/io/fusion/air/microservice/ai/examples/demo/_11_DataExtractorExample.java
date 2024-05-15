@@ -70,7 +70,7 @@ public class _11_DataExtractorExample {
 
         // POJO Person Extractor
         request = """
-                In 1968, amidst the fading echoes of Independence Day, 
+                In 1968, amidst the fading echoes of Indian Independence Day, 
                 a child named John arrived under the calm evening sky. 
                 This newborn, bearing the surname Doe, marked the start of a new journey.""";
 
