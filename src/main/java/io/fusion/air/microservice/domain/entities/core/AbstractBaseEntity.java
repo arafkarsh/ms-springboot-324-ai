@@ -98,6 +98,7 @@ public class AbstractBaseEntity {
      * 4. Updated By
      * @return
      */
+    @JsonIgnore
     public AuditLog getAuditLog() {
         return auditLog;
     }

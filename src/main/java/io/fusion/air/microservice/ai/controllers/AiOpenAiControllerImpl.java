@@ -16,26 +16,34 @@
 package io.fusion.air.microservice.ai.controllers;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
+// Custom
+import io.fusion.air.microservice.domain.entities.example.ChatMessageEntity;
 import io.fusion.air.microservice.ai.services.CustomDataAnalyzer;
 import io.fusion.air.microservice.ai.services.TemplateManager;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 import io.fusion.air.microservice.domain.exceptions.DataNotFoundException;
 import io.fusion.air.microservice.domain.models.core.StandardResponse;
+import io.fusion.air.microservice.domain.ports.services.ChatMessageService;
 import io.fusion.air.microservice.server.controllers.AbstractController;
+// Swagger
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.slf4j.Logger;
+// Spring
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.annotation.RequestScope;
-
+// Java
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -65,6 +73,9 @@ public class AiOpenAiControllerImpl extends AbstractController {
 
 	@Value("${openai.api.key}")
 	private String OPENAI_API_KEY;
+
+	@Autowired
+	private ChatMessageService chatMessageService;
 
 	// Chat Language Model is automatically injected by the constructor
 	// based on the Qualifier "ChatLanguageModelGPT"
@@ -147,6 +158,33 @@ public class AiOpenAiControllerImpl extends AbstractController {
 			return ResponseEntity.ok(createResponse(response, _msg));
 		}
 		throw new DataNotFoundException("Unable to retrieve data... !");
+	}
+
+	/**
+	 * GET Method Call to ChatMessages by User Id
+	 *
+	 * @return
+	 */
+	@Operation(summary = "Get the ChatMessage By User ID")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200",
+					description = "ChatMessages Retrieved for User ID",
+					content = {@Content(mediaType = "application/json")}),
+			@ApiResponse(responseCode = "400",
+					description = "Invalid User ID.",
+					content = @Content)
+	})
+	@GetMapping("/chat/userid/{userId}")
+	@ResponseBody
+	public ResponseEntity<StandardResponse> getProductStatus(@PathVariable("userId") String userId) throws Exception {
+		log.info("|"+name()+"|Request to Get ChatMessages by User ID.. "+userId);
+		List<ChatMessageEntity> chats = chatMessageService.fetchByUserId(userId);
+		if(chats.size() > 0) {
+			StandardResponse stdResponse = createSuccessResponse("Chats Fetch Success!");
+			stdResponse.setPayload(chats);
+			return ResponseEntity.ok(stdResponse);
+		}
+		throw new DataNotFoundException("Chats not found for User Id "+userId);
 	}
 
 	/**

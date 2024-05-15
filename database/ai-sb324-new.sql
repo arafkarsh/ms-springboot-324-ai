@@ -52,11 +52,30 @@ CREATE TABLE ms_schema.carts_tx (
 ALTER TABLE ms_schema.carts_tx OWNER TO postgres;
 
 --
+-- Name: chatmessage_m; Type: TABLE; Schema: ms_schema; Owner: postgres
+--
+
+CREATE TABLE ms_schema.chatmessage_m (
+    uuid uuid NOT NULL,
+    createdby character varying(255) NOT NULL,
+    createdtime timestamp(6) without time zone NOT NULL,
+    updatedby character varying(255) NOT NULL,
+    updatedtime timestamp(6) without time zone NOT NULL,
+    isactive boolean,
+    version integer,
+    chatmessage character varying(255) NOT NULL,
+    userid character varying(36)
+);
+
+
+ALTER TABLE ms_schema.chatmessage_m OWNER TO postgres;
+
+--
 -- Name: country_m; Type: TABLE; Schema: ms_schema; Owner: postgres
 --
 
 CREATE TABLE ms_schema.country_m (
-    countryuuid character(36) NOT NULL,
+    countryuuid uuid NOT NULL,
     countrycode character varying(255) NOT NULL,
     countryid integer NOT NULL,
     countryname character varying(255) NOT NULL,
@@ -67,11 +86,25 @@ CREATE TABLE ms_schema.country_m (
 ALTER TABLE ms_schema.country_m OWNER TO postgres;
 
 --
+-- Name: country_t_cid_seq; Type: SEQUENCE; Schema: ms_schema; Owner: postgres
+--
+
+CREATE SEQUENCE ms_schema.country_t_cid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE ms_schema.country_t_cid_seq OWNER TO postgres;
+
+--
 -- Name: country_t; Type: TABLE; Schema: ms_schema; Owner: arafkarsh
 --
 
 CREATE TABLE ms_schema.country_t (
-    cid integer NOT NULL,
+    cid integer DEFAULT nextval('ms_schema.country_t_cid_seq'::regclass) NOT NULL,
     countryid integer NOT NULL,
     countrycode character varying(255) NOT NULL,
     countryname character varying(255) NOT NULL,
@@ -86,7 +119,7 @@ ALTER TABLE ms_schema.country_t OWNER TO arafkarsh;
 --
 
 CREATE TABLE ms_schema.products_m (
-    uuid bpchar NOT NULL,
+    uuid uuid NOT NULL,
     createdby character varying(255) NOT NULL,
     createdtime timestamp(6) without time zone NOT NULL,
     updatedby character varying(255) NOT NULL,
@@ -109,6 +142,14 @@ ALTER TABLE ms_schema.products_m OWNER TO postgres;
 COPY ms_schema.carts_tx (uuid, createdby, createdtime, updatedby, updatedtime, isactive, version, customerid, productid, productname, price, quantity) FROM stdin;
 22273a09-ee9e-4e5a-98fa-6bcfcfa97b49	john.doe	2023-05-28 20:26:12.919	john.doe	2023-05-28 20:26:12.919	t	0	123	789	Pencil	10.00	3.00
 7b54e398-711a-4820-a32c-81c7dfab1ab1	john.doe	2023-05-28 20:26:12.919	john.doe	2023-05-28 20:26:12.919	t	0	123	678	Pen	30.00	2.00
+\.
+
+
+--
+-- Data for Name: chatmessage_m; Type: TABLE DATA; Schema: ms_schema; Owner: postgres
+--
+
+COPY ms_schema.chatmessage_m (uuid, createdby, createdtime, updatedby, updatedtime, isactive, version, chatmessage, userid) FROM stdin;
 \.
 
 
@@ -176,11 +217,26 @@ f2cc6216-9d04-4f3f-882f-4f1567a1a449	john.doe	2023-06-25 23:09:04.734	john.doe	2
 
 
 --
+-- Name: country_t_cid_seq; Type: SEQUENCE SET; Schema: ms_schema; Owner: postgres
+--
+
+SELECT pg_catalog.setval('ms_schema.country_t_cid_seq', 23, true);
+
+
+--
 -- Name: carts_tx carts_tx_pkey; Type: CONSTRAINT; Schema: ms_schema; Owner: postgres
 --
 
 ALTER TABLE ONLY ms_schema.carts_tx
     ADD CONSTRAINT carts_tx_pkey PRIMARY KEY (uuid);
+
+
+--
+-- Name: chatmessage_m chatmessage_m_pkey; Type: CONSTRAINT; Schema: ms_schema; Owner: postgres
+--
+
+ALTER TABLE ONLY ms_schema.chatmessage_m
+    ADD CONSTRAINT chatmessage_m_pkey PRIMARY KEY (uuid);
 
 
 --

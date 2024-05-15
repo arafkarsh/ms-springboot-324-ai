@@ -4,5 +4,17 @@
 # -------------------------------------------------------------------------------------------
 echo "Starting `getServiceName` Microservice"
 export JDK_JAVA_OPTIONS="--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED"
-mvn spring-boot:run
-#java -jar target/ms-cache-service-*-spring-boot.jar
+runMode=$1
+# Check if the runMode is null or not one of "dev", "prod", or "staging"
+if [[ -z $runMode || ($runMode != "dev" && $runMode != "prod" && $runMode != "staging") ]]
+then
+  runMode="dev"
+fi
+echo "App running with profile = $runMode"
+
+# Run Maven Command
+# mvn spring-boot:run -Dspring-boot.run.profiles=$runMode
+
+# Run Java command
+echo "java -jar target/ai-service-*-spring-boot.jar --spring.profiles.active=$runMode"
+java -jar target/ai-service-*-spring-boot.jar --spring.profiles.active=$runMode
