@@ -81,6 +81,6 @@ public class _12_PersistentChatMemoryStoreExample {
         // To Test the persisted Data.
         // Comment out the previous call "persistInitialData()"
         // UnComment the following call "testThePersistedData()"
-        // testThePersistedData();
+        testThePersistedData();
     }
 }
