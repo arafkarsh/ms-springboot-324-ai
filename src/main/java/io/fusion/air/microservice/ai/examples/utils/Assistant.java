@@ -40,5 +40,4 @@ public interface Assistant {
      * @return
      */
     public String chat(@MemoryId String memoryId, @UserMessage String userMessage);
-
 }

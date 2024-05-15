@@ -3,6 +3,25 @@
 ## Quick Test after starting the SpringBoot App
 ![Ai Prompt](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/Ai-Prompt.jpg)
 
+## Generative AI Examples 
+
+| #   | Example           | Details                                                                   |
+|-----|-------------------|---------------------------------------------------------------------------|
+| 1.  | Hello World       | First Gen AI Example                                                      |
+| 2.  | Complex World     | Complex Example                                                           |
+| 3.  | Custom Data       | User your own data (docs) for Query                                       |
+| 4.  | ImageExample    | Create an Image with text prompt                                          | 
+| 5.  | PromptTemplate    | Get Structured Response using Prompt                                      |
+| 6.  | ToolsExample      | Use Tools anotation for Custom Queries                                    |
+| 7.  | ChatMemory        | How to create a ChatBot with Conversation Context                         |
+| 8.  | FewShotExample    | Create Chat Bot with predefined answers from an App perspective           |
+| 9.  | TranslatorExample | Translate from one language to another                                    |
+| 10. | SentimentAnalyzer | Analyses the Sentiment of an input.                                       |
+| 11. | DataExtractor     | Extract Number, Date, Model from a Text                                   |
+| 12. | PersistentStore   | Use a Persistent Store for Chat Memory                                    |
+
+
+
 ## Package Structure
 
 ![Package Structure](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/MS-Pkg-Structure.jpg)
