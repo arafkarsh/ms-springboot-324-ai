@@ -5,20 +5,20 @@
 
 ## Generative AI Examples 
 
-| #   | Example           | Details                                                                   |
-|-----|-------------------|---------------------------------------------------------------------------|
-| 1.  | Hello World       | First Gen AI Example                                                      |
-| 2.  | Complex World     | Complex Example                                                           |
-| 3.  | Custom Data       | User your own data (docs) for Query                                       |
-| 4.  | ImageExample    | Create an Image with text prompt                                          | 
-| 5.  | PromptTemplate    | Get Structured Response using Prompt                                      |
-| 6.  | ToolsExample      | Use Tools anotation for Custom Queries                                    |
-| 7.  | ChatMemory        | How to create a ChatBot with Conversation Context                         |
-| 8.  | FewShotExample    | Create Chat Bot with predefined answers from an App perspective           |
-| 9.  | TranslatorExample | Translate from one language to another                                    |
-| 10. | SentimentAnalyzer | Analyses the Sentiment of an input.                                       |
-| 11. | DataExtractor     | Extract Number, Date, Model from a Text                                   |
-| 12. | PersistentStore   | Use a Persistent Store for Chat Memory                                    |
+| #   | Example           | Details                                                            |
+|-----|-------------------|--------------------------------------------------------------------|
+| 1.  | Hello World       | First Hello World Generative AI Example                            |
+| 2.  | Complex World     | Complex Example with Word Problems and Math                        |
+| 3.  | Custom Data       | User your own data (docs) for Search / Query                       |
+| 4.  | ImageExample    | Create an Image with text prompt                                   | 
+| 5.  | PromptTemplate    | Get Structured Response using Prompt                               |
+| 6.  | ToolsExample      | Use Tools anotation for Custom Search / Queries                    |
+| 7.  | ChatMemory        | How to create a ChatBot in a Conversational Context                |
+| 8.  | FewShotExample    | Create Chat Bot with custom answers from an App perspective        |
+| 9.  | TranslatorExample | Translate from one language to another                             |
+| 10. | SentimentAnalyzer | Analyses the Sentiment of a text input. Positve, Neutral, Negative |
+| 11. | DataExtractor     | Extract Number, Date, Model (Pojo) from a Text                     |
+| 12. | PersistentStore   | Use a Persistent Store for Chat Memory                             |
 
 
 
