@@ -20,7 +20,6 @@ import io.fusion.air.microservice.ai.services.CustomDataAnalyzer;
 import io.fusion.air.microservice.ai.services.TemplateManager;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 import io.fusion.air.microservice.domain.exceptions.DataNotFoundException;
-import io.fusion.air.microservice.domain.models.core.StandardResponse;
 import io.fusion.air.microservice.server.controllers.AbstractController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -31,11 +30,8 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.annotation.RequestScope;
-
-import java.util.LinkedHashMap;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -57,8 +53,8 @@ import static org.slf4j.LoggerFactory.getLogger;
 // "/ms-ai/api/v1"
 @RequestMapping("${service.api.path}/ai/openai/string")
 @RequestScope
-@Tag(name = "AI", description = "Ex. io.f.a.m.adapters.controllers.AiControllerImpl")
-public class AiStringControllerImpl extends AbstractController {
+@Tag(name = "AI", description = "Ex. io.f.a.m.adapters.controllers.AiOpenAiControllerImpl")
+public class AiOpenAiStringControllerImpl extends AbstractController {
 
 	// Set Logger -> Lookup will automatically determine the class name.
 	private static final Logger log = getLogger(lookup().lookupClass());
@@ -77,7 +73,7 @@ public class AiStringControllerImpl extends AbstractController {
 	 *
 	 * @param _chatLanguageModel
 	 */
-	public AiStringControllerImpl(@Qualifier("ChatLangugeModelGPT")
+	public AiOpenAiStringControllerImpl(@Qualifier("ChatLangugeModelGPT")
 							ChatLanguageModel _chatLanguageModel) {
 		this.chatLanguageModel = _chatLanguageModel;
 	}

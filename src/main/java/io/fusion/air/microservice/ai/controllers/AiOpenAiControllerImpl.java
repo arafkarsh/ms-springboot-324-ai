@@ -57,8 +57,8 @@ import static org.slf4j.LoggerFactory.getLogger;
 // "/ms-ai/api/v1"
 @RequestMapping("${service.api.path}/ai/openai")
 @RequestScope
-@Tag(name = "AI", description = "Ex. io.f.a.m.adapters.controllers.AiControllerImpl")
-public class AiControllerImpl extends AbstractController {
+@Tag(name = "AI", description = "Ex. io.f.a.m.adapters.controllers.AiOpenAiControllerImpl")
+public class AiOpenAiControllerImpl extends AbstractController {
 
 	// Set Logger -> Lookup will automatically determine the class name.
 	private static final Logger log = getLogger(lookup().lookupClass());
@@ -77,7 +77,7 @@ public class AiControllerImpl extends AbstractController {
 	 *
 	 * @param _chatLanguageModel
 	 */
-	public AiControllerImpl(@Qualifier("ChatLangugeModelGPT")
+	public AiOpenAiControllerImpl(@Qualifier("ChatLangugeModelGPT")
 							ChatLanguageModel _chatLanguageModel) {
 		this.chatLanguageModel = _chatLanguageModel;
 	}
