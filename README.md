@@ -27,11 +27,12 @@
 
 ## Pre-Requisites
 
-1. Java 21+
-2. PostgreSQL Database 
+1. SpringBoot 3.2.4
+2. Java 22
+3. Jakarta EE 10 (jakarta.servlet.*, jakarta.persistence.*, javax.validation.*)
+4. PostgreSQL Database 
 
-By default the app will use H2 In-Memory Database. No Database setup required for this. 
-
+By default the app will use H2 In-Memory Database. No Database setup required for this.
 
 ## Step 1.1 - Getting Started
 
@@ -78,7 +79,7 @@ Without generated application.properties file the service will NOT be running. T
 2. CRUD Examples
 3. JWT Token Examples
 
-Check the <a href="https://github.com/arafkarsh/ms-springboot-ai/blob/main/CRUD_Examples.md">CRUD_Examples</a>.md</a>
+Check the <a href="https://github.com/arafkarsh/ms-springboot-324-ai/blob/main/CRUD_Examples.md">CRUD_Examples</a>.md</a>
 
 (C) Copyright 2024 : Apache 2 License : Author: Araf Karsh Hamid
 
