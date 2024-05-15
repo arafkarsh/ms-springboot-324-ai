@@ -15,6 +15,9 @@
  */
 package io.fusion.air.microservice.ai.examples.utils;
 
+import dev.langchain4j.service.MemoryId;
+import dev.langchain4j.service.UserMessage;
+
 /**
  * @author: Araf Karsh Hamid
  * @version:
@@ -28,5 +31,14 @@ public interface Assistant {
      * @return
      */
     public String chat(String userMessage);
+
+    /**
+     * Chat Memory with a Memory ID
+     *
+     * @param memoryId
+     * @param userMessage
+     * @return
+     */
+    public String chat(@MemoryId String memoryId, @UserMessage String userMessage);
 
 }

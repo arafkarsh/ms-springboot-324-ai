@@ -17,6 +17,7 @@ package io.fusion.air.microservice.ai.examples.demo;
 
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.memory.ChatMemory;
+import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.data.message.SystemMessage;
 import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.memory.chat.TokenWindowChatMemory;
@@ -27,6 +28,8 @@ import dev.langchain4j.model.output.Response;
 
 import static dev.langchain4j.data.message.UserMessage.userMessage;
 
+import dev.langchain4j.service.AiServices;
+import io.fusion.air.microservice.ai.examples.utils.Assistant;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 
@@ -37,9 +40,9 @@ import io.fusion.air.microservice.ai.utils.AiConstants;
  */
 public class _07_ChatMemoryExample {
 
-    public static void main(String[] args) throws Exception {
-        ChatLanguageModel model = new AiBeans().createChatLanguageModel();
+    public static ChatLanguageModel model = new AiBeans().createChatLanguageModel();
 
+    public static void chatMemoryConversations() {
         Tokenizer tokenizer = new OpenAiTokenizer(AiConstants.getAlgo());
         ChatMemory chatMemory = TokenWindowChatMemory.withMaxTokens(2000, tokenizer);
 
@@ -55,11 +58,11 @@ public class _07_ChatMemoryExample {
 
         // Conversation - 1
         UserMessage userMessage1 = userMessage(
-               """
-                       1. How to optimize database queries for a large-scale health-care platform? 
-                       2. How to add Security Features from Spring Security perspective?
-                       Answer short in three to five lines maximum.
-                """);
+                """
+                        1. How to optimize database queries for a large-scale health-care platform? 
+                        2. How to add Security Features from Spring Security perspective?
+                        Answer short in three to five lines maximum.
+                 """);
         chatMemory.add(userMessage1);
         Response<AiMessage> response1 = model.generate(chatMemory.messages());
         chatMemory.add(response1.content());
@@ -77,6 +80,37 @@ public class _07_ChatMemoryExample {
         chatMemory.add(response2.content());
         // Print Result
         AiBeans.printResult(userMessage2.text(), response2.content().text());
+    }
 
+    public static void chatMemoryWithMultipleUsers() {
+        Assistant assistant = AiServices.builder(Assistant.class)
+                .chatLanguageModel(model)
+                .chatMemoryProvider(memoryId -> MessageWindowChatMemory.withMaxMessages(10))
+                .build();
+
+        String request1 = "UUID-1 >> Hello, my name is John Sam Doe";
+        String response1 = assistant.chat("UUID-1", request1);
+        AiBeans.printResult(request1, response1);
+
+        String request2 = "UUID-2, >> Hello, my name is Jane Daisy Doe";
+        String response2 = assistant.chat("UUID-2", request2);
+        AiBeans.printResult(request2, response2);
+
+        String request3 = "What is my name?";
+        String response3 = assistant.chat("UUID-1", "UUID-1 >> "+request3);
+        AiBeans.printResult("UUID-1 >> "+request3, response3);
+
+        String response4 = assistant.chat("UUID-2", "UUID-2 >> "+request3);
+        AiBeans.printResult("UUID-2 >> "+request3, response4);
+
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        // Chat Memory Conversations
+        chatMemoryConversations();
+
+        // Chat Memory with Multiple user
+        chatMemoryWithMultipleUsers();
     }
 }
