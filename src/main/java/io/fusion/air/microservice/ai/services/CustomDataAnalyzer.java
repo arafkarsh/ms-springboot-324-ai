@@ -37,7 +37,7 @@ public class CustomDataAnalyzer {
 
     public static String processUserQuery(String query) {
         ChatLanguageModel model = new AiBeans()
-                .createChatLanguageModel(AiConstants.GPT_3_5_TURBO, false, false);
+                .createChatLanguageModel(AiConstants.getAlgo(), false, false);
         return model.generate(query);
     }
 
@@ -45,8 +45,8 @@ public class CustomDataAnalyzer {
      * Process the Data with Custom Data
      * @param _request
      */
-    public static void processFile(String _request) {
-            processFile(_request, "bramayugam.txt");
+    public static String processFile(String _request) {
+            return processFile(_request, "bramayugam.txt");
     }
 
     /**
@@ -54,15 +54,12 @@ public class CustomDataAnalyzer {
      * @param _request
      * @param _fileName
      */
-    public static void processFile(String _request, String _fileName) {
+    public static String processFile(String _request, String _fileName) {
         ConversationalRetrievalChain chain = new AiBeans()
                 .createConversationalRetrievalChain(_fileName);
         String response = chain.execute(_request);
-        System.out.println("--[Human]----------------------------------------------------------");
-        System.out.println(_request);
-        System.out.println("--[HAL9000]-------------------------------------------------------");
-        System.out.println(response);
-        System.out.println("-------------------------------------------------------------------");
+        AiBeans.printResult(_request, response);
+        return response;
     }
 
     /**
@@ -70,20 +67,16 @@ public class CustomDataAnalyzer {
      *
      * @param _request
      */
-    public static void processMultiFiles(String _request) {
+    public static String processMultiFiles(String _request) {
         ConversationalRetrievalChain chain = new AiBeans()
                 .createMovieDatabaseChain();
-
-        System.out.println("--[Human]----------------------------------------------------------");
-        System.out.println(_request);
-        System.out.println("--[HAL9000]-------------------------------------------------------");
-
         PromptTemplate promptTemplate = TemplateManager.createMoviePrompt();
         Map<String, Object> params = new HashMap<>();
         params.put("movieName", _request);
         Prompt prompt = promptTemplate.apply(params);
         String response = chain.execute(prompt.text());
-        System.out.println(response);
-        System.out.println("-------------------------------------------------------------------");
+
+        AiBeans.printResult(_request, response);
+        return response;
     }
 }

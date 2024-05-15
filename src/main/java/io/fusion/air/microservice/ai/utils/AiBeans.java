@@ -36,10 +36,8 @@ import dev.langchain4j.model.embedding.EmbeddingModel;
 import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.loadDocument;
 
 // Custom
-import io.fusion.air.microservice.ai.services.TemplateManager;
 import io.fusion.air.microservice.ai.setup.HAL9000;
 // Spring
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -66,10 +64,9 @@ public class AiBeans {
      * Returns Chat Language Model with Default Model GPT 3.5 Turbo
      * @return
      */
-    // @Bean
-    @Qualifier("ChatLangugeModelGPT")
+    @Bean(name = "ChatLangugeModelGPT")
     public ChatLanguageModel createChatLanguageModel() {
-        return createChatLanguageModel(AiConstants.GPT_3_5_TURBO, false, false);
+        return createChatLanguageModel(AiConstants.getAlgo(), false, false);
     }
 
     /**
@@ -131,7 +128,7 @@ public class AiBeans {
      */
     @Bean
     public HAL9000 createHAL9000() {
-        return createHAL9000(AiConstants.GPT_3_5_TURBO);
+        return createHAL9000(AiConstants.getAlgo());
     }
 
     /**
@@ -219,5 +216,19 @@ public class AiBeans {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Print Request & Response
+     *
+     * @param _request
+     * @param _response
+     */
+    public static void printResult(String _request, String _response) {
+        System.out.println("--[Human]----------------------------------------------------------");
+        System.out.println(_request);
+        System.out.println("--[HAL9000]-------------------------------------------------------");
+        System.out.println(_response);
+        System.out.println("-------------------------------------------------------------------");
     }
 }

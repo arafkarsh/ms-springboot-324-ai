@@ -72,7 +72,7 @@ public class ImageBuilder {
      * @param fileName
      * @throws IOException
      */
-    private static void downloadImageFromUrl(String imageUrl, String fileName) throws IOException {
+    private static String downloadImageFromUrl(String imageUrl, String fileName) throws IOException {
         URL url = new URL(imageUrl);
         Path targetPath = Paths.get(fileName).toAbsolutePath();
 
@@ -85,5 +85,6 @@ public class ImageBuilder {
             }
             System.out.println("Image has been downloaded successfully to " + targetPath);
         }
+        return targetPath.toString();
     }
 }

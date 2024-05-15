@@ -29,8 +29,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.annotation.RequestScope;
@@ -55,10 +55,10 @@ import static org.slf4j.LoggerFactory.getLogger;
 @Configuration
 @RestController
 // "/ms-ai/api/v1"
-@RequestMapping("${service.api.path}/ai/openai")
+@RequestMapping("${service.api.path}/ai/openai/string")
 @RequestScope
 @Tag(name = "AI", description = "Ex. io.f.a.m.adapters.controllers.AiControllerImpl")
-public class AiControllerImpl extends AbstractController {
+public class AiStringControllerImpl extends AbstractController {
 
 	// Set Logger -> Lookup will automatically determine the class name.
 	private static final Logger log = getLogger(lookup().lookupClass());
@@ -77,7 +77,7 @@ public class AiControllerImpl extends AbstractController {
 	 *
 	 * @param _chatLanguageModel
 	 */
-	public AiControllerImpl(@Qualifier("ChatLangugeModelGPT")
+	public AiStringControllerImpl(@Qualifier("ChatLangugeModelGPT")
 							ChatLanguageModel _chatLanguageModel) {
 		this.chatLanguageModel = _chatLanguageModel;
 	}
@@ -89,18 +89,18 @@ public class AiControllerImpl extends AbstractController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200",
 					description = "AI Conversations",
-					content = {@Content(mediaType = "application/json")}),
+					content = {@Content(mediaType = "application/text")}),
 			@ApiResponse(responseCode = "404",
 					description = "Unable to Create the Chat Response",
 					content = @Content)
 	})
 	@PostMapping("/chat")
-	public ResponseEntity<StandardResponse> chat( @RequestBody String _msg) {
+	public String chat( @RequestBody String _msg) {
 		log.info("|"+name()+"|Chat Request to AI...  "+AiConstants.getAlgo()+" .. "+_msg);
 		// log.info("Open_API_KEY = "+OPENAI_API_KEY);
 		String response = chatLanguageModel.generate(_msg);
 		if(response != null) {
-			return ResponseEntity.ok(createResponse(response, _msg));
+			return createResponse(response, _msg);
 		}
 		throw new DataNotFoundException("Unable to retrieve data... !");
 	}
@@ -113,18 +113,18 @@ public class AiControllerImpl extends AbstractController {
             				What was the rating?
             				Elaborate the Characters in the movie.
 							""",
-					content = {@Content(mediaType = "application/json")}),
+					content = {@Content(mediaType = "application/text")}),
 			@ApiResponse(responseCode = "404",
 					description = "Unable to Create the Chat Response",
 					content = @Content)
 	})
 	@PostMapping("/chat/custom")
-	public ResponseEntity<StandardResponse> chatCustomData(@RequestBody String _msg) {
+	public String chatCustomData(@RequestBody String _msg) {
 		log.info("|" + name() + "|Custom Chat Request to AI Engine "+AiConstants.getAlgo()+"... " + _msg);
 		// log.info("Open_API_KEY = "+OPENAI_API_KEY);
 		String response = CustomDataAnalyzer.processFile(_msg);
 		if(response != null) {
-			return ResponseEntity.ok(createResponse(response, _msg));
+			return createResponse(response, _msg);
 		}
 		throw new DataNotFoundException("Unable to retrieve data... !");
 	}
@@ -133,37 +133,35 @@ public class AiControllerImpl extends AbstractController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200",
 					description = "Recipe: oven dish, cucumber, potato, tomato, salmon, olives, olive oil",
-					content = {@Content(mediaType = "application/json")}),
+					content = {@Content(mediaType = "application/text")}),
 			@ApiResponse(responseCode = "404",
 					description = "Unable to Create the Chat Response",
 					content = @Content)
 	})
 	@PostMapping("/chat/structured")
-	public ResponseEntity<StandardResponse> chatStructuredData(@RequestBody String _msg) {
+	public String chatStructuredData(@RequestBody String _msg) {
 		log.info("|" + name() + "|Structured Chat Request to AI Engine "+AiConstants.getAlgo()+"... " + _msg);
 		// log.info("Open_API_KEY = "+OPENAI_API_KEY);
 		String response = TemplateManager.structuredTemplate("[P1: "+_msg);
 		if(response != null) {
-			return ResponseEntity.ok(createResponse(response, _msg));
+			return createResponse(response, _msg);
 		}
 		throw new DataNotFoundException("Unable to retrieve data... !");
 	}
 
 	/**
-	 * Create Response as Standard Response
+     * Create Response as Standard Response
 	 *
 	 * @param _response
-	 * @param _msg
-	 * @return
+     * @param _msg
+     * @return
 	 */
-	private StandardResponse createResponse(String _response, String _msg) {
-		String[] rows = _response.split("\n");
-		StandardResponse stdResponse = createSuccessResponse("AI Response");
-		LinkedHashMap<String, Object> data = new LinkedHashMap<String, Object>();
-		data.put("Algo", AiConstants.getAlgo());
-		data.put("Request", _msg);
-		data.put("Response", rows);
-		stdResponse.setPayload(data);
-		return stdResponse;
+	private String createResponse(String _response, String _msg) {
+		StringBuilder sb = new StringBuilder();
+		String request = _msg.replaceAll("\n", " ").trim();
+		sb.append("Algorithm = ").append(AiConstants.getAlgo()).append("\n");
+		sb.append("Request   = ").append(request).append("\n");
+		sb.append("Response  = ").append("\n").append(_response);
+		return sb.toString();
 	}
  }

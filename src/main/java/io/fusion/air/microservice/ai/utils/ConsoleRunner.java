@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.utils;
+package io.fusion.air.microservice.ai.utils;
 
 import io.fusion.air.microservice.ai.services.CustomDataAnalyzer;
 import io.fusion.air.microservice.ai.services.ImageBuilder;
@@ -42,7 +42,7 @@ public class ConsoleRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("==========================================================================================");
-            System.out.println("Ask your questions to HAL 9000.");
+            System.out.println("Ask your questions to HAL 9000. Algo >> "+AiConstants.getAlgo());
             System.out.println("To create an image, prefix the text with IMAGE:");
             System.out.println("To Analyze & Search Custom Data, prefix the text with CUSTOM:");
             System.out.println("To Get Structured data use [P1 for Recipe, [P2 for Movies etc.. ");
@@ -58,7 +58,8 @@ public class ConsoleRunner implements CommandLineRunner {
                     continue;
                 }
                 System.out.println("==========================================================================================");
-                if ("exit".equalsIgnoreCase(userQuery) || "quit".equalsIgnoreCase(userQuery)) {
+                if ("exit".equalsIgnoreCase(userQuery) || "quit".equalsIgnoreCase(userQuery)
+                        || "q".equalsIgnoreCase(userQuery)) {
                     break;
                 }
                 if(userQuery.startsWith("IMAGE: ")) {
