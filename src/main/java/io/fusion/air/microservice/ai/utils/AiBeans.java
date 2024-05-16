@@ -45,6 +45,7 @@ import org.springframework.context.annotation.Configuration;
 import static java.time.Duration.ofSeconds;
 
 /**
+ * Ai Beans
  * @author: Araf Karsh Hamid
  * @version:
  * @date:
@@ -134,59 +135,6 @@ public class AiBeans {
                 .chatLanguageModel(chatLanguageModel)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
                 // .tools(tool)
-                .build();
-    }
-
-    /**
-     * Read and Analyze the Data
-     * @param _fileName
-     * @return
-     */
-    public ConversationalRetrievalChain createConversationalRetrievalChain(String _fileName) {
-        EmbeddingModel embeddingModel = new AllMiniLmL6V2EmbeddingModel();
-        EmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
-
-        EmbeddingStoreIngestor ingestor = EmbeddingStoreIngestor.builder()
-                .documentSplitter(DocumentSplitters.recursive(5000, 0))
-                .embeddingModel(embeddingModel)
-                .embeddingStore(embeddingStore)
-                .build();
-
-        Document document = loadDocument(Utils.toPath("static/data/p/"+_fileName), new TextDocumentParser());
-        ingestor.ingest(document);
-
-        return ConversationalRetrievalChain.builder()
-                .chatLanguageModel(createChatLanguageModel())
-                .retriever(EmbeddingStoreRetriever.from(embeddingStore, embeddingModel))
-                // .chatMemory() // you can override default chat memory
-                // .promptTemplate() // you can override default prompt template
-                .build();
-    }
-
-    /**
-     * Multi Document
-     * @return
-     */
-    public ConversationalRetrievalChain createMovieDatabaseChain() {
-        EmbeddingModel embeddingModel = new AllMiniLmL6V2EmbeddingModel();
-        EmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
-
-        EmbeddingStoreIngestor ingestor = EmbeddingStoreIngestor.builder()
-                .documentSplitter(DocumentSplitters.recursive(5000, 0))
-                .embeddingModel(embeddingModel)
-                .embeddingStore(embeddingStore)
-                .build();
-
-        Document document1 = loadDocument(Utils.toPath("static/data/p/bramayugam.txt"), new TextDocumentParser());
-        ingestor.ingest(document1);
-        Document document2 = loadDocument(Utils.toPath("static/data/p/vaaliban.txt"), new TextDocumentParser());
-        ingestor.ingest(document2);
-
-        return ConversationalRetrievalChain.builder()
-                .chatLanguageModel(createChatLanguageModel())
-                .retriever(EmbeddingStoreRetriever.from(embeddingStore, embeddingModel))
-                // .promptTemplate(TemplateManager.createMoviePrompt()) // you can override default prompt template
-                // .chatMemory() // you can override default chat memory
                 .build();
     }
 

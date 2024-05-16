@@ -80,7 +80,7 @@ public class ConsoleRunner implements CommandLineRunner {
                     CustomDataAnalyzer.processMultiFiles(dArray[1]);                    continue;
                 } else {
                     String response = CustomDataAnalyzer.processUserQuery(userQuery);
-                    System.out.println("--[HAL9000Assistant]---------------------------------------------------------------------------");
+                    System.out.println("--[HAL9000]---------------------------------------------------------------------------");
                     System.out.println(response);
                 }
                 System.out.println("------------------------------------------------------------------------------------------");
@@ -95,8 +95,11 @@ public class ConsoleRunner implements CommandLineRunner {
      */
     public static void startConversationWith(CarRentalAssistant assistant) {
         try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("==========================================================================================");
+            System.out.println(" OZAZO Car Rental Service ChatBot.... ");
+            System.out.println("Type exit or [q]uit, to quit the Prompt.");
+            System.out.println("------------------------------------------------------------------------------------------");
             while (true) {
-                System.out.println("==========================================================================================");
                 System.out.print("User: >>> ");
                 String userQuery = scanner.nextLine();
                 if(userQuery == null || userQuery.length() == 0) {
@@ -108,7 +111,7 @@ public class ConsoleRunner implements CommandLineRunner {
                     break;
                 }
                 String response = assistant.chat(userQuery);
-                System.out.println("--[HAL9000Assistant]---------------------------------------------------------------------------");
+                System.out.println("--[HAL9000]---------------------------------------------------------------------------");
                 System.out.println(response);
                 System.out.println("------------------------------------------------------------------------------------------");
             }

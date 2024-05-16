@@ -55,8 +55,7 @@ public class CustomDataAnalyzer {
      * @param _fileName
      */
     public static String processFile(String _request, String _fileName) {
-        ConversationalRetrievalChain chain = new AiBeans()
-                .createConversationalRetrievalChain(_fileName);
+        ConversationalRetrievalChain chain = RAGBuilder.createConversationalRetrievalChain(_fileName);
         String response = chain.execute(_request);
         AiBeans.printResult(_request, response);
         return response;
@@ -68,8 +67,7 @@ public class CustomDataAnalyzer {
      * @param _request
      */
     public static String processMultiFiles(String _request) {
-        ConversationalRetrievalChain chain = new AiBeans()
-                .createMovieDatabaseChain();
+        ConversationalRetrievalChain chain = RAGBuilder.createMovieDatabaseChain();
         PromptTemplate promptTemplate = TemplateManager.createMoviePrompt();
         Map<String, Object> params = new HashMap<>();
         params.put("movieName", _request);

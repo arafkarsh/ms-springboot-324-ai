@@ -7,28 +7,34 @@
 
 ![Ai Sentiment](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/Ai-Ex-Sentiment-2.jpg)
 
+## ChatBot using RAG (Custom Data) - Case Study: Car Rental Service
+
+![Ai ChatBot-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/Ai-Ex-RAG-OZO-1.jpg)
+![Ai ChatBot-2](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/Ai-Ex-RAG-OZO-2.jpg)
+![Ai ChatBot-3](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/Ai-Ex-RAG-OZO-3.jpg)
+
 ## Data Extractions using ChatGPT 4o
 
 ![Ai Sentiment](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/Ai-Ex-DataExtractor.jpg)
 
 ## Generative AI Examples 
 
-| #   | Example                    | Details                                                                 |
-|-----|----------------------------|-------------------------------------------------------------------------|
-| 1.  | Hello World                | First Hello World Generative AI Example                                 |
-| 2.  | Complex World              | Complex Example with Word Problems and Math                             |
-| 3.  | Custom Data Example        | Use your own data (docs) for Search / Query                             |
-| 4.  | Image Example              | Create an Image using text prompt                                       | 
-| 5.  | Prompt Template Example    | Get Structured Response using Structured Prompt                         |
-| 6.  | Tools Example              | Use Tools anotation for Custom Search / Queries                         |
-| 7.  | Chat Memory Example        | How to create a ChatBot in a Conversational Context                     |
-| 8.  | FewShot Example            | Create ChatBot with custom answers from an App perspective              |
-| 9.  | Translator Example         | Translate from one language to another                                  |
-| 10. | Sentiment Analyzer Example | Analyses the Sentiment of a text input. Positve, Neutral, Negative      |
-| 11. | Data Extractor Example     | Extract Number, Date, Model (Pojo) from a Text                          |
-| 12. | Persistent Store Example   | Use a Persistent Store for Chat Memory & Retrive the Chat based on User. |
-| 13. | RAG Simple Example        | RAG based Chat Bot Use Case: Car Rental Service                                |
-
+| #   | Example                  | Details                                                                  |
+|-----|--------------------------|--------------------------------------------------------------------------|
+| 1.  | Hello World              | First Hello World Generative AI Example                                  |
+| 2.  | Complex World            | Complex Example with Word Problems and Math                              |
+| 3.  | Custom Data Example      | Use your own data (docs) for Search / Query                              |
+| 4.  | Image Example            | Create an Image using text prompt                                        | 
+| 5.  | Prompt Template Example  | Get Structured Response using Structured Prompt                          |
+| 6.  | Tools Example            | Use Tools anotation for Custom Search / Queries                          |
+| 7.  | Chat Memory Example      | How to create a ChatBot in a Conversational Context                      |
+| 8.  | FewShot Example          | Create ChatBot with custom answers from an App perspective               |
+| 9.  | Translator Example       | Translate from one language to another                                   |
+| 10. | Sentiment Analyzer Example | Analyses the Sentiment of a text input. Positve, Neutral, Negative       |
+| 11. | Data Extractor Example   | Extract Number, Date, Model (Pojo) from a Text                           |
+| 12. | Persistent Store Example | Use a Persistent Store for Chat Memory & Retrive the Chat based on User. |
+| 13. | RAG Simple Example       | RAG based Chat Bot Use Case: Car Rental Service                          |
+| 14. | RAG Segments Example     | RAG (using Segments) based Chat Bot Use Case: Car Rental Service         |
 
 ## Package Structure
 
