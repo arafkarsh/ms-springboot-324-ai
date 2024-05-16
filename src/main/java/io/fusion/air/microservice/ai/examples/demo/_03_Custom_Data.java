@@ -22,7 +22,7 @@ import io.fusion.air.microservice.ai.services.CustomDataAnalyzer;
  * @version:
  * @date:
  */
-public class _03_CustomData {
+public class _03_Custom_Data {
 
     public static void main(String[] args) {
 

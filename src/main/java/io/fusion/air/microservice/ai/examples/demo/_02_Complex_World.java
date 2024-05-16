@@ -27,7 +27,7 @@ import java.time.temporal.ChronoUnit;
  * @version:
  * @date:
  */
-public class _02_ComplexWorld {
+public class _02_Complex_World {
 
     public static void main(String[] args) {
         // Create the Ai Assistant

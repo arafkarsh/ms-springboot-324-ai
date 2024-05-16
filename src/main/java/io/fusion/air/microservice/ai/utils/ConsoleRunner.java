@@ -15,6 +15,7 @@
  */
 package io.fusion.air.microservice.ai.utils;
 // Custom
+import io.fusion.air.microservice.ai.examples.assistants.Assistant;
 import io.fusion.air.microservice.ai.examples.assistants.CarRentalAssistant;
 import io.fusion.air.microservice.ai.services.CustomDataAnalyzer;
 import io.fusion.air.microservice.ai.services.ImageBuilder;
@@ -89,14 +90,23 @@ public class ConsoleRunner implements CommandLineRunner {
     }
 
     /**
+     * For Ozazo Car Rental Service (Default)
+     * @param assistant
+     */
+    public static void startConversationWith(Assistant assistant) {
+        startConversationWith(assistant, "OZAZO Car Rental Service ChatBot....");
+    }
+
+    /**
      * Start a Command Line Conversation with an Gen AI Assistant
      *
      * @param assistant
+     * @param header
      */
-    public static void startConversationWith(CarRentalAssistant assistant) {
+    public static void startConversationWith(Assistant assistant, String header) {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("==========================================================================================");
-            System.out.println(" OZAZO Car Rental Service ChatBot.... ");
+            System.out.println(header);
             System.out.println("Type exit or [q]uit, to quit the Prompt.");
             System.out.println("------------------------------------------------------------------------------------------");
             while (true) {

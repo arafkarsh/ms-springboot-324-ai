@@ -27,7 +27,7 @@ import dev.langchain4j.service.UserMessage;
  * @version:
  * @date:
  */
-public interface CarRentalAssistant {
+public interface CarRentalAssistant extends Assistant{
 
     /**
      * Translate the message into the target language

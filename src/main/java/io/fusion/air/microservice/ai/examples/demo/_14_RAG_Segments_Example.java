@@ -15,50 +15,38 @@
  */
 package io.fusion.air.microservice.ai.examples.demo;
 
-import dev.langchain4j.data.document.Document;
-import dev.langchain4j.data.document.DocumentParser;
-import dev.langchain4j.data.document.DocumentSplitter;
-import dev.langchain4j.data.document.parser.TextDocumentParser;
-import dev.langchain4j.data.document.splitter.DocumentSplitters;
-import dev.langchain4j.data.embedding.Embedding;
-import dev.langchain4j.data.segment.TextSegment;
-import dev.langchain4j.memory.ChatMemory;
-import dev.langchain4j.memory.chat.MessageWindowChatMemory;
-import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.rag.content.retriever.ContentRetriever;
-import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
-import dev.langchain4j.service.AiServices;
-import dev.langchain4j.store.embedding.EmbeddingStore;
-import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
-import dev.langchain4j.model.embedding.bge.small.en.v15.BgeSmallEnV15QuantizedEmbeddingModel;
-
 // Custom
 import io.fusion.air.microservice.ai.examples.assistants.CarRentalAssistant;
 import io.fusion.air.microservice.ai.services.RAGBuilder;
-import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.ConsoleRunner;
-import io.fusion.air.microservice.utils.Utils;
-
-import java.util.List;
-
-import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.loadDocument;
 
 /**
- * RAG Example
+ * RAG Segment Example
  *
- * @author: Araf Karsh Hamid
+ * @author: Araf Karsh HamidHell
  * @version:
  * @date:
  */
 public class _14_RAG_Segments_Example {
 
     /**
-     * RAG Segment Example
+     * This example demonstrates how to implement a naive Retrieval-Augmented Generation (RAG) application.
      *
-     * @param args
+     * In each interaction with the Large Language Model (LLM), we will:
+     * 1. Take the user's query as-is.
+     * 2. Embed it using an embedding model.
+     * 3. Use the query's embedding to search an embedding store (containing small segments of your documents)
+     * for the X most relevant segments.
+     * 4. Append the found segments to the user's query.
+     * 5. Send the combined input (user query + segments) to the LLM.
+     * 6. Hope that:
+     * - The user's query is well-formulated and contains all necessary details for retrieval.
+     * - The found segments are relevant to the user's query.
+     *
      */
     public static void main(String[] args) {
-        CarRentalAssistant assistant = RAGBuilder.createCarRentalAssistant();
+        // Setting up the Gen AI Context with Open AI LLM, and RAG
+        CarRentalAssistant assistant = RAGBuilder.createCarRentalAssistantWithSegments();
         // Start the Conversation with Ozazo Rental Service ChatBot
         // - Hello
         // - I am Sam. Can I cancel my reservation?
@@ -67,6 +55,6 @@ public class _14_RAG_Segments_Example {
         // - If I had an accident, should I pay extra?
         // - Do you have a refund policy?
         // - No, thank you.
-        ConsoleRunner.startConversationWith(assistant);
+        ConsoleRunner.startConversationWith(assistant, "OZAZO Car Rental Premium Service ChatBot");
     }
 }

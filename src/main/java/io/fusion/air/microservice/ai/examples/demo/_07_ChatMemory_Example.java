@@ -38,7 +38,7 @@ import io.fusion.air.microservice.ai.utils.AiConstants;
  * @version:
  * @date:
  */
-public class _07_ChatMemoryExample {
+public class _07_ChatMemory_Example {
 
     public static ChatLanguageModel model = new AiBeans().createChatLanguageModel();
 

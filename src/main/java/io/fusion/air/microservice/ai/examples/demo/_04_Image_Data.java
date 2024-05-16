@@ -24,7 +24,7 @@ import io.fusion.air.microservice.ai.services.ImageBuilder;
  * @version:
  * @date:
  */
-public class _04_ImageData {
+public class _04_Image_Data {
 
     public static void main(String[] args) {
 

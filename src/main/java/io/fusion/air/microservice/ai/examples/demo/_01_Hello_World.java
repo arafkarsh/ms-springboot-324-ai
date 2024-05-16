@@ -31,7 +31,7 @@ import io.fusion.air.microservice.ai.utils.AiConstants;
  * @version:
  * @date:
  */
-public class _01_HelloWorld {
+public class _01_Hello_World {
 
     public static void main(String[] args) {
         helloWorld();

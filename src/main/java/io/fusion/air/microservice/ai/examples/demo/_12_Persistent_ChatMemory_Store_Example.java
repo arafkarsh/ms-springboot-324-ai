@@ -32,7 +32,7 @@ import io.fusion.air.microservice.ai.utils.AiBeans;
  * @version:
  * @date:
  */
-public class _12_PersistentChatMemoryStoreExample {
+public class _12_Persistent_ChatMemory_Store_Example {
 
     private static Assistant assistant;
 

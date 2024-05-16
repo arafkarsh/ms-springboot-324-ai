@@ -30,7 +30,7 @@ public interface Assistant {
      * @param userMessage
      * @return
      */
-    public String chat(String userMessage);
+    public String chat(@UserMessage String userMessage);
 
     /**
      * Chat Memory with a Memory ID

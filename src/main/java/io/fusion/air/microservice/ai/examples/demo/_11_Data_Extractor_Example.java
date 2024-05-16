@@ -42,7 +42,7 @@ import static java.util.Arrays.asList;
  * @version:
  * @date:
  */
-public class _11_DataExtractorExample {
+public class _11_Data_Extractor_Example {
 
     public static ChatLanguageModel model = new AiBeans().createChatLanguageModel();
     public static DataExtractorAssistant extractor = AiServices.create(DataExtractorAssistant.class, model);

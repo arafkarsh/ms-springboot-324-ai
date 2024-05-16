@@ -25,7 +25,7 @@ import io.fusion.air.microservice.ai.services.TemplateManager;
  * @version:
  * @date:
  */
-public class _05_PromptTemplates {
+public class _05_Prompt_Templates {
 
     public static void main(String[] args) {
         System.out.println("Prompt Example 1 >>--------------------------------------------");

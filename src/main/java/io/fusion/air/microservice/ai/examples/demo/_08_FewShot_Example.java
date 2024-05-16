@@ -30,7 +30,7 @@ import java.util.List;
  * @version:
  * @date:
  */
-public class _08_FewShotExample {
+public class _08_FewShot_Example {
 
     private static ChatLanguageModel model = new AiBeans().createChatLanguageModel();
     private static List<ChatMessage> fewShotHistory = new ArrayList<>();

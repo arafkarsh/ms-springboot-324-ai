@@ -29,13 +29,19 @@ import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.embedding.AllMiniLmL6V2EmbeddingModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.embedding.bge.small.en.v15.BgeSmallEnV15QuantizedEmbeddingModel;
+import dev.langchain4j.model.openai.OpenAiChatModel;
+import dev.langchain4j.rag.DefaultRetrievalAugmentor;
+import dev.langchain4j.rag.RetrievalAugmentor;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
+import dev.langchain4j.rag.query.transformer.CompressingQueryTransformer;
+import dev.langchain4j.rag.query.transformer.QueryTransformer;
 import dev.langchain4j.retriever.EmbeddingStoreRetriever;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
+import io.fusion.air.microservice.ai.examples.assistants.Assistant;
 import io.fusion.air.microservice.ai.examples.assistants.CarRentalAssistant;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.utils.Utils;
@@ -43,6 +49,7 @@ import io.fusion.air.microservice.utils.Utils;
 import java.util.List;
 
 import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.loadDocument;
+import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.loadDocuments;
 
 /**
  * Retrieval-Augmented Generation (RAG) Builder
@@ -116,11 +123,47 @@ public class RAGBuilder {
     }
 
     /**
+     * Create a Simple RAG for the Car Rental Service
+     *
+     * @return
+     */
+    public static Assistant createCarRentalAssistantSimple() {
+        // Setup the Language Model
+        ChatLanguageModel model = new AiBeans().createChatLanguageModel();
+        // Documents for processing
+        List<Document> documents = loadDocuments(Utils.toPath("static/data/e/"), Utils.getPathMatcher("*.txt"));
+        // Embedding Model
+        EmbeddingModel embeddingModel = new AllMiniLmL6V2EmbeddingModel();
+        // Here, we create and empty in-memory store for our documents and their embeddings.
+        InMemoryEmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
+        // Here, we are ingesting our documents into the store.
+        // Under the hood, a lot of "magic" is happening, but we can ignore it for now.
+        EmbeddingStoreIngestor ingestor = EmbeddingStoreIngestor.builder()
+                .embeddingModel(embeddingModel)
+                .embeddingStore(embeddingStore)
+                .build();
+        ingestor.ingest(documents);
+        // Lastly, let's create a content retriever from an embedding store.
+        ContentRetriever retriever =  EmbeddingStoreContentRetriever.builder()
+                .embeddingModel(embeddingModel)
+                .embeddingStore(embeddingStore)
+                .build();
+
+        // The final step is to build our AI Service,
+        // Return the Assistant
+        return  AiServices.builder(Assistant.class)
+                .chatLanguageModel(model)
+                .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
+                .contentRetriever(retriever)
+                .build();
+    }
+
+    /**
      * Create Car Rental Assistant using RAG to process Custom Data
      *
      * @return
      */
-    public static CarRentalAssistant createCarRentalAssistant() {
+    public static CarRentalAssistant createCarRentalAssistantWithSegments() {
         ChatLanguageModel chatLanguageModel = new AiBeans().createChatLanguageModel();
 
         // Now, let's load a document that we want to use for RAG.
@@ -184,6 +227,51 @@ public class RAGBuilder {
                 .chatLanguageModel(chatLanguageModel)
                 .contentRetriever(contentRetriever)
                 .chatMemory(chatMemory)
+                .build();
+    }
+
+    /**
+     * Create Assistant with Query Transformer
+     * @return
+     */
+    public static Assistant createAssistantWithQueryTransformer() {
+        // Load the documents
+        Document document = loadDocument(Utils.toPath("static/data/e/akiera-kiera_biography.txt"), new TextDocumentParser());
+        EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
+        EmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
+        EmbeddingStoreIngestor ingestor = EmbeddingStoreIngestor.builder()
+                .documentSplitter(DocumentSplitters.recursive(300, 0))
+                .embeddingModel(embeddingModel)
+                .embeddingStore(embeddingStore)
+                .build();
+
+        ingestor.ingest(document);
+        // Create LLM
+        ChatLanguageModel chatLanguageModel = new AiBeans().createChatLanguageModel();
+        // We will create a CompressingQueryTransformer, which is responsible for compressing
+        // the user's query and the preceding conversation into a single, stand-alone query.
+        // This should significantly improve the quality of the retrieval process.
+        QueryTransformer queryTransformer = new CompressingQueryTransformer(chatLanguageModel);
+        // Content Retriever
+        ContentRetriever contentRetriever = EmbeddingStoreContentRetriever.builder()
+                .embeddingStore(embeddingStore)
+                .embeddingModel(embeddingModel)
+                .maxResults(2)
+                .minScore(0.6)
+                .build();
+
+        // The RetrievalAugmentor serves as the entry point into the RAG flow in LangChain4j.
+        // It can be configured to customize the RAG behavior according to your requirements.
+        // In subsequent examples, we will explore more customizations.
+        RetrievalAugmentor retrievalAugmentor = DefaultRetrievalAugmentor.builder()
+                .queryTransformer(queryTransformer)
+                .contentRetriever(contentRetriever)
+                .build();
+
+        return AiServices.builder(Assistant.class)
+                .chatLanguageModel(chatLanguageModel)
+                .retrievalAugmentor(retrievalAugmentor)
+                .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
                 .build();
     }
 }

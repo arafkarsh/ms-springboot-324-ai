@@ -30,7 +30,7 @@ import io.fusion.air.microservice.ai.utils.AiConstants;
  * @version:
  * @date:
  */
-public class _06_ToolsExample {
+public class _06_Tools_Example {
 
     public static void main(String[] args) {
 

@@ -27,7 +27,7 @@ import java.util.List;
  * @version:
  * @date:
  */
-public class _09_TranslatorExample {
+public class _09_Translator_Example {
 
     public static void main(String[] args) {
 
