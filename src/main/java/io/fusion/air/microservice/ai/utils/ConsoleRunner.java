@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 package io.fusion.air.microservice.ai.utils;
-
+// Custom
+import io.fusion.air.microservice.ai.examples.assistants.CarRentalAssistant;
 import io.fusion.air.microservice.ai.services.CustomDataAnalyzer;
 import io.fusion.air.microservice.ai.services.ImageBuilder;
 import io.fusion.air.microservice.ai.services.TemplateManager;
+// Spring
 import org.slf4j.Logger;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -78,9 +80,36 @@ public class ConsoleRunner implements CommandLineRunner {
                     CustomDataAnalyzer.processMultiFiles(dArray[1]);                    continue;
                 } else {
                     String response = CustomDataAnalyzer.processUserQuery(userQuery);
-                    System.out.println("--[HAL9000]---------------------------------------------------------------------------");
+                    System.out.println("--[HAL9000Assistant]---------------------------------------------------------------------------");
                     System.out.println(response);
                 }
+                System.out.println("------------------------------------------------------------------------------------------");
+            }
+        }
+    }
+
+    /**
+     * Start a Command Line Conversation with an Gen AI Assistant
+     *
+     * @param assistant
+     */
+    public static void startConversationWith(CarRentalAssistant assistant) {
+        try (Scanner scanner = new Scanner(System.in)) {
+            while (true) {
+                System.out.println("==========================================================================================");
+                System.out.print("User: >>> ");
+                String userQuery = scanner.nextLine();
+                if(userQuery == null || userQuery.length() == 0) {
+                    continue;
+                }
+                System.out.println("------------------------------------------------------------------------------------------");
+                if ("exit".equalsIgnoreCase(userQuery) || "quit".equalsIgnoreCase(userQuery)
+                        || "q".equalsIgnoreCase(userQuery)) {
+                    break;
+                }
+                String response = assistant.chat(userQuery);
+                System.out.println("--[HAL9000Assistant]---------------------------------------------------------------------------");
+                System.out.println(response);
                 System.out.println("------------------------------------------------------------------------------------------");
             }
         }

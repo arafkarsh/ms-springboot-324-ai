@@ -15,7 +15,7 @@
  */
 package io.fusion.air.microservice.ai.examples.demo;
 
-import io.fusion.air.microservice.ai.setup.HAL9000;
+import io.fusion.air.microservice.ai.examples.assistants.HAL9000Assistant;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 
@@ -31,7 +31,7 @@ public class _02_ComplexWorld {
 
     public static void main(String[] args) {
         // Create the Ai Assistant
-        HAL9000 hal9k = new AiBeans().createHAL9000(AiConstants.GPT_3_5_TURBO);
+        HAL9000Assistant hal9k = new AiBeans().createHAL9000(AiConstants.GPT_3_5_TURBO);
         // Run the Test Cases
         complexWorld1(hal9k);
         complexWorld2(hal9k);
@@ -43,7 +43,7 @@ public class _02_ComplexWorld {
      * Example 1
      * @param hal9k
      */
-    public static void complexWorld1(HAL9000 hal9k) {
+    public static void complexWorld1(HAL9000Assistant hal9k) {
         interact(hal9k, "What is the square root of 144233377?");
         interact(hal9k, "Capitalize every third letter except the sixth letter: abcdefghjiklmnop");
     }
@@ -52,7 +52,7 @@ public class _02_ComplexWorld {
      * Example 2
      * @param hal9k
      */
-    public static void complexWorld2(HAL9000 hal9k) {
+    public static void complexWorld2(HAL9000Assistant hal9k) {
         interact(hal9k, "What are the hours between 06:00 on 7 Feb 1970 and 11:00 on 02 Jun 1980?");
         interact(hal9k, "What is the sum of all the digits in the previous question? Is that a Prime Number?");
         interact(hal9k, "What are the hours between 11:00 on 2 Jun 1980 and 12:00 on 11 Mar 2024?");
@@ -64,16 +64,16 @@ public class _02_ComplexWorld {
      * Example 3
      * @param hal9k
      */
-    public static void complexWorld3(HAL9000 hal9k) {
+    public static void complexWorld3(HAL9000Assistant hal9k) {
         interact(hal9k, "Explain French Revolution in details with critical events.");
     }
 
     /**
-     * Interact with HAL9000 Ai Assistant
+     * Interact with HAL9000Assistant Ai Assistant
      * @param hal9k
      * @param userMessage
      */
-    private static void interact(HAL9000 hal9k, String userMessage) {
+    private static void interact(HAL9000Assistant hal9k, String userMessage) {
         System.out.println("[Human]: " + userMessage);
         String response = hal9k.chat(userMessage);
         System.out.println("[HAL9K]: " + response);

@@ -27,6 +27,7 @@
 | 10. | Sentiment Analyzer Example | Analyses the Sentiment of a text input. Positve, Neutral, Negative      |
 | 11. | Data Extractor Example     | Extract Number, Date, Model (Pojo) from a Text                          |
 | 12. | Persistent Store Example   | Use a Persistent Store for Chat Memory & Retrive the Chat based on User. |
+| 13. | RAG Simple Example        | RAG based Chat Bot Use Case: Car Rental Service                                |
 
 
 ## Package Structure

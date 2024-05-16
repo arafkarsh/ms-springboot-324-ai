@@ -16,6 +16,7 @@
 package io.fusion.air.microservice.ai.setup;
 
 import dev.langchain4j.agent.tool.Tool;
+import io.fusion.air.microservice.ai.examples.assistants.HAL9000Assistant;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
@@ -29,7 +30,7 @@ import java.time.LocalTime;
 public class AssistantTools {
 
     /**
-     * This tool is available to {@link HAL9000}
+     * This tool is available to {@link HAL9000Assistant}
      */
     @Tool
     public String currentTime() {

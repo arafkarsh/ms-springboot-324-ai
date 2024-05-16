@@ -16,7 +16,14 @@
 
 package io.fusion.air.microservice.utils;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.PathMatcher;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
@@ -27,6 +34,7 @@ import java.util.stream.Stream;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
@@ -421,6 +429,54 @@ public final class Utils {
 			sb.append(" -d '").append(Utils.toJsonString(request)).append("'").append("");
 		}
 		return sb.toString();
+	}
+
+	/**
+	 * Returns Path Matcher
+	 * Glob:
+	 * The term "glob" is short for "global" or "global pattern".
+	 * Glob patterns are a simplified form of pattern matching, commonly used in Unix-like
+	 * operating systems for matching filenames or paths.
+	 * They use wildcards and other symbols to specify sets of filenames with simplicity and
+	 * conciseness.
+	 *
+	 * Common Glob Patterns:
+	    '*': Matches zero or more characters (e.g., *.txt matches all .txt files).
+	     ?: Matches exactly one character (e.g., file?.txt matches file1.txt, file2.txt, but not file10.txt).
+	 *
+	@param glob
+	 * @return
+	 */
+	public static PathMatcher getPathMatcher(String glob) {
+		return FileSystems.getDefault().getPathMatcher("glob:" + glob);
+	}
+
+	/**
+	 * To Look for Data in "resource/static/data" Path
+	 *
+	 * @param fileName
+	 * @return
+	 */
+	public static Path toPathResourceData(String fileName) {
+		return toPath("static/data/"+fileName);
+	}
+
+	/**
+	 * Load Data File Path
+	 * @param fileName
+	 * @return
+	 */
+	public static Path toPath(String fileName) {
+		try {
+			ClassPathResource dataFile = new ClassPathResource(fileName);
+			URL fileUrl = dataFile.getURL();
+			if (fileUrl == null) {
+				throw new IllegalStateException("Resource not found: " + fileName);
+			}
+			return Paths.get(fileUrl.toURI());
+		} catch (URISyntaxException | IOException  e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**

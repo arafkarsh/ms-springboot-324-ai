@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai.setup;
+package io.fusion.air.microservice.ai.examples.assistants;
 
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.spring.AiService;
@@ -25,7 +25,7 @@ import dev.langchain4j.service.spring.AiService;
  */
 
 @AiService
-public interface HAL9000 {
+public interface HAL9000Assistant {
 
     @SystemMessage("""
                             I am an IT Professional focusing on Cloud Native Architecture, Security, 

@@ -17,6 +17,7 @@ package io.fusion.air.microservice.ai.setup;
 
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
+import io.fusion.air.microservice.ai.examples.assistants.HAL9000Assistant;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,10 +30,10 @@ import org.springframework.context.annotation.Configuration;
 public class AssistantConfig {
 
     /**
-     * This chat memory will be used by an {@link HAL9000}
+     * This chat memory will be used by an {@link HAL9000Assistant}
      */
     @Bean
     public ChatMemory chatMemory() {
-        return MessageWindowChatMemory.withMaxMessages(10);
+        return MessageWindowChatMemory.withMaxMessages(20);
     }
 }

@@ -36,21 +36,13 @@ import dev.langchain4j.model.embedding.EmbeddingModel;
 import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.loadDocument;
 
 // Custom
-import io.fusion.air.microservice.ai.setup.HAL9000;
+import io.fusion.air.microservice.ai.examples.assistants.HAL9000Assistant;
 // Spring
+import io.fusion.air.microservice.utils.Utils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
-import java.nio.file.Path;
 
 import static java.time.Duration.ofSeconds;
-
-
 
 /**
  * @author: Araf Karsh Hamid
@@ -127,7 +119,7 @@ public class AiBeans {
      * @return
      */
     @Bean
-    public HAL9000 createHAL9000() {
+    public HAL9000Assistant createHAL9000() {
         return createHAL9000(AiConstants.getAlgo());
     }
 
@@ -136,9 +128,9 @@ public class AiBeans {
      * @param _model
      * @return
      */
-    public HAL9000 createHAL9000(String _model) {
+    public HAL9000Assistant createHAL9000(String _model) {
         ChatLanguageModel chatLanguageModel = createChatLanguageModel(_model);
-        return AiServices.builder(HAL9000.class)
+        return AiServices.builder(HAL9000Assistant.class)
                 .chatLanguageModel(chatLanguageModel)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
                 // .tools(tool)
@@ -160,7 +152,7 @@ public class AiBeans {
                 .embeddingStore(embeddingStore)
                 .build();
 
-        Document document = loadDocument(toPath("static/data/"+_fileName), new TextDocumentParser());
+        Document document = loadDocument(Utils.toPath("static/data/p/"+_fileName), new TextDocumentParser());
         ingestor.ingest(document);
 
         return ConversationalRetrievalChain.builder()
@@ -185,9 +177,9 @@ public class AiBeans {
                 .embeddingStore(embeddingStore)
                 .build();
 
-        Document document1 = loadDocument(toPath("static/data/bramayugam.txt"), new TextDocumentParser());
+        Document document1 = loadDocument(Utils.toPath("static/data/p/bramayugam.txt"), new TextDocumentParser());
         ingestor.ingest(document1);
-        Document document2 = loadDocument(toPath("static/data/vaaliban.txt"), new TextDocumentParser());
+        Document document2 = loadDocument(Utils.toPath("static/data/p/vaaliban.txt"), new TextDocumentParser());
         ingestor.ingest(document2);
 
         return ConversationalRetrievalChain.builder()
@@ -199,26 +191,6 @@ public class AiBeans {
     }
 
     /**
-     * Load Data File Path
-     * @param fileName
-     * @return
-     */
-    private static Path toPath(String fileName) {
-        try {
-            ClassPathResource dataFile = new ClassPathResource(fileName);
-            URL fileUrl = dataFile.getURL();
-            if (fileUrl == null) {
-                throw new IllegalStateException("Resource not found: " + fileName);
-            }
-            return Paths.get(fileUrl.toURI());
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
      * Print Request & Response
      *
      * @param _request
@@ -227,7 +199,7 @@ public class AiBeans {
     public static void printResult(String _request, String _response) {
         System.out.println("--[Human]----------------------------------------------------------");
         System.out.println(_request);
-        System.out.println("--[HAL9000]-------------------------------------------------------");
+        System.out.println("--[HAL9000Assistant]-------------------------------------------------------");
         System.out.println(_response);
         System.out.println("-------------------------------------------------------------------");
     }
