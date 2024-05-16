@@ -3,6 +3,14 @@
 ## Quick Test after starting the SpringBoot App
 ![Ai Prompt](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/Ai-Prompt.jpg)
 
+## Sentiment Analysis using ChatGPT 4o
+
+![Ai Sentiment](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/Ai-Ex-Sentiment.jpg)
+
+## Data Extractions using ChatGPT 4o
+
+![Ai Sentiment](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/Ai-Ex-Sentiment.jpg)
+
 ## Generative AI Examples 
 
 | #   | Example                    | Details                                                                 |
