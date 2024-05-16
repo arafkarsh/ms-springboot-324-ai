@@ -17,7 +17,7 @@ package io.fusion.air.microservice.ai.examples.demo;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.service.AiServices;
-import io.fusion.air.microservice.ai.examples.utils.TextUtils;
+import io.fusion.air.microservice.ai.examples.assistants.LanguageAssistant;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 
 import java.util.List;
@@ -32,7 +32,7 @@ public class _09_TranslatorExample {
     public static void main(String[] args) {
 
         ChatLanguageModel model = new AiBeans().createChatLanguageModel();
-        TextUtils utils = AiServices.create(TextUtils.class, model);
+        LanguageAssistant utils = AiServices.create(LanguageAssistant.class, model);
         String request = """
                     Hello, how are you?
                     What do you think about current weather and climate change?

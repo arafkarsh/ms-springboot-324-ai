@@ -19,9 +19,9 @@ import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.service.AiServices;
 import io.fusion.air.microservice.ai.examples.models.Person;
 import io.fusion.air.microservice.ai.examples.models.Recipe;
-import io.fusion.air.microservice.ai.examples.models.StructuredRecipePrompt;
-import io.fusion.air.microservice.ai.examples.utils.Chef;
-import io.fusion.air.microservice.ai.examples.utils.DataExtractor;
+import io.fusion.air.microservice.ai.examples.prompts.StructuredPromptRecipe;
+import io.fusion.air.microservice.ai.examples.assistants.ChefAssistant;
+import io.fusion.air.microservice.ai.examples.assistants.DataExtractorAssistant;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 
 import java.time.LocalDate;
@@ -45,7 +45,7 @@ import static java.util.Arrays.asList;
 public class _11_DataExtractorExample {
 
     public static ChatLanguageModel model = new AiBeans().createChatLanguageModel();
-    public static DataExtractor extractor = AiServices.create(DataExtractor.class, model);
+    public static DataExtractorAssistant extractor = AiServices.create(DataExtractorAssistant.class, model);
 
     public static void numberExtractor() {
         // Extract Numbers
@@ -87,14 +87,14 @@ public class _11_DataExtractorExample {
     }
 
     public static void complexPojoExtractor() {
-        Chef chef = AiServices.create(Chef.class, model);
-        Recipe recipe = chef.createRecipeFrom("cucumber", "tomato", "feta", "onion", "olives", "lemon");
+        ChefAssistant chefAssistant = AiServices.create(ChefAssistant.class, model);
+        Recipe recipe = chefAssistant.createRecipeFrom("cucumber", "tomato", "feta", "onion", "olives", "lemon");
         System.out.println(recipe);
 
-        StructuredRecipePrompt recipe2 = new StructuredRecipePrompt("oven dish",
+        StructuredPromptRecipe recipe2 = new StructuredPromptRecipe("oven dish",
                 asList("cucumber", "tomato", "feta", "onion", "olives", "potatoes") );
 
-        Recipe anotherRecipe = chef.createRecipe(recipe2);
+        Recipe anotherRecipe = chefAssistant.createRecipe(recipe2);
         System.out.println(anotherRecipe);
     }
 

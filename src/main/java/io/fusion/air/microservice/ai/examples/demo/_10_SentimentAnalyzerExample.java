@@ -18,7 +18,9 @@ package io.fusion.air.microservice.ai.examples.demo;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.service.AiServices;
 import io.fusion.air.microservice.ai.examples.models.Sentiment;
-import io.fusion.air.microservice.ai.examples.utils.SentimentAnalyzer;
+import io.fusion.air.microservice.ai.examples.assistants.SentimentAssistant;
+import io.fusion.air.microservice.ai.services.SentimentAnalyzer;
+import io.fusion.air.microservice.ai.services.TemplateManager;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 
 /**
@@ -35,36 +37,23 @@ public class _10_SentimentAnalyzerExample {
     public static void main(String[] args) {
 
         ChatLanguageModel model = new AiBeans().createChatLanguageModel();
-        SentimentAnalyzer sentimentAnalyzer = AiServices.create(SentimentAnalyzer.class, model);
+        SentimentAssistant sentimentAssistant = AiServices.create(SentimentAssistant.class, model);
         String request = """
-                The movie was quite engaging, although the songs were somewhat lackluster. Nevertheless, the background 
-                score and choreography significantly enhanced the musical sequences, making up for the shortcomings. Overall, 
-                the experience was not that bad.""";
-        Sentiment sentiment = sentimentAnalyzer.analyzeSentimentOf(request);
-        boolean positive = sentimentAnalyzer.isPositive(request);
-        AiBeans.printResult(request,
-                "Rating of the movie     = "+sentiment.name() + "\n"
-                             +"Is Sentiment Positive?  = "+((positive) ? "Yes" : "No"));
+                The movie was quite engaging, although the songs were somewhat lackluster. Nevertheless, the background score and choreography significantly 
+                enhanced the musical sequences, making up for the shortcomings. Overall, the experience was not that bad.""";
+
+        SentimentAnalyzer.analyzeSentiment(request, true);
 
         request = """
-                    The movie had a promising storyline, but the direction, acting, and cinematography were so over the top 
-                    that they lulled the audience into a state of forced sleep. """;
-        sentiment = sentimentAnalyzer.analyzeSentimentOf(request);
-        positive = sentimentAnalyzer.isPositive(request);
-        AiBeans.printResult(request,
-                "Rating of the movie     = "+sentiment.name() + "\n"
-                             +"Is Sentiment Positive?  = "+((positive) ? "Yes" : "No"));
+                    The movie had a promising storyline, but the direction, acting, and cinematography were so over the top that they lulled the audience into 
+                    a state of forced sleep. """;
+        SentimentAnalyzer.analyzeSentiment(request, true);
 
         request = """
-                    In essence, “Bramayugam” delves into the intricate dynamics between an autocratic ruler, oppressed citizens, 
-                    and those yearning to rebel, portraying the timeless struggle between the privileged and the disenfranchised 
-                    across various epochs and landscapes. Through a finely crafted screenplay, stunning artistry, captivating 
-                    cinematography, evocative background score, and stellar performances by the central  characters, the film 
-                    transcends mere entertainment, offering an immersive cinematic journey that resonates deeply with its audience. """;
-        sentiment = sentimentAnalyzer.analyzeSentimentOf(request);
-        positive = sentimentAnalyzer.isPositive(request);
-        AiBeans.printResult(request,
-                "Rating of the movie     = "+sentiment.name() + "\n"
-                             +"Is Sentiment Positive?  = "+((positive) ? "Yes" : "No"));
+                    In essence, “Bramayugam” delves into the intricate dynamics between an autocratic ruler, oppressed citizens, and those yearning to rebel, 
+                    portraying the timeless struggle between the privileged and the disenfranchised  across various epochs and landscapes. Through a finely 
+                    crafted screenplay, stunning artistry, captivating cinematography, evocative background score, and stellar performances by the central  
+                    characters, the film transcends mere entertainment, offering an immersive cinematic journey that resonates deeply with its audience. """;
+        SentimentAnalyzer.analyzeSentiment(request, true);
     }
 }

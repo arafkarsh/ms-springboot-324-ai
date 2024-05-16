@@ -30,7 +30,7 @@ import java.util.List;
  * @version:
  * @date:
  */
-public interface TextUtils {
+public interface LanguageAssistant {
 
     /**
      * Translate the message into the target language

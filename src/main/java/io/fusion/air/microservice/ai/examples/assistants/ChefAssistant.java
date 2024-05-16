@@ -23,7 +23,7 @@ import io.fusion.air.microservice.ai.examples.prompts.StructuredPromptRecipe;
  * @version:
  * @date:
  */
-public interface Chef {
+public interface ChefAssistant {
 
     public Recipe createRecipeFrom(String... ingredients);
 

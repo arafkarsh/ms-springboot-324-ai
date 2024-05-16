@@ -17,49 +17,37 @@ package io.fusion.air.microservice.ai.examples.prompts;
 
 import dev.langchain4j.model.input.structured.StructuredPrompt;
 
-import java.util.List;
-
 /**
  * @author: Araf Karsh Hamid
  * @version:
  * @date:
  */
 @StructuredPrompt({
-        "Create a recipe of a {{dish}} that can be prepared using only {{ingredients}}.",
+        "Convey the feelings {{feeling}} based on the content {{content}}.",
         "Structure your answer in the following way:",
-
-        "Recipe name: ...",
-        "Description: ...",
-        "Preparation time: ...",
-
-        "Required ingredients:",
-        "- ...",
-        "- ...",
-
-        "Instructions:",
-        "- ...",
-        "- ..."
+        "Feeling: ...",
+        "Key points: ...",
+        "Explanation: ..."
 })
-public class StructuredPromptRecipe {
+public class StructuredPromptFeelings {
 
-    private final String dish;
-    private final List<String> ingredients;
+    private final String feeling;
+    private final String content;
 
     /**
-     *
-     * @param _dish
-     * @param _ingredients
+     * @param _feeling
+     * @param _content
      */
-    public StructuredPromptRecipe(String _dish, List<String> _ingredients) {
-        this.dish = _dish;
-        this.ingredients = _ingredients;
+    public StructuredPromptFeelings(String _feeling, String _content) {
+        this.feeling = _feeling;
+        this.content = _content;
     }
 
-    public String getDish() {
-        return dish;
+    public String getFeeling() {
+        return feeling;
     }
 
-    public List<String> getIngredients() {
-        return ingredients;
+    public String getContent() {
+        return content;
     }
 }

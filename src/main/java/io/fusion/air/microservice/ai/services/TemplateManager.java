@@ -19,7 +19,8 @@ import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.input.Prompt;
 import dev.langchain4j.model.input.PromptTemplate;
 import dev.langchain4j.model.input.structured.StructuredPromptProcessor;
-import io.fusion.air.microservice.ai.examples.models.StructuredRecipePrompt;
+import io.fusion.air.microservice.ai.examples.prompts.StructuredPromptFeelings;
+import io.fusion.air.microservice.ai.examples.prompts.StructuredPromptRecipe;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 
@@ -65,7 +66,7 @@ public class TemplateManager {
             String[] data = prompt.split(",");
             String dish = data[0];
             String ingredients = prompt.replaceAll(dish+",", "").trim();
-             response = structuredRecipePrompt(dish, ingredients);
+             response = structuredPromptRecipe(dish, ingredients);
         } else {
             System.out.println("No Template found!!! ........... ");
         }
@@ -183,8 +184,8 @@ public class TemplateManager {
      * Structured Recipe Prompt Example
      *
      */
-    public static String structuredRecipePrompt() {
-        return structuredRecipePrompt("oven dish", "cucumber, potato, tomato, red meat, olives, olive oil");
+    public static String structuredPromptRecipe() {
+        return structuredPromptRecipe("oven dish", "cucumber, potato, tomato, red meat, olives, olive oil");
     }
 
     /**
@@ -193,18 +194,51 @@ public class TemplateManager {
      * @param dish
      * @param ingredients
      * @see AiBeans
-     * @see StructuredRecipePrompt
+     * @see StructuredPromptRecipe
      */
-    public static String structuredRecipePrompt(String dish, String ingredients) {
+    public static String structuredPromptRecipe(String dish, String ingredients) {
         ChatLanguageModel model = new AiBeans()
                 .createChatLanguageModel(AiConstants.getAlgo());
         // Structured Prompt
-        StructuredRecipePrompt recipePrompt = new StructuredRecipePrompt(dish, asList(ingredients));
+        StructuredPromptRecipe recipePrompt = new StructuredPromptRecipe(dish, asList(ingredients));
         // Created Prompt
         Prompt prompt = StructuredPromptProcessor.toPrompt(recipePrompt);
         // Execute the Request
         String response = model.generate(prompt.text());
         AiBeans.printResult(prompt.text(), response);
+        return response;
+    }
+
+    /**
+     * Feelings Prompt
+     * @param _feelings
+     * @param _content
+     * @return
+     */
+    public static String structuredPromptFeelings(String _feelings, String _content) {
+        return structuredPromptFeelings( _feelings,  _content,  false);
+    }
+
+    /**
+     * Feelings Prompt
+     *
+     * @param _feelings
+     * @param _content
+     * @param _print
+     * @return
+     */
+    public static String structuredPromptFeelings(String _feelings, String _content, boolean _print) {
+        ChatLanguageModel model = new AiBeans()
+                .createChatLanguageModel(AiConstants.getAlgo());
+        // Structured Prompt
+        StructuredPromptFeelings feelingsPrompt = new StructuredPromptFeelings(_feelings, _content);
+        // Created Prompt
+        Prompt prompt = StructuredPromptProcessor.toPrompt(feelingsPrompt);
+        // Execute the Request
+        String response = model.generate(prompt.text());
+        if(_print) {
+            AiBeans.printResult(prompt.text(), response);
+        }
         return response;
     }
 }

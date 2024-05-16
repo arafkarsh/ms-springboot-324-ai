@@ -26,7 +26,7 @@ import io.fusion.air.microservice.ai.examples.models.Sentiment;
  * @version:
  * @date:
  */
-public interface SentimentAnalyzer {
+public interface SentimentAssistant {
 
     @UserMessage("Analyze sentiment of {{it}}")
     public Sentiment analyzeSentimentOf(String text);

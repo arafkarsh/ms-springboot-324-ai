@@ -20,7 +20,7 @@ import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.service.AiServices;
 
-import io.fusion.air.microservice.ai.examples.utils.Assistant;
+import io.fusion.air.microservice.ai.examples.assistants.Assistant;
 import io.fusion.air.microservice.ai.examples.utils.Calculator;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;

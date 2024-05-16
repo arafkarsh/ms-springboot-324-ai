@@ -31,7 +31,7 @@ import java.time.LocalTime;
  * @version:
  * @date:
  */
-public interface DataExtractor {
+public interface DataExtractorAssistant {
 
     // Number Extractor
     @UserMessage("Extract number from {{it}}")
