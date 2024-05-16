@@ -1,0 +1,52 @@
+
+--[Human]----------------------------------------------------------
+The movie was quite engaging, although the songs were somewhat lackluster. Nevertheless, the background score and choreography significantly
+enhanced the musical sequences, making up for the shortcomings. Overall, the experience was not that bad.
+
+--[HAL9000]-------------------------------------------------------
+
+Rating of the content  = NEUTRAL
+Is Sentiment Positive? = Yes
+Feeling: Neutral
+
+Key points: Engaging movie, lackluster songs, enhanced by background score and choreography
+
+Explanation: The movie was able to hold the viewer's attention, despite the songs being somewhat disappointing. However, the background score and choreography added value to the musical sequences, balancing out the weaknesses. Overall, the experience was not negative, but it was not exceptional either.
+-------------------------------------------------------------------
+
+--[Human]----------------------------------------------------------
+The movie had a promising storyline, but the direction, acting, and cinematography were so over the top that they lulled the audience into
+a state of forced sleep.
+
+--[HAL9000]-------------------------------------------------------
+
+Rating of the content  = NEGATIVE
+Is Sentiment Positive? = No
+Feeling: Disappointment
+
+Key points: Promising storyline, over-the-top direction, acting, cinematography
+
+Explanation: The movie had a lot of potential with its promising storyline, but the execution fell flat. The over-the-top direction, acting, and cinematography were so excessive that they detracted from the overall viewing experience. Instead of engaging the audience, these elements actually made it difficult to stay awake and pay attention. Overall, it was a disappointing and frustrating experience for viewers.
+-------------------------------------------------------------------
+
+--[Human]----------------------------------------------------------
+In essence, “Bramayugam” delves into the intricate dynamics between an autocratic ruler, oppressed citizens, and those yearning to rebel,
+portraying the timeless struggle between the privileged and the disenfranchised  across various epochs and landscapes. Through a finely
+crafted screenplay, stunning artistry, captivating cinematography, evocative background score, and stellar performances by the central
+characters, the film transcends mere entertainment, offering an immersive cinematic journey that resonates deeply with its audience.
+
+--[HAL9000]-------------------------------------------------------
+
+Rating of the content  = POSITIVE
+Is Sentiment Positive? = Yes
+Feeling: Inspired and captivated
+
+Key points: 
+- Intricate dynamics between an autocratic ruler, oppressed citizens, and rebels
+- Timeless struggle between the privileged and the disenfranchised
+- Finely crafted screenplay, stunning artistry, captivating cinematography, evocative background score, and stellar performances
+- Immersive cinematic journey that resonates deeply with the audience
+
+Explanation: "Bramayugam" is a film that leaves viewers feeling inspired and captivated by its exploration of power dynamics and rebellion. The film's portrayal of the struggle between the privileged and the disenfranchised is both timeless and relevant. Through its exceptional screenplay, artistry, cinematography, score, and performances, the film transcends mere entertainment to offer an immersive cinematic experience that deeply resonates with its audience.
+-------------------------------------------------------------------
+

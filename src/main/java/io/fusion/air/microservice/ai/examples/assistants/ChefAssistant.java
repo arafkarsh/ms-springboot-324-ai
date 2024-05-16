@@ -13,24 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai.examples.utils;
+package io.fusion.air.microservice.ai.examples.assistants;
 
-import dev.langchain4j.service.UserMessage;
-
-import io.fusion.air.microservice.ai.examples.models.Sentiment;
+import io.fusion.air.microservice.ai.examples.models.Recipe;
+import io.fusion.air.microservice.ai.examples.prompts.StructuredPromptRecipe;
 
 /**
- * Sentiment Analyzer
- *
  * @author: Araf Karsh Hamid
  * @version:
  * @date:
  */
-public interface SentimentAnalyzer {
+public interface Chef {
 
-    @UserMessage("Analyze sentiment of {{it}}")
-    public Sentiment analyzeSentimentOf(String text);
+    public Recipe createRecipeFrom(String... ingredients);
 
-    @UserMessage("Does {{it}} have a positive sentiment?")
-    public boolean isPositive(String text);
+    public Recipe createRecipe(StructuredPromptRecipe prompt);
 }
