@@ -9,7 +9,7 @@
 
 ## Data Extractions using ChatGPT 4o
 
-![Ai Sentiment](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/Ai-Ex-Sentiment.jpg)
+![Ai Sentiment](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/Ai-Ex-DataExtractor.jpg)
 
 ## Generative AI Examples 
 
