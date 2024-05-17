@@ -22,6 +22,7 @@ import dev.langchain4j.data.document.DocumentSplitter;
 import dev.langchain4j.data.document.parser.TextDocumentParser;
 import dev.langchain4j.data.document.splitter.DocumentSplitters;
 import dev.langchain4j.data.embedding.Embedding;
+import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
@@ -29,6 +30,8 @@ import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.embedding.AllMiniLmL6V2EmbeddingModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.embedding.bge.small.en.v15.BgeSmallEnV15QuantizedEmbeddingModel;
+import dev.langchain4j.model.input.Prompt;
+import dev.langchain4j.model.input.PromptTemplate;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.scoring.ScoringModel;
 import dev.langchain4j.rag.DefaultRetrievalAugmentor;
@@ -39,6 +42,7 @@ import dev.langchain4j.rag.content.injector.ContentInjector;
 import dev.langchain4j.rag.content.injector.DefaultContentInjector;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
+import dev.langchain4j.rag.query.Query;
 import dev.langchain4j.rag.query.router.DefaultQueryRouter;
 import dev.langchain4j.rag.query.router.LanguageModelQueryRouter;
 import dev.langchain4j.rag.query.router.QueryRouter;
@@ -57,12 +61,15 @@ import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 import io.fusion.air.microservice.utils.Utils;
 // Java
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.loadDocument;
 import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.loadDocuments;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 import static java.util.Arrays.asList;
 
 /**
@@ -420,6 +427,54 @@ public class RAGBuilder {
         // Let's create a query router that will route each query to both retrievers.
         QueryRouter queryRouter = new DefaultQueryRouter(biographyCR, rentalCR);
 
+        // Retrieval Augmentor
+        RetrievalAugmentor retrievalAugmentor = DefaultRetrievalAugmentor.builder()
+                .queryRouter(queryRouter)
+                .build();
+        // Create Assistant
+        return AiServices.builder(Assistant.class)
+                .chatLanguageModel(chatLanguageModel)
+                .retrievalAugmentor(retrievalAugmentor)
+                .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
+                .build();
+    }
+
+    /**
+     * RAG - Content Retrieval Skipping
+     * @return
+     */
+    public static Assistant createAssistantWithRetrievalSkipping() {
+        // Create LLM
+        ChatLanguageModel chatLanguageModel = new AiBeans().createChatLanguageModel(true, true);
+        // Load the documents
+        EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
+        // Create Embedding Store for Car Rental Service
+        EmbeddingStore<TextSegment> rentalES =
+                createEmbeddingStore("ozazo-car-rental-services.txt", embeddingModel);
+        //Content Retriever for Car Rental Service.
+        ContentRetriever rentalCR = createContentRetriever(rentalES, embeddingModel);
+
+        // Create a query router.
+        QueryRouter queryRouter = new QueryRouter() {
+            private final PromptTemplate PROMPT_TEMPLATE = PromptTemplate.from(
+                    """
+                                Is the following query related to the business of the car rental company?
+                                Answer only 'allow access', 'skip' or 'maybe allow access'.
+                                Query: {{it}}
+                            """
+            );
+
+            @Override
+            public Collection<ContentRetriever> route(Query query) {
+                Prompt prompt = PROMPT_TEMPLATE.apply(query.text());
+                AiMessage aiMessage = chatLanguageModel.generate(prompt.toUserMessage()).content();
+                System.out.println(">>> HAL9000 decided to: " + aiMessage.text());
+                if (aiMessage.text().toLowerCase().contains("skip")) {
+                    return emptyList();
+                }
+                return singletonList(rentalCR);
+            }
+        };
         // Retrieval Augmentor
         RetrievalAugmentor retrievalAugmentor = DefaultRetrievalAugmentor.builder()
                 .queryRouter(queryRouter)

@@ -48,6 +48,7 @@ Here’s how it helps developers:
 | 17. | RAG Re-Ranking Example | RAG Re-Ranking using Cohere API. Case Study: Car Rental Service          |
 | 18. | RAG MetaData Example | RAG MetaData (Data Source). Case Study: Car Rental Service               |
 | 19. | RAG Multiple Content Retrievers Example | RAG Multi Content Retrievers. Car Rental & Biography                     |
+| 20. | RAG Skipping Content Retrieval Example | RAG Content Retrieval Skipping. Case Study: Car Rental |
 
 ## Quick Test after starting the SpringBoot App
 ![Ai Prompt](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/Ai-Prompt.jpg)
