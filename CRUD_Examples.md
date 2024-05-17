@@ -120,7 +120,7 @@ production environment.
 ![Postman Import](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/Import-API-into-Postman-2.jpg)
 
 #### Step 1.5.4: Test the API using Postman
-![Postman Test](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/Import-API-into-Postman-3.jpg)
+![Postman Test](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/Import-API-Into-Postman-3.jpg)
 
 ## 2. CRUD Operations Demo & Error Handling
 
@@ -128,60 +128,60 @@ production environment.
 
 #### 2.1.1 GET Query Execution and Fallback Data
 
-![Crud Get](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-1-get-fallback.jpg)
+![Crud Get](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/crud/crud-1-get-fallback.jpg)
 
 #### 2.1.2 POST Create Data - Product 1
-![Crud Post-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-2-post-prod-1-A.jpg)
+![Crud Post-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/crud/crud-2-post-prod-1-A.jpg)
 
 #### 2.1.3 POST Create Data - Product 1 : Result
-![Crud Post-2](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-2-post-prod-1-B.jpg)
+![Crud Post-2](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/crud/crud-2-post-prod-1-B.jpg)
 
 #### 2.1.4 POST Create Data - Product 2 
-![Crud Post-3](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-3-post-prod-2.jpg)
+![Crud Post-3](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/crud/crud-3-post-prod-2.jpg)
 
 #### 2.1.5 POST Create Data - Product 3
-![Crud Post-4](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-4-post-prod-3.jpg)
+![Crud Post-4](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/crud/crud-4-post-prod-3.jpg)
 
 #### 2.1.6 GET All the Data (Created in Steps 2.2 - 2.5)
-![Crud Get-6](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-5-get-from-db.jpg)
+![Crud Get-6](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/crud/crud-5-get-from-db.jpg)
 
 #### 2.1.7 GET Single Record
-![Crud Get-7](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-6-get-from-db.jpg)
+![Crud Get-7](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/crud/crud-6-get-from-db.jpg)
 
 #### 2.1.8 PUT Update the Product Price
-![Crud Get-8](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-7-put-update-price.jpg)
+![Crud Get-8](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/crud/crud-7-put-update-price.jpg)
 
 #### 2.1.9 PUT Update the Product - DeActivate the Product > Set isActive Flag = False
-![Crud Get-9](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-8-put-deactivate.jpg)
+![Crud Get-9](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/crud/crud-8-put-deactivate.jpg)
 
 #### 2.1.10 State of the Records after Inserts and Updates
-![Crud Get-10](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-9-db-records.jpg)
+![Crud Get-10](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/crud/crud-9-db-records.jpg)
 
 ### 2.2 Error Handling
 
 #### 2.2.1 Error Handling - Invalid Input
-![Error-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-error-1-post-invalid-input-A.jpg)
+![Error-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/crud/crud-error-1-post-invalid-input-A.jpg)
 
 #### 2.2.2 Error Handling - Invalid Input - Result
-![Error-2](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-error-1-post-invalid-input-B.jpg)
+![Error-2](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/crud/crud-error-1-post-invalid-input-B.jpg)
 
 #### 2.2.3 Error Handling - Invalid Input - Field Validations
-![Error-3](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-error-2-post-invalid-input-A.jpg)
+![Error-3](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/crud/crud-error-2-post-invalid-input-A.jpg)
 
 #### 2.2.4 Error Handling - Invalid Input - Field Validations - Result
-![Error-4](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-error-2-post-invalid-input-B.jpg)
+![Error-4](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/crud/crud-error-2-post-invalid-input-B.jpg)
 
 #### 2.2.5 Error Handling - Version Mismatch based on JPA @Version Annotation
-![Error-5](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/crud/crud-error-3-post-Version-Mismatch-B.jpg)
+![Error-5](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/crud/crud-error-3-post-Version-Mismatch-B.jpg)
 
 
 ### 2.3 Log Management 
 
 #### 2.3.1 Log Success Messages
-![Log-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/log/Log-Messages-1.jpg)
+![Log-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/log/Log-Messages-1.jpg)
 
 #### 2.3.2 Log Failure Messages
-![Log-2](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/log/Log-Messages-2.jpg)
+![Log-2](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/log/Log-Messages-2.jpg)
 
 ## 3. Configure the Template: Setup Org, Service, & Container Name, Versions, API Path in app.props.tmpl
 
@@ -203,7 +203,7 @@ Update the Properties Template
    server.version=0.1.0
 
 Sample Property File Template
-![Property File](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/MS-Property-File.jpg)
+![Property File](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/MS-Property-File.jpg)
 
 When you change the version in POM.xml, update that info in src/main/resources/app.props.tmpl - server.version property also.
 
