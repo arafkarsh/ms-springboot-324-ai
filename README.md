@@ -43,10 +43,11 @@ Here’s how it helps developers:
 | 12. | Persistent Store Example | Use a Persistent Store for Chat Memory & Retrive the Chat based on User. |
 | 13. | RAG Simple Example       | RAG based Chat Bot Use Case: Car Rental Service                          |
 | 14. | RAG Segments Example     | RAG (using Segments) based Chat Bot Use Case: Car Rental Service         |
-| 15. | RAG Query Transformer Example | RAG (using Query Transformer) Chat Bot Use Case: Biography                   |
-| 16. | RAG Query Router Example | RAG Query Routing between Car Rental Service & Biography |        
-| 17. | RAG Re-Ranking Example | RAG Re-Ranking using Cohere API. Case Study: Car Rental Service |
-| 18. | RAG MetaData Example | RAG MetaData (Data Source). Case Study: Car Rental Service |
+| 15. | RAG Query Transformer Example | RAG (using Query Transformer) Chat Bot Use Case: Biography               |
+| 16. | RAG Query Router Example | RAG Query Routing between Car Rental Service & Biography                 |        
+| 17. | RAG Re-Ranking Example | RAG Re-Ranking using Cohere API. Case Study: Car Rental Service          |
+| 18. | RAG MetaData Example | RAG MetaData (Data Source). Case Study: Car Rental Service               |
+| 19. | RAG Multiple Content Retrievers Example | RAG Multi Content Retrievers. Car Rental & Biography                     |
 
 ## Quick Test after starting the SpringBoot App
 ![Ai Prompt](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/Ai-Prompt.jpg)

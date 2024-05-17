@@ -39,6 +39,7 @@ import dev.langchain4j.rag.content.injector.ContentInjector;
 import dev.langchain4j.rag.content.injector.DefaultContentInjector;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
+import dev.langchain4j.rag.query.router.DefaultQueryRouter;
 import dev.langchain4j.rag.query.router.LanguageModelQueryRouter;
 import dev.langchain4j.rag.query.router.QueryRouter;
 import dev.langchain4j.rag.query.transformer.CompressingQueryTransformer;
@@ -387,6 +388,41 @@ public class RAGBuilder {
         RetrievalAugmentor retrievalAugmentor = DefaultRetrievalAugmentor.builder()
                 .contentRetriever(rentalCR)
                 .contentInjector(contentInjector)
+                .build();
+        // Create Assistant
+        return AiServices.builder(Assistant.class)
+                .chatLanguageModel(chatLanguageModel)
+                .retrievalAugmentor(retrievalAugmentor)
+                .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
+                .build();
+    }
+
+    /**
+     * RAG - Multiple Content Retrievers
+     * @return
+     */
+    public static Assistant createAssistantWithMultiContentRetrievers() {
+        // Create LLM
+        ChatLanguageModel chatLanguageModel = new AiBeans().createChatLanguageModel(true, true);
+        // Load the documents
+        EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
+        // Create Embedding Store for Biography
+        EmbeddingStore<TextSegment> biographyES =
+                createEmbeddingStore("akiera-kiera_biography.txt", embeddingModel);
+        // Content Retriever for Biography
+        ContentRetriever biographyCR = createContentRetriever(biographyES, embeddingModel);
+        // Create Embedding Store for Car Rental Service
+        EmbeddingStore<TextSegment> rentalES =
+                createEmbeddingStore("ozazo-car-rental-services.txt", embeddingModel);
+        //Content Retriever for Car Rental Service.
+        ContentRetriever rentalCR = createContentRetriever(rentalES, embeddingModel);
+
+        // Let's create a query router that will route each query to both retrievers.
+        QueryRouter queryRouter = new DefaultQueryRouter(biographyCR, rentalCR);
+
+        // Retrieval Augmentor
+        RetrievalAugmentor retrievalAugmentor = DefaultRetrievalAugmentor.builder()
+                .queryRouter(queryRouter)
                 .build();
         // Create Assistant
         return AiServices.builder(Assistant.class)
