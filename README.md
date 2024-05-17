@@ -47,11 +47,11 @@ Here’s how it helps developers:
 | 16. | RAG Query Router Example | RAG Query Routing between Car Rental Service & Biography |                           
 
 ## Quick Test after starting the SpringBoot App
-![Ai Prompt](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/Ai-Prompt.jpg)
+![Ai Prompt](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/Ai-Prompt.jpg)
 
 ## Sentiment Analysis using ChatGPT 4o
 
-![Ai Sentiment](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/Ai-Ex-Sentiment-2.jpg)
+![Ai Sentiment](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/Ai-Ex-Sentiment-2.jpg)
 
 ## ChatBot using RAG (Custom Data) - Case Study: Car Rental Service
 
@@ -79,29 +79,29 @@ sources. This approach allows organizations to exert more control over the conte
 the model, ensuring accuracy and relevance. Additionally, it provides users with clearer insights 
 into the sources and processes the LLM uses to formulate its responses.
 
-![Ai RAG-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/diagrams/Ai-RAG-Architecture.jpg)
+![Ai RAG-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/diagrams/Ai-RAG-Architecture.jpg)
 
 ### Conversation using LLM with (Custom Data) Car Rental Service Agreement
 
-![Ai ChatBot-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/Ai-Ex-RAG-OZO-1.jpg)
-![Ai ChatBot-2](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/Ai-Ex-RAG-OZO-2.jpg)
-![Ai ChatBot-3](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/Ai-Ex-RAG-OZO-3.jpg)
+![Ai ChatBot-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/Ai-Ex-RAG-OZO-1.jpg)
+![Ai ChatBot-2](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/Ai-Ex-RAG-OZO-2.jpg)
+![Ai ChatBot-3](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/Ai-Ex-RAG-OZO-3.jpg)
 
 ## Data Extractions using ChatGPT 4o
 
-![Ai Sentiment](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/Ai-Ex-DataExtractor.jpg)
+![Ai Sentiment](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/Ai-Ex-DataExtractor.jpg)
 
 ## LangChain4J operates on two levels of abstraction:
 
 - Low level. At this level, you have the most freedom and access to all the low-level components such as ChatLanguageModel, UserMessage, AiMessage, EmbeddingStore, Embedding, etc. These are the "primitives" of your LLM-powered application. You have complete control over how to combine them, but you will need to write more glue code.
 - High level. At this level, you interact with LLMs using high-level APIs like AiServices and Chains, which hides all the complexity and boilerplate from you. You still have the flexibility to adjust and fine-tune the behavior, but it is done in a declarative manner.
 
-![LangChain4J](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/langchain4j-components.jpg)
+![LangChain4J](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/langchain4j-components.jpg)
 Read more... <a href="https://docs.langchain4j.dev/intro">LangChain4J Introduction</a>
 
 ## Package Structure
 
-![Package Structure](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/MS-Pkg-Structure.jpg)
+![Package Structure](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/MS-Pkg-Structure.jpg)
 
 ## Pre-Requisites
 
