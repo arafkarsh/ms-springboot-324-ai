@@ -1,4 +1,4 @@
-# Ai - Springboot / Langchain4J Examples
+# Gen Ai - Springboot / Langchain4J Examples
 
 Generative AI refers to a subset of artificial intelligence that can generate new content based 
 on input data. This encompasses models that can create text, images, music, and even videos. 
@@ -13,7 +13,7 @@ learn patterns and structures in the data. They have a wide range of application
 - Data Augmentation: Generating additional data for training other machine learning models.
 - Healthcare: Assisting in medical imaging and creating personalized treatment plans.
 
-## How LangChain4J API Helps Developers Build Spring Boot AI Apps
+## How LangChain4J Gen AI API Helps Developers Build Spring Boot AI Apps
 
 LangChain4J is a Java library designed to simplify the integration of large language models 
 (LLMs) and AI capabilities into Java applications, including those built with Spring Boot. 
@@ -46,6 +46,7 @@ Here’s how it helps developers:
 | 15. | RAG Query Transformer Example | RAG (using Query Transformer) Chat Bot Use Case: Biography                   |
 | 16. | RAG Query Router Example | RAG Query Routing between Car Rental Service & Biography |        
 | 17. | RAG Re-Ranking Example | RAG Re-Ranking using Cohere API. Case Study: Car Rental Service |
+| 18. | RAG MetaData Example | RAG MetaData (Data Source). Case Study: Car Rental Service |
 
 ## Quick Test after starting the SpringBoot App
 ![Ai Prompt](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/Ai-Prompt.jpg)

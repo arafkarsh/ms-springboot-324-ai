@@ -29,11 +29,14 @@ import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.embedding.AllMiniLmL6V2EmbeddingModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.embedding.bge.small.en.v15.BgeSmallEnV15QuantizedEmbeddingModel;
+import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.scoring.ScoringModel;
 import dev.langchain4j.rag.DefaultRetrievalAugmentor;
 import dev.langchain4j.rag.RetrievalAugmentor;
 import dev.langchain4j.rag.content.aggregator.ContentAggregator;
 import dev.langchain4j.rag.content.aggregator.ReRankingContentAggregator;
+import dev.langchain4j.rag.content.injector.ContentInjector;
+import dev.langchain4j.rag.content.injector.DefaultContentInjector;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.rag.query.router.LanguageModelQueryRouter;
@@ -59,6 +62,7 @@ import java.util.Map;
 
 import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.loadDocument;
 import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.loadDocuments;
+import static java.util.Arrays.asList;
 
 /**
  * Retrieval-Augmented Generation (RAG) Builder
@@ -176,7 +180,7 @@ public class RAGBuilder {
      * @return
      */
     public static CarRentalAssistant createCarRentalAssistantWithSegments() {
-        ChatLanguageModel chatLanguageModel = new AiBeans().createChatLanguageModel();
+        ChatLanguageModel chatLanguageModel = new AiBeans().createChatLanguageModel(true, true);
 
         // Now, let's load a document that we want to use for RAG.
         // We will use the terms of use from an imaginary car rental company, "Miles of Smiles".
@@ -247,6 +251,8 @@ public class RAGBuilder {
      * @return
      */
     public static Assistant createAssistantWithQueryTransformer() {
+        // Create LLM
+        ChatLanguageModel chatLanguageModel = new AiBeans().createChatLanguageModel(true, true);
         // Load the documents
         Document document = loadDocument(Utils.toPath("static/data/e/akiera-kiera_biography.txt"), new TextDocumentParser());
         EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
@@ -258,8 +264,6 @@ public class RAGBuilder {
                 .build();
 
         ingestor.ingest(document);
-        // Create LLM
-        ChatLanguageModel chatLanguageModel = new AiBeans().createChatLanguageModel();
         // We will create a CompressingQueryTransformer, which is responsible for compressing
         // the user's query and the preceding conversation into a single, stand-alone query.
         // This should significantly improve the quality of the retrieval process.
@@ -293,6 +297,8 @@ public class RAGBuilder {
      * @return
      */
     public static Assistant createAssistantWithQueryRouter() {
+        // Create LLM
+        ChatLanguageModel chatLanguageModel = new AiBeans().createChatLanguageModel(true, true);
         // Load the documents
         EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
         // Create Embedding Store for Biography
@@ -305,8 +311,6 @@ public class RAGBuilder {
                 createEmbeddingStore("ozazo-car-rental-services.txt", embeddingModel);
         //Content Retriever for Car Rental Service.
         ContentRetriever rentalCR = createContentRetriever(rentalES, embeddingModel);
-        // Create LLM
-        ChatLanguageModel chatLanguageModel = new AiBeans().createChatLanguageModel();
         // Let's create a query router.
         Map<ContentRetriever, String> retrieverToDescription = new HashMap<>();
         retrieverToDescription.put(biographyCR, "Biography of Akiera Kiera");
@@ -330,6 +334,8 @@ public class RAGBuilder {
      * @return
      */
     public static Assistant createAssistantWithReRanking() {
+        // Create LLM
+        ChatLanguageModel chatLanguageModel = new AiBeans().createChatLanguageModel(true, true);
         // Load the documents
         EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
         // Create Embedding Store for Car Rental Service
@@ -337,9 +343,6 @@ public class RAGBuilder {
                 createEmbeddingStore("ozazo-car-rental-services.txt", embeddingModel);
         //Content Retriever for Car Rental Service.
         ContentRetriever rentalCR = createContentRetriever(rentalES, embeddingModel);
-        // Create LLM
-        ChatLanguageModel chatLanguageModel = new AiBeans().createChatLanguageModel();
-
         // To register and get a free API key for Cohere, please visit the following link:
         // https://dashboard.cohere.com/welcome/register
         ScoringModel scoringModel = CohereScoringModel.withApiKey(AiConstants.COHERE_API_KEY);
@@ -354,6 +357,38 @@ public class RAGBuilder {
                 .contentAggregator(contentAggregator)
                 .build();
 
+        return AiServices.builder(Assistant.class)
+                .chatLanguageModel(chatLanguageModel)
+                .retrievalAugmentor(retrievalAugmentor)
+                .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
+                .build();
+    }
+
+    /**
+     * RAG - Meta Data
+     * @return
+     */
+    public static Assistant createAssistantWithMetaData() {
+        // Create LLM
+        ChatLanguageModel chatLanguageModel = new AiBeans().createChatLanguageModel(true, true);
+        // Load the documents
+        EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
+        // Create Embedding Store for Car Rental Service
+        EmbeddingStore<TextSegment> rentalES =
+                createEmbeddingStore("ozazo-car-rental-services.txt", embeddingModel);
+        //Content Retriever for Car Rental Service.
+        ContentRetriever rentalCR = createContentRetriever(rentalES, embeddingModel);
+        // Each retrieved segment should include "file_name" and "index" metadata values in the prompt
+        ContentInjector contentInjector = DefaultContentInjector.builder()
+                // .promptTemplate(...) // Formatting can also be changed
+                .metadataKeysToInclude(asList("file_name", "index"))
+                .build();
+        // Retrieval Augmentor
+        RetrievalAugmentor retrievalAugmentor = DefaultRetrievalAugmentor.builder()
+                .contentRetriever(rentalCR)
+                .contentInjector(contentInjector)
+                .build();
+        // Create Assistant
         return AiServices.builder(Assistant.class)
                 .chatLanguageModel(chatLanguageModel)
                 .retrievalAugmentor(retrievalAugmentor)

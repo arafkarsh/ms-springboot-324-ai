@@ -73,6 +73,16 @@ public class AiBeans {
 
     /**
      * Returns Chat Language Model
+     * @param _req
+     * @param _res
+     * @return
+     */
+    public ChatLanguageModel createChatLanguageModel(boolean _req, boolean _res) {
+        return createChatLanguageModel(AiConstants.getAlgo(), _req, _res);
+    }
+
+    /**
+     * Returns Chat Language Model
      * @param _model
      * @return
      */
@@ -147,7 +157,7 @@ public class AiBeans {
     public static void printResult(String _request, String _response) {
         System.out.println("--[Human]----------------------------------------------------------");
         System.out.println(_request);
-        System.out.println("--[HAL9000Assistant]-------------------------------------------------------");
+        System.out.println("--[HAL9000]-------------------------------------------------------");
         System.out.println(_response);
         System.out.println("-------------------------------------------------------------------");
     }
