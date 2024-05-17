@@ -63,6 +63,7 @@ into the sources and processes the LLM uses to formulate its responses.
 | 12. | Persistent Store Example | Use a Persistent Store for Chat Memory & Retrive the Chat based on User. |
 | 13. | RAG Simple Example       | RAG based Chat Bot Use Case: Car Rental Service                          |
 | 14. | RAG Segments Example     | RAG (using Segments) based Chat Bot Use Case: Car Rental Service         |
+| 15. | RAG Query Transformer Example | RAG (using Query Transformer) Chat Bot Use Case: Car Rental Service |
 
 ## Package Structure
 
