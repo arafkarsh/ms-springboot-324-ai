@@ -34,6 +34,8 @@ import dev.langchain4j.rag.DefaultRetrievalAugmentor;
 import dev.langchain4j.rag.RetrievalAugmentor;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
+import dev.langchain4j.rag.query.router.LanguageModelQueryRouter;
+import dev.langchain4j.rag.query.router.QueryRouter;
 import dev.langchain4j.rag.query.transformer.CompressingQueryTransformer;
 import dev.langchain4j.rag.query.transformer.QueryTransformer;
 import dev.langchain4j.retriever.EmbeddingStoreRetriever;
@@ -46,7 +48,9 @@ import io.fusion.air.microservice.ai.examples.assistants.CarRentalAssistant;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.utils.Utils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.loadDocument;
 import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.loadDocuments;
@@ -122,6 +126,9 @@ public class RAGBuilder {
                 .build();
     }
 
+    // =========================================================================================================================
+    // RAG - Retrieval Augmented Generation
+    // =========================================================================================================================
     /**
      * Create a Simple RAG for the Car Rental Service
      *
@@ -159,7 +166,7 @@ public class RAGBuilder {
     }
 
     /**
-     * Create Car Rental Assistant using RAG to process Custom Data
+     * RAG - Query Segments
      *
      * @return
      */
@@ -231,7 +238,7 @@ public class RAGBuilder {
     }
 
     /**
-     * Create Assistant with Query Transformer
+     * RAG - Query Transformer
      * @return
      */
     public static Assistant createAssistantWithQueryTransformer() {
@@ -272,6 +279,79 @@ public class RAGBuilder {
                 .chatLanguageModel(chatLanguageModel)
                 .retrievalAugmentor(retrievalAugmentor)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
+                .build();
+    }
+
+    /**
+     * RAG - Query Router
+     *
+     * @return
+     */
+    public static Assistant createAssistantWithQueryRouter() {
+        // Load the documents
+        EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
+        // Create Embedding Store
+        EmbeddingStore<TextSegment> biographyES =
+                createEmbeddingStore("akiera-kiera_biography.txt", embeddingModel);
+        // Content Retriever for Biography
+        ContentRetriever biographyCR = createContentRetriever(biographyES, embeddingModel);
+        //Content Retriever for Car Rental Service.
+        EmbeddingStore<TextSegment> rentalES =
+                createEmbeddingStore("ozazo-car-rental-services.txt", embeddingModel);
+        ContentRetriever rentalCR = createContentRetriever(rentalES, embeddingModel);
+        // Create LLM
+        ChatLanguageModel chatLanguageModel = new AiBeans().createChatLanguageModel();
+        // Let's create a query router.
+        Map<ContentRetriever, String> retrieverToDescription = new HashMap<>();
+        retrieverToDescription.put(biographyCR, "Biography of Akiera Kiera");
+        retrieverToDescription.put(rentalCR, "Terms of use of Ozazo Car Rental Company");
+        QueryRouter queryRouter = new LanguageModelQueryRouter(chatLanguageModel, retrieverToDescription);
+        // Retrieval Augmentor
+        RetrievalAugmentor retrievalAugmentor = DefaultRetrievalAugmentor.builder()
+                .queryRouter(queryRouter)
+                .build();
+        // Create Assistant
+        return AiServices.builder(Assistant.class)
+                .chatLanguageModel(chatLanguageModel)
+                .retrievalAugmentor(retrievalAugmentor)
+                .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
+                .build();
+    }
+
+    /**
+     * Create EmbeddingStore<TextSegment>
+     *
+     * @param documentName
+     * @param embeddingModel
+     * @return
+     */
+    private static EmbeddingStore<TextSegment> createEmbeddingStore(String documentName, EmbeddingModel embeddingModel) {
+        DocumentParser documentParser = new TextDocumentParser();
+        Document document = loadDocument(Utils.toPath("static/data/e/"+documentName), documentParser);
+
+        DocumentSplitter splitter = DocumentSplitters.recursive(300, 0);
+        List<TextSegment> segments = splitter.split(document);
+
+        List<Embedding> embeddings = embeddingModel.embedAll(segments).content();
+        EmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
+        embeddingStore.addAll(embeddings, segments);
+        return embeddingStore;
+    }
+
+    /**
+     * Create Content Retriever
+     *
+     * @param embeddingStore
+     * @param embeddingModel
+     * @return
+     */
+    private static ContentRetriever createContentRetriever(
+            EmbeddingStore<TextSegment> embeddingStore, EmbeddingModel embeddingModel) {
+        return  EmbeddingStoreContentRetriever.builder()
+                .embeddingStore(embeddingStore)
+                .embeddingModel(embeddingModel)
+                .maxResults(2)
+                .minScore(0.6)
                 .build();
     }
 }
