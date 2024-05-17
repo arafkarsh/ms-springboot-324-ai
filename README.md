@@ -35,7 +35,7 @@ into the sources and processes the LLM uses to formulate its responses.
 
 ![Ai RAG-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/diagrams/Ai-RAG-Architecture.jpg)
 
-### Conversation with a Gen AI with Custom Data Car Rental Service Agreement Agreement
+### Conversation using LLM with (Custom Data) Car Rental Service Agreement
 
 ![Ai ChatBot-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/Ai-Ex-RAG-OZO-1.jpg)
 ![Ai ChatBot-2](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/ai/Ai-Ex-RAG-OZO-2.jpg)
