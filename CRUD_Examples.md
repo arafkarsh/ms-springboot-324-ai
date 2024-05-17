@@ -119,6 +119,9 @@ production environment.
 #### Step 1.5.3: Import Into Postman - Confirm
 ![Postman Import](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/Import-API-into-Postman-2.jpg)
 
+#### Step 1.5.4: Test the API using Postman
+![Postman Test](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/master/diagrams/Import-API-into-Postman-3.jpg)
+
 ## 2. CRUD Operations Demo & Error Handling
 
 ### 2.1 CRUD Operations 
