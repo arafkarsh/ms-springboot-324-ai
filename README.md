@@ -44,7 +44,8 @@ Here’s how it helps developers:
 | 13. | RAG Simple Example       | RAG based Chat Bot Use Case: Car Rental Service                          |
 | 14. | RAG Segments Example     | RAG (using Segments) based Chat Bot Use Case: Car Rental Service         |
 | 15. | RAG Query Transformer Example | RAG (using Query Transformer) Chat Bot Use Case: Biography                   |
-| 16. | RAG Query Router Example | RAG Query Routing between Car Rental Service & Biography |                           
+| 16. | RAG Query Router Example | RAG Query Routing between Car Rental Service & Biography |        
+| 17. | RAG Re-Ranking Example | RAG Re-Ranking using Cohere API. Case Study: Car Rental Service |
 
 ## Quick Test after starting the SpringBoot App
 ![Ai Prompt](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/Ai-Prompt.jpg)

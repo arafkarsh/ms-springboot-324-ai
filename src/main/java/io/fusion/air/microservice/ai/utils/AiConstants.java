@@ -55,6 +55,7 @@ public class AiConstants {
 
     // API Keys -----------------------------------------------------------------------
     public static final String OPENAI_API_KEY = System.getenv("OPENAI_API_KEY");
+    public static final String COHERE_API_KEY = System.getenv("COHERE_API_KEY");
 
     // Algo Config ----------------------------------------------------------------------
     @Value("${langchain4j.default.algo:gpt-4o-2024-05-13}")

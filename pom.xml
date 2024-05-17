@@ -118,6 +118,16 @@
 			<artifactId>langchain4j-embeddings-bge-small-en-v15-q</artifactId>
 			<version>${langchain4j.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j-cohere</artifactId>
+			<version>${langchain4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j-embedding-store-filter-parser-sql</artifactId>
+			<version>${langchain4j.version}</version>
+		</dependency>
 		<!--
 		mapdb dependency has issues in the pom. It started to download
 		eclipse-collection-api versions 7.x, 8.x, 9.x etc..

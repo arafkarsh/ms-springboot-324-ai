@@ -29,9 +29,11 @@ import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.embedding.AllMiniLmL6V2EmbeddingModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.embedding.bge.small.en.v15.BgeSmallEnV15QuantizedEmbeddingModel;
-import dev.langchain4j.model.openai.OpenAiChatModel;
+import dev.langchain4j.model.scoring.ScoringModel;
 import dev.langchain4j.rag.DefaultRetrievalAugmentor;
 import dev.langchain4j.rag.RetrievalAugmentor;
+import dev.langchain4j.rag.content.aggregator.ContentAggregator;
+import dev.langchain4j.rag.content.aggregator.ReRankingContentAggregator;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.rag.query.router.LanguageModelQueryRouter;
@@ -43,11 +45,14 @@ import dev.langchain4j.service.AiServices;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
+import dev.langchain4j.model.cohere.CohereScoringModel;
+// Custom
 import io.fusion.air.microservice.ai.examples.assistants.Assistant;
 import io.fusion.air.microservice.ai.examples.assistants.CarRentalAssistant;
 import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 import io.fusion.air.microservice.utils.Utils;
-
+// Java
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -290,14 +295,15 @@ public class RAGBuilder {
     public static Assistant createAssistantWithQueryRouter() {
         // Load the documents
         EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
-        // Create Embedding Store
+        // Create Embedding Store for Biography
         EmbeddingStore<TextSegment> biographyES =
                 createEmbeddingStore("akiera-kiera_biography.txt", embeddingModel);
         // Content Retriever for Biography
         ContentRetriever biographyCR = createContentRetriever(biographyES, embeddingModel);
-        //Content Retriever for Car Rental Service.
+        // Create Embedding Store for Car Rental Service
         EmbeddingStore<TextSegment> rentalES =
                 createEmbeddingStore("ozazo-car-rental-services.txt", embeddingModel);
+        //Content Retriever for Car Rental Service.
         ContentRetriever rentalCR = createContentRetriever(rentalES, embeddingModel);
         // Create LLM
         ChatLanguageModel chatLanguageModel = new AiBeans().createChatLanguageModel();
@@ -311,6 +317,43 @@ public class RAGBuilder {
                 .queryRouter(queryRouter)
                 .build();
         // Create Assistant
+        return AiServices.builder(Assistant.class)
+                .chatLanguageModel(chatLanguageModel)
+                .retrievalAugmentor(retrievalAugmentor)
+                .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
+                .build();
+    }
+
+    /**
+     * RAG - ReRanking
+     *
+     * @return
+     */
+    public static Assistant createAssistantWithReRanking() {
+        // Load the documents
+        EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
+        // Create Embedding Store for Car Rental Service
+        EmbeddingStore<TextSegment> rentalES =
+                createEmbeddingStore("ozazo-car-rental-services.txt", embeddingModel);
+        //Content Retriever for Car Rental Service.
+        ContentRetriever rentalCR = createContentRetriever(rentalES, embeddingModel);
+        // Create LLM
+        ChatLanguageModel chatLanguageModel = new AiBeans().createChatLanguageModel();
+
+        // To register and get a free API key for Cohere, please visit the following link:
+        // https://dashboard.cohere.com/welcome/register
+        ScoringModel scoringModel = CohereScoringModel.withApiKey(AiConstants.COHERE_API_KEY);
+
+        ContentAggregator contentAggregator = ReRankingContentAggregator.builder()
+                .scoringModel(scoringModel)
+                .minScore(0.8) // we want to present the LLM with only the truly relevant segments for the user's query
+                .build();
+
+        RetrievalAugmentor retrievalAugmentor = DefaultRetrievalAugmentor.builder()
+                .contentRetriever(rentalCR)
+                .contentAggregator(contentAggregator)
+                .build();
+
         return AiServices.builder(Assistant.class)
                 .chatLanguageModel(chatLanguageModel)
                 .retrievalAugmentor(retrievalAugmentor)
