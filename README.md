@@ -27,7 +27,7 @@ Here’s how it helps developers:
 
 ## Case Study: Health Care App - Gen Ai Enabled Diagnosis Microservices
 
-![Ai RAG-0](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/diagrams/Ai-Case-Study-Architecturejpg)
+![Ai RAG-0](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/diagrams/Ai-Case-Study-Architecture.jpg)
 
 ## Generative AI Examples using LangChain4J
 
@@ -87,7 +87,7 @@ sources. This approach allows organizations to exert more control over the conte
 the model, ensuring accuracy and relevance. Additionally, it provides users with clearer insights 
 into the sources and processes the LLM uses to formulate its responses.
 
-![Ai RAG-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/diagrams/Ai-Case-Study-Architecturejpg)
+![Ai RAG-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/diagrams/Ai-Case-Study-Architecture.jpg)
 
 ### Conversation using LLM with (Custom Data) Car Rental Service Agreement
 
