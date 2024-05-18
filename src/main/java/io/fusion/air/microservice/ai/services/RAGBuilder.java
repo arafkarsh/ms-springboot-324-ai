@@ -32,7 +32,6 @@ import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.embedding.bge.small.en.v15.BgeSmallEnV15QuantizedEmbeddingModel;
 import dev.langchain4j.model.input.Prompt;
 import dev.langchain4j.model.input.PromptTemplate;
-import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.scoring.ScoringModel;
 import dev.langchain4j.rag.DefaultRetrievalAugmentor;
 import dev.langchain4j.rag.RetrievalAugmentor;
@@ -55,8 +54,8 @@ import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 import dev.langchain4j.model.cohere.CohereScoringModel;
 // Custom
-import io.fusion.air.microservice.ai.examples.assistants.Assistant;
-import io.fusion.air.microservice.ai.examples.assistants.CarRentalAssistant;
+import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
+import io.fusion.air.microservice.ai.examples.core.assistants.CarRentalAssistant;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 import io.fusion.air.microservice.utils.Utils;

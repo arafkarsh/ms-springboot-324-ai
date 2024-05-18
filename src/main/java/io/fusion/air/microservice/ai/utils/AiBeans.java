@@ -15,30 +15,16 @@
  */
 package io.fusion.air.microservice.ai.utils;
 
-import dev.langchain4j.chain.ConversationalRetrievalChain;
-import dev.langchain4j.data.document.Document;
-import dev.langchain4j.data.document.parser.TextDocumentParser;
-import dev.langchain4j.data.document.splitter.DocumentSplitters;
-import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.image.ImageModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiImageModel;
-import dev.langchain4j.retriever.EmbeddingStoreRetriever;
+import dev.langchain4j.model.ollama.OllamaChatModel;
 import dev.langchain4j.service.AiServices;
-import dev.langchain4j.store.embedding.EmbeddingStore;
-import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
-import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
-import dev.langchain4j.model.embedding.AllMiniLmL6V2EmbeddingModel;
-import dev.langchain4j.model.embedding.EmbeddingModel;
-
-import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.loadDocument;
-
 // Custom
-import io.fusion.air.microservice.ai.examples.assistants.HAL9000Assistant;
+import io.fusion.air.microservice.ai.examples.core.assistants.HAL9000Assistant;
 // Spring
-import io.fusion.air.microservice.utils.Utils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -54,7 +40,7 @@ import static java.time.Duration.ofSeconds;
 public class AiBeans {
 
     /**
-     * Returns Chat Language Model with Default Model GPT 3.5 Turbo
+     * Returns Chat Language Model based on ChatGPT 3.5, 4.0, 4o (Omni)
      * @return
      */
     @Bean(name = "ChatLangugeModelGPT")
@@ -63,7 +49,7 @@ public class AiBeans {
     }
 
     /**
-     * Returns Chat Language Model
+     * Returns Chat Language Model based on ChatGPT 3.5, 4.0, 4o (Omni)
      * @param _model
      * @return
      */
@@ -72,7 +58,7 @@ public class AiBeans {
     }
 
     /**
-     * Returns Chat Language Model
+     * Returns Chat Language Model based on ChatGPT 3.5, 4.0, 4o (Omni)
      * @param _req
      * @param _res
      * @return
@@ -82,7 +68,7 @@ public class AiBeans {
     }
 
     /**
-     * Returns Chat Language Model
+     * Returns Chat Language Model based on ChatGPT 3.5, 4.0, 4o (Omni)
      * @param _model
      * @return
      */
@@ -97,6 +83,18 @@ public class AiBeans {
                 .modelName(_model)
                 .logRequests(_req)
                 .logResponses(_res)
+                .build();
+    }
+
+    /**
+     * Returns Chat Language Model based on Llama 3
+     * @return
+     */
+    @Bean(name = "ChatLangugeModelOllama")
+    public ChatLanguageModel createChatLanguageModelLlama() {
+        return OllamaChatModel.builder()
+                .baseUrl("http://localhost:11434/api/generate/")
+                .modelName("llama3")
                 .build();
     }
 

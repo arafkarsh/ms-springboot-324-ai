@@ -57,6 +57,16 @@ public class AiConstants {
     public static final String OPENAI_API_KEY = System.getenv("OPENAI_API_KEY");
     public static final String COHERE_API_KEY = System.getenv("COHERE_API_KEY");
 
+    // Llama Config --------------------------------------------------------------------
+    @Value("${langchain4j.llama.url:http://localhost:11434/api/generate}")
+    private  String llamaBaseUrl;
+
+    @Value("${langchain4j.llama.model:llama3}")
+    private  String llamaModel;
+
+    public static String LLAMA_URL;
+    public static String LLAMA_MODEL;
+
     // Algo Config ----------------------------------------------------------------------
     @Value("${langchain4j.default.algo:gpt-4o-2024-05-13}")
     private  String defaultAlgo;
@@ -64,7 +74,9 @@ public class AiConstants {
 
     @PostConstruct
     public void init() {
-        DEFAULT_ALGO = this.defaultAlgo;
+        DEFAULT_ALGO  = this.defaultAlgo;
+        LLAMA_URL       = this.llamaBaseUrl;
+        LLAMA_MODEL   = this.llamaModel;
     }
 
     /**

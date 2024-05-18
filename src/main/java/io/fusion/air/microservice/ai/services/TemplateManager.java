@@ -19,8 +19,8 @@ import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.input.Prompt;
 import dev.langchain4j.model.input.PromptTemplate;
 import dev.langchain4j.model.input.structured.StructuredPromptProcessor;
-import io.fusion.air.microservice.ai.examples.prompts.StructuredPromptFeelings;
-import io.fusion.air.microservice.ai.examples.prompts.StructuredPromptRecipe;
+import io.fusion.air.microservice.ai.examples.core.prompts.StructuredPromptFeelings;
+import io.fusion.air.microservice.ai.examples.core.prompts.StructuredPromptRecipe;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 

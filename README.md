@@ -155,6 +155,63 @@ Without generated application.properties file the service will NOT be running. T
 1. test OR ./test (Runs in Linux or Mac OS)
 2. Execute the curl commands directly (from the test script)
 
+## Chat Models
+
+- OpenAI (Examples available)
+- Ollama - run AI models on your local machine (Examples available)
+- Azure Open AI
+- Amazon Bedrock
+    - Cohere's Command
+    - AI21 Labs' Jurassic-2
+    - Meta's LLama 2
+    - Amazon's Titan
+- Google Vertex AI Palm
+- Google Gemini
+- HuggingFace - access thousands of models, including those from Meta such as Llama2
+- MistralAI
+
+## Text-to-image Models
+
+- OpenAI with DALL-E (Examples available)
+- StabilityAI
+
+## Transcription (audio to text) Models
+
+- OpenAI
+
+## Embedding Models
+
+- OpenAI
+- Ollama
+- Azure OpenAI
+- ONNX
+- PostgresML
+- Bedrock Cohere
+- Bedrock Titan
+- Google VertexAI
+- Mistal AI
+
+The Vector Store API provides portability across different providers, featuring a novel SQL-like metadata filtering API that maintains portability.
+
+## Vector Databases
+
+- Azure Vector Search
+- Chroma
+- Milvus
+- Neo4j
+- PostgreSQL/PGVector
+- PineCone
+- Redis
+- Weaviate
+- Qdrant
+
+## Models supported are
+
+- OpenAI
+- Azure OpenAI
+- VertexAI
+- Mistral AI
+
 ## Checkout the CRUD Operation Examples 
 
 1. Setting up Postman with REST Endpoints for Testing

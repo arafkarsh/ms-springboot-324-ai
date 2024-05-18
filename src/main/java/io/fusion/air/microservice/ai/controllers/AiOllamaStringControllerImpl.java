@@ -51,10 +51,10 @@ import static org.slf4j.LoggerFactory.getLogger;
 @Configuration
 @RestController
 // "/ms-ai/api/v1"
-@RequestMapping("${service.api.path}/ai/openai/string")
+@RequestMapping("${service.api.path}/ai/ollama/string")
 @RequestScope
-@Tag(name = "AI - OpenAi", description = "GPT 3.5, GPT 3.5 Turbo, GPT 4, GPT 4o, Dall-E 3")
-public class AiOpenAiStringControllerImpl extends AbstractController {
+@Tag(name = "AI - Ollama", description = "Llama3, llama2, mistral, codellama, phi or tinyllama")
+public class AiOllamaStringControllerImpl extends AbstractController {
 
 	// Set Logger -> Lookup will automatically determine the class name.
 	private static final Logger log = getLogger(lookup().lookupClass());
@@ -73,7 +73,7 @@ public class AiOpenAiStringControllerImpl extends AbstractController {
 	 *
 	 * @param _chatLanguageModel
 	 */
-	public AiOpenAiStringControllerImpl(@Qualifier("ChatLangugeModelGPT")
+	public AiOllamaStringControllerImpl(@Qualifier("ChatLangugeModelOllama")
 							ChatLanguageModel _chatLanguageModel) {
 		this.chatLanguageModel = _chatLanguageModel;
 	}
@@ -81,7 +81,7 @@ public class AiOpenAiStringControllerImpl extends AbstractController {
 	/**
 	 * Create the AI Chat Conversation
 	 */
-	@Operation(summary = "AI Chat - Generic ChatGPT 3.5 or 4o ")
+	@Operation(summary = "AI Chat - Generic Llama3")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200",
 					description = "AI Conversations",
@@ -155,7 +155,7 @@ public class AiOpenAiStringControllerImpl extends AbstractController {
 	private String createResponse(String _response, String _msg) {
 		StringBuilder sb = new StringBuilder();
 		String request = _msg.replaceAll("\n", " ").trim();
-		sb.append("Algorithm = ").append(AiConstants.getAlgo()).append("\n");
+		sb.append("Algorithm = ").append("Llama3").append("\n");
 		sb.append("Request   = ").append(request).append("\n");
 		sb.append("Response  = ").append("\n").append(_response);
 		return sb.toString();

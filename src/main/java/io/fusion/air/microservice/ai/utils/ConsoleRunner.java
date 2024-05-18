@@ -15,8 +15,7 @@
  */
 package io.fusion.air.microservice.ai.utils;
 // Custom
-import io.fusion.air.microservice.ai.examples.assistants.Assistant;
-import io.fusion.air.microservice.ai.examples.assistants.CarRentalAssistant;
+import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.services.CustomDataAnalyzer;
 import io.fusion.air.microservice.ai.services.ImageBuilder;
 import io.fusion.air.microservice.ai.services.TemplateManager;

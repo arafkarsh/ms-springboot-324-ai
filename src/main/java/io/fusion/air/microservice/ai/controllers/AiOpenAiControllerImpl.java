@@ -65,7 +65,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 // "/ms-ai/api/v1"
 @RequestMapping("${service.api.path}/ai/openai")
 @RequestScope
-@Tag(name = "AI", description = "Ex. io.f.a.m.adapters.controllers.AiOpenAiControllerImpl")
+@Tag(name = "AI - OpenAi", description = "GPT 3.5, GPT 3.5 Turbo, GPT 4, GPT 4o, Dall-E 3")
 public class AiOpenAiControllerImpl extends AbstractController {
 
 	// Set Logger -> Lookup will automatically determine the class name.
