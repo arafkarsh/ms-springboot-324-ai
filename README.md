@@ -25,6 +25,10 @@ Here’s how it helps developers:
 - Spring Boot Integration: LangChain4J supports Spring Boot, making it easier for developers to create robust and scalable AI applications. The integration allows seamless incorporation of AI services into Spring Boot applications, leveraging Spring's dependency injection and configuration management features.
 - Examples and Documentation: LangChain4J offers extensive documentation and examples, guiding developers through various use cases and demonstrating how to implement AI-powered functionalities in their applications.
 
+## Case Study: Health Care App - Gen Ai Enabled Diagnosis Microservices
+
+![Ai RAG-0](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/diagrams/Ai-Case-Study-Architecturejpg)
+
 ## Generative AI Examples using LangChain4J
 
 | #   | Example                  | Details                                                                  |
@@ -83,7 +87,7 @@ sources. This approach allows organizations to exert more control over the conte
 the model, ensuring accuracy and relevance. Additionally, it provides users with clearer insights 
 into the sources and processes the LLM uses to formulate its responses.
 
-![Ai RAG-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/diagrams/Ai-RAG-Architecture.jpg)
+![Ai RAG-1](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/diagrams/Ai-Case-Study-Architecturejpg)
 
 ### Conversation using LLM with (Custom Data) Car Rental Service Agreement
 
