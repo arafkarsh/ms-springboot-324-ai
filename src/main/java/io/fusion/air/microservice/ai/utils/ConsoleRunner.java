@@ -89,23 +89,28 @@ public class ConsoleRunner implements CommandLineRunner {
     }
 
     /**
-     * For Ozazo Car Rental Service (Default)
-     * @param assistant
+     * Start a Command Line Conversation with an Gen AI Assistant
+     *
+     * @param _assistant
      */
-    public static void startConversationWith(Assistant assistant) {
-        startConversationWith(assistant, "OZAZO Car Rental Service ChatBot....");
+    public static void startConversationWith(Assistant _assistant) {
+        startConversationWith(_assistant, "OZAZO Car Rental Service ChatBot....");
     }
 
     /**
      * Start a Command Line Conversation with an Gen AI Assistant
      *
-     * @param assistant
-     * @param header
+     * @param _assistant
+     * @param _header
      */
-    public static void startConversationWith(Assistant assistant, String header) {
+    public static void startConversationWith(Assistant _assistant, String _header) {
+        if(_assistant == null || _header == null) {
+            System.out.println("Invalid Inputs!!");
+            return;
+        }
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("==========================================================================================");
-            System.out.println(header);
+            System.out.println(_header);
             System.out.println("Type exit or [q]uit, to quit the Prompt.");
             System.out.println("------------------------------------------------------------------------------------------");
             while (true) {
@@ -119,7 +124,7 @@ public class ConsoleRunner implements CommandLineRunner {
                         || "q".equalsIgnoreCase(userQuery)) {
                     break;
                 }
-                String response = assistant.chat(userQuery);
+                String response = _assistant.chat(userQuery);
                 System.out.println("--[HAL9000]---------------------------------------------------------------------------");
                 System.out.println(response);
                 System.out.println("------------------------------------------------------------------------------------------");

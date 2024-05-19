@@ -39,24 +39,32 @@ public class ImageBuilder {
 
     /**
      * Create Image
-     * @param text
+     * @param _text
      * @return
      */
-    public static Response<Image> createImage(String text) {
+    public static Response<Image> createImage(String _text) {
+        if(_text == null) {
+            return null;
+        }
         ImageModel model = new AiBeans().createImageModel(AiConstants.DALL_E_3);
-        Response<Image> response = model.generate(text);
+        Response<Image> response = model.generate(_text);
         return response;
     }
 
     /**
      * Download Image
-     * @param response
+     *
+     * @param _response
      */
-    public static void downloadImage(Response<Image> response) {
-        if (response.content().url() != null) {
-            System.out.println("Image URL: " + response.content().url());
+    public static void downloadImage(Response<Image> _response) {
+        if(_response == null) {
+            System.out.println("No image was returned. Invalid Input!");
+            return;
+        }
+        if (_response.content().url() != null) {
+            System.out.println("Image URL: " + _response.content().url());
             try {
-                downloadImageFromUrl(response.content().url().toString(), "downloaded_image.jpg");
+                downloadImageFromUrl(_response.content().url().toString(), "downloaded_image.jpg");
             } catch (IOException e) {
                 System.out.println("No image was returned.");
                 throw new RuntimeException(e);
@@ -68,13 +76,18 @@ public class ImageBuilder {
 
     /**
      * Download the image from the URL
-     * @param imageUrl
-     * @param fileName
+     *
+     * @param _imageUrl
+     * @param _fileName
      * @throws IOException
      */
-    private static String downloadImageFromUrl(String imageUrl, String fileName) throws IOException {
-        URL url = new URL(imageUrl);
-        Path targetPath = Paths.get(fileName).toAbsolutePath();
+    private static String downloadImageFromUrl(String _imageUrl, String _fileName) throws IOException {
+        if(_imageUrl == null || _fileName == null) {
+            System.out.println("Unable to download Image. Invalid Inputs!");
+            return null;
+        }
+        URL url = new URL(_imageUrl);
+        Path targetPath = Paths.get(_fileName).toAbsolutePath();
 
         try (InputStream in = url.openStream();
              OutputStream out = new FileOutputStream(targetPath.toString())) {

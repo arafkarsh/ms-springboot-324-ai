@@ -25,6 +25,8 @@ import io.fusion.air.microservice.ai.utils.AiConstants;
 import java.util.HashMap;
 import java.util.Map;
 
+import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.loadDocument;
+
 /**
  * Custom Data Analyzer
  *
@@ -34,11 +36,27 @@ import java.util.Map;
  */
 public class CustomDataAnalyzer {
 
-
-    public static String processUserQuery(String query) {
+    /**
+     * Process User Query
+     *
+     * @param _query
+     * @return
+     */
+    public static String processUserQuery(String _query) {
         ChatLanguageModel model = new AiBeans()
                 .createChatLanguageModel(AiConstants.getAlgo(), false, false);
-        return model.generate(query);
+        return processUserQuery( _query,  model);
+    }
+
+    /**
+     * Process User Query
+     *
+     * @param _query
+     * @param _model
+     * @return
+     */
+    public static String processUserQuery(String _query, ChatLanguageModel _model) {
+        return _model.generate(_query);
     }
 
     /**

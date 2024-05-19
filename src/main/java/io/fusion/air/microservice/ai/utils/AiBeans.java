@@ -40,6 +40,14 @@ import static java.time.Duration.ofSeconds;
 public class AiBeans {
 
     /**
+     * Get the default Language Model (OpenAPI ChatGPT 4o)
+     * @return
+     */
+    public static ChatLanguageModel getDefaultLanguageModel() {
+        return new AiBeans().createChatLanguageModel();
+    }
+
+    /**
      * Returns Chat Language Model based on ChatGPT 3.5, 4.0, 4o (Omni)
      * @return
      */

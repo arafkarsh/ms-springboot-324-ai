@@ -39,7 +39,8 @@ public class SentimentAnalyzer {
      * @return
      */
     public static String analyzeSentiment(String _request) {
-        return analyzeSentiment(_request,  false);
+        ChatLanguageModel model = new AiBeans().createChatLanguageModel();
+        return analyzeSentiment(_request, model, false);
     }
 
     /**
@@ -53,6 +54,23 @@ public class SentimentAnalyzer {
      */
     public static String analyzeSentiment(String _request, boolean _print) {
         ChatLanguageModel model = new AiBeans().createChatLanguageModel();
+        return analyzeSentiment( _request, model, _print);
+    }
+
+    /**
+     * Analyze the Sentiment of a text.
+     * Rating based on Positive, Neutral and Negative
+     * Analyze the feelings of the user based on the content.
+     *
+     * @param _request
+     * @param model
+     * @param _print
+     * @return
+     */
+    public static String analyzeSentiment(String _request, ChatLanguageModel model,  boolean _print) {
+        if(_request == null || model == null) {
+            return "Invalid Inputs";
+        }
         SentimentAssistant sentimentAssistant = AiServices.create(SentimentAssistant.class, model);
         Sentiment sentiment = sentimentAssistant.analyzeSentimentOf(_request);
         boolean positive = sentimentAssistant.isPositive(_request);
