@@ -64,6 +64,20 @@ public class AiBeans {
     }
 
     /**
+     * Get the Ollama Chat Language Model
+     * 1. Llama 3 (llama3)
+     * 2. Misrtal (mistral)
+     * 3. Phi-3 (phi-3)
+     * 4. Gemma (gemma)
+     *
+     * @param _model
+     * @return
+     */
+    public static ChatLanguageModel getChatLanguageModelLlama(String _model) {
+        return new AiBeans().createChatLanguageModelLlama(_model);
+    }
+
+    /**
      * Returns Chat Language Model based on ChatGPT 3.5, 4.0, 4o (Omni)
      * @return
      */
@@ -116,16 +130,35 @@ public class AiBeans {
      */
     @Bean(name = "ChatLangugeModelOllama")
     public ChatLanguageModel createChatLanguageModelLlama() {
-        return OllamaChatModel.builder()
-                .baseUrl("http://localhost:11434/api/generate/")
-                .modelName("llama3")
-                .build();
+        return createChatLanguageModelLlama( AiConstants.OLLAMA_LLAMA3);
     }
 
     /**
-     * Returns the Image Model
+     * Returns Chat Language Model based on
+     * 1. Llama 3 (llama3)
+     * 2. Misrtal (mistral)
+     * 3. Phi-3 (phi-3)
+     * 4. Gemma (gemma)
+     *
+     * @param _model
      * @return
      */
+    public ChatLanguageModel createChatLanguageModelLlama(String _model) {
+            return OllamaChatModel.builder()
+                    .baseUrl("http://localhost:11434/api/generate/")
+                    .modelName(_model)
+                    // Higher the Temperature, Higher the Randomness.
+                    // For Accurate deterministic results keep the temperature low
+                    .temperature(0.0)
+                    .timeout(ofSeconds(120))
+                    .build();
+    }
+
+
+        /**
+         * Returns the Image Model
+         * @return
+         */
     @Bean
     public ImageModel createImageModel() {
         return createImageModel(AiConstants.DALL_E_3);
@@ -181,6 +214,16 @@ public class AiBeans {
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
                 // .tools(tool)
                 .build();
+    }
+
+    /**
+     * Print Model Details
+     * @param _llm
+     * @param _model
+     */
+    public static void printModelDetails(String _llm, String _model) {
+        System.out.println("--[Model]----------------------------------------------------------");
+        System.out.println(">>> "+_llm+" : "+_model);
     }
 
     /**

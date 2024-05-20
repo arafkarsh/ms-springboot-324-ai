@@ -35,6 +35,9 @@ import org.springframework.context.annotation.PropertySource;
 // value = "classpath:application2.properties,file:./application.properties")
 public class AiConstants {
 
+    public static final String LLM_GPT             = "OpenAI";
+    public static final String LLM_OLLAMA        = "Ollama";
+
     // ChatGPT ----------------------------------------------------------------------
     // INPUT = $0.005 / 1K tokens	   OUTPUT = $0.015 / 1K tokens
     public static final String GPT_4o               = "gpt-4o-2024-05-13";
@@ -67,6 +70,10 @@ public class AiConstants {
     public static String LLAMA_URL;
     public static String OLLAMA_LLAMA3        = "llama3";
     public static String OLLAMA_MISTRAL       = "mistral";
+    public static String OLLAMA_PHI_3           = "phi-3";
+    public static String OLLAMA_GEMMA         = "gemma";
+
+
 
 
     // Algo Config ----------------------------------------------------------------------

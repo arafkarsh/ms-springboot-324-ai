@@ -33,7 +33,7 @@ Here’s how it helps developers:
 
 | #   | Example                | GPT 4o | Llama3  | Mistral | Phi-3 | Gemma | Details                                                                  |
 |-----|------------------------|--------|---------|---------|-------|-------|--------------------------------------------------------------------------|
-| 1.  | Hello World            | Yes    | Yes     |         |       |       | First Hello World Generative AI Example                                  |
+| 1.  | Hello World            | Yes    | Yes     |  Yes    |       |       | First Hello World Generative AI Example                                  |
 | 2.  | Complex World          | Yes    | Yes     |         |       |       | Complex Example with Word Problems and Math                              |
 | 3.  | Custom Data            | Yes    | Yes     |         |       |       | Use your data (docs) for Search / Query                                  |
 | 4.  | Image                  | Yes    | -       |         |       |       | Create an Image using text prompt                                        | 
