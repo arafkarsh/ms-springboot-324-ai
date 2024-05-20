@@ -77,7 +77,7 @@ Here’s how it helps developers:
 | M2 | Image Generation | No Image generation support                              |
 | M3 | Prompt Tempalte  | GPT 4o answers are far more refined compared to Mistral  |
 | M4 | Tools Annotation | No Support for Tools that helps in querying custom data. | 
-| M5 | FewShot          | Complete confused! Gives both -ve & +ve responses.       |
+| M5 | FewShot          | Completely confused! Gives both -ve & +ve responses.     |
 | M6 | Lang Translator  | 90% Accuracy                                             |
 | M7 | Data Extractor   | Not able to extract Number, Date, Pojos with dates       |
 | M8 | Persistent Store | Confused about Memory ID in LangChain4J                  |
