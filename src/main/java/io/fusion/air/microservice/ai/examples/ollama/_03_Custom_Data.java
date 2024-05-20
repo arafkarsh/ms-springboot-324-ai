@@ -27,8 +27,8 @@ import io.fusion.air.microservice.ai.utils.AiBeans;
 public class _03_Custom_Data {
 
     public static void main(String[] args) {
-        // Create Model
-        ChatLanguageModel model = new AiBeans().createChatLanguageModelLlama();
+        // Create Chat Language Model llama3
+        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama();;
 
         String request1 = """
             Who were the Key Characters in the movie Bramayugam?

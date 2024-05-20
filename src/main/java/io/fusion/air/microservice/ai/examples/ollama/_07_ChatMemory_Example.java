@@ -39,7 +39,8 @@ import static dev.langchain4j.data.message.UserMessage.userMessage;
  */
 public class _07_ChatMemory_Example {
 
-    public static ChatLanguageModel model = new AiBeans().createChatLanguageModelLlama();
+    // Create Chat Language Model llama3
+    public static ChatLanguageModel model =  AiBeans.getChatLanguageModelLlama();
 
     public static void chatMemoryConversations() {
         Tokenizer tokenizer = new OpenAiTokenizer(AiConstants.GPT_4_TURBO);

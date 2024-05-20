@@ -38,8 +38,8 @@ public class _06_Tools_Example {
      */
     public static void main(String[] args) {
 
-        // Create Model
-        ChatLanguageModel model = new AiBeans().createChatLanguageModelLlama();
+        // Create Chat Language Model llama3
+        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama();;
 
         Assistant assistant = AiServices.builder(Assistant.class)
                 .chatLanguageModel(model)

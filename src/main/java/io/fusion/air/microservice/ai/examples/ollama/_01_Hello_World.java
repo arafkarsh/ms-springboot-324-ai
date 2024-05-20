@@ -26,8 +26,8 @@ import io.fusion.air.microservice.ai.utils.AiBeans;
 public class _01_Hello_World {
 
     public static void main(String[] args) {
-
-        ChatLanguageModel model = new AiBeans().createChatLanguageModelLlama();
+        // Create Chat Language Model llama3
+        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama();;
         String request = "Explain French Revolution";
         String response = model.generate(request);
         AiBeans.printResult(request, response);

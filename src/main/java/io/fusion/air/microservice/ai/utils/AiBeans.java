@@ -48,6 +48,22 @@ public class AiBeans {
     }
 
     /**
+     * Get the Open AI Chat Language Model (ChatGPT 4o)
+     * @return
+     */
+    public static ChatLanguageModel getChatLanguageModelOpenAi() {
+        return new AiBeans().createChatLanguageModelOpenAi();
+    }
+
+    /**
+     * Get the Ollama Chat Language Model (llama3)
+     * @return
+     */
+    public static ChatLanguageModel getChatLanguageModelLlama() {
+        return new AiBeans().createChatLanguageModelLlama();
+    }
+
+    /**
      * Returns Chat Language Model based on ChatGPT 3.5, 4.0, 4o (Omni)
      * @return
      */

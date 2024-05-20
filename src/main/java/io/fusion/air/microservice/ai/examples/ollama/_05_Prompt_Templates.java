@@ -30,8 +30,8 @@ import io.fusion.air.microservice.ai.utils.AiBeans;
 public class _05_Prompt_Templates {
 
     public static void main(String[] args) {
-        // Create Model
-        ChatLanguageModel model = new AiBeans().createChatLanguageModelLlama();
+        // Create Chat Language Model llama3
+        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama();;
 
         System.out.println("Prompt Example 1 >>--------------------------------------------");
         TemplateManager.simplePrompt(model);

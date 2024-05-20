@@ -31,8 +31,9 @@ import java.time.temporal.ChronoUnit;
 public class _02_Complex_World {
 
     public static void main(String[] args) {
+        // Create Chat Language Model llama3
+        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama();;
         // Create the Ai Assistant
-        ChatLanguageModel model = new AiBeans().createChatLanguageModelLlama();
         HAL9000Assistant hal9k = new AiBeans().createHAL9000(model);
         // Run the Test Cases
         complexWorld1(hal9k);
