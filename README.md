@@ -36,7 +36,7 @@ Here’s how it helps developers:
 | 1.  | Hello World            | Yes    | Yes     | Yes     | Yes   | Yes   | Yes | First Hello World Generative AI Example                                  |
 | 2.  | Complex World          | Yes    | Yes     | M1      | Yes   | Yes   | Yes | Complex Example with Word and Math Problems                              |
 | 3.  | Custom Data            | Yes    | Yes     | Yes     | Yes   | Yes   | F1  | Use your data (docs) for Search / Query                                  |
-| 4.  | Image Generation       | Yes    | <span style="color: red;">L1</span>      | M2      | P1    | -     | F2  | Create an Image using text prompt                                        | 
+| 4.  | Image Generation       | Yes    | L1      | M2      | P1    | -     | F2  | Create an Image using text prompt                                        | 
 | 5.  | Prompt Template        | Yes    | Yes     | M3      | Yes   | Yes   | Yes | Get Structured Response using Structured Prompt                          |
 | 6.  | Tools Annotation       | Yes    | L2      | M4      | P2    | G1    | F3  | Use Tools annotation for Custom Search / Queries                         |
 | 7.  | Chat Memory            | Yes    | Yes     | Yes     | P3    | G2    | Yes | How to create a ChatBot in a Conversational Context                      |
