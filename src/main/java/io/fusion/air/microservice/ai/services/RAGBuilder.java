@@ -91,7 +91,7 @@ public class RAGBuilder {
      * @return
      */
     private static ChatLanguageModel getDefaultLanguageModel() {
-        return new AiBeans().createChatLanguageModel();
+        return new AiBeans().createChatLanguageModelOpenAi();
     }
     /**
      * Read and Analyze the Local Data
@@ -185,7 +185,7 @@ public class RAGBuilder {
      */
     public static Assistant createCarRentalAssistantSimple(ChatLanguageModel _model) {
         // Setup the Language Model
-        ChatLanguageModel model = new AiBeans().createChatLanguageModel();
+        ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
         // Documents for processing
         List<Document> documents = loadDocuments(Utils.toPath("static/data/e/"), Utils.getPathMatcher("*.txt"));
         // Embedding Model

@@ -38,7 +38,7 @@ public class _12_Persistent_ChatMemory_Store_Example {
 
     public static void setupContext() {
         // Create LLM Model
-        ChatLanguageModel model = new AiBeans().createChatLanguageModel();
+        ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
         // Create Persistent Store
         FilePersistentChatMemoryStore store = new FilePersistentChatMemoryStore();
         // Create Chat Memory Provider with the Store

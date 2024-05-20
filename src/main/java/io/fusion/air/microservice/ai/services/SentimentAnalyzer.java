@@ -39,7 +39,7 @@ public class SentimentAnalyzer {
      * @return
      */
     public static String analyzeSentiment(String _request) {
-        ChatLanguageModel model = new AiBeans().createChatLanguageModel();
+        ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
         return analyzeSentiment(_request, model, false);
     }
 
@@ -53,7 +53,7 @@ public class SentimentAnalyzer {
      * @return
      */
     public static String analyzeSentiment(String _request, boolean _print) {
-        ChatLanguageModel model = new AiBeans().createChatLanguageModel();
+        ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
         return analyzeSentiment( _request, model, _print);
     }
 

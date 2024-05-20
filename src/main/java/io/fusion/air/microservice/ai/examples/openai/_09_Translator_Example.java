@@ -31,7 +31,7 @@ public class _09_Translator_Example {
 
     public static void main(String[] args) {
 
-        ChatLanguageModel model = new AiBeans().createChatLanguageModel();
+        ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
         LanguageAssistant utils = AiServices.create(LanguageAssistant.class, model);
         String request = """
                     Hello, how are you?

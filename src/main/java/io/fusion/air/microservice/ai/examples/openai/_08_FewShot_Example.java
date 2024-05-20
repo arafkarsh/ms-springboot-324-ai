@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class _08_FewShot_Example {
 
-    private static ChatLanguageModel model = new AiBeans().createChatLanguageModel();
+    private static ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
     private static List<ChatMessage> fewShotHistory = new ArrayList<>();
 
     /**

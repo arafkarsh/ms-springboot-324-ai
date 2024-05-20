@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai.examples.openai;
+package io.fusion.air.microservice.ai.examples.ollama;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import io.fusion.air.microservice.ai.examples.core.assistants.HAL9000Assistant;
@@ -31,9 +31,8 @@ import java.time.temporal.ChronoUnit;
 public class _02_Complex_World {
 
     public static void main(String[] args) {
-        // Create Chat Language Model
-        ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
         // Create the Ai Assistant
+        ChatLanguageModel model = new AiBeans().createChatLanguageModelLlama();
         HAL9000Assistant hal9k = new AiBeans().createHAL9000(model);
         // Run the Test Cases
         complexWorld1(hal9k);

@@ -65,7 +65,7 @@ public class AiConstants {
     private  String llamaModel;
 
     public static String LLAMA_URL;
-    public static String LLAMA_MODEL;
+    public static String LLAMA_MODEL = "llama3";
 
     // Algo Config ----------------------------------------------------------------------
     @Value("${langchain4j.default.algo:gpt-4o-2024-05-13}")

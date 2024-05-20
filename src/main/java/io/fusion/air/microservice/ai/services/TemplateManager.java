@@ -59,8 +59,21 @@ public class TemplateManager {
      *
      * @param _template
      * @param _prompt
+     * @return
      */
     public static String structuredTemplate(String _template, String _prompt) {
+        ChatLanguageModel model = new AiBeans()
+                .createChatLanguageModelOpenAi(AiConstants.getAlgo());
+        return structuredTemplate( _template,  _prompt, model);
+    }
+
+    /**
+     * Handle Multiple Structured Templates
+     *
+     * @param _template
+     * @param _prompt
+     */
+    public static String structuredTemplate(String _template, String _prompt, ChatLanguageModel _model) {
         if(_template == null || _template.length() == 0) {
             return "Invalid Inputs to Structured Template function!";
         }
@@ -69,7 +82,7 @@ public class TemplateManager {
             String[] data = _prompt.split(",");
             String dish = data[0];
             String ingredients = _prompt.replaceAll(dish+",", "").trim();
-             response = structuredPromptRecipe(dish, ingredients);
+             response = structuredPromptRecipe(dish, ingredients, _model);
         } else {
             System.out.println("No Template found!!! ........... ");
         }
@@ -84,8 +97,20 @@ public class TemplateManager {
         params.put("DishType", "oven dish");
         params.put("Ingredients", "cucumber, potato, tomato, red meat, olives, olive oil");
         ChatLanguageModel model = new AiBeans()
-                .createChatLanguageModel(AiConstants.getAlgo());
+                .createChatLanguageModelOpenAi(AiConstants.getAlgo());
         return simplePrompt(params, model);
+    }
+
+    /**
+     * Simple Template
+     * @param _model
+     * @return
+     */
+    public static String simplePrompt(ChatLanguageModel _model) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("DishType", "oven dish");
+        params.put("Ingredients", "cucumber, potato, tomato, red meat, olives, olive oil");
+        return simplePrompt(params, _model);
     }
 
     /**
@@ -96,7 +121,7 @@ public class TemplateManager {
      */
     public static String simplePrompt(Map<String, Object> _params) {
         ChatLanguageModel model = new AiBeans()
-                .createChatLanguageModel(AiConstants.getAlgo());
+                .createChatLanguageModelOpenAi(AiConstants.getAlgo());
         return simplePrompt(_params, model);
     }
 
@@ -136,13 +161,25 @@ public class TemplateManager {
 
     /**
      * Complex Template
+     * @param _model
+     * @return
+     */
+    public static String complexPrompt(ChatLanguageModel _model) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("DishType", "oven dish");
+        params.put("Ingredients", "cucumber, potato, tomato, red meat, olives, olive oil");
+        return complexPrompt(params, _model);
+    }
+
+    /**
+     * Complex Template
      * @param _params
      * @return
      */
     public static String complexPrompt(Map<String, Object> _params) {
         // Checkout the ChatLanguageModel Implementation details in AiBeans.java
         ChatLanguageModel model = new AiBeans()
-                .createChatLanguageModel(AiConstants.getAlgo());
+                .createChatLanguageModelOpenAi(AiConstants.getAlgo());
         return complexPrompt(_params, model);
     }
 
@@ -226,6 +263,15 @@ public class TemplateManager {
 
     /**
      * Structured Prompt Example - Recipe
+     * @param _model
+     * @return
+     */
+    public static String structuredPromptRecipe(ChatLanguageModel _model) {
+        return structuredPromptRecipe("oven dish", "cucumber, potato, tomato, red meat, olives, olive oil", _model);
+    }
+
+    /**
+     * Structured Prompt Example - Recipe
      *
      * @param _dish
      * @param _ingredients
@@ -233,7 +279,7 @@ public class TemplateManager {
      */
     public static String structuredPromptRecipe(String _dish, String _ingredients) {
         ChatLanguageModel model = new AiBeans()
-                .createChatLanguageModel(AiConstants.getAlgo());
+                .createChatLanguageModelOpenAi(AiConstants.getAlgo());
         return structuredPromptRecipe(_dish, _ingredients,  model);
     }
 
@@ -281,7 +327,7 @@ public class TemplateManager {
      */
     public static String structuredPromptFeelings(String _feelings, String _content, boolean _print) {
         ChatLanguageModel model = new AiBeans()
-                .createChatLanguageModel(AiConstants.getAlgo());
+                .createChatLanguageModelOpenAi(AiConstants.getAlgo());
         return structuredPromptFeelings( _feelings,  _content, model,  _print);
     }
 

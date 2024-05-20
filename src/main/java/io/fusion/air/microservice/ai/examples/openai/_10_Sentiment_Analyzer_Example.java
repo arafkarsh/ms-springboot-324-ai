@@ -34,7 +34,7 @@ public class _10_Sentiment_Analyzer_Example {
 
     public static void main(String[] args) {
 
-        ChatLanguageModel model = new AiBeans().createChatLanguageModel();
+        ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
         SentimentAssistant sentimentAssistant = AiServices.create(SentimentAssistant.class, model);
         String request = """
                 The movie was quite engaging, although the songs were somewhat lackluster. Nevertheless, the background score and choreography significantly 

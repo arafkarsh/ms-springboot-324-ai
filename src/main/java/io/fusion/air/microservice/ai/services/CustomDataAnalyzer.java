@@ -44,7 +44,7 @@ public class CustomDataAnalyzer {
      */
     public static String processUserQuery(String _query) {
         ChatLanguageModel model = new AiBeans()
-                .createChatLanguageModel(AiConstants.getAlgo(), false, false);
+                .createChatLanguageModelOpenAi(AiConstants.getAlgo(), false, false);
         return processUserQuery( _query,  model);
     }
 
@@ -64,16 +64,30 @@ public class CustomDataAnalyzer {
      * @param _request
      */
     public static String processFile(String _request) {
-            return processFile(_request, "bramayugam.txt");
+        ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
+        return processFile(_request, "bramayugam.txt");
     }
 
     /**
      * Process the Data with Custom Data
      * @param _request
      * @param _fileName
+     * @return
      */
     public static String processFile(String _request, String _fileName) {
-        ConversationalRetrievalChain chain = RAGBuilder.createConversationalRetrievalChain(_fileName);
+        ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
+        return processFile( _request,  _fileName,  model);
+    }
+
+    /**
+     * Process the Data with Custom Data
+     * @param _request
+     * @param _fileName
+     * @param _model
+     * @return
+     */
+    public static String processFile(String _request, String _fileName, ChatLanguageModel _model) {
+        ConversationalRetrievalChain chain = RAGBuilder.createConversationalRetrievalChain(_fileName, _model);
         String response = chain.execute(_request);
         AiBeans.printResult(_request, response);
         return response;
@@ -81,11 +95,22 @@ public class CustomDataAnalyzer {
 
     /**
      * Process the Data from Multiple Files
-     *
      * @param _request
+     * @return
      */
     public static String processMultiFiles(String _request) {
-        ConversationalRetrievalChain chain = RAGBuilder.createMovieDatabaseChain();
+        ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
+        return processMultiFiles( _request,  model);
+    }
+
+    /**
+     * Process the Data from Multiple Files
+     * @param _request
+     * @param _chatLanguageModel
+     * @return
+     */
+    public static String processMultiFiles(String _request, ChatLanguageModel _chatLanguageModel) {
+        ConversationalRetrievalChain chain = RAGBuilder.createMovieDatabaseChain(_chatLanguageModel);
         PromptTemplate promptTemplate = TemplateManager.createMoviePrompt();
         Map<String, Object> params = new HashMap<>();
         params.put("movieName", _request);

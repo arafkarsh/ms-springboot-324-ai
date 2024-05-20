@@ -44,7 +44,7 @@ public class AiBeans {
      * @return
      */
     public static ChatLanguageModel getDefaultLanguageModel() {
-        return new AiBeans().createChatLanguageModel();
+        return new AiBeans().createChatLanguageModelOpenAi();
     }
 
     /**
@@ -52,8 +52,8 @@ public class AiBeans {
      * @return
      */
     @Bean(name = "ChatLangugeModelGPT")
-    public ChatLanguageModel createChatLanguageModel() {
-        return createChatLanguageModel(AiConstants.getAlgo(), false, false);
+    public ChatLanguageModel createChatLanguageModelOpenAi() {
+        return createChatLanguageModelOpenAi(AiConstants.getAlgo(), false, false);
     }
 
     /**
@@ -61,8 +61,8 @@ public class AiBeans {
      * @param _model
      * @return
      */
-    public ChatLanguageModel createChatLanguageModel(String _model) {
-        return createChatLanguageModel(_model, false, false);
+    public ChatLanguageModel createChatLanguageModelOpenAi(String _model) {
+        return createChatLanguageModelOpenAi(_model, false, false);
     }
 
     /**
@@ -71,8 +71,8 @@ public class AiBeans {
      * @param _res
      * @return
      */
-    public ChatLanguageModel createChatLanguageModel(boolean _req, boolean _res) {
-        return createChatLanguageModel(AiConstants.getAlgo(), _req, _res);
+    public ChatLanguageModel createChatLanguageModelOpenAi(boolean _req, boolean _res) {
+        return createChatLanguageModelOpenAi(AiConstants.getAlgo(), _req, _res);
     }
 
     /**
@@ -80,7 +80,7 @@ public class AiBeans {
      * @param _model
      * @return
      */
-    public ChatLanguageModel createChatLanguageModel(String _model, boolean _req, boolean _res) {
+    public ChatLanguageModel createChatLanguageModelOpenAi(String _model, boolean _req, boolean _res) {
        return OpenAiChatModel.builder()
                 .apiKey(AiConstants.OPENAI_API_KEY)
                 // Higher the Temperature, Higher the Randomness.
@@ -146,9 +146,22 @@ public class AiBeans {
      * @return
      */
     public HAL9000Assistant createHAL9000(String _model) {
-        ChatLanguageModel chatLanguageModel = createChatLanguageModel(_model);
+        ChatLanguageModel chatLanguageModel = createChatLanguageModelOpenAi(_model);
         return AiServices.builder(HAL9000Assistant.class)
                 .chatLanguageModel(chatLanguageModel)
+                .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
+                // .tools(tool)
+                .build();
+    }
+
+    /**
+     * Create Ai Assistant
+     * @param _chatLanguageModel
+     * @return
+     */
+    public HAL9000Assistant createHAL9000(ChatLanguageModel _chatLanguageModel) {
+        return AiServices.builder(HAL9000Assistant.class)
+                .chatLanguageModel(_chatLanguageModel)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
                 // .tools(tool)
                 .build();

@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai.examples.openai;
+package io.fusion.air.microservice.ai.examples.ollama;
 
 
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.service.AiServices;
-
 import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.examples.core.tools.Calculator;
 import io.fusion.air.microservice.ai.utils.AiBeans;
@@ -32,10 +31,15 @@ import io.fusion.air.microservice.ai.utils.AiConstants;
  */
 public class _06_Tools_Example {
 
+    /**
+     * Tools Are NOT Supported by Ollama Models - Llama3
+     *
+     * @param args
+     */
     public static void main(String[] args) {
 
-        ChatLanguageModel model = new AiBeans()
-                .createChatLanguageModelOpenAi(AiConstants.GPT_3_5_TURBO);
+        // Create Model
+        ChatLanguageModel model = new AiBeans().createChatLanguageModelLlama();
 
         Assistant assistant = AiServices.builder(Assistant.class)
                 .chatLanguageModel(model)

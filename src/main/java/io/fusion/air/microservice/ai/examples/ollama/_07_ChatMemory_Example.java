@@ -13,25 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai.examples.openai;
+package io.fusion.air.microservice.ai.examples.ollama;
 
 import dev.langchain4j.data.message.AiMessage;
-import dev.langchain4j.memory.ChatMemory;
-import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.data.message.SystemMessage;
 import dev.langchain4j.data.message.UserMessage;
+import dev.langchain4j.memory.ChatMemory;
+import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.memory.chat.TokenWindowChatMemory;
 import dev.langchain4j.model.Tokenizer;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.openai.OpenAiTokenizer;
 import dev.langchain4j.model.output.Response;
-
-import static dev.langchain4j.data.message.UserMessage.userMessage;
-
 import dev.langchain4j.service.AiServices;
 import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
+
+import static dev.langchain4j.data.message.UserMessage.userMessage;
 
 /**
  * @author: Araf Karsh Hamid
@@ -40,10 +39,10 @@ import io.fusion.air.microservice.ai.utils.AiConstants;
  */
 public class _07_ChatMemory_Example {
 
-    public static ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
+    public static ChatLanguageModel model = new AiBeans().createChatLanguageModelLlama();
 
     public static void chatMemoryConversations() {
-        Tokenizer tokenizer = new OpenAiTokenizer(AiConstants.getAlgo());
+        Tokenizer tokenizer = new OpenAiTokenizer(AiConstants.LLAMA_MODEL);
         ChatMemory chatMemory = TokenWindowChatMemory.withMaxTokens(2000, tokenizer);
 
         // Setting the Context
@@ -108,7 +107,7 @@ public class _07_ChatMemory_Example {
     public static void main(String[] args) throws Exception {
 
         // Chat Memory Conversations
-        chatMemoryConversations();
+        // chatMemoryConversations();
 
         // Chat Memory with Multiple user
         chatMemoryWithMultipleUsers();

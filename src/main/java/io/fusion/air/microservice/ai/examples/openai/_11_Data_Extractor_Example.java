@@ -44,7 +44,7 @@ import static java.util.Arrays.asList;
  */
 public class _11_Data_Extractor_Example {
 
-    public static ChatLanguageModel model = new AiBeans().createChatLanguageModel();
+    public static ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
     public static DataExtractorAssistant extractor = AiServices.create(DataExtractorAssistant.class, model);
 
     public static void numberExtractor() {
