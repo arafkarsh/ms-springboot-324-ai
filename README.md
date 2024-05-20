@@ -34,17 +34,17 @@ Here’s how it helps developers:
 | #   | Example                | GPT 4o | Llama3  | Mistral | Phi-3 | Gemma | Details                                                                  |
 |-----|------------------------|--------|---------|---------|-------|-------|--------------------------------------------------------------------------|
 | 1.  | Hello World            | Yes    | Yes     | Yes     | Yes   |       | First Hello World Generative AI Example                                  |
-| 2.  | Complex World          | Yes    | Yes     | M1      |       |       | Complex Example with Word and Math Problems                              |
-| 3.  | Custom Data            | Yes    | Yes     | Yes     |       |       | Use your data (docs) for Search / Query                                  |
-| 4.  | Image Generation       | Yes    | L1      | M2      |       |       | Create an Image using text prompt                                        | 
-| 5.  | Prompt Template        | Yes    | Yes     | M3      |       |       | Get Structured Response using Structured Prompt                          |
-| 6.  | Tools Annotation       | Yes    | L2      | M4      |       |       | Use Tools annotation for Custom Search / Queries                         |
-| 7.  | Chat Memory            | Yes    | Yes     | Yes     |       |       | How to create a ChatBot in a Conversational Context                      |
-| 8.  | FewShot                | Yes    | Yes     | M5      |       |       | Create ChatBot with custom answers from an App perspective               |
-| 9.  | Language Translator    | Yes    | Yes     | M6      |       |       | Translate from one language to another                                   |
-| 10. | Sentiment Analyzer     | Yes    | Yes     | Yes     |       |       | Analyses the Sentiment of a text input. Positve, Neutral, Negative       |
-| 11. | Data Extractor         | Yes    | L3      | M7      |       |       | Extract Number, Date, Model (Pojo) from a Text                           |
-| 12. | Persistent Store       | Yes    | Yes     | M8      |       |       | Use a Persistent Store for Chat Memory & Retrieve the Chat based on User.|
+| 2.  | Complex World          | Yes    | Yes     | M1      | Yes   |       | Complex Example with Word and Math Problems                              |
+| 3.  | Custom Data            | Yes    | Yes     | Yes     | Yes   |       | Use your data (docs) for Search / Query                                  |
+| 4.  | Image Generation       | Yes    | L1      | M2      | P1    |       | Create an Image using text prompt                                        | 
+| 5.  | Prompt Template        | Yes    | Yes     | M3      | Yes   |       | Get Structured Response using Structured Prompt                          |
+| 6.  | Tools Annotation       | Yes    | L2      | M4      | P2    |       | Use Tools annotation for Custom Search / Queries                         |
+| 7.  | Chat Memory            | Yes    | Yes     | Yes     | P3    |       | How to create a ChatBot in a Conversational Context                      |
+| 8.  | FewShot                | Yes    | Yes     | M5      | Yes   |       | Create ChatBot with custom answers from an App perspective               |
+| 9.  | Language Translator    | Yes    | Yes     | M6      | Yes   |       | Translate from one language to another                                   |
+| 10. | Sentiment Analyzer     | Yes    | Yes     | Yes     | Yes   |       | Analyses the Sentiment of a text input. Positve, Neutral, Negative       |
+| 11. | Data Extractor         | Yes    | L3      | M7      | P4    |       | Extract Number, Date, Model (Pojo) from a Text                           |
+| 12. | Persistent Store       | Yes    | Yes     | M8      | P5    |       | Use a Persistent Store for Chat Memory & Retrieve the Chat based on User.|
 
 ## Retrieval Augmented Generation (RAG) Examples
 
@@ -59,7 +59,7 @@ Here’s how it helps developers:
 | 19. | Multiple Content Retrievers  | Yes    | Yes     | Yes     |       |       | Multi Content Retrievers. Car Rental & Biography                   |
 | 20. | Skipping Content Retrieval   | Yes    | Yes     | Yes     |       |       | Content Retrieval Skipping. Case Study: Car Rental                 |
 
-### Llama3 Observations
+### Facebook Llama3 Observations
 
 | #  | Example          | Observations                                             |
 |----|------------------|----------------------------------------------------------|
@@ -83,7 +83,15 @@ Here’s how it helps developers:
 | M8 | Persistent Store | Confused about Memory ID in LangChain4J                  |
 | M9 | Query Router     | Query Router doesnt work between different sources       |
 
+### Microsoft PHI - 3 Observations
 
+| #  | Example          | Observations                                             |
+|----|------------------|----------------------------------------------------------|
+| P1 | Image Generation | No image generation support                              |
+| P2 | Tools Annotation | No Support for Tools that helps in querying custom data. | 
+| P3 | Chat Memory      | Memory ID annotation is not working                      |
+| P4 | Data Extractor   | Data extractor doesnt work cleanly for Date and Pojos    |
+| P5 | Persistent Store | Confused about Memory ID in LangChain4J                  |
 
 
 
