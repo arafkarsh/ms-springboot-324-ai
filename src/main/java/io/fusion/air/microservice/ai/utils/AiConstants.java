@@ -70,7 +70,7 @@ public class AiConstants {
     public static String LLAMA_URL;
     public static String OLLAMA_LLAMA3        = "llama3";
     public static String OLLAMA_MISTRAL       = "mistral";
-    public static String OLLAMA_PHI_3           = "phi-3";
+    public static String OLLAMA_PHI_3           = "phi3";
     public static String OLLAMA_GEMMA         = "gemma";
 
 
