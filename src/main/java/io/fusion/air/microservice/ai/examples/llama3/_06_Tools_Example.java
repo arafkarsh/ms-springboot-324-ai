@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai.examples.ollama;
+package io.fusion.air.microservice.ai.examples.llama3;
 
 
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
@@ -22,7 +22,6 @@ import dev.langchain4j.service.AiServices;
 import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.examples.core.tools.Calculator;
 import io.fusion.air.microservice.ai.utils.AiBeans;
-import io.fusion.air.microservice.ai.utils.AiConstants;
 
 /**
  * @author: Araf Karsh Hamid

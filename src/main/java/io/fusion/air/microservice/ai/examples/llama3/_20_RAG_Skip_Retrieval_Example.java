@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai.examples.ollama;
+package io.fusion.air.microservice.ai.examples.llama3;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;

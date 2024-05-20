@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai.examples.ollama;
+package io.fusion.air.microservice.ai.examples.mistral;
 // LangChain4J
 
 import dev.langchain4j.memory.chat.ChatMemoryProvider;
@@ -23,6 +23,7 @@ import dev.langchain4j.service.AiServices;
 import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.examples.core.utils.FilePersistentChatMemoryStore;
 import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 
 /**
  * Chat Memory Persistent Store Example.
@@ -34,8 +35,8 @@ import io.fusion.air.microservice.ai.utils.AiBeans;
  */
 public class _12_Persistent_ChatMemory_Store_Example {
 
-    // Create Chat Language Model llama3
-    public static ChatLanguageModel model = AiBeans.getChatLanguageModelLlama();
+    // Create Chat Language Model Mistral
+    private static ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_MISTRAL);        // Create the Ai Assistant
     // Create Ai Assistant
     private static Assistant assistant;
 
@@ -75,6 +76,7 @@ public class _12_Persistent_ChatMemory_Store_Example {
     }
 
     public static void main(String[] args) {
+        AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_MISTRAL);
         // Setup the Context
         setupContext();
         // Initialize with Data

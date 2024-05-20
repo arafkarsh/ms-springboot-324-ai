@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai.examples.ollama;
+package io.fusion.air.microservice.ai.examples.mistral;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.service.AiServices;
@@ -23,6 +23,7 @@ import io.fusion.air.microservice.ai.examples.core.models.Person;
 import io.fusion.air.microservice.ai.examples.core.models.Recipe;
 import io.fusion.air.microservice.ai.examples.core.prompts.StructuredPromptRecipe;
 import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -44,8 +45,8 @@ import static java.util.Arrays.asList;
  */
 public class _11_Data_Extractor_Example {
 
-    // Create Chat Language Model llama3
-    public static ChatLanguageModel model = AiBeans.getChatLanguageModelLlama();
+    // Create Chat Language Model Mistral
+    private static ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_MISTRAL);
     // Create Ai Assistant
     public static DataExtractorAssistant extractor = AiServices.create(DataExtractorAssistant.class, model);
 
@@ -101,6 +102,8 @@ public class _11_Data_Extractor_Example {
     }
 
     public static void main(String[] args) {
+        // Create the Ai Assistant
+        AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_MISTRAL);
         try {
             System.out.println("Number Extractor =================================================");
             // Extract Numbers

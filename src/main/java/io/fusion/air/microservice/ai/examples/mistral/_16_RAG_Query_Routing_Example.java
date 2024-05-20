@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai.examples.ollama;
+package io.fusion.air.microservice.ai.examples.mistral;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
@@ -23,6 +23,7 @@ import dev.langchain4j.store.embedding.EmbeddingStore;
 import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.services.RAGBuilder;
 import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 import io.fusion.air.microservice.ai.utils.ConsoleRunner;
 
 /**
@@ -57,8 +58,10 @@ public class _16_RAG_Query_Routing_Example {
     public static void main(String[] args) {
         // WARNING: Query Routing is not working with Llama 3
         // It's not able to pickup the content of the person provided in the biography doc.
-        // Create Chat Language Model llama3
-        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama();
+        // Create Chat Language Model Mistral
+        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_MISTRAL);
+        AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_MISTRAL);
+        // Create the Ai Assistant
         // Setting up the Gen AI Context with Open AI LLM, and RAG
         Assistant assistant = RAGBuilder.createAssistantWithQueryRouter(model);
         // Start the Conversation with Multi Data Source ChatBot

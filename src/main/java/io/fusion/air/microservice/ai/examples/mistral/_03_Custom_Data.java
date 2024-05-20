@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai.examples.ollama;
+package io.fusion.air.microservice.ai.examples.mistral;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import io.fusion.air.microservice.ai.services.CustomDataAnalyzer;
 import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 
 /**
  * @author: Araf Karsh Hamid
@@ -27,22 +28,23 @@ import io.fusion.air.microservice.ai.utils.AiBeans;
 public class _03_Custom_Data {
 
     public static void main(String[] args) {
-        // Create Chat Language Model llama3
-        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama();;
+        // Create Chat Language Model Mistral
+        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_MISTRAL);        // Create the Ai Assistant
+        AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_MISTRAL);
 
         String request1 = """
             Who were the Key Characters in the movie Bramayugam?
             What was the rating?
             Elaborate the Characters in the movie.
             """;
-        // CustomDataAnalyzer.processFile(request1,  "bramayugam.txt", model);
+        CustomDataAnalyzer.processFile(request1,  "bramayugam.txt", model);
 
         String request2 = """
                 Elaborate the key ideas behind the movie Malaikotai Vaaliban.
                 Elaborate each stage (in bullet points) in the movie and its significance.
                 What was the movie rating?
                 """;
-        // CustomDataAnalyzer.processFile(request2,  "vaaliban.txt", model);
+        CustomDataAnalyzer.processFile(request2,  "vaaliban.txt", model);
 
         // Multi File Analysis
         CustomDataAnalyzer.processMultiFiles("Malaikotai Vaaliban", model);

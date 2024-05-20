@@ -13,40 +13,52 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai.examples.ollama;
+package io.fusion.air.microservice.ai.examples.llama3;
 
+// Custom
 import dev.langchain4j.model.chat.ChatLanguageModel;
-import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
+import io.fusion.air.microservice.ai.examples.core.assistants.CarRentalAssistant;
 import io.fusion.air.microservice.ai.services.RAGBuilder;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.ConsoleRunner;
 
 /**
- * RAG Example
+ * RAG Segment Example
  *
- * @author: Araf Karsh Hamid
+ * @author: Araf Karsh HamidHell
  * @version:
  * @date:
  */
-public class _13_RAG_Simple_Example {
+public class _14_RAG_Segments_Example {
 
     /**
-     * This example demonstrates how to implement an "Easy RAG" (Retrieval-Augmented Generation) application.
-     * By "easy" we mean that we won't dive into all the details about parsing, splitting, embedding, etc.
-     * <p>
+     * This example demonstrates how to implement a naive Retrieval-Augmented Generation (RAG) application.
+     *
+     * In each interaction with the Large Language Model (LLM), we will:
+     * 1. Take the user's query as-is.
+     * 2. Embed it using an embedding model.
+     * 3. Use the query's embedding to search an embedding store (containing small segments of your documents)
+     * for the X most relevant segments.
+     * 4. Append the found segments to the user's query.
+     * 5. Send the combined input (user query + segments) to the LLM.
+     * 6. Hope that:
+     * - The user's query is well-formulated and contains all necessary details for retrieval.
+     * - The found segments are relevant to the user's query.
+     *
      */
     public static void main(String[] args) {
         // Create Chat Language Model llama3
         ChatLanguageModel model = AiBeans.getChatLanguageModelLlama();
         // Setting up the Gen AI Context with Open AI LLM, and RAG
-        Assistant assistant = RAGBuilder.createCarRentalAssistantSimple(model);
+        CarRentalAssistant assistant = RAGBuilder.createCarRentalAssistantWithSegments(model);
         // Start the Conversation with Ozazo Rental Service ChatBot
         // - Hello
         // - I am Sam. Can I cancel my reservation?
+        // - What will be the charge if I cancel 48 hours before the reservation date?
         // - Do you have a refund policy?
-        // - I had an accident, should I pay extra?
         // - Can you elaborate the usage policy?
+        // - If I had an accident, should I pay extra?
         // - No, thank you.
-        ConsoleRunner.startConversationWith(assistant, "OZAZO Car Rental Service ChatBot");
+        ConsoleRunner.startConversationWith(assistant, "OZAZO Car Rental Premium Service ChatBot");
     }
 }

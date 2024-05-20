@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai.examples.ollama;
+package io.fusion.air.microservice.ai.examples.mistral;
 
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.data.message.ChatMessage;
@@ -21,6 +21,7 @@ import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.output.Response;
 import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +33,8 @@ import java.util.List;
  */
 public class _08_FewShot_Example {
 
-    // Create Chat Language Model llama3
-    private static ChatLanguageModel model = AiBeans.getChatLanguageModelLlama();
+    // Create Chat Language Model Mistral
+    private static ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_MISTRAL);        // Create the Ai Assistant
     private static List<ChatMessage> fewShotHistory = new ArrayList<>();
 
     /**
@@ -81,6 +82,8 @@ public class _08_FewShot_Example {
     }
 
     public static void main(String[] args) {
+      // Create the Ai Assistant
+        AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_MISTRAL);
         // Build Chat Context
         buildContext();
         // Message 1

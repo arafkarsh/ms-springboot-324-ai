@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai.examples.ollama;
+package io.fusion.air.microservice.ai.examples.mistral;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.services.RAGBuilder;
 import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 import io.fusion.air.microservice.ai.utils.ConsoleRunner;
 
 /**
@@ -50,8 +51,10 @@ public class _15_RAG_Query_Compression_Example {
      * used for conversation. For instance, you might use a smaller local model trained for summarization.
      */
     public static void main(String[] args) {
-        // Create Chat Language Model llama3
-        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama();
+        // Create Chat Language Model Mistral
+        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_MISTRAL);
+        AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_MISTRAL);
+        // Create the Ai Assistant
         // Setting up the Gen AI Context with Open AI LLM, and RAG
         Assistant assistant = RAGBuilder.createAssistantWithQueryTransformer();
         // Start the Conversation with Akiera Kiera Biography ChatBot

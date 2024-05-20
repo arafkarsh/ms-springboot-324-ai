@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai.examples.ollama;
+package io.fusion.air.microservice.ai.examples.llama3;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import io.fusion.air.microservice.ai.examples.core.assistants.HAL9000Assistant;
 import io.fusion.air.microservice.ai.utils.AiBeans;
-import io.fusion.air.microservice.ai.utils.AiConstants;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;

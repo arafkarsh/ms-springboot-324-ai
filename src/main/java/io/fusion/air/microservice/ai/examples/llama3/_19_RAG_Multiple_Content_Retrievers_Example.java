@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai.examples.ollama;
+package io.fusion.air.microservice.ai.examples.llama3;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.services.RAGBuilder;
 import io.fusion.air.microservice.ai.utils.AiBeans;
@@ -27,28 +26,21 @@ import io.fusion.air.microservice.ai.utils.ConsoleRunner;
  * @version:
  * @date:
  */
-public class _17_RAG_ReRanking_Example {
+public class _19_RAG_Multiple_Content_Retrievers_Example {
 
     /**
-     * This example illustrates the implementation of a more advanced RAG application
-     * using a technique known as "re-ranking".
-     * <p>
-     * Frequently, not all results retrieved by {@link ContentRetriever} are truly relevant to the user query.
-     * This is because, during the initial retrieval stage, it is often preferable to use faster
-     * and more cost-effective models, particularly when dealing with a large volume of data.
-     * The trade-off is that the retrieval quality may be lower.
-     * Providing irrelevant information to the LLM can be costly and, in the worst case, lead to hallucinations.
-     * Therefore, in the second stage, we can perform re-ranking of the results obtained in the first stage
-     * and eliminate irrelevant results using a more advanced model (e.g., Cohere Rerank).
+     * RAG - Multiple Content Retrievers
+     * This example demonstrates how to use multiple content retrievers.
      */
+
     public static void main(String[] args) {
         // Create Chat Language Model llama3
         ChatLanguageModel model = AiBeans.getChatLanguageModelLlama();
         // Setting up the Gen AI Context with Open AI LLM, and RAG
-        Assistant assistant = RAGBuilder.createAssistantWithReRanking(model);
+        Assistant assistant = RAGBuilder.createAssistantWithMultiContentRetrievers(model);
         // Start the Conversation with Multi Data Source ChatBot
         // - I am Sam. Can I cancel my reservation?
         // - Please explain the refund policy.
-        ConsoleRunner.startConversationWith(assistant, "Ozazo Car Rental Service - ReRanking");
+        ConsoleRunner.startConversationWith(assistant, "Ozazo Car Rental Service - Multiple Content Retrievers");
     }
 }
