@@ -34,17 +34,17 @@ Here’s how it helps developers:
 | #   | Example                | GPT 4o | Meta Llama3 | Mistral | Microsoft Phi-3 | Google Gemma | TII Falcon 2 | Details                                    |
 |-----|------------------------|--------|---------|---------|-------|-------|-----|--------------------------------------------------------------------------|
 | 1.  | Hello World            | Yes    | Yes     | Yes     | Yes   | Yes   | Yes | First Hello World Generative AI Example                                  |
-| 2.  | Complex World          | Yes    | Yes     | :red_circle: M1      | Yes   | Yes   | Yes | Complex Example with Word and Math Problems                              |
-| 3.  | Custom Data            | Yes    | Yes     | Yes     | Yes   | Yes   | :red_circle: F1  | Use your data (docs) for Search / Query                                  |
-| 4.  | Image Generation       | Yes    | :red_circle: L1      | :red_circle: M2      | :red_circle: P1    | -     | :red_circle: F2  | Create an Image using text prompt                                        | 
-| 5.  | Prompt Template        | Yes    | Yes     | :red_circle: M3      | Yes   | Yes   | Yes | Get Structured Response using Structured Prompt                          |
-| 6.  | Tools Annotation       | Yes    | :red_circle: L2      | :red_circle: M4      | :red_circle: P2    | :red_circle: G1    | :red_circle: F3  | Use Tools annotation for Custom Search / Queries                         |
-| 7.  | Chat Memory            | Yes    | Yes     | Yes     | :red_circle: P3    | :red_circle: G2    | Yes | How to create a ChatBot in a Conversational Context                      |
-| 8.  | FewShot                | Yes    | Yes     | :red_circle: M5      | Yes   | Yes   | Yes | Create ChatBot with custom answers from an App perspective               |
-| 9.  | Language Translator    | Yes    | Yes     | :red_circle: M6      | Yes   | Yes   | Yes | Translate from one language to another                                   |
+| 2.  | Complex World          | Yes    | Yes     | M1      | Yes   | Yes   | Yes | Complex Example with Word and Math Problems                              |
+| 3.  | Custom Data            | Yes    | Yes     | Yes     | Yes   | Yes   | F1  | Use your data (docs) for Search / Query                                  |
+| 4.  | Image Generation       | Yes    | :red_circle: L1      | M2      | P1    | -     | F2  | Create an Image using text prompt                                        | 
+| 5.  | Prompt Template        | Yes    | Yes     | M3      | Yes   | Yes   | Yes | Get Structured Response using Structured Prompt                          |
+| 6.  | Tools Annotation       | Yes    | L2      | M4      | P2    | G1    | F3  | Use Tools annotation for Custom Search / Queries                         |
+| 7.  | Chat Memory            | Yes    | Yes     | Yes     | P3    | G2    | Yes | How to create a ChatBot in a Conversational Context                      |
+| 8.  | FewShot                | Yes    | Yes     | M5      | Yes   | Yes   | Yes | Create ChatBot with custom answers from an App perspective               |
+| 9.  | Language Translator    | Yes    | Yes     | M6      | Yes   | Yes   | Yes | Translate from one language to another                                   |
 | 10. | Sentiment Analyzer     | Yes    | Yes     | Yes     | Yes   | Yes   | Yes | Analyses the Sentiment of a text input. Positve, Neutral, Negative       |
-| 11. | Data Extractor         | Yes    | :red_circle: L3      | :red_circle: M7      | :red_circle: P4    | :red_circle: G3    | :red_circle: F4  | Extract Number, Date, Model (Pojo) from a Text                           |
-| 12. | Persistent Store       | Yes    | Yes     | :red_circle: M8      | :red_circle: P5    | :red_circle: G4    | Yes | Use a Persistent Store for Chat Memory & Retrieve the Chat based on User.|
+| 11. | Data Extractor         | Yes    | L3      | M7      | P4    | G3    | F4  | Extract Number, Date, Model (Pojo) from a Text                           |
+| 12. | Persistent Store       | Yes    | Yes     | M8      | P5    | G4    | Yes | Use a Persistent Store for Chat Memory & Retrieve the Chat based on User.|
 
 ## Retrieval Augmented Generation (RAG) Examples
 
