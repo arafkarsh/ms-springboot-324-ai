@@ -41,7 +41,7 @@ Here’s how it helps developers:
 | 6.  | Tools Annotation       | Yes    | L2      | M4      |       |       | Use Tools annotation for Custom Search / Queries                         |
 | 7.  | Chat Memory            | Yes    | Yes     | Yes     |       |       | How to create a ChatBot in a Conversational Context                      |
 | 8.  | FewShot                | Yes    | Yes     | M5      |       |       | Create ChatBot with custom answers from an App perspective               |
-| 9.  | Translator             | Yes    | Yes     | M6      |       |       | Translate from one language to another                                   |
+| 9.  | Language Translator    | Yes    | Yes     | M6      |       |       | Translate from one language to another                                   |
 | 10. | Sentiment Analyzer     | Yes    | Yes     | Yes     |       |       | Analyses the Sentiment of a text input. Positve, Neutral, Negative       |
 | 11. | Data Extractor         | Yes    | L3      | M7      |       |       | Extract Number, Date, Model (Pojo) from a Text                           |
 | 12. | Persistent Store       | Yes    | Yes     | M8      |       |       | Use a Persistent Store for Chat Memory & Retrieve the Chat based on User.|
