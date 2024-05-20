@@ -51,14 +51,14 @@ Here’s how it helps developers:
 
 | #   | Example                      | GPT 4o | Meta Llama3 | Mistral | Microsoft Phi-3 | Google Gemma | Details                                       |
 |-----|------------------------------|--------|---------|---------|-------|-------|--------------------------------------------------------------------|
-| 13. | Simple                       | Yes    | Yes     | Yes     | Yes   |       | Chat Bot Use Case: Car Rental Service                              |
-| 14. | Segments                     | Yes    | Yes     | Yes     | Yes   |       | Using Segments Use Case: Car Rental Service                        |
-| 15. | Query Transformer            | Yes    | Yes     | Yes     | Yes   |       | Using Query Transformer Use Case: Biography                        |
-| 16. | Query Router                 | Yes    | L4      | M9      | P6    |       | Query Routing between Car Rental Service & Biography               |        
-| 17. | Re-Ranking                   | Yes    | Yes     | Yes     | Yes   |       | Re-Ranking using Cohere API. Case Study: Car Rental Service        |
-| 18. | MetaData                     | Yes    | Yes     | Yes     | Yes   |       | MetaData (Data Source). Case Study: Car Rental Service             |
-| 19. | Multiple Content Retrievers  | Yes    | Yes     | Yes     | Yes   |       | Multi Content Retrievers. Car Rental & Biography                   |
-| 20. | Skipping Content Retrieval   | Yes    | Yes     | Yes     | Yes   |       | Content Retrieval Skipping. Case Study: Car Rental                 |
+| 13. | Simple                       | Yes    | Yes     | Yes     | Yes   | Yes   | Chat Bot Use Case: Car Rental Service                              |
+| 14. | Segments                     | Yes    | Yes     | Yes     | Yes   | Yes   | Using Segments Use Case: Car Rental Service                        |
+| 15. | Query Transformer            | Yes    | Yes     | Yes     | Yes   | Yes   | Using Query Transformer Use Case: Biography                        |
+| 16. | Query Router                 | Yes    | L4      | M9      | P6    | G4    | Query Routing between Car Rental Service & Biography               |        
+| 17. | Re-Ranking                   | Yes    | Yes     | Yes     | Yes   | Yes   | Re-Ranking using Cohere API. Case Study: Car Rental Service        |
+| 18. | MetaData                     | Yes    | Yes     | Yes     | Yes   | Yes   | MetaData (Data Source). Case Study: Car Rental Service             |
+| 19. | Multiple Content Retrievers  | Yes    | Yes     | Yes     | Yes   | Yes   | Multi Content Retrievers. Car Rental & Biography                   |
+| 20. | Skipping Content Retrieval   | Yes    | Yes     | Yes     | Yes   | Yes   | Content Retrieval Skipping. Case Study: Car Rental                 |
 
 ### Meta (Facebook) Llama3 Observations
 
@@ -78,6 +78,7 @@ Here’s how it helps developers:
 | G2 | Chat Memory      | MemoryID Annotation not working.                           |
 | G3 | Data Extractor   | Unable to extract date and Pojos with Dates.               |
 | G4 | Persistent Store | Confused about Memory ID in LangChain4J                    |
+| G5 | Query Router     | Works only with 1 data set. Car Rental Service.            |
 
 
 ### Microsoft PHI - 3 Observations
