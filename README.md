@@ -46,6 +46,8 @@ Here’s how it helps developers:
 | 11. | Data Extractor         | Yes    | -       |         |       |       | Extract Number, Date, Model (Pojo) from a Text                           |
 | 12. | Persistent Store       | Yes    | Yes     |         |       |       | Use a Persistent Store for Chat Memory & Retrieve the Chat based on User.|
 
+## Retrieval Augmented Generation (RAG) Examples
+
 | #   | RAG Example                  | GPT 4o | Llama3  | Mistral | Phi-3 | Gemma | Details                                                            |
 |-----|------------------------------|--------|---------|---------|-------|-------|--------------------------------------------------------------------|
 | 13. | Simple                       | Yes    | Yes     |         |       |       | Chat Bot Use Case: Car Rental Service                              |
