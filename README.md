@@ -31,20 +31,20 @@ Here’s how it helps developers:
 
 ## Generative AI Examples using LangChain4J
 
-| #   | Example                | GPT 4o | Meta Llama3 | Mistral | Microsoft Phi-3 | Google Gemma | Details                                             |
-|-----|------------------------|--------|---------|---------|-------|-------|--------------------------------------------------------------------------|
-| 1.  | Hello World            | Yes    | Yes     | Yes     | Yes   | Yes   | First Hello World Generative AI Example                                  |
-| 2.  | Complex World          | Yes    | Yes     | M1      | Yes   | Yes   | Complex Example with Word and Math Problems                              |
-| 3.  | Custom Data            | Yes    | Yes     | Yes     | Yes   | Yes   | Use your data (docs) for Search / Query                                  |
-| 4.  | Image Generation       | Yes    | L1      | M2      | P1    | -     | Create an Image using text prompt                                        | 
-| 5.  | Prompt Template        | Yes    | Yes     | M3      | Yes   | Yes   | Get Structured Response using Structured Prompt                          |
-| 6.  | Tools Annotation       | Yes    | L2      | M4      | P2    | G1    | Use Tools annotation for Custom Search / Queries                         |
-| 7.  | Chat Memory            | Yes    | Yes     | Yes     | P3    | G2    | How to create a ChatBot in a Conversational Context                      |
-| 8.  | FewShot                | Yes    | Yes     | M5      | Yes   | Yes   | Create ChatBot with custom answers from an App perspective               |
-| 9.  | Language Translator    | Yes    | Yes     | M6      | Yes   | Yes   | Translate from one language to another                                   |
-| 10. | Sentiment Analyzer     | Yes    | Yes     | Yes     | Yes   | Yes   | Analyses the Sentiment of a text input. Positve, Neutral, Negative       |
-| 11. | Data Extractor         | Yes    | L3      | M7      | P4    | G3    | Extract Number, Date, Model (Pojo) from a Text                           |
-| 12. | Persistent Store       | Yes    | Yes     | M8      | P5    | G4    | Use a Persistent Store for Chat Memory & Retrieve the Chat based on User.|
+| #   | Example                | GPT 4o | Meta Llama3 | Mistral | Microsoft Phi-3 | Google Gemma | TII Falcon 2 | Details                                    |
+|-----|------------------------|--------|---------|---------|-------|-------|--------------------------------------------------------------------------------|
+| 1.  | Hello World            | Yes    | Yes     | Yes     | Yes   | Yes   | Yes | First Hello World Generative AI Example                                  |
+| 2.  | Complex World          | Yes    | Yes     | M1      | Yes   | Yes   | Yes | Complex Example with Word and Math Problems                              |
+| 3.  | Custom Data            | Yes    | Yes     | Yes     | Yes   | Yes   | F1  | Use your data (docs) for Search / Query                                  |
+| 4.  | Image Generation       | Yes    | L1      | M2      | P1    | -     | F2  | Create an Image using text prompt                                        | 
+| 5.  | Prompt Template        | Yes    | Yes     | M3      | Yes   | Yes   | Yes | Get Structured Response using Structured Prompt                          |
+| 6.  | Tools Annotation       | Yes    | L2      | M4      | P2    | G1    | F3  | Use Tools annotation for Custom Search / Queries                         |
+| 7.  | Chat Memory            | Yes    | Yes     | Yes     | P3    | G2    | Yes | How to create a ChatBot in a Conversational Context                      |
+| 8.  | FewShot                | Yes    | Yes     | M5      | Yes   | Yes   | Yes | Create ChatBot with custom answers from an App perspective               |
+| 9.  | Language Translator    | Yes    | Yes     | M6      | Yes   | Yes   | Yes | Translate from one language to another                                   |
+| 10. | Sentiment Analyzer     | Yes    | Yes     | Yes     | Yes   | Yes   | Yes | Analyses the Sentiment of a text input. Positve, Neutral, Negative       |
+| 11. | Data Extractor         | Yes    | L3      | M7      | P4    | G3    | F4  | Extract Number, Date, Model (Pojo) from a Text                           |
+| 12. | Persistent Store       | Yes    | Yes     | M8      | P5    | G4    | Yes | Use a Persistent Store for Chat Memory & Retrieve the Chat based on User.|
 
 ## Retrieval Augmented Generation (RAG) Examples
 
@@ -106,6 +106,15 @@ Here’s how it helps developers:
 | M8 | Persistent Store | Confused about Memory ID in LangChain4J                    |
 | M9 | Query Router     | Query Router doesnt work between different sources         |
 
+
+### TII Falcon 2 Observations
+
+| #  | Example          | Observations                                               |
+|----|------------------|------------------------------------------------------------|
+| F1 | Custom Data      | Falcon is completely confused in handling Custom Data.     |
+| F2 | Image Generation | No image generation support                                |
+| F3 | Tools Annotation | No Support for Tools that helps in querying custom data.   | 
+| F4 | Data Extractor   | Data extractor doesnt work cleanly for Time and Pojos      |
 
 
 

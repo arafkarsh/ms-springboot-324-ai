@@ -72,6 +72,8 @@ public class AiConstants {
     public static String OLLAMA_MISTRAL       = "mistral";
     public static String OLLAMA_PHI_3           = "phi3";
     public static String OLLAMA_GEMMA         = "gemma";
+    public static String OLLAMA_FALCON_2      = "falcon2";
+
 
 
 
