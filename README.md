@@ -31,7 +31,7 @@ Here’s how it helps developers:
 
 ## Generative AI Examples using LangChain4J
 
-| #   | Example                | GPT 4o | Llama3  | Mistral | Phi-3 | Gemma | Details                                                                  |
+| #   | Example                | GPT 4o | Meta Llama3  | Mistral | Microsoft Phi-3 | Google Gemma | Details                                                                  |
 |-----|------------------------|--------|---------|---------|-------|-------|--------------------------------------------------------------------------|
 | 1.  | Hello World            | Yes    | Yes     | Yes     | Yes   |       | First Hello World Generative AI Example                                  |
 | 2.  | Complex World          | Yes    | Yes     | M1      | Yes   |       | Complex Example with Word and Math Problems                              |
@@ -49,8 +49,10 @@ Here’s how it helps developers:
 ## Retrieval Augmented Generation (RAG) Examples
 
 | #   | RAG Example                  | GPT 4o | Llama3  | Mistral | Phi-3 | Gemma | Details                                                            |
+
+| #   | Example                      | GPT 4o | Meta Llama3  | Mistral | Microsoft Phi-3 | Google Gemma | Details                                                                  |
 |-----|------------------------------|--------|---------|---------|-------|-------|--------------------------------------------------------------------|
-| 13. | Simple                       | Yes    | Yes     | Yes     |       |       | Chat Bot Use Case: Car Rental Service                              |
+| 13. | Simple                       | Yes    | Yes     | Yes     | Yes   |       | Chat Bot Use Case: Car Rental Service                              |
 | 14. | Segments                     | Yes    | Yes     | Yes     |       |       | Using Segments Use Case: Car Rental Service                        |
 | 15. | Query Transformer            | Yes    | Yes     | Yes     |       |       | Using Query Transformer Use Case: Biography                        |
 | 16. | Query Router                 | Yes    | L4      | M9      |       |       | Query Routing between Car Rental Service & Biography               |        
