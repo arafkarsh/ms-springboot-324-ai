@@ -31,28 +31,31 @@ Here’s how it helps developers:
 
 ## Generative AI Examples using LangChain4J
 
-| #   | Example                                 | GPT 4o | Llama3  | Mistral | Details                                                                  |
-|-----|-----------------------------------------|--------|---------|---------|--------------------------------------------------------------------------|
-| 1.  | Hello World                             | Yes    | Yes     |         | First Hello World Generative AI Example                                  |
-| 2.  | Complex World                           | Yes    | Yes     |         | Complex Example with Word Problems and Math                              |
-| 3.  | Custom Data                      | Yes    | Yes     |         | Use your data (docs) for Search / Query                                  |
-| 4.  | Image                            | Yes    | -       |         | Create an Image using text prompt                                        | 
-| 5.  | Prompt Template                  | Yes    | Yes     |         | Get Structured Response using Structured Prompt                          |
-| 6.  | Tools                            | Yes    | -       |         | Use Tools annotation for Custom Search / Queries                         |
-| 7.  | Chat Memory                      | Yes    | Yes     |         | How to create a ChatBot in a Conversational Context                      |
-| 8.  | FewShot                          | Yes    | Yes     |         | Create ChatBot with custom answers from an App perspective               |
-| 9.  | Translator                       | Yes    | Yes     |         | Translate from one language to another                                   |
-| 10. | Sentiment Analyzer               | Yes    | Yes     |         | Analyses the Sentiment of a text input. Positve, Neutral, Negative       |
-| 11. | Data Extractor                   | Yes    | Yes     |         | Extract Number, Date, Model (Pojo) from a Text                           |
-| 12. | Persistent Store                 | Yes    | Yes     |         | Use a Persistent Store for Chat Memory & Retrieve the Chat based on User.|
-| 13. | RAG Simple                       | Yes    | Yes     |         | RAG based Chat Bot Use Case: Car Rental Service                          |
-| 14. | RAG Segments                     | Yes    | Yes     |         | RAG (using Segments) based Chat Bot Use Case: Car Rental Service         |
-| 15. | RAG Query Transformer            | Yes    | Yes     |         | RAG (using Query Transformer) Chat Bot Use Case: Biography               |
-| 16. | RAG Query Router                 | Yes    | -       |         | RAG Query Routing between Car Rental Service & Biography                 |        
-| 17. | RAG Re-Ranking                   | Yes    | Yes     |         | RAG Re-Ranking using Cohere API. Case Study: Car Rental Service          |
-| 18. | RAG MetaData                     | Yes    | Yes     |         | RAG MetaData (Data Source). Case Study: Car Rental Service               |
-| 19. | RAG Multiple Content Retrievers  | Yes    | Yes     |         | RAG Multi Content Retrievers. Car Rental & Biography                     |
-| 20. | RAG Skipping Content Retrieval   | Yes    | Yes     |         | RAG Content Retrieval Skipping. Case Study: Car Rental                   |
+| #   | Example                | GPT 4o | Llama3  | Mistral | Phi-3 | Gemma | Details                                                                  |
+|-----|------------------------|--------|---------|---------|-------|-------|--------------------------------------------------------------------------|
+| 1.  | Hello World            | Yes    | Yes     |         |       |       | First Hello World Generative AI Example                                  |
+| 2.  | Complex World          | Yes    | Yes     |         |       |       | Complex Example with Word Problems and Math                              |
+| 3.  | Custom Data            | Yes    | Yes     |         |       |       | Use your data (docs) for Search / Query                                  |
+| 4.  | Image                  | Yes    | -       |         |       |       | Create an Image using text prompt                                        | 
+| 5.  | Prompt Template        | Yes    | Yes     |         |       |       | Get Structured Response using Structured Prompt                          |
+| 6.  | Tools                  | Yes    | -       |         |       |       | Use Tools annotation for Custom Search / Queries                         |
+| 7.  | Chat Memory            | Yes    | Yes     |         |       |       | How to create a ChatBot in a Conversational Context                      |
+| 8.  | FewShot                | Yes    | Yes     |         |       |       | Create ChatBot with custom answers from an App perspective               |
+| 9.  | Translator             | Yes    | Yes     |         |       |       | Translate from one language to another                                   |
+| 10. | Sentiment Analyzer     | Yes    | Yes     |         |       |       | Analyses the Sentiment of a text input. Positve, Neutral, Negative       |
+| 11. | Data Extractor         | Yes    | -       |         |       |       | Extract Number, Date, Model (Pojo) from a Text                           |
+| 12. | Persistent Store       | Yes    | Yes     |         |       |       | Use a Persistent Store for Chat Memory & Retrieve the Chat based on User.|
+
+| #   | RAG Example                  | GPT 4o | Llama3  | Mistral | Phi-3 | Gemma | Details                                                            |
+|-----|------------------------------|--------|---------|---------|-------|-------|--------------------------------------------------------------------|
+| 13. | Simple                       | Yes    | Yes     |         |       |       | Chat Bot Use Case: Car Rental Service                              |
+| 14. | Segments                     | Yes    | Yes     |         |       |       | Using Segments Use Case: Car Rental Service                        |
+| 15. | Query Transformer            | Yes    | Yes     |         |       |       | Using Query Transformer Use Case: Biography                        |
+| 16. | Query Router                 | Yes    | -       |         |       |       | Query Routing between Car Rental Service & Biography               |        
+| 17. | Re-Ranking                   | Yes    | Yes     |         |       |       | Re-Ranking using Cohere API. Case Study: Car Rental Service        |
+| 18. | MetaData                     | Yes    | Yes     |         |       |       | MetaData (Data Source). Case Study: Car Rental Service             |
+| 19. | Multiple Content Retrievers  | Yes    | Yes     |         |       |       | Multi Content Retrievers. Car Rental & Biography                   |
+| 20. | Skipping Content Retrieval   | Yes    | Yes     |         |       |       | Content Retrieval Skipping. Case Study: Car Rental                 |
 
 ## Quick Test after starting the SpringBoot App
 ![Ai Prompt](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/Ai-Prompt.jpg)
