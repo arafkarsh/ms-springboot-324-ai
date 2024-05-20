@@ -41,41 +41,41 @@ public class _02_Complex_World {
 
     /**
      * Example 1
-     * @param hal9k
+     * @param _hal9k
      */
-    public static void complexWorld1(HAL9000Assistant hal9k) {
-        interact(hal9k, "What is the square root of 144233377?");
-        interact(hal9k, "Capitalize every third letter except the sixth letter: abcdefghjiklmnop");
+    public static void complexWorld1(HAL9000Assistant _hal9k) {
+        interact(_hal9k, "What is the square root of 144233377?");
+        interact(_hal9k, "Capitalize every third letter except the sixth letter: abcdefghjiklmnop");
     }
 
     /**
      * Example 2
-     * @param hal9k
+     * @param _hal9k
      */
-    public static void complexWorld2(HAL9000Assistant hal9k) {
-        interact(hal9k, "What are the hours between 06:00 on 7 Feb 1970 and 11:00 on 02 Jun 1980?");
-        interact(hal9k, "What is the sum of all the digits in the previous question? Is that a Prime Number?");
-        interact(hal9k, "What are the hours between 11:00 on 2 Jun 1980 and 12:00 on 11 Mar 2024?");
+    public static void complexWorld2(HAL9000Assistant _hal9k) {
+        interact(_hal9k, "What are the hours between 06:00 on 7 Feb 1970 and 11:00 on 02 Jun 1980?");
+        interact(_hal9k, "What is the sum of all the digits in the previous question? Is that a Prime Number?");
+        interact(_hal9k, "What are the hours between 11:00 on 2 Jun 1980 and 12:00 on 11 Mar 2024?");
         validateCalc();
         System.out.println("--------------------------------------------------------------");
     }
 
     /**
      * Example 3
-     * @param hal9k
+     * @param _hal9k
      */
-    public static void complexWorld3(HAL9000Assistant hal9k) {
-        interact(hal9k, "Explain French Revolution in details with critical events.");
+    public static void complexWorld3(HAL9000Assistant _hal9k) {
+        interact(_hal9k, "Explain French Revolution in details with critical events.");
     }
 
     /**
      * Interact with HAL9000Assistant Ai Assistant
-     * @param hal9k
-     * @param userMessage
+     * @param _hal9k
+     * @param _userMessage
      */
-    private static void interact(HAL9000Assistant hal9k, String userMessage) {
-        System.out.println("[Human]: " + userMessage);
-        String response = hal9k.chat(userMessage);
+    private static void interact(HAL9000Assistant _hal9k, String _userMessage) {
+        System.out.println("[Human]: " + _userMessage);
+        String response = _hal9k.chat(_userMessage);
         System.out.println("[HAL9K]: " + response);
         System.out.println("--------------------------------------------------------------");
     }
@@ -104,29 +104,29 @@ public class _02_Complex_World {
 
     /**
      * Sum Digits
-     * @param number
+     * @param _number
      * @return
      */
-    private static long sumOfDigits(long number) {
+    private static long sumOfDigits(long _number) {
         long sum = 0;
-        while (number > 0) {
-            sum += number % 10;
-            number /= 10;
+        while (_number > 0) {
+            sum += _number % 10;
+            _number /= 10;
         }
         return sum;
     }
 
     /**
      * Find Prime
-     * @param number
+     * @param _number
      * @return
      */
-    private static boolean isPrime(long number) {
-        if (number <= 1) {
+    private static boolean isPrime(long _number) {
+        if (_number <= 1) {
             return false;
         }
-        for (int i = 2; i <= Math.sqrt(number); i++) {
-            if (number % i == 0) {
+        for (int i = 2; i <= Math.sqrt(_number); i++) {
+            if (_number % i == 0) {
                 return false;
             }
         }

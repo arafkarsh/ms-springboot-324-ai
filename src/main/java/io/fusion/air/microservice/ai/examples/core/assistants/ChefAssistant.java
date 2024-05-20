@@ -25,7 +25,17 @@ import io.fusion.air.microservice.ai.examples.core.prompts.StructuredPromptRecip
  */
 public interface ChefAssistant {
 
-    public Recipe createRecipeFrom(String... ingredients);
+    /**
+     *  Create Recipe from the Ingredients
+     * @param _ingredients
+     * @return
+     */
+    public Recipe createRecipeFrom(String... _ingredients);
 
-    public Recipe createRecipe(StructuredPromptRecipe prompt);
+    /**
+     * Create Recipe using a Structured Prompt
+     * @param _prompt
+     * @return
+     */
+    public Recipe createRecipe(StructuredPromptRecipe _prompt);
 }

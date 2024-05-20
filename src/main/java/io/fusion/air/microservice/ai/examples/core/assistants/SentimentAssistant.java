@@ -28,9 +28,19 @@ import io.fusion.air.microservice.ai.examples.core.models.Sentiment;
  */
 public interface SentimentAssistant {
 
+    /**
+     * Analyze Sentiment of a Text
+     * @param _text
+     * @return
+     */
     @UserMessage("Analyze sentiment of {{it}}")
-    public Sentiment analyzeSentimentOf(String text);
+    public Sentiment analyzeSentimentOf(String _text);
 
+    /**
+     * Returns True if the Sentiment is Positive
+     * @param _text
+     * @return
+     */
     @UserMessage("Does {{it}} have a positive sentiment?")
-    public boolean isPositive(String text);
+    public boolean isPositive(String _text);
 }

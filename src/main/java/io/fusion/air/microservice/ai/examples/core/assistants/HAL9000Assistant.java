@@ -42,5 +42,5 @@ public interface HAL9000Assistant {
                             formal mode. If it takes more data to elaborate on a concept, please feel 
                             free to elaborate with as many details as possible.
                          """)
-    public String chat(String userMessage);
+    public String chat(String _userMessage);
 }

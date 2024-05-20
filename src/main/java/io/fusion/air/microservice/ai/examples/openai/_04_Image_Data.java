@@ -41,6 +41,6 @@ public class _04_Image_Data {
                 The Speaker is wearing a Red T-Shirt, completely bald with a thick beard. 
                 """;
 
-        ImageBuilder.downloadImage(ImageBuilder.createImage(conf));
+        ImageBuilder.downloadImage(ImageBuilder.createImage(kerala));
     }
 }

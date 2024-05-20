@@ -47,19 +47,33 @@ public class FilePersistentChatMemoryStore implements ChatMemoryStore {
     // private final Map<Integer, String> map = db.hashMap("messages", STRING, STRING).createOrOpen();
     private ConcurrentHashMap<String, String> map = new ConcurrentHashMap<String, String>();
 
+    /**
+     * Get Messages
+     * @param _memoryId
+     * @return
+     */
     @Override
-    public List<ChatMessage> getMessages(Object memoryId) {
-        String json = map.get((String) memoryId);
+    public List<ChatMessage> getMessages(Object _memoryId) {
+        String json = map.get((String) _memoryId);
         return messagesFromJson(json);
     }
 
+    /**
+     * Update Message based on Memory ID
+     * @param _memoryId
+     * @param _messages
+     */
     @Override
-    public void updateMessages(Object memoryId, List<ChatMessage> messages) {
-        String json = messagesToJson(messages);
-        map.put((String) memoryId, json);
+    public void updateMessages(Object _memoryId, List<ChatMessage> _messages) {
+        String json = messagesToJson(_messages);
+        map.put((String) _memoryId, json);
         // db.commit();
     }
 
+    /**
+     * Delete Message based on Memory ID
+     * @param memoryId
+     */
     @Override
     public void deleteMessages(Object memoryId) {
         map.remove((String) memoryId);

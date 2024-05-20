@@ -27,17 +27,17 @@ public interface Assistant {
 
     /**
      * Chat Conversation
-     * @param userMessage
+     * @param _userMessage
      * @return
      */
-    public String chat(@UserMessage String userMessage);
+    public String chat(@UserMessage String _userMessage);
 
     /**
      * Chat Memory with a Memory ID
      *
-     * @param memoryId
-     * @param userMessage
+     * @param _memoryId
+     * @param _userMessage
      * @return
      */
-    public String chat(@MemoryId String memoryId, @UserMessage String userMessage);
+    public String chat(@MemoryId String _memoryId, @UserMessage String _userMessage);
 }

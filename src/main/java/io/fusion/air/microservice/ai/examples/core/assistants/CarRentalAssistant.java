@@ -32,7 +32,7 @@ public interface CarRentalAssistant extends Assistant{
     /**
      * Translate the message into the target language
      *
-     * @param request
+     * @param _userMessage
      * @return
      */
     @SystemMessage("""
@@ -44,5 +44,5 @@ public interface CarRentalAssistant extends Assistant{
         the conversation with a good bye greetings. 
         Always try to answer with proper clause number in the terms of usage.
         """)
-    public String chat(@UserMessage String request);
+    public String chat(@UserMessage String _userMessage);
 }

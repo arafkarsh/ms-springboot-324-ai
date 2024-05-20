@@ -35,34 +35,34 @@ public interface DataExtractorAssistant {
 
     // Number Extractor
     @UserMessage("Extract number from {{it}}")
-    public int extractInt(String text);
+    public int extractInt(String _text);
 
     @UserMessage("Extract number from {{it}}")
-    public long extractLong(String text);
+    public long extractLong(String _text);
 
     @UserMessage("Extract number from {{it}}")
-    public BigInteger extractBigInteger(String text);
+    public BigInteger extractBigInteger(String _text);
 
     @UserMessage("Extract number from {{it}}")
-    public float extractFloat(String text);
+    public float extractFloat(String _text);
 
     @UserMessage("Extract number from {{it}}")
-    public double extractDouble(String text);
+    public double extractDouble(String _text);
 
     @UserMessage("Extract number from {{it}}")
-    public BigDecimal extractBigDecimal(String text);
+    public BigDecimal extractBigDecimal(String _text);
 
     // Date & Time Extractor
     @UserMessage("Extract date from {{it}}")
-    public LocalDate extractDateFrom(String text);
+    public LocalDate extractDateFrom(String _text);
 
     @UserMessage("Extract time from {{it}}")
-    public LocalTime extractTimeFrom(String text);
+    public LocalTime extractTimeFrom(String _text);
 
     @UserMessage("Extract date and time from {{it}}")
-    public LocalDateTime extractDateTimeFrom(String text);
+    public LocalDateTime extractDateTimeFrom(String _text);
 
     // POJO Extractor
     @UserMessage("Extract information about a person from {{it}}")
-    public Person extractPersonFrom(String text);
+    public Person extractPersonFrom(String _text);
 }

@@ -172,15 +172,15 @@ public class AiOllamaControllerImpl extends AbstractController {
 	})
 	@GetMapping("/chat/userid/{userId}")
 	@ResponseBody
-	public ResponseEntity<StandardResponse> getProductStatus(@PathVariable("userId") String userId) throws Exception {
-		log.info("|"+name()+"|Request to Get ChatMessages by User ID.. "+userId);
-		List<ChatMessageEntity> chats = chatMessageService.fetchByUserId(userId);
+	public ResponseEntity<StandardResponse> getProductStatus(@PathVariable("userId") String _userId) throws Exception {
+		log.info("|"+name()+"|Request to Get ChatMessages by User ID.. "+ _userId);
+		List<ChatMessageEntity> chats = chatMessageService.fetchByUserId(_userId);
 		if(chats.size() > 0) {
 			StandardResponse stdResponse = createSuccessResponse("Chats Fetch Success!");
 			stdResponse.setPayload(chats);
 			return ResponseEntity.ok(stdResponse);
 		}
-		throw new DataNotFoundException("Chats not found for User Id "+userId);
+		throw new DataNotFoundException("Chats not found for User Id "+ _userId);
 	}
 
 	/**
