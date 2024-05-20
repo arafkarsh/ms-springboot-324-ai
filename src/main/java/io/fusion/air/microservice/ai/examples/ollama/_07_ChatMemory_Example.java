@@ -42,7 +42,7 @@ public class _07_ChatMemory_Example {
     public static ChatLanguageModel model = new AiBeans().createChatLanguageModelLlama();
 
     public static void chatMemoryConversations() {
-        Tokenizer tokenizer = new OpenAiTokenizer(AiConstants.LLAMA_MODEL);
+        Tokenizer tokenizer = new OpenAiTokenizer(AiConstants.GPT_4_TURBO);
         ChatMemory chatMemory = TokenWindowChatMemory.withMaxTokens(2000, tokenizer);
 
         // Setting the Context
@@ -107,7 +107,7 @@ public class _07_ChatMemory_Example {
     public static void main(String[] args) throws Exception {
 
         // Chat Memory Conversations
-        // chatMemoryConversations();
+        chatMemoryConversations();
 
         // Chat Memory with Multiple user
         chatMemoryWithMultipleUsers();
