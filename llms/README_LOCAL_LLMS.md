@@ -12,23 +12,23 @@ For Linux
 curl -fsSL https://ollama.com/install.sh | sh
 ```
 
-### Meta (FaceBook) Llama3
+### 1. Meta (FaceBook) Llama3
 ```
 ollama run llama3
 ```
 
-### Mistral
+### 2.Mistral
 
 ```
 ollama run mistral
 ```
 
-### Microsoft PHI-3
+### 3. Microsoft PHI-3
 ```
 ollama run phi3
 ```
 
-### Google Gemma
+### 4. Google Gemma
 ```
 ollama run gemma
 ```
