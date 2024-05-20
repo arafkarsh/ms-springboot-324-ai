@@ -62,8 +62,8 @@ public class _16_RAG_Query_Routing_Example {
         // Setting up the Gen AI Context with Open AI LLM, and RAG
         Assistant assistant = RAGBuilder.createAssistantWithQueryRouter(model);
         // Start the Conversation with Multi Data Source ChatBot
-        // - "What is the legacy of Akiera Kiera?"
-        // - "When was he born?".
+        // - What is the legacy of Akiera Kiera?
+        // - When was he born?
         // - I am Sam. Can I cancel my reservation?
         // - Please explain the refund policy.
         ConsoleRunner.startConversationWith(assistant, "Multi-Data Source Query Routing Service");

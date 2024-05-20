@@ -50,7 +50,7 @@ public class _17_RAG_ReRanking_Example {
         // Setting up the Gen AI Context with Open AI LLM, and RAG
         Assistant assistant = RAGBuilder.createAssistantWithReRanking(model);
         // Start the Conversation with Multi Data Source ChatBot
-        // - I am Sam. Can I cancel my reservation?
+        // - Can I cancel my reservation?
         // - Please explain the refund policy.
         ConsoleRunner.startConversationWith(assistant, "Ozazo Car Rental Service - ReRanking");
     }

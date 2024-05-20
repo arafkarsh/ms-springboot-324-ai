@@ -55,7 +55,7 @@ public class _20_RAG_Skip_Retrieval_Example {
         // Setting up the Gen AI Context with Open AI LLM, and RAG
         Assistant assistant = RAGBuilder.createAssistantWithRetrievalSkipping(model);
         // Start the Conversation with Multi Data Source ChatBot
-        // - "Hi"
+        // - Hi
         // Notice how this query is not routed to any retrievers.
         // - I am Sam. Can I cancel my reservation?
         // - Please explain the refund policy.

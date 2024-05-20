@@ -55,8 +55,8 @@ public class _15_RAG_Query_Compression_Example {
         // Setting up the Gen AI Context with Open AI LLM, and RAG
         Assistant assistant = RAGBuilder.createAssistantWithQueryTransformer();
         // Start the Conversation with Akiera Kiera Biography ChatBot
-        // First, ask "What is the legacy of Akiera Kiera?"
-        // Then, ask "When was he born?".
+        // - What is the legacy of Akiera Kiera?
+        // - When was he born?
         ConsoleRunner.startConversationWith(assistant, "Akiera Kiera Biography ChatBot");
     }
 }
