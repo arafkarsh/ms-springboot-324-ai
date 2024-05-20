@@ -32,7 +32,7 @@ Here’s how it helps developers:
 ## Generative AI Examples using LangChain4J
 
 | #   | Example                | GPT 4o | Meta Llama3 | Mistral | Microsoft Phi-3 | Google Gemma | TII Falcon 2 | Details                                    |
-|-----|------------------------|--------|---------|---------|-------|-------|--------------------------------------------------------------------------------|
+|-----|------------------------|--------|---------|---------|-------|-------|-----|--------------------------------------------------------------------------|
 | 1.  | Hello World            | Yes    | Yes     | Yes     | Yes   | Yes   | Yes | First Hello World Generative AI Example                                  |
 | 2.  | Complex World          | Yes    | Yes     | M1      | Yes   | Yes   | Yes | Complex Example with Word and Math Problems                              |
 | 3.  | Custom Data            | Yes    | Yes     | Yes     | Yes   | Yes   | F1  | Use your data (docs) for Search / Query                                  |
