@@ -20,6 +20,7 @@ import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.services.RAGBuilder;
 import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 import io.fusion.air.microservice.ai.utils.ConsoleRunner;
 
 /**
@@ -42,8 +43,9 @@ public class _17_RAG_ReRanking_Example {
      * and eliminate irrelevant results using a more advanced model (e.g., Cohere Rerank).
      */
     public static void main(String[] args) {
-        // Create Chat Language Model llama3
-        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama();
+        // Create Chat Language Model Google Llama3
+        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_LLAMA3);
+        AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_LLAMA3);
         // Setting up the Gen AI Context with Open AI LLM, and RAG
         Assistant assistant = RAGBuilder.createAssistantWithReRanking(model);
         // Start the Conversation with Multi Data Source ChatBot
