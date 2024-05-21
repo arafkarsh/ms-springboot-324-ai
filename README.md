@@ -59,7 +59,7 @@ Here’s how it helps developers:
 | 18. | MetaData                     | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | MetaData (Data Source): Car Rental Service           |
 | 19. | Multiple Content Retrievers  | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | Multi Content Retrievers. Car Rental & Biography     |
 | 20. | Skipping Content Retrieval   | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | Content Retrieval Skipping: Car Rental Service       |
-| 21. | Health Care Diagnosis        | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  |                 | Health Care Case Study: Diagnosis Summary & Details  | 
+| 21. | Health Care Diagnosis        | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | Health Care Case Study: Diagnosis Summary & Details  | 
 
 ### OpenAI GPT 4o (Omini) Observations
 
