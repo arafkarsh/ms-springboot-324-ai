@@ -63,9 +63,9 @@ Here’s how it helps developers:
 
 ### OpenAI GPT 4o (Omini) Observations
 
-| #  | Example          | Observations                                                      |
-|----|------------------|-------------------------------------------------------------------|
-| G1 | Data Extractor   | Data extractor (for Pojos) works with GPT 3.5 and not with GPT 4o |
+| #  | Example          | Observations                                               |
+|----|------------------|------------------------------------------------------------|
+| G1 | Data Extractor   | Pojos works with GPT 3.5 only and not with GPT 4o          |
 
 ### Meta (Facebook) Llama3 Observations
 
