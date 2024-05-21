@@ -49,16 +49,16 @@ Here’s how it helps developers:
 ## Retrieval Augmented Generation (RAG) Examples
 
 
-| #   | Example                      | GPT 4o         | Meta Llama3     | Mistral         | Microsoft Phi-3 | Google Gemma    | TII Falcon 2    | Details                                                      |
-|-----|------------------------------|----------------|-----------------|-----------------|-----------------|-----------------|-----------------|--------------------------------------------------------------|
-| 13. | Simple                       | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | Chat Bot Use Case: Car Rental Service                        |
-| 14. | Segments                     | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | Using Segments Use Case: Car Rental Service                  |
-| 15. | Query Transformer            | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | Using Query Transformer Use Case: Biography                  |
-| 16. | Query Router                 | :green_circle: | :red_circle: L4 | :red_circle: M9 | :red_circle: P6 | :red_circle: G4 | :red_circle: F5 | Query Routing between Car Rental Service & Biography         |        
-| 17. | Re-Ranking                   | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | Re-Ranking using Cohere API. Case Study: Car Rental Service  |
-| 18. | MetaData                     | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | MetaData (Data Source). Case Study: Car Rental Service       |
-| 19. | Multiple Content Retrievers  | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | Multi Content Retrievers. Car Rental & Biography             |
-| 20. | Skipping Content Retrieval   | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | Content Retrieval Skipping. Case Study: Car Rental           |
+| #   | Example                      | GPT 4o         | Meta Llama3     | Mistral         | Microsoft Phi-3 | Google Gemma    | TII Falcon 2    | Details                                              |
+|-----|------------------------------|----------------|-----------------|-----------------|-----------------|-----------------|-----------------|------------------------------------------------------|
+| 13. | Simple                       | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | Chat Bot Use Case: Car Rental Service                |
+| 14. | Segments                     | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | Using Segments: Car Rental Service                   |
+| 15. | Query Transformer            | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | Using Query Transformer: Biography                   |
+| 16. | Query Router                 | :green_circle: | :red_circle: L4 | :red_circle: M9 | :red_circle: P6 | :red_circle: G4 | :red_circle: F5 | Query Routing between Car Rental Service & Biography |        
+| 17. | Re-Ranking                   | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | Re-Ranking using Cohere API: Car Rental Service      |
+| 18. | MetaData                     | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | MetaData (Data Source): Car Rental Service           |
+| 19. | Multiple Content Retrievers  | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | Multi Content Retrievers. Car Rental & Biography     |
+| 20. | Skipping Content Retrieval   | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | Content Retrieval Skipping: Car Rental Service       |
 
 ### Meta (Facebook) Llama3 Observations
 
@@ -68,6 +68,16 @@ Here’s how it helps developers:
 | L2 | Tools Annotation | No Support for Tools that helps in querying custom data.   | 
 | L3 | Data Extractor   | Data extractor doesnt work cleanly for Date and Pojos      |
 | L4 | Query Router     | Query Router doesnt work between different sources         |
+
+### TII Falcon 2 Observations
+
+| #  | Example          | Observations                                               |
+|----|------------------|------------------------------------------------------------|
+| F1 | Custom Data      | Falcon is completely confused in handling Custom Data.     |
+| F2 | Image Generation | No image generation support                                |
+| F3 | Tools Annotation | No Support for Tools that helps in querying custom data.   | 
+| F4 | Data Extractor   | Data extractor doesnt work cleanly for Time and Pojos      |
+| F5 | Query Router     | Query Router doesnt work between different sources         |
 
 ### Google Gemma Observations
 
@@ -105,18 +115,6 @@ Here’s how it helps developers:
 | M7 | Data Extractor   | Not able to extract Number, Date, Pojos with dates         |
 | M8 | Persistent Store | Confused about Memory ID in LangChain4J                    |
 | M9 | Query Router     | Query Router doesnt work between different sources         |
-
-
-### TII Falcon 2 Observations
-
-| #  | Example          | Observations                                               |
-|----|------------------|------------------------------------------------------------|
-| F1 | Custom Data      | Falcon is completely confused in handling Custom Data.     |
-| F2 | Image Generation | No image generation support                                |
-| F3 | Tools Annotation | No Support for Tools that helps in querying custom data.   | 
-| F4 | Data Extractor   | Data extractor doesnt work cleanly for Time and Pojos      |
-
-
 
 
 ## Quick Test after starting the SpringBoot App
