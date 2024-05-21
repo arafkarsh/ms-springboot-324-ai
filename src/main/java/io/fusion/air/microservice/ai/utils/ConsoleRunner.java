@@ -18,6 +18,7 @@ package io.fusion.air.microservice.ai.utils;
 import dev.langchain4j.model.input.Prompt;
 import dev.langchain4j.model.input.structured.StructuredPromptProcessor;
 import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
+import io.fusion.air.microservice.ai.examples.core.prompts.StructuredPromptDiagnosis;
 import io.fusion.air.microservice.ai.examples.core.prompts.StructuredPromptDiagnosisDetails;
 import io.fusion.air.microservice.ai.examples.core.prompts.StructuredPromptDiagnosisSummary;
 import io.fusion.air.microservice.ai.examples.core.prompts.StructuredPromptRecipe;
@@ -186,6 +187,10 @@ public class ConsoleRunner implements CommandLineRunner {
                             Prompt prompt = StructuredPromptProcessor.toPrompt(diagnosisSummary);
                             userQuery = prompt.text();
                         }
+                } else {
+                    // Created Prompt
+                    Prompt prompt = StructuredPromptProcessor.toPrompt(new StructuredPromptDiagnosis());
+                    userQuery = prompt.text();
                 }
                 response = _assistant.chat(userQuery);
 
