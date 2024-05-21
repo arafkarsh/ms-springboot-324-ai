@@ -16,14 +16,14 @@
 package io.fusion.air.microservice.ai.examples.openai;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
-import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
-import io.fusion.air.microservice.ai.services.RAGBuilder;
+import io.fusion.air.microservice.ai.examples.core.assistants.HealthCareAssistant;
+import io.fusion.air.microservice.ai.services.RAGHealthCareBuilder;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 import io.fusion.air.microservice.ai.utils.ConsoleRunner;
 
 /**
- * RAG Example
+ * RAG Health Care Diagnosis Service Example
  *
  * @author: Araf Karsh Hamid
  * @version:
@@ -32,9 +32,7 @@ import io.fusion.air.microservice.ai.utils.ConsoleRunner;
 public class _21_RAG_HealthCare_Example {
 
     /**
-     * This example demonstrates how to implement an "Easy RAG" (Retrieval-Augmented Generation) application.
-     * By "easy" we mean that we won't dive into all the details about parsing, splitting, embedding, etc.
-     * <p>
+     * This example demonstrates how to implement Health Care Diagnosis Service Example
      */
     public static void main(String[] args) {
         // Create Chat Language Model - Open AI GPT 4o
@@ -42,14 +40,14 @@ public class _21_RAG_HealthCare_Example {
         AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_4o);
         // Create the Assistant
         // Setting up the Gen AI Context with Open AI LLM, and RAG
-        Assistant assistant = RAGBuilder.createCarRentalAssistantSimple(model);
-        // Start the Conversation with Ozazo Rental Service ChatBot
-        // - Hello
-        // - I am Sam. Can I cancel my reservation?
-        // - Can you elaborate the usage policy?
-        // - I had an accident, should I pay extra?
-        // - Do you have a refund policy?
+        HealthCareAssistant assistant = RAGHealthCareBuilder.createDiagnosisSummary(model);
+        // Start the Conversation with iCare Health Care Diagnosis Service ChatBot
+        // - Hi
+        // - I need the diagnosis history of Akiera Kiera for the past 3 years
+        // - I need the diagnosis history of Patient 300100202
+        // - I need the diagnosis history of Jane Susan Wood for the past 4 years
+        // - I need the diagnosis history of Patient 400100201
         // - No, thank you.
-        ConsoleRunner.startConversationWith(assistant, "OZAZO Car Rental Service ChatBot");
+        ConsoleRunner.startConversationWithPrompts(assistant, "iCare - Health Care Hospitals");
     }
 }

@@ -15,7 +15,12 @@
  */
 package io.fusion.air.microservice.ai.utils;
 // Custom
+import dev.langchain4j.model.input.Prompt;
+import dev.langchain4j.model.input.structured.StructuredPromptProcessor;
 import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
+import io.fusion.air.microservice.ai.examples.core.prompts.StructuredPromptDiagnosisDetails;
+import io.fusion.air.microservice.ai.examples.core.prompts.StructuredPromptDiagnosisSummary;
+import io.fusion.air.microservice.ai.examples.core.prompts.StructuredPromptRecipe;
 import io.fusion.air.microservice.ai.services.CustomDataAnalyzer;
 import io.fusion.air.microservice.ai.services.ImageBuilder;
 import io.fusion.air.microservice.ai.services.TemplateManager;
@@ -27,6 +32,7 @@ import org.springframework.stereotype.Component;
 import java.util.Scanner;
 
 import static java.lang.invoke.MethodHandles.lookup;
+import static java.util.Arrays.asList;
 import static org.slf4j.LoggerFactory.getLogger;
 
 /**
@@ -125,6 +131,64 @@ public class ConsoleRunner implements CommandLineRunner {
                     break;
                 }
                 String response = _assistant.chat(userQuery);
+                System.out.println("--[HAL9000]---------------------------------------------------------------------------");
+                System.out.println(response);
+                System.out.println("------------------------------------------------------------------------------------------");
+            }
+        }
+    }
+
+    /**
+     * Conversation with Structured Prompts
+     * @param _assistant
+     * @param _header
+     */
+    public static void startConversationWithPrompts(Assistant _assistant, String _header) {
+        if(_assistant == null || _header == null) {
+            System.out.println("Invalid Inputs!!");
+            return;
+        }
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("==========================================================================================");
+            System.out.println(_header);
+            System.out.println("Prompts Examples: ");
+            System.out.println("[P: Patient Name");
+            System.out.println("[P: Patient Name, Disease");
+            System.out.println("Type exit or [q]uit, to quit the Prompt.");
+            System.out.println("------------------------------------------------------------------------------------------");
+            while (true) {
+                System.out.print("User: >>> ");
+                String userQuery = scanner.nextLine();
+                if(userQuery == null || userQuery.length() == 0) {
+                    continue;
+                }
+                System.out.println("------------------------------------------------------------------------------------------");
+                if ("exit".equalsIgnoreCase(userQuery) || "quit".equalsIgnoreCase(userQuery)
+                        || "q".equalsIgnoreCase(userQuery)) {
+                    break;
+                }
+                String response = "";
+                if(userQuery.startsWith("[P: ") || userQuery.startsWith("[p: ")) {
+                    String[] input1 = userQuery.split(":");
+                    String[] input = input1[1].split(",");
+                    if(input.length == 2) {
+                            // Structured Prompt
+                            StructuredPromptDiagnosisDetails diagnosisDetails =
+                                    new StructuredPromptDiagnosisDetails(input[0], input[1]);
+                            // Created Prompt
+                            Prompt prompt = StructuredPromptProcessor.toPrompt(diagnosisDetails);
+                            userQuery = prompt.text();
+                        } else {
+                            // Structured Prompt
+                            StructuredPromptDiagnosisSummary diagnosisSummary =
+                                    new StructuredPromptDiagnosisSummary(input[0]);
+                            // Created Prompt
+                            Prompt prompt = StructuredPromptProcessor.toPrompt(diagnosisSummary);
+                            userQuery = prompt.text();
+                        }
+                }
+                response = _assistant.chat(userQuery);
+
                 System.out.println("--[HAL9000]---------------------------------------------------------------------------");
                 System.out.println(response);
                 System.out.println("------------------------------------------------------------------------------------------");

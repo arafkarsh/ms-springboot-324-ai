@@ -19,28 +19,31 @@ import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 
 /**
- * Car Rental Customer Support
+ * HealthCare Assistant
+ * 1. Diagnosis Details
+ * 2. Prescription Details
+ * 3. Lab Details
  *
  * @author: Araf Karsh Hamid
  * @version:
  * @date:
  */
-public interface CarRentalAssistant extends Assistant{
+public interface HealthCareAssistant extends Assistant{
 
     /**
-     * Car Rental Support Staff Conversation with Customer
+     * iCare Health Care
      *
      * @param _userMessage
      * @return
      */
     @SystemMessage("""
-        You are Ozazo Car Rental Support staff.
+        You are iCare Health Care Hospital Support staff.
         Start the (first) conversation with a Greeting and be polite.
         If the customer has given the name, Include the name in the conversation to have
         personal touch and never start with name John Doe.
         Always ask if there is any else you can assist with.  When customer says no. then end 
         the conversation with a good bye greetings. 
-        Always try to answer with proper clause number in the terms of usage.
+        Always try to answer for the proper time period. Check the date in the document.
         """)
     public String chat(@UserMessage String _userMessage);
 }
