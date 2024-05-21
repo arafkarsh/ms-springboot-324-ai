@@ -23,6 +23,7 @@ import io.fusion.air.microservice.ai.examples.core.prompts.StructuredPromptRecip
 import io.fusion.air.microservice.ai.examples.core.assistants.ChefAssistant;
 import io.fusion.air.microservice.ai.examples.core.assistants.DataExtractorAssistant;
 import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -44,7 +45,8 @@ import static java.util.Arrays.asList;
  */
 public class _11_Data_Extractor_Example {
 
-    public static ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
+    // Create Chat Language Model - Open AI GPT 4o
+    private static ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_3_5_TURBO);
     public static DataExtractorAssistant extractor = AiServices.create(DataExtractorAssistant.class, model);
 
     public static void numberExtractor() {
@@ -99,13 +101,40 @@ public class _11_Data_Extractor_Example {
     }
 
     public static void main(String[] args) {
-        // Extract Numbers
-        numberExtractor();
-        // Extract Date and Time
-        DateTimeExtractor();
-        // POJO Person Extractor
-         pojoExtractor();;
-        // Complex Pojo Extractor with Descriptions (rules)
-        complexPojoExtractor();
+        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_3_5_TURBO);
+        try {
+            System.out.println("Number Extractor =================================================");
+            // Extract Numbers
+            numberExtractor();
+        } catch (Exception e) {
+            System.out.println("Error: "+e.getMessage());
+            // e.printStackTrace();
+        }
+        try {
+            System.out.println("Date & Time Extractor =============================================");
+            // Extract Date and Time
+            DateTimeExtractor();
+        } catch (Exception e) {
+            System.out.println("Error: "+e.getMessage());
+            // e.printStackTrace();
+        }
+        try {
+            // Works with GPT 3.5 Turbo and Not with GPT 4o
+            System.out.println("Pojo Extractor ====================================================");
+            // POJO Person Extractor
+            pojoExtractor();;
+        } catch (Exception e) {
+            System.out.println("Error: "+e.getMessage());
+            // e.printStackTrace();
+        }
+        try {
+            // Works with GPT 3.5 Turbo and Not with GPT 4o
+            System.out.println("Complex Pogo Extractor ============================================");
+            // Complex Pojo Extractor with Descriptions (rules)
+            complexPojoExtractor();
+        } catch (Exception e) {
+            System.out.println("Error: "+e.getMessage());
+            // e.printStackTrace();
+        }
     }
 }

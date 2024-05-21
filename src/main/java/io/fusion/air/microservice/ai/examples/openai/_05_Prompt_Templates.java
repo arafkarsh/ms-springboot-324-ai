@@ -15,7 +15,10 @@
  */
 package io.fusion.air.microservice.ai.examples.openai;
 
+import dev.langchain4j.model.chat.ChatLanguageModel;
 import io.fusion.air.microservice.ai.services.TemplateManager;
+import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 
 
 /**
@@ -28,15 +31,20 @@ import io.fusion.air.microservice.ai.services.TemplateManager;
 public class _05_Prompt_Templates {
 
     public static void main(String[] args) {
+        // Create Chat Language Model - Open AI GPT 4o
+        ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_4o);
+
         System.out.println("Prompt Example 1 >>--------------------------------------------");
-        TemplateManager.simplePrompt();
+        TemplateManager.simplePrompt(model);
         System.out.println("Prompt Example 2 >>--------------------------------------------");
-        TemplateManager.complexPrompt();
+        TemplateManager.complexPrompt(model);
         System.out.println("Prompt Example 3 >>--------------------------------------------");
-        TemplateManager.structuredPromptRecipe();
+        TemplateManager.structuredPromptRecipe(model);
         System.out.println("Prompt Example 4 >>--------------------------------------------");
         TemplateManager.structuredTemplate(
-                "[P1","oven dish, cucumber, potato, tomato, red meat, olives, olive oil");
+                "[P1","oven dish, cucumber, potato, tomato, red meat, olives, olive oil",
+                model);
     }
 
 }

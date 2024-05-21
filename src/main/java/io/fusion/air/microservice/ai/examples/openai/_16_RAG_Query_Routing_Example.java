@@ -15,12 +15,15 @@
  */
 package io.fusion.air.microservice.ai.examples.openai;
 
+import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.query.router.LanguageModelQueryRouter;
 import dev.langchain4j.rag.query.router.QueryRouter;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.services.RAGBuilder;
+import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 import io.fusion.air.microservice.ai.utils.ConsoleRunner;
 
 /**
@@ -53,8 +56,12 @@ public class _16_RAG_Query_Routing_Example {
      * For scenario 4, this example will demonstrate how to use a {@link LanguageModelQueryRouter}.
      */
     public static void main(String[] args) {
+        // Create Chat Language Model - Open AI GPT 4o
+        ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_4o);
+        // Create the Assistant
         // Setting up the Gen AI Context with Open AI LLM, and RAG
-        Assistant assistant = RAGBuilder.createAssistantWithQueryRouter();
+        Assistant assistant = RAGBuilder.createAssistantWithQueryRouter(model);
         // Start the Conversation with Multi Data Source ChatBot
         // - What is the legacy of Akiera Kiera?
         // - When was he born?

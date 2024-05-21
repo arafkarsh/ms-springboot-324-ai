@@ -15,10 +15,13 @@
  */
 package io.fusion.air.microservice.ai.examples.openai;
 
+import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.query.router.QueryRouter;
 import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.services.RAGBuilder;
+import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 import io.fusion.air.microservice.ai.utils.ConsoleRunner;
 
 /**
@@ -48,8 +51,12 @@ public class _20_RAG_Skip_Retrieval_Example {
      */
 
     public static void main(String[] args) {
+        // Create Chat Language Model - Open AI GPT 4o
+        ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_4o);
+        // Create the Assistant
         // Setting up the Gen AI Context with Open AI LLM, and RAG
-        Assistant assistant = RAGBuilder.createAssistantWithRetrievalSkipping();
+        Assistant assistant = RAGBuilder.createAssistantWithRetrievalSkipping(model);
         // Start the Conversation with Multi Data Source ChatBot
         // - Hi
         // Notice how this query is not routed to any retrievers.

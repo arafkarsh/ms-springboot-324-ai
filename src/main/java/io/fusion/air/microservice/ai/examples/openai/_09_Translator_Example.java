@@ -19,6 +19,7 @@ import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.service.AiServices;
 import io.fusion.air.microservice.ai.examples.core.assistants.LanguageAssistant;
 import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 
 import java.util.List;
 
@@ -30,8 +31,10 @@ import java.util.List;
 public class _09_Translator_Example {
 
     public static void main(String[] args) {
-
-        ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
+        // Create Chat Language Model - Open AI GPT 4o
+        ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_4o);
+        // Create the Assistant
         LanguageAssistant utils = AiServices.create(LanguageAssistant.class, model);
         String request = """
                     Hello, how are you?

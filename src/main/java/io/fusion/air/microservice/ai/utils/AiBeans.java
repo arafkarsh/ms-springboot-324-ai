@@ -56,6 +56,19 @@ public class AiBeans {
     }
 
     /**
+     * Get the OpenAI Language Model
+     * 1. GPT 3.5 Turbo
+     * 2. GPT 4
+     * 3. GPT 4o
+     *
+     * @param _model
+     * @return
+     */
+    public static ChatLanguageModel getChatLanguageModelOpenAi(String _model) {
+        return new AiBeans().createChatLanguageModelOpenAi(_model);
+    }
+
+    /**
      * Get the Ollama Chat Language Model (llama3)
      * @return
      */

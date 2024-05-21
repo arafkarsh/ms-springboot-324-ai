@@ -15,7 +15,10 @@
  */
 package io.fusion.air.microservice.ai.examples.openai;
 
+import dev.langchain4j.model.chat.ChatLanguageModel;
 import io.fusion.air.microservice.ai.services.CustomDataAnalyzer;
+import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 
 /**
  * @author: Araf Karsh Hamid
@@ -26,24 +29,28 @@ public class _03_Custom_Data {
 
     public static void main(String[] args) {
 
+        // Create Chat Language Model - Open AI GPT 4o
+        ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_4o);
+
         String request1 = """
             Who were the Key Characters in the movie Bramayugam?
             What was the rating?
             Elaborate the Characters in the movie.
             """;
-        // CustomDataAnalyzer.processFile(request1,  "bramayugam.txt");
+        CustomDataAnalyzer.processFile(request1,  "bramayugam.txt", model);
 
         String request2 = """
                 Elaborate the key ideas behind the movie Malaikotai Vaaliban.
                 Elaborate each stage (in bullet points) in the movie and its significance.
                 What was the movie rating?
                 """;
-        // CustomDataAnalyzer.processFile(request2,  "vaaliban.txt");
+        CustomDataAnalyzer.processFile(request2,  "vaaliban.txt", model);
 
         // Multi File Analysis
-        CustomDataAnalyzer.processMultiFiles("Malaikotai Vaaliban");
+        CustomDataAnalyzer.processMultiFiles("Malaikotai Vaaliban", model);
 
-        CustomDataAnalyzer.processMultiFiles("Bramayugam");
+        CustomDataAnalyzer.processMultiFiles("Bramayugam", model);
 
 
         System.exit(0);

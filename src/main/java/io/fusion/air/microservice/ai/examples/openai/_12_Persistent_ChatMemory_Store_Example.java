@@ -23,6 +23,7 @@ import dev.langchain4j.service.AiServices;
 import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.examples.core.utils.FilePersistentChatMemoryStore;
 import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 
 /**
  * Chat Memory Persistent Store Example.
@@ -37,8 +38,10 @@ public class _12_Persistent_ChatMemory_Store_Example {
     private static Assistant assistant;
 
     public static void setupContext() {
-        // Create LLM Model
-        ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
+        // Create Chat Language Model - Open AI GPT 4o
+        ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_4o);
+        // Create the Assistant
         // Create Persistent Store
         FilePersistentChatMemoryStore store = new FilePersistentChatMemoryStore();
         // Create Chat Memory Provider with the Store

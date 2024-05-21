@@ -34,8 +34,9 @@ public class _06_Tools_Example {
 
     public static void main(String[] args) {
 
-        ChatLanguageModel model = new AiBeans()
-                .createChatLanguageModelOpenAi(AiConstants.GPT_3_5_TURBO);
+        // Create Chat Language Model - Open AI GPT 4o
+        ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_4o);
 
         Assistant assistant = AiServices.builder(Assistant.class)
                 .chatLanguageModel(model)
@@ -45,11 +46,11 @@ public class _06_Tools_Example {
 
         String question1 = "What is the square root of the sum of the numbers of letters in the words \"Hello\" and \"my Fusion world\"?";
         String answer1 = assistant.chat(question1);
-        System.out.println(answer1);
+        AiBeans.printResult(question1, answer1);
+
         // The square root of the sum of the number of letters in the words "hello" and "world" is approximately 4.47.
         String question2 = "What is the sum of the numbers of letters in the words \"Hello\" and \"my Fusion world\"?";
         String answer2 = assistant.chat(question2);
-        System.out.println(answer2);
-
+        AiBeans.printResult(question2, answer2);
     }
 }

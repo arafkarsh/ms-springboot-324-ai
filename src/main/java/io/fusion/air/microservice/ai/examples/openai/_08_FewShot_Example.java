@@ -21,6 +21,7 @@ import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.output.Response;
 import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,8 @@ import java.util.List;
  */
 public class _08_FewShot_Example {
 
-    private static ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
+    // Create Chat Language Model - Open AI GPT 4o
+    private static ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
     private static List<ChatMessage> fewShotHistory = new ArrayList<>();
 
     /**
@@ -74,6 +76,7 @@ public class _08_FewShot_Example {
         fewShotHistory.add(request);
         // Response from Ai
         Response<AiMessage> response = model.generate(fewShotHistory);
+        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_4o);
         // Print Result
         AiBeans.printResult(request.text(), response.content().text());
         return response.content().text();

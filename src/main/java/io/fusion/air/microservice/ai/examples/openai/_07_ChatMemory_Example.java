@@ -40,7 +40,8 @@ import io.fusion.air.microservice.ai.utils.AiConstants;
  */
 public class _07_ChatMemory_Example {
 
-    public static ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
+    // Create Chat Language Model - Open AI GPT 4o
+    private static ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
 
     public static void chatMemoryConversations() {
         Tokenizer tokenizer = new OpenAiTokenizer(AiConstants.getAlgo());
@@ -106,6 +107,7 @@ public class _07_ChatMemory_Example {
     }
 
     public static void main(String[] args) throws Exception {
+        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_4o);
 
         // Chat Memory Conversations
         chatMemoryConversations();

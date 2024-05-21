@@ -16,8 +16,11 @@
 package io.fusion.air.microservice.ai.examples.openai;
 
 // Custom
+import dev.langchain4j.model.chat.ChatLanguageModel;
 import io.fusion.air.microservice.ai.examples.core.assistants.CarRentalAssistant;
 import io.fusion.air.microservice.ai.services.RAGBuilder;
+import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 import io.fusion.air.microservice.ai.utils.ConsoleRunner;
 
 /**
@@ -45,8 +48,12 @@ public class _14_RAG_Segments_Example {
      *
      */
     public static void main(String[] args) {
+        // Create Chat Language Model - Open AI GPT 4o
+        ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_4o);
+        // Create the Assistant
         // Setting up the Gen AI Context with Open AI LLM, and RAG
-        CarRentalAssistant assistant = RAGBuilder.createCarRentalAssistantWithSegments();
+        CarRentalAssistant assistant = RAGBuilder.createCarRentalAssistantWithSegments(model);
         // Start the Conversation with Ozazo Rental Service ChatBot
         // - Hello
         // - I am Sam. Can I cancel my reservation?

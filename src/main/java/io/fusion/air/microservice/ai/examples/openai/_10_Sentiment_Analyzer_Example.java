@@ -20,6 +20,7 @@ import dev.langchain4j.service.AiServices;
 import io.fusion.air.microservice.ai.examples.core.assistants.SentimentAssistant;
 import io.fusion.air.microservice.ai.services.SentimentAnalyzer;
 import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 
 /**
  * Sentiment Analyzer Example
@@ -34,7 +35,10 @@ public class _10_Sentiment_Analyzer_Example {
 
     public static void main(String[] args) {
 
-        ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
+        // Create Chat Language Model - Open AI GPT 4o
+        ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_4o);
+        // Create the Assistant
         SentimentAssistant sentimentAssistant = AiServices.create(SentimentAssistant.class, model);
         String request = """
                 The movie was quite engaging, although the songs were somewhat lackluster. Nevertheless, the background score and choreography significantly 

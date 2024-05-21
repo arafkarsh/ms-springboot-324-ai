@@ -31,8 +31,9 @@ import java.time.temporal.ChronoUnit;
 public class _02_Complex_World {
 
     public static void main(String[] args) {
-        // Create Chat Language Model
-        ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
+        // Create Chat Language Model - Open AI GPT 4o
+        ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_4o);
         // Create the Ai Assistant
         HAL9000Assistant hal9k = new AiBeans().createHAL9000(model);
         // Run the Test Cases
@@ -77,10 +78,8 @@ public class _02_Complex_World {
      * @param _userMessage
      */
     private static void interact(HAL9000Assistant _hal9k, String _userMessage) {
-        System.out.println("[Human]: " + _userMessage);
         String response = _hal9k.chat(_userMessage);
-        System.out.println("[HAL9K]: " + response);
-        System.out.println("--------------------------------------------------------------");
+        AiBeans.printResult(_userMessage, response);
     }
 
     /**
