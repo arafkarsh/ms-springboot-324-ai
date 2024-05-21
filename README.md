@@ -43,7 +43,7 @@ Here’s how it helps developers:
 | 8.  | FewShot              | :green_circle:     | :green_circle:  | :red_circle: M5  | :green_circle:   | :green_circle:   | :green_circle:  | Create ChatBot with custom answers from an App perspective               |
 | 9.  | Language Translator  | :green_circle:     | :green_circle:  | :red_circle: M6  | :green_circle:   | :green_circle:   | :green_circle:  | Translate from one language to another                                   |
 | 10. | Sentiment Analyzer   | :green_circle:     | :green_circle:  | :green_circle:   | :green_circle:   | :green_circle:   | :green_circle:  | Analyses the Sentiment of a text input. Positve, Neutral, Negative       |
-| 11. | Data Extractor       | :orange_circle: G1 | :red_circle: L3 | :red_circle: M7  | :red_circle: P4  | :red_circle: G3  | :red_circle: F4 | Extract Number, Date, Model (Pojo) from a Text                           |
+| 11. | Data Extractor       | :orange_circle: O1 | :red_circle: L3 | :red_circle: M7  | :red_circle: P4  | :red_circle: G3  | :red_circle: F4 | Extract Number, Date, Model (Pojo) from a Text                           |
 | 12. | Persistent Store     | :green_circle:     | :green_circle:  | :red_circle: M8  | :red_circle: P5  | :red_circle: G4  | :green_circle:  | Use a Persistent Store for Chat Memory & Retrieve the Chat based on User.|
 
 ## Retrieval Augmented Generation (RAG) Examples
@@ -65,7 +65,7 @@ Here’s how it helps developers:
 
 | #  | Example          | Observations                                               |
 |----|------------------|------------------------------------------------------------|
-| G1 | Data Extractor   | Pojos works with GPT 3.5 only and not with GPT 4o          |
+| O1 | Data Extractor   | Pojos works with GPT 3.5 only and not with GPT 4o          |
 
 ### Meta (Facebook) Llama3 Observations
 
