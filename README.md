@@ -122,6 +122,16 @@ Here’s how it helps developers:
 | M8 | Persistent Store | Confused about Memory ID in LangChain4J                    |
 | M9 | Query Router     | Query Router doesnt work between different sources         |
 
+## Install Local LLMs
+
+To Install the Local LLMs using Ollama 
+1. Meta Llama3
+2. Google Gemma
+3. Microsoft PHI-3
+4. TII Falcon 2
+5. Mistral
+
+Check out the <a href="https://github.com/arafkarsh/ms-springboot-324-ai/blob/main/llms/README_LOCAL_LLMS.md">installation guide.</a>
 
 ## Quick Test after starting the SpringBoot App
 ![Ai Prompt](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/Ai-Prompt.jpg)
