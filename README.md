@@ -31,34 +31,34 @@ Here’s how it helps developers:
 
 ## Generative AI Examples using LangChain4J
 
-| #   | Example                | GPT 4o | Meta Llama3 | Mistral | Microsoft Phi-3 | Google Gemma | TII Falcon 2 | Details                                    |
-|-----|------------------------|--------|---------|---------|-------|-------|-----|--------------------------------------------------------------------------|
-| 1.  | Hello World            | :green_circle:    | :green_circle:     | :green_circle:     | :green_circle:   | :green_circle:   | :green_circle: | First Hello World Generative AI Example                                  |
-| 2.  | Complex World          | :green_circle:    | :green_circle:     | :red_circle: M1      | :green_circle:   | :green_circle:   | :green_circle: | Complex Example with Word and Math Problems                              |
-| 3.  | Custom Data            | :green_circle:    | :green_circle:     | :green_circle:     | :green_circle:   | :green_circle:   | :red_circle: F1  | Use your data (docs) for Search / Query                                  |
-| 4.  | Image Generation       | :green_circle:    | :red_circle: L1      | :red_circle: M2      | :red_circle: P1    | -     | :red_circle: F2  | Create an Image using text prompt                                        | 
-| 5.  | Prompt Template        | :green_circle:    | :green_circle:     | :red_circle: M3      | :green_circle:   | :green_circle:   | :green_circle: | Get Structured Response using Structured Prompt                          |
-| 6.  | Tools Annotation       | :green_circle:    | :red_circle: L2      | :red_circle: M4      | :red_circle: P2    | :red_circle: G1    | :red_circle: F3  | Use Tools annotation for Custom Search / Queries                         |
-| 7.  | Chat Memory            | :green_circle:    | :green_circle:     | :green_circle:     | :red_circle: P3    | :red_circle: G2    | :green_circle: | How to create a ChatBot in a Conversational Context                      |
-| 8.  | FewShot                | :green_circle:    | :green_circle:     | :red_circle: M5      | :green_circle:   | :green_circle:   | :green_circle: | Create ChatBot with custom answers from an App perspective               |
-| 9.  | Language Translator    | :green_circle:    | :green_circle:     | :red_circle: M6      | :green_circle:   | :green_circle:   | :green_circle: | Translate from one language to another                                   |
-| 10. | Sentiment Analyzer     | :green_circle:    | :green_circle:     | :green_circle:     | :green_circle:   | :green_circle:   | :green_circle: | Analyses the Sentiment of a text input. Positve, Neutral, Negative       |
-| 11. | Data Extractor         | :green_circle:    | :red_circle: L3      | :red_circle: M7      | :red_circle: P4    | :red_circle: G3    | :red_circle: F4  | Extract Number, Date, Model (Pojo) from a Text                           |
-| 12. | Persistent Store       | :green_circle:    | :green_circle:     | :red_circle: M8      | :red_circle: P5    | :red_circle: G4    | :green_circle: | Use a Persistent Store for Chat Memory & Retrieve the Chat based on User.|
+| #   | Example              | GPT 4o         | Meta Llama3     | Mistral          | Microsoft Phi-3  | Google Gemma     | TII Falcon 2    | Details                                                                  |
+|-----|----------------------|----------------|-----------------|------------------|------------------|------------------|-----------------|--------------------------------------------------------------------------|
+| 1.  | Hello World          | :green_circle: | :green_circle:  | :green_circle:   | :green_circle:   | :green_circle:   | :green_circle:  | First Hello World Generative AI Example                                  |
+| 2.  | Complex World        | :green_circle: | :green_circle:  | :red_circle: M1  | :green_circle:   | :green_circle:   | :green_circle:  | Complex Example with Word and Math Problems                              |
+| 3.  | Custom Data          | :green_circle: | :green_circle:  | :green_circle:   | :green_circle:   | :green_circle:   | :red_circle: F1 | Use your data (docs) for Search / Query                                  |
+| 4.  | Image Generation     | :green_circle: | :red_circle: L1 | :red_circle: M2  | :red_circle: P1  | :orange_circle:  | :red_circle: F2 | Create an Image using text prompt                                        | 
+| 5.  | Prompt Template      | :green_circle: | :green_circle:  | :red_circle: M3  | :green_circle:   | :green_circle:   | :green_circle:  | Get Structured Response using Structured Prompt                          |
+| 6.  | Tools Annotation     | :green_circle: | :red_circle: L2 | :red_circle: M4  | :red_circle: P2  | :red_circle: G1  | :red_circle: F3 | Use Tools annotation for Custom Search / Queries                         |
+| 7.  | Chat Memory          | :green_circle: | :green_circle:  | :green_circle:   | :red_circle: P3  | :red_circle: G2  | :green_circle:  | How to create a ChatBot in a Conversational Context                      |
+| 8.  | FewShot              | :green_circle: | :green_circle:  | :red_circle: M5  | :green_circle:   | :green_circle:   | :green_circle:  | Create ChatBot with custom answers from an App perspective               |
+| 9.  | Language Translator  | :green_circle: | :green_circle:  | :red_circle: M6  | :green_circle:   | :green_circle:   | :green_circle:  | Translate from one language to another                                   |
+| 10. | Sentiment Analyzer   | :green_circle: | :green_circle:  | :green_circle:   | :green_circle:   | :green_circle:   | :green_circle:  | Analyses the Sentiment of a text input. Positve, Neutral, Negative       |
+| 11. | Data Extractor       | :green_circle: | :red_circle: L3 | :red_circle: M7  | :red_circle: P4  | :red_circle: G3  | :red_circle: F4 | Extract Number, Date, Model (Pojo) from a Text                           |
+| 12. | Persistent Store     | :green_circle: | :green_circle:  | :red_circle: M8  | :red_circle: P5  | :red_circle: G4  | :green_circle:  | Use a Persistent Store for Chat Memory & Retrieve the Chat based on User.|
 
 ## Retrieval Augmented Generation (RAG) Examples
 
 
-| #   | Example                      | GPT 4o | Meta Llama3 | Mistral | Microsoft Phi-3 | Google Gemma | Details                                       |
-|-----|------------------------------|--------|---------|---------|-------|-------|--------------------------------------------------------------------|
-| 13. | Simple                       | :green_circle:    | :green_circle:     | :green_circle:     | :green_circle:   | :green_circle:   | Chat Bot Use Case: Car Rental Service                              |
-| 14. | Segments                     | :green_circle:    | :green_circle:     | :green_circle:     | :green_circle:   | :green_circle:   | Using Segments Use Case: Car Rental Service                        |
-| 15. | Query Transformer            | :green_circle:    | :green_circle:     | :green_circle:     | :green_circle:   | :green_circle:   | Using Query Transformer Use Case: Biography                        |
-| 16. | Query Router                 | :green_circle:    | L4      | M9      | P6    | G4    | Query Routing between Car Rental Service & Biography               |        
-| 17. | Re-Ranking                   | :green_circle:    | :green_circle:     | :green_circle:     | :green_circle:   | :green_circle:   | Re-Ranking using Cohere API. Case Study: Car Rental Service        |
-| 18. | MetaData                     | :green_circle:    | :green_circle:     | :green_circle:     | :green_circle:   | :green_circle:   | MetaData (Data Source). Case Study: Car Rental Service             |
-| 19. | Multiple Content Retrievers  | :green_circle:    | :green_circle:     | :green_circle:     | :green_circle:   | :green_circle:   | Multi Content Retrievers. Car Rental & Biography                   |
-| 20. | Skipping Content Retrieval   | :green_circle:    | :green_circle:     | :green_circle:     | :green_circle:   | :green_circle:   | Content Retrieval Skipping. Case Study: Car Rental                 |
+| #   | Example                      | GPT 4o         | Meta Llama3     | Mistral         | Microsoft Phi-3 | Google Gemma    | TII Falcon 2    | Details                                                      |
+|-----|------------------------------|----------------|-----------------|-----------------|-----------------|-----------------|-----------------|--------------------------------------------------------------|
+| 13. | Simple                       | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | Chat Bot Use Case: Car Rental Service                        |
+| 14. | Segments                     | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | Using Segments Use Case: Car Rental Service                  |
+| 15. | Query Transformer            | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | Using Query Transformer Use Case: Biography                  |
+| 16. | Query Router                 | :green_circle: | :red_circle: L4 | :red_circle: M9 | :red_circle: P6 | :red_circle: G4 | :red_circle: F5 | Query Routing between Car Rental Service & Biography         |        
+| 17. | Re-Ranking                   | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | Re-Ranking using Cohere API. Case Study: Car Rental Service  |
+| 18. | MetaData                     | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | MetaData (Data Source). Case Study: Car Rental Service       |
+| 19. | Multiple Content Retrievers  | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | Multi Content Retrievers. Car Rental & Biography             |
+| 20. | Skipping Content Retrieval   | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | Content Retrieval Skipping. Case Study: Car Rental           |
 
 ### Meta (Facebook) Llama3 Observations
 
