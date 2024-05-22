@@ -34,7 +34,6 @@ public class _13_RAG_Simple_Example {
     /**
      * This example demonstrates how to implement an "Easy RAG" (Retrieval-Augmented Generation) application.
      * By "easy" we mean that we won't dive into all the details about parsing, splitting, embedding, etc.
-     * <p>
      */
     public static void main(String[] args) {
         // Create Chat Language Model - Open AI GPT 4o

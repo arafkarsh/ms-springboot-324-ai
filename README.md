@@ -134,6 +134,19 @@ To Install the Local LLMs using Ollama
 
 Check out the <a href="https://github.com/arafkarsh/ms-springboot-324-ai/blob/main/llms/README_LOCAL_LLMS.md">installation guide.</a>
 
+## Cloud Based LLMs
+
+Register to get the API Keys 
+
+1. Open AI - ChatGPT (API Key can be created here: https://platform.openai.com/api-keys)
+2. Anthropic - Claude 3 (API key can be created here: https://console.anthropic.com/settings/keys)
+
+
+## Gen AI - Code Package Structure 
+
+![Ai-Code](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/diagrams/Ai-Code-Base.jpg)
+
+
 ## Quick Test after starting the SpringBoot App
 ![Ai Prompt](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/Ai-Prompt.jpg)
 
@@ -196,7 +209,8 @@ Read more... <a href="https://docs.langchain4j.dev/intro">LangChain4J Introducti
 1. SpringBoot 3.2.4
 2. Java 22
 3. Jakarta EE 10 (jakarta.servlet.*, jakarta.persistence.*, javax.validation.*)
-4. PostgreSQL Database 
+4. PostgreSQL Database 14
+5. Ollama 0.1.38
 
 By default the app will use H2 In-Memory Database. No Database setup required for this.
 
