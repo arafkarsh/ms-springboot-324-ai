@@ -17,6 +17,9 @@ Go To the web site: https://ollama.com/blog/vision-models
 For Math Problems
 Go To the Web Site: https://ollama.com/blog/wizardmath-examples
 
+## List all LLMs in Ollama
+
+![Ai-LLMS-0](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/Ai-Ollama-llms.jpg)
 
 ## Run Various LLMs using Ollama CLI
 
