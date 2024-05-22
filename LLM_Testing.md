@@ -131,6 +131,13 @@ Register to get the API Keys
 
 ![Ai-Code](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/diagrams/Ai-Code-Base.jpg)
 
+## Tools Support in LangChain4J
+
+- OpenAiChatModel
+- AzureOpenAiChatModel
+- LocalAiChatModel
+- QianfanChatModel
+
 
 (C) Copyright 2024 : Apache 2 License : Author: Araf Karsh Hamid
 
