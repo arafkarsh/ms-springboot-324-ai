@@ -46,11 +46,13 @@ public class _10_Sentiment_Analyzer_Example {
                 enhanced the musical sequences, making up for the shortcomings. Overall, the experience was not that bad.""";
 
         SentimentAnalyzer.analyzeSentiment(request, true);
+        AiBeans.sleep(55);
 
         request = """
                     The movie had a promising storyline, but the direction, acting, and cinematography were so over the top that they lulled the audience into 
                     a state of forced sleep. """;
         SentimentAnalyzer.analyzeSentiment(request, true);
+        AiBeans.sleep(55);
 
         request = """
                     In essence, “Bramayugam” delves into the intricate dynamics between an autocratic ruler, oppressed citizens, and those yearning to rebel, 

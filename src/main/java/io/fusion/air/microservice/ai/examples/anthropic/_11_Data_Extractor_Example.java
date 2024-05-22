@@ -59,6 +59,7 @@ public class _11_Data_Extractor_Example {
 
         int intNumber = extractor.extractInt(request);
         AiBeans.printResult(request, "Number = "+intNumber);
+        AiBeans.sleep(55);
     }
 
     public static void DateTimeExtractor() {
@@ -69,13 +70,17 @@ public class _11_Data_Extractor_Example {
                     shy of midnight, following the celebrations of Independence Day.""";
 
         LocalDate date = extractor.extractDateFrom(request);
+        AiBeans.sleep(55);
         sb.append("Date      = ").append(date).append("\n");
         LocalTime time = extractor.extractTimeFrom(request);
+        AiBeans.sleep(55);
         sb.append("Time      = ").append(time).append("\n");
         LocalDateTime dateTime = extractor.extractDateTimeFrom(request);
         sb.append("DateTime = ").append(dateTime);
 
         AiBeans.printResult(request, sb.toString());
+        AiBeans.sleep(55);
+
     }
 
     public static void pojoExtractor() {
@@ -87,18 +92,21 @@ public class _11_Data_Extractor_Example {
 
         Person person = extractor.extractPersonFrom(request);
         AiBeans.printResult(request, person.toString());
+        AiBeans.sleep(55);
     }
 
     public static void complexPojoExtractor() {
         ChefAssistant chefAssistant = AiServices.create(ChefAssistant.class, model);
         Recipe recipe = chefAssistant.createRecipeFrom("cucumber", "tomato", "feta", "onion", "olives", "lemon");
         System.out.println(recipe);
+        AiBeans.sleep(55);
 
         StructuredPromptRecipe recipe2 = new StructuredPromptRecipe("oven dish",
                 asList("cucumber", "tomato", "feta", "onion", "olives", "potatoes") );
 
         Recipe anotherRecipe = chefAssistant.createRecipe(recipe2);
         System.out.println(anotherRecipe);
+        AiBeans.sleep(55);
     }
 
     public static void main(String[] args) {

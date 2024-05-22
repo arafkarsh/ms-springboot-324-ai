@@ -36,15 +36,15 @@ Here’s how it helps developers:
 | 1.  | Hello World          | :green_circle:     | :green_circle:  | :green_circle:   | :green_circle:   | :green_circle:   | :green_circle:  | :green_circle: | First Hello World Generative AI Example                                  |
 | 2.  | Complex World        | :green_circle:     | :green_circle:  | :red_circle: M1  | :green_circle:   | :green_circle:   | :green_circle:  | :green_circle: | Complex Example with Word and Math Problems                              |
 | 3.  | Custom Data          | :green_circle:     | :green_circle:  | :green_circle:   | :green_circle:   | :green_circle:   | :red_circle: F1 | :green_circle: | Use your data (docs) for Search / Query                                  |
-| 4.  | Image Generation     | :green_circle:     | :red_circle: L1 | :red_circle: M2  | :red_circle: P1  | :orange_circle:  | :red_circle: F2 | :green_circle: | Create an Image using text prompt                                        | 
+| 4.  | Image Generation     | :green_circle:     | :red_circle: L1 | :red_circle: M2  | :red_circle: P1  | :orange_circle:  | :red_circle: F2 | :yellow_circle:| Create an Image using text prompt                                        | 
 | 5.  | Prompt Template      | :green_circle:     | :green_circle:  | :red_circle: M3  | :green_circle:   | :green_circle:   | :green_circle:  | :green_circle: | Get Structured Response using Structured Prompt                          |
 | 6.  | Tools Annotation     | :green_circle:     | :red_circle: L2 | :red_circle: M4  | :red_circle: P2  | :red_circle: G1  | :red_circle: F3 | :green_circle: | Use Tools annotation for Custom Search / Queries                         |
 | 7.  | Chat Memory          | :green_circle:     | :green_circle:  | :green_circle:   | :red_circle: P3  | :red_circle: G2  | :green_circle:  | :green_circle: | How to create a ChatBot in a Conversational Context                      |
-| 8.  | FewShot              | :green_circle:     | :green_circle:  | :red_circle: M5  | :green_circle:   | :green_circle:   | :green_circle:  |                | Create ChatBot with custom answers from an App perspective               |
-| 9.  | Language Translator  | :green_circle:     | :green_circle:  | :red_circle: M6  | :green_circle:   | :green_circle:   | :green_circle:  |                | Translate from one language to another                                   |
-| 10. | Sentiment Analyzer   | :green_circle:     | :green_circle:  | :green_circle:   | :green_circle:   | :green_circle:   | :green_circle:  |                | Analyses the Sentiment of a text input. Positve, Neutral, Negative       |
-| 11. | Data Extractor       | :orange_circle: O1 | :red_circle: L3 | :red_circle: M7  | :red_circle: P4  | :red_circle: G3  | :red_circle: F4 |                | Extract Number, Date, Model (Pojo) from a Text                           |
-| 12. | Persistent Store     | :green_circle:     | :green_circle:  | :red_circle: M8  | :red_circle: P5  | :red_circle: G4  | :green_circle:  |                | Use a Persistent Store for Chat Memory & Retrieve the Chat based on User.|
+| 8.  | FewShot              | :green_circle:     | :green_circle:  | :red_circle: M5  | :green_circle:   | :green_circle:   | :green_circle:  | :green_circle: | Create ChatBot with custom answers from an App perspective               |
+| 9.  | Language Translator  | :green_circle:     | :green_circle:  | :red_circle: M6  | :green_circle:   | :green_circle:   | :green_circle:  | :green_circle: | Translate from one language to another                                   |
+| 10. | Sentiment Analyzer   | :green_circle:     | :green_circle:  | :green_circle:   | :green_circle:   | :green_circle:   | :green_circle:  | :green_circle: | Analyses the Sentiment of a text input. Positve, Neutral, Negative       |
+| 11. | Data Extractor       | :orange_circle: O1 | :red_circle: L3 | :red_circle: M7  | :red_circle: P4  | :red_circle: G3  | :red_circle: F4 | :green_circle: | Extract Number, Date, Model (Pojo) from a Text                           |
+| 12. | Persistent Store     | :green_circle:     | :green_circle:  | :red_circle: M8  | :red_circle: P5  | :red_circle: G4  | :green_circle:  | :green_circle: | Use a Persistent Store for Chat Memory & Retrieve the Chat based on User.|
 
 ## Retrieval Augmented Generation (RAG) Examples
 

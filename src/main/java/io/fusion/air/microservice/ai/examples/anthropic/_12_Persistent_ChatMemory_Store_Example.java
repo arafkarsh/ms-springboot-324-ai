@@ -60,19 +60,23 @@ public class _12_Persistent_ChatMemory_Store_Example {
         String request1 = "UUID-1 >> Hello, my name is John Sam Doe";
         String response1 = assistant.chat("UUID-1", request1);
         AiBeans.printResult(request1, response1);
+        AiBeans.sleep(55);
 
         String request2 = "UUID-2, >> Hello, my name is Jane Daisy Doe";
         String response2 = assistant.chat("UUID-2", request2);
         AiBeans.printResult(request2, response2);
+        AiBeans.sleep(55);
     }
 
     public static void testThePersistedData() {
         String request3 = "What is my name?";
         String response3 = assistant.chat("UUID-1", "UUID-1 >> "+request3);
         AiBeans.printResult("UUID-1 >> "+request3, response3);
+        AiBeans.sleep(55);
 
         String response4 = assistant.chat("UUID-2", "UUID-2 >> "+request3);
         AiBeans.printResult("UUID-2 >> "+request3, response4);
+        AiBeans.sleep(55);
     }
 
     public static void main(String[] args) {

@@ -45,6 +45,7 @@ public class _09_Translator_Example {
                 """;
         String response = utils.translate(request, "french");
         AiBeans.printResult(request, response);
+        AiBeans.sleep(55);
 
         request = """
                     AI, or artificial intelligence, is a branch of computer science that aims to create 

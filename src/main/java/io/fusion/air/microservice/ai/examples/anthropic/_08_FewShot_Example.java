@@ -79,6 +79,7 @@ public class _08_FewShot_Example {
         Response<AiMessage> response = model.generate(fewShotHistory);
         // Print Result
         AiBeans.printResult(request.text(), response.content().text());
+        AiBeans.sleep(70);
         return response.content().text();
     }
 
