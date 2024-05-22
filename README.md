@@ -75,67 +75,7 @@ Here’s how it helps developers:
 
 Note: Cloud-based LLMs will have more than 500 billion parameter support while the local LLMs are mostly based on 8 Billion parameters.
 
-### OpenAI GPT 4o (Omini) Observations
-
-| #  | Example          | Observations                                               |
-|----|------------------|------------------------------------------------------------|
-| O1 | Data Extractor   | Pojos works with GPT 3.5 only and not with GPT 4o          |
-
-### Meta (Facebook) Llama3 Observations
-
-| #  | Example          | Observations                                               |
-|----|------------------|------------------------------------------------------------|
-| L1 | Image Generation | No image generation support                                |
-| L2 | Tools Annotation | No Support for Tools that helps in querying custom data.   | 
-| L3 | Data Extractor   | Data extractor doesnt work cleanly for Date and Pojos      |
-| L4 | Query Router     | Query Router doesnt work between different sources         |
-
-### TII Falcon 2 Observations
-
-| #  | Example          | Observations                                               |
-|----|------------------|------------------------------------------------------------|
-| F1 | Custom Data      | Falcon is completely confused in handling Custom Data.     |
-| F2 | Image Generation | No image generation support                                |
-| F3 | Tools Annotation | No Support for Tools that helps in querying custom data.   | 
-| F4 | Data Extractor   | Data extractor doesnt work cleanly for Time and Pojos      |
-| F5 | Query Router     | Query Router doesnt work between different sources         |
-
-### Google Gemma Observations
-
-| #  | Example          | Observations                                               |
-|----|------------------|------------------------------------------------------------|
-| -  | Image Generation | No image generation support. Created ascii based images.   |
-| G1 | Tools Annotation | No Support for Tools that helps in querying custom data.   |
-| G2 | Chat Memory      | MemoryID Annotation not working.                           |
-| G3 | Data Extractor   | Unable to extract date and Pojos with Dates.               |
-| G4 | Persistent Store | Confused about Memory ID in LangChain4J                    |
-| G5 | Query Router     | Works only with 1 data set. Car Rental Service.            |
-
-
-### Microsoft PHI - 3 Observations
-
-| #  | Example          | Observations                                               |
-|----|------------------|------------------------------------------------------------|
-| P1 | Image Generation | No image generation support                                |
-| P2 | Tools Annotation | No Support for Tools that helps in querying custom data.   | 
-| P3 | Chat Memory      | Memory ID annotation is not working                        |
-| P4 | Data Extractor   | Data extractor doesnt work cleanly for Date and Pojos      |
-| P5 | Persistent Store | Confused about Memory ID in LangChain4J                    |
-| P6 | Query Router     | Query Router works, but adds un-wanted data (hallucinates) |
-
-### Mistral Observations
-
-| #  | Example          | Observations                                               |
-|----|------------------|------------------------------------------------------------|
-| M1 | Complex World    | Extremely poor in Word and Math problems                   |
-| M2 | Image Generation | No Image generation support                                |
-| M3 | Prompt Tempalte  | GPT 4o answers are far more refined compared to Mistral    |
-| M4 | Tools Annotation | No Support for Tools that helps in querying custom data.   | 
-| M5 | FewShot          | Completely confused! Gives both -ve & +ve responses.       |
-| M6 | Lang Translator  | 90% Accuracy                                               |
-| M7 | Data Extractor   | Not able to extract Number, Date, Pojos with dates         |
-| M8 | Persistent Store | Confused about Memory ID in LangChain4J                    |
-| M9 | Query Router     | Query Router doesnt work between different sources         |
+Checkout more details on <a href="https://github.com/arafkarsh/ms-springboot-324-ai/blob/main/LLM_Testing.md">Testing Scores</a>
 
 ## Install Local LLMs
 
