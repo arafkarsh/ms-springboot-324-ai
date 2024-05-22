@@ -29,6 +29,8 @@ import io.fusion.air.microservice.ai.examples.core.assistants.HAL9000Assistant;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.Duration;
+
 import static java.time.Duration.ofSeconds;
 
 /**
@@ -300,5 +302,23 @@ public class AiBeans {
         System.out.println("--[HAL9000]-------------------------------------------------------");
         System.out.println(_response);
         System.out.println("-------------------------------------------------------------------");
+    }
+
+    /**
+     * Sleep
+     */
+    public static void sleep() {
+        sleep(45);
+    }
+
+    /**
+     * Sleep
+     * @param seconds
+     */
+    public static void sleep(long seconds) {
+        try {
+            System.out.println("Sleeping for "+seconds+" Seconds to avoid per minute rate limit issues with Claude LLM...");
+            Thread.sleep(Duration.ofSeconds(seconds));
+        } catch (InterruptedException e) {}
     }
 }
