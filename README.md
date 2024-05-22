@@ -73,7 +73,7 @@ Here’s how it helps developers:
 | 5 | Microsoft   | PHI 3                 | 15/21 | Local    |
 | 6 | Mistral     | Mistral               | 12/21 | Local    |
 
-Note: Cloud based LLM will have more than 500 billion parameter support while the local llms are mostly based on 8 Billion paramters.
+Note: Cloud-based LLMs will have more than 500 billion parameter support while the local LLMs are mostly based on 8 Billion parameters.
 
 ### OpenAI GPT 4o (Omini) Observations
 
