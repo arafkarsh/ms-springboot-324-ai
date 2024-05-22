@@ -59,36 +59,41 @@ public class ConsoleRunner implements CommandLineRunner {
             System.out.println("Type exit or quit, to quit the Prompt.");
             System.out.println("------------------------------------------------------------------------------------------");
             while (true) {
-                System.out.print("User: >>> ");
-                String userQuery = scanner.nextLine();
-                if(userQuery == null || userQuery.length() == 0) {
-                    continue;
+                try {
+                    System.out.print("User: >>> ");
+                    String userQuery = scanner.nextLine();
+                    if (userQuery == null || userQuery.length() == 0) {
+                        continue;
+                    }
+                    System.out.println("==========================================================================================");
+                    if ("exit".equalsIgnoreCase(userQuery) || "quit".equalsIgnoreCase(userQuery)
+                            || "q".equalsIgnoreCase(userQuery)) {
+                        break;
+                    }
+                    if (userQuery.startsWith("IMAGE: ")) {
+                        String query = userQuery.replaceAll("IMAGE:", "");
+                        ImageBuilder.downloadImage(ImageBuilder.createImage(query));
+                        continue;
+                    } else if (userQuery.startsWith("CUSTOM: ")) {
+                        String query = userQuery.replaceAll("CUSTOM:", "");
+                        CustomDataAnalyzer.processFile(query);
+                        continue;
+                    } else if (userQuery.startsWith("[P1")) {
+                        TemplateManager.structuredTemplate(userQuery);
+                        continue;
+                    } else if (userQuery.startsWith("[P2")) {
+                        String[] dArray = userQuery.split(":");
+                        CustomDataAnalyzer.processMultiFiles(dArray[1]);
+                        continue;
+                    } else {
+                        String response = CustomDataAnalyzer.processUserQuery(userQuery);
+                        System.out.println("--[HAL9000]---------------------------------------------------------------------------");
+                        System.out.println(response);
+                    }
+                    System.out.println("------------------------------------------------------------------------------------------");
+                } catch (Exception e) {
+                    System.out.println("Error: "+e.getMessage());
                 }
-                System.out.println("==========================================================================================");
-                if ("exit".equalsIgnoreCase(userQuery) || "quit".equalsIgnoreCase(userQuery)
-                        || "q".equalsIgnoreCase(userQuery)) {
-                    break;
-                }
-                if(userQuery.startsWith("IMAGE: ")) {
-                    String query = userQuery.replaceAll("IMAGE:", "");
-                    ImageBuilder.downloadImage(ImageBuilder.createImage(query));
-                    continue;
-                } else if(userQuery.startsWith("CUSTOM: ")) {
-                    String query = userQuery.replaceAll("CUSTOM:", "");
-                    CustomDataAnalyzer.processFile(query);
-                    continue;
-                } else if(userQuery.startsWith("[P1")) {
-                    TemplateManager.structuredTemplate(userQuery);
-                    continue;
-                } else if(userQuery.startsWith("[P2")) {
-                    String[] dArray = userQuery.split(":");
-                    CustomDataAnalyzer.processMultiFiles(dArray[1]);                    continue;
-                } else {
-                    String response = CustomDataAnalyzer.processUserQuery(userQuery);
-                    System.out.println("--[HAL9000]---------------------------------------------------------------------------");
-                    System.out.println(response);
-                }
-                System.out.println("------------------------------------------------------------------------------------------");
             }
         }
     }
@@ -119,20 +124,24 @@ public class ConsoleRunner implements CommandLineRunner {
             System.out.println("Type exit or [q]uit, to quit the Prompt.");
             System.out.println("------------------------------------------------------------------------------------------");
             while (true) {
-                System.out.print("User: >>> ");
-                String userQuery = scanner.nextLine();
-                if(userQuery == null || userQuery.length() == 0) {
-                    continue;
+                try {
+                    System.out.print("User: >>> ");
+                    String userQuery = scanner.nextLine();
+                    if (userQuery == null || userQuery.length() == 0) {
+                        continue;
+                    }
+                    System.out.println("------------------------------------------------------------------------------------------");
+                    if ("exit".equalsIgnoreCase(userQuery) || "quit".equalsIgnoreCase(userQuery)
+                            || "q".equalsIgnoreCase(userQuery)) {
+                        break;
+                    }
+                    String response = _assistant.chat(userQuery);
+                    System.out.println("--[HAL9000]---------------------------------------------------------------------------");
+                    System.out.println(response);
+                    System.out.println("------------------------------------------------------------------------------------------");
+                } catch (Exception e) {
+                    System.out.println("Error: "+e.getMessage());
                 }
-                System.out.println("------------------------------------------------------------------------------------------");
-                if ("exit".equalsIgnoreCase(userQuery) || "quit".equalsIgnoreCase(userQuery)
-                        || "q".equalsIgnoreCase(userQuery)) {
-                    break;
-                }
-                String response = _assistant.chat(userQuery);
-                System.out.println("--[HAL9000]---------------------------------------------------------------------------");
-                System.out.println(response);
-                System.out.println("------------------------------------------------------------------------------------------");
             }
         }
     }
@@ -156,21 +165,22 @@ public class ConsoleRunner implements CommandLineRunner {
             System.out.println("Type exit or [q]uit, to quit the Prompt.");
             System.out.println("------------------------------------------------------------------------------------------");
             while (true) {
-                System.out.print("User: >>> ");
-                String userQuery = scanner.nextLine();
-                if(userQuery == null || userQuery.length() == 0) {
-                    continue;
-                }
-                System.out.println("------------------------------------------------------------------------------------------");
-                if ("exit".equalsIgnoreCase(userQuery) || "quit".equalsIgnoreCase(userQuery)
-                        || "q".equalsIgnoreCase(userQuery)) {
-                    break;
-                }
-                String response = "";
-                if(userQuery.startsWith("[P: ") || userQuery.startsWith("[p: ")) {
-                    String[] input1 = userQuery.split(":");
-                    String[] input = input1[1].split(",");
-                    if(input.length == 2) {
+                try {
+                    System.out.print("User: >>> ");
+                    String userQuery = scanner.nextLine();
+                    if (userQuery == null || userQuery.length() == 0) {
+                        continue;
+                    }
+                    System.out.println("------------------------------------------------------------------------------------------");
+                    if ("exit".equalsIgnoreCase(userQuery) || "quit".equalsIgnoreCase(userQuery)
+                            || "q".equalsIgnoreCase(userQuery)) {
+                        break;
+                    }
+                    String response = "";
+                    if (userQuery.startsWith("[P: ") || userQuery.startsWith("[p: ")) {
+                        String[] input1 = userQuery.split(":");
+                        String[] input = input1[1].split(",");
+                        if (input.length == 2) {
                             // Structured Prompt
                             StructuredPromptDiagnosisDetails diagnosisDetails =
                                     new StructuredPromptDiagnosisDetails(input[0], input[1]);
@@ -185,16 +195,19 @@ public class ConsoleRunner implements CommandLineRunner {
                             Prompt prompt = StructuredPromptProcessor.toPrompt(diagnosisSummary);
                             userQuery = prompt.text();
                         }
-                } else {
-                    // Created Prompt
-                    Prompt prompt = StructuredPromptProcessor.toPrompt(new StructuredPromptDiagnosis());
-                    userQuery = prompt.text();
-                }
-                response = _assistant.chat(userQuery);
+                    } else {
+                        // Created Prompt
+                        Prompt prompt = StructuredPromptProcessor.toPrompt(new StructuredPromptDiagnosis());
+                        userQuery = prompt.text();
+                    }
+                    response = _assistant.chat(userQuery);
 
-                System.out.println("--[HAL9000]---------------------------------------------------------------------------");
-                System.out.println(response);
-                System.out.println("------------------------------------------------------------------------------------------");
+                    System.out.println("--[HAL9000]---------------------------------------------------------------------------");
+                    System.out.println(response);
+                    System.out.println("------------------------------------------------------------------------------------------");
+                } catch (Exception e) {
+                    System.out.println("Error: "+e.getMessage());
+                }
             }
         }
     }
