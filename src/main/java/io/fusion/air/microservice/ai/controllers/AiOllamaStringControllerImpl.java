@@ -73,7 +73,7 @@ public class AiOllamaStringControllerImpl extends AbstractController {
 	 *
 	 * @param _chatLanguageModel
 	 */
-	public AiOllamaStringControllerImpl(@Qualifier("ChatLangugeModelOllama")
+	public AiOllamaStringControllerImpl(@Qualifier("ChatLanguageModelOllama")
 							ChatLanguageModel _chatLanguageModel) {
 		this.chatLanguageModel = _chatLanguageModel;
 	}

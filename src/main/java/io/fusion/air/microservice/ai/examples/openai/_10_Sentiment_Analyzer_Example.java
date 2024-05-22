@@ -37,7 +37,7 @@ public class _10_Sentiment_Analyzer_Example {
 
         // Create Chat Language Model - Open AI GPT 4o
         ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
-        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_4o);
         // Create the Assistant
         SentimentAssistant sentimentAssistant = AiServices.create(SentimentAssistant.class, model);
         String request = """

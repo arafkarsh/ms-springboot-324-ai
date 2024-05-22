@@ -18,6 +18,7 @@ package io.fusion.air.microservice.ai.utils;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.image.ImageModel;
+import dev.langchain4j.model.anthropic.AnthropicChatModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiImageModel;
 import dev.langchain4j.model.ollama.OllamaChatModel;
@@ -91,10 +92,31 @@ public class AiBeans {
     }
 
     /**
+     * Get the Anthropic Chat Language Models
+     * 1. Claude 3 Haiku
+     *
+     * @return
+     */
+    public static ChatLanguageModel getChatLanguageModelAnthropic() {
+        return getChatLanguageModelAnthropic(AiConstants.ANTHROPIC_CLAUDE_3_HAIKU);
+    }
+
+    /**
+     * Get the Anthropic Chat Language Models
+     * 1. Claude 3 Haiku
+     *
+     * @param _model
+     * @return
+     */
+    public static ChatLanguageModel getChatLanguageModelAnthropic(String _model) {
+        return new AiBeans().createChatLanguageModelAnthropic(_model);
+    }
+
+    /**
      * Returns Chat Language Model based on ChatGPT 3.5, 4.0, 4o (Omni)
      * @return
      */
-    @Bean(name = "ChatLangugeModelGPT")
+    @Bean(name = "ChatLanguageModelGPT")
     public ChatLanguageModel createChatLanguageModelOpenAi() {
         return createChatLanguageModelOpenAi(AiConstants.getAlgo(), false, false);
     }
@@ -141,7 +163,7 @@ public class AiBeans {
      * Returns Chat Language Model based on Llama 3
      * @return
      */
-    @Bean(name = "ChatLangugeModelOllama")
+    @Bean(name = "ChatLanguageModelOllama")
     public ChatLanguageModel createChatLanguageModelLlama() {
         return createChatLanguageModelLlama( AiConstants.OLLAMA_LLAMA3);
     }
@@ -167,11 +189,38 @@ public class AiBeans {
                     .build();
     }
 
+    /**
+     * Returns Chat Language Model based on
+     * 1. Claude 3 Haiku
+     *
+     * @return
+     */
+    @Bean(name = "ChatLanguageModelAnthropic")
+    public ChatLanguageModel createChatLanguageModelAnthropic() {
+        return createChatLanguageModelAnthropic( AiConstants.ANTHROPIC_CLAUDE_3_HAIKU);
+    }
 
-        /**
-         * Returns the Image Model
-         * @return
-         */
+    /**
+     * Returns Chat Language Model based on
+     * 1. Claude 3 Haiku
+     *
+     * @param _model
+     * @return
+     */
+    public ChatLanguageModel createChatLanguageModelAnthropic(String _model) {
+        return  AnthropicChatModel.builder()
+                // API key can be created here: https://console.anthropic.com/settings/keys
+                .apiKey(AiConstants.ANTHROPIC_API_KEY)
+                .modelName(_model) // claude-3-haiku-20240307
+                .logRequests(true)
+                .logResponses(true)
+                .build();
+    }
+
+    /**
+     * Returns the Image Model
+     * @return
+     */
     @Bean
     public ImageModel createImageModel() {
         return createImageModel(AiConstants.DALL_E_3);

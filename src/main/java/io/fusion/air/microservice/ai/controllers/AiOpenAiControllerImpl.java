@@ -88,7 +88,7 @@ public class AiOpenAiControllerImpl extends AbstractController {
 	 *
 	 * @param _chatLanguageModel
 	 */
-	public AiOpenAiControllerImpl(@Qualifier("ChatLangugeModelGPT")
+	public AiOpenAiControllerImpl(@Qualifier("ChatLanguageModelGPT")
 							ChatLanguageModel _chatLanguageModel) {
 		this.chatLanguageModel = _chatLanguageModel;
 	}

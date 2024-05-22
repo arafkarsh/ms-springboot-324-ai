@@ -33,7 +33,7 @@ public class _05_Prompt_Templates {
     public static void main(String[] args) {
         // Create Chat Language Model - Open AI GPT 4o
         ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
-        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_4o);
 
         System.out.println("Prompt Example 1 >>--------------------------------------------");
         TemplateManager.simplePrompt(model);

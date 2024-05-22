@@ -53,7 +53,7 @@ public class _20_RAG_Skip_Retrieval_Example {
     public static void main(String[] args) {
         // Create Chat Language Model - Open AI GPT 4o
         ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
-        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_4o);
         // Create the Assistant
         // Setting up the Gen AI Context with Open AI LLM, and RAG
         Assistant assistant = RAGBuilder.createAssistantWithRetrievalSkipping(model);

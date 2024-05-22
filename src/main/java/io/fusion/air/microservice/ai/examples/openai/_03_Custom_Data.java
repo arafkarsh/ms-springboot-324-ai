@@ -31,7 +31,7 @@ public class _03_Custom_Data {
 
         // Create Chat Language Model - Open AI GPT 4o
         ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
-        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_4o);
 
         String request1 = """
             Who were the Key Characters in the movie Bramayugam?

@@ -33,7 +33,7 @@ public class _02_Complex_World {
     public static void main(String[] args) {
         // Create Chat Language Model - Open AI GPT 4o
         ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
-        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_4o);
         // Create the Ai Assistant
         HAL9000Assistant hal9k = new AiBeans().createHAL9000(model);
         // Run the Test Cases

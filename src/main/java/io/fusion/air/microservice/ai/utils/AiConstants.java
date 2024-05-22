@@ -35,8 +35,9 @@ import org.springframework.context.annotation.PropertySource;
 // value = "classpath:application2.properties,file:./application.properties")
 public class AiConstants {
 
-    public static final String LLM_GPT             = "OpenAI";
+    public static final String LLM_OPENAI         = "OpenAI";
     public static final String LLM_OLLAMA        = "Ollama";
+    public static final String LLM_ANTHROPIC    = "Anthropic";
 
     // ChatGPT ----------------------------------------------------------------------
     // INPUT = $0.005 / 1K tokens	   OUTPUT = $0.015 / 1K tokens
@@ -59,6 +60,7 @@ public class AiConstants {
     // API Keys -----------------------------------------------------------------------
     public static final String OPENAI_API_KEY = System.getenv("OPENAI_API_KEY");
     public static final String COHERE_API_KEY = System.getenv("COHERE_API_KEY");
+    public static final String ANTHROPIC_API_KEY = System.getenv("ANTHROPIC_API_KEY");
 
     // Ollama Config --------------------------------------------------------------------
     @Value("${langchain4j.llama.url:http://localhost:11434/api/generate}")
@@ -74,7 +76,8 @@ public class AiConstants {
     public static String OLLAMA_GEMMA         = "gemma";
     public static String OLLAMA_FALCON_2      = "falcon2";
 
-
+    // Anthropic Config ----------------------------------------------------------------
+    public static final String ANTHROPIC_CLAUDE_3_HAIKU = "claude-3-haiku-20240307";
 
 
 

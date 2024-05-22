@@ -76,7 +76,7 @@ public class _08_FewShot_Example {
         fewShotHistory.add(request);
         // Response from Ai
         Response<AiMessage> response = model.generate(fewShotHistory);
-        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_4o);
         // Print Result
         AiBeans.printResult(request.text(), response.content().text());
         return response.content().text();

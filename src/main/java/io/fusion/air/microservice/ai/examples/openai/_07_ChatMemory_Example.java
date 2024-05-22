@@ -107,7 +107,7 @@ public class _07_ChatMemory_Example {
     }
 
     public static void main(String[] args) throws Exception {
-        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_4o);
 
         // Chat Memory Conversations
         chatMemoryConversations();

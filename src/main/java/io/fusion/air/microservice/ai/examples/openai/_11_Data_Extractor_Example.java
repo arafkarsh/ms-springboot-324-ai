@@ -101,7 +101,7 @@ public class _11_Data_Extractor_Example {
     }
 
     public static void main(String[] args) {
-        AiBeans.printModelDetails(AiConstants.LLM_GPT, AiConstants.GPT_3_5_TURBO);
+        AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_3_5_TURBO);
         try {
             System.out.println("Number Extractor =================================================");
             // Extract Numbers

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai.examples.openai;
+package io.fusion.air.microservice.ai.examples.anthropic;
 
 import dev.langchain4j.chain.ConversationalChain;
 import dev.langchain4j.data.message.AiMessage;
@@ -21,10 +21,10 @@ import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.TokenWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.openai.OpenAiTokenizer;
-import static dev.langchain4j.data.message.UserMessage.userMessage;
-
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
+
+import static dev.langchain4j.data.message.UserMessage.userMessage;
 
 /**
  * @author: Araf Karsh Hamid
@@ -41,7 +41,7 @@ public class _01_Hello_World {
         // Start interacting
         String request = "Hello My Space...";
         String response = model.generate(request);
-        AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_ANTHROPIC, AiConstants.ANTHROPIC_CLAUDE_3_HAIKU);
         AiBeans.printResult(request, response);
     }
 
@@ -94,8 +94,8 @@ public class _01_Hello_World {
      * @param args
      */
     public static void main(String[] args) {
-        // Create Chat Language Model - Open AI GPT 4o
-        ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
+        // Create Chat Language Model - Anthropic Claude 3 Haiku
+        ChatLanguageModel model = AiBeans.getChatLanguageModelAnthropic(AiConstants.ANTHROPIC_CLAUDE_3_HAIKU);
 
         helloWorld(model);
         conversationChat(model);
