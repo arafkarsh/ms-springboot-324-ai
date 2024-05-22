@@ -20,8 +20,8 @@ import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.service.AiServices;
 
-import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
-import io.fusion.air.microservice.ai.examples.core.tools.Calculator;
+import io.fusion.air.microservice.ai.core.assistants.Assistant;
+import io.fusion.air.microservice.ai.core.tools.CalculatorTool;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 
@@ -40,7 +40,7 @@ public class _06_Tools_Example {
 
         Assistant assistant = AiServices.builder(Assistant.class)
                 .chatLanguageModel(model)
-                .tools(new Calculator())
+                .tools(new CalculatorTool())
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
                 .build();
 

@@ -18,8 +18,8 @@ package io.fusion.air.microservice.ai.controllers;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 // Custom
 import io.fusion.air.microservice.domain.entities.example.ChatMessageEntity;
-import io.fusion.air.microservice.ai.services.CustomDataAnalyzer;
-import io.fusion.air.microservice.ai.services.TemplateManager;
+import io.fusion.air.microservice.ai.core.services.CustomDataAnalyzer;
+import io.fusion.air.microservice.ai.core.services.TemplateManager;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 import io.fusion.air.microservice.domain.exceptions.DataNotFoundException;
 import io.fusion.air.microservice.domain.models.core.StandardResponse;

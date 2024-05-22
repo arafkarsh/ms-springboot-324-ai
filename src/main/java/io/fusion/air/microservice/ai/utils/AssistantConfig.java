@@ -17,7 +17,7 @@ package io.fusion.air.microservice.ai.utils;
 
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
-import io.fusion.air.microservice.ai.examples.core.assistants.HAL9000Assistant;
+import io.fusion.air.microservice.ai.core.assistants.HAL9000Assistant;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

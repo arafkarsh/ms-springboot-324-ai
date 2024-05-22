@@ -15,9 +15,6 @@
  */
 package io.fusion.air.microservice;
 
-import io.fusion.air.microservice.ai.services.CustomDataAnalyzer;
-import io.fusion.air.microservice.ai.services.ImageBuilder;
-import io.fusion.air.microservice.ai.services.TemplateManager;
 import jakarta.annotation.PostConstruct;
 // import javax.servlet.MultipartConfigElement;
 // import jakarta.servlet.MultipartConfigElement;
@@ -30,7 +27,6 @@ import io.fusion.air.microservice.server.controllers.HealthController;
 import org.slf4j.Logger;
 
 // Spring Framework
-import org.slf4j.LoggerFactory;
 import org.springdoc.core.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,7 +42,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Component;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -67,7 +62,6 @@ import io.swagger.v3.oas.models.servers.Server;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;

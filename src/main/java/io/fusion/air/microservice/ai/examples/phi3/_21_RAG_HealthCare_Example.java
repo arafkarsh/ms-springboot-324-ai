@@ -16,8 +16,8 @@
 package io.fusion.air.microservice.ai.examples.phi3;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
-import io.fusion.air.microservice.ai.examples.core.assistants.HealthCareAssistant;
-import io.fusion.air.microservice.ai.services.RAGHealthCareBuilder;
+import io.fusion.air.microservice.ai.core.assistants.HealthCareAssistant;
+import io.fusion.air.microservice.ai.core.services.RAGHealthCareBuilder;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 import io.fusion.air.microservice.ai.utils.ConsoleRunner;

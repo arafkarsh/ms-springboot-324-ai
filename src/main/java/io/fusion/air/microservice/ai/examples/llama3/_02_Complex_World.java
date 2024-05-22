@@ -16,7 +16,7 @@
 package io.fusion.air.microservice.ai.examples.llama3;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
-import io.fusion.air.microservice.ai.examples.core.assistants.HAL9000Assistant;
+import io.fusion.air.microservice.ai.core.assistants.HAL9000Assistant;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 
 import java.time.LocalDateTime;

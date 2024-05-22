@@ -17,7 +17,7 @@ package io.fusion.air.microservice.ai.examples.llama3;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.service.AiServices;
-import io.fusion.air.microservice.ai.examples.core.assistants.LanguageAssistant;
+import io.fusion.air.microservice.ai.core.assistants.LanguageAssistant;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 
 import java.util.List;

@@ -17,14 +17,13 @@ package io.fusion.air.microservice.ai.utils;
 // Custom
 import dev.langchain4j.model.input.Prompt;
 import dev.langchain4j.model.input.structured.StructuredPromptProcessor;
-import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
-import io.fusion.air.microservice.ai.examples.core.prompts.StructuredPromptDiagnosis;
-import io.fusion.air.microservice.ai.examples.core.prompts.StructuredPromptDiagnosisDetails;
-import io.fusion.air.microservice.ai.examples.core.prompts.StructuredPromptDiagnosisSummary;
-import io.fusion.air.microservice.ai.examples.core.prompts.StructuredPromptRecipe;
-import io.fusion.air.microservice.ai.services.CustomDataAnalyzer;
-import io.fusion.air.microservice.ai.services.ImageBuilder;
-import io.fusion.air.microservice.ai.services.TemplateManager;
+import io.fusion.air.microservice.ai.core.assistants.Assistant;
+import io.fusion.air.microservice.ai.core.prompts.StructuredPromptDiagnosis;
+import io.fusion.air.microservice.ai.core.prompts.StructuredPromptDiagnosisDetails;
+import io.fusion.air.microservice.ai.core.prompts.StructuredPromptDiagnosisSummary;
+import io.fusion.air.microservice.ai.core.services.CustomDataAnalyzer;
+import io.fusion.air.microservice.ai.core.services.ImageBuilder;
+import io.fusion.air.microservice.ai.core.services.TemplateManager;
 // Spring
 import org.slf4j.Logger;
 import org.springframework.boot.CommandLineRunner;
@@ -33,7 +32,6 @@ import org.springframework.stereotype.Component;
 import java.util.Scanner;
 
 import static java.lang.invoke.MethodHandles.lookup;
-import static java.util.Arrays.asList;
 import static org.slf4j.LoggerFactory.getLogger;
 
 /**

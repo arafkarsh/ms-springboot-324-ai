@@ -17,11 +17,11 @@ package io.fusion.air.microservice.ai.examples.phi3;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.service.AiServices;
-import io.fusion.air.microservice.ai.examples.core.assistants.ChefAssistant;
-import io.fusion.air.microservice.ai.examples.core.assistants.DataExtractorAssistant;
-import io.fusion.air.microservice.ai.examples.core.models.Person;
-import io.fusion.air.microservice.ai.examples.core.models.Recipe;
-import io.fusion.air.microservice.ai.examples.core.prompts.StructuredPromptRecipe;
+import io.fusion.air.microservice.ai.core.assistants.ChefAssistant;
+import io.fusion.air.microservice.ai.core.assistants.DataExtractorAssistant;
+import io.fusion.air.microservice.ai.core.models.Person;
+import io.fusion.air.microservice.ai.core.models.Recipe;
+import io.fusion.air.microservice.ai.core.prompts.StructuredPromptRecipe;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 

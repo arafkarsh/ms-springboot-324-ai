@@ -29,7 +29,7 @@ import dev.langchain4j.model.output.Response;
 import static dev.langchain4j.data.message.UserMessage.userMessage;
 
 import dev.langchain4j.service.AiServices;
-import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
+import io.fusion.air.microservice.ai.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 

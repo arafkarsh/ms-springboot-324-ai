@@ -16,8 +16,8 @@
 package io.fusion.air.microservice.ai.examples.gemma;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
-import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
-import io.fusion.air.microservice.ai.services.RAGBuilder;
+import io.fusion.air.microservice.ai.core.assistants.Assistant;
+import io.fusion.air.microservice.ai.core.services.RAGBuilder;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 import io.fusion.air.microservice.ai.utils.ConsoleRunner;

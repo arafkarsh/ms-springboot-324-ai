@@ -19,8 +19,8 @@ import dev.langchain4j.memory.chat.ChatMemoryProvider;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.service.AiServices;
-import io.fusion.air.microservice.ai.examples.core.assistants.Assistant;
-import io.fusion.air.microservice.ai.examples.core.utils.FilePersistentChatMemoryStore;
+import io.fusion.air.microservice.ai.core.assistants.Assistant;
+import io.fusion.air.microservice.ai.core.utils.FilePersistentChatMemoryStore;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 

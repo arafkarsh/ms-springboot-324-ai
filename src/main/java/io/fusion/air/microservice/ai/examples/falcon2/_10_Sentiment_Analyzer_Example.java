@@ -17,8 +17,8 @@ package io.fusion.air.microservice.ai.examples.falcon2;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.service.AiServices;
-import io.fusion.air.microservice.ai.examples.core.assistants.SentimentAssistant;
-import io.fusion.air.microservice.ai.services.SentimentAnalyzer;
+import io.fusion.air.microservice.ai.core.assistants.SentimentAssistant;
+import io.fusion.air.microservice.ai.core.services.SentimentAnalyzer;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 

@@ -16,7 +16,7 @@
 package io.fusion.air.microservice.ai.examples.openai;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
-import io.fusion.air.microservice.ai.services.TemplateManager;
+import io.fusion.air.microservice.ai.core.services.TemplateManager;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 
