@@ -103,12 +103,16 @@ Check out the <a href="https://github.com/arafkarsh/ms-springboot-324-ai/blob/ma
     // API Keys -----------------------------------------------------------------------
     // OpenAI API key here: https://platform.openai.com/account/api-keys
     public static final String OPENAI_API_KEY = System.getenv("OPENAI_API_KEY");
+    
     // Cohere API key here: // https://dashboard.cohere.com/welcome/register
     public static final String COHERE_API_KEY = System.getenv("COHERE_API_KEY");
+    
     // Anthropic API key here:: https://console.anthropic.com/settings/keys
     public static final String ANTHROPIC_API_KEY = System.getenv("ANTHROPIC_API_KEY");
+    
     // HuggingFace API key here: https://huggingface.co/settings/tokens
     public static final String HF_API_KEY = System.getenv("HF_API_KEY");
+    
     // Judge0 RapidAPI key here: https://rapidapi.com/judge0-official/api/judge0-ce
     public static final String RAPID_API_KEY = System.getenv("RAPID_API_KEY");
 ```
