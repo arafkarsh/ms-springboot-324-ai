@@ -28,7 +28,7 @@
 		<maven-compiler-plugin>3.8.1</maven-compiler-plugin>
 		<maven-dependency-plugin>3.3.0</maven-dependency-plugin>
 		<maven-jar-plugin>3.2.2</maven-jar-plugin>
-		<maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
+		<maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
 
 		<!-- Encoding ====================================================== -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -67,6 +67,7 @@
 		<!-- LangChain4J API  ============================================= -->
 		<langchain4j.version>0.30.0</langchain4j.version>
 		<mapdb.version>3.1.0</mapdb.version>
+		<eclipse.collection.version>11.0.0</eclipse.collection.version>
 
 	</properties>
 
@@ -75,21 +76,8 @@
 	<!-- ================================================================= -->
 	<repositories>
 		<repository>
-			<id>spring-snapshots</id>
-			<name>Spring Snapshots</name>
-			<url>https://repo.spring.io/snapshot</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-		</repository>
-		<repository>
-			<id>public</id>
-			<url>http://maven.nuxeo.org/nexus/content/repositories/public/</url>
+			<id>central</id>
+			<url>https://repo.maven.apache.org/maven2</url>
 		</repository>
 	</repositories>
 
@@ -137,9 +125,14 @@
 			<artifactId>langchain4j-anthropic</artifactId>
 			<version>${langchain4j.version}</version>
 		</dependency>
-		<!--
-		mapdb dependency has issues in the pom. It started to download
-		eclipse-collection-api versions 7.x, 8.x, 9.x etc..
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j-vertex-ai-gemini</artifactId>
+			<version>${langchain4j.version}</version>
+		</dependency>
+		<!-- ================================================================= -->
+		<!-- MapDB Persistent File Store for HashMap -->
+		<!-- ================================================================= -->
 		<dependency>
 			<groupId>org.mapdb</groupId>
 			<artifactId>mapdb</artifactId>
@@ -149,55 +142,13 @@
 					<groupId>org.jetbrains.kotlin</groupId>
 					<artifactId>kotlin-stdlib</artifactId>
 				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.collections</groupId>
-					<artifactId>eclipse-collections-api</artifactId>
-				</exclusion>
 			</exclusions>
 		</dependency>
-		-->
-		<!--
 		<dependency>
-			<groupId>dev.langchain4j</groupId>
-			<artifactId>langchain4j</artifactId>
-			<version>${langchain4j.version}</version>
+			<groupId>org.eclipse.collections</groupId>
+			<artifactId>eclipse-collections</artifactId>
+			<version>${eclipse.collection.version}</version>
 		</dependency>
-		<dependency>
-            <groupId>dev.langchain4j</groupId>
-            <artifactId>langchain4j-open-ai</artifactId>
-			<version>${langchain4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>dev.langchain4j</groupId>
-            <artifactId>langchain4j-embeddings-all-minilm-l6-v2</artifactId>
-			<version>${langchain4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>dev.langchain4j</groupId>
-            <artifactId>langchain4j-document-parser-apache-pdfbox</artifactId>
-			<version>${langchain4j.version}</version>
-        </dependency>
-		<dependency>
-			<groupId>dev.langchain4j</groupId>
-			<artifactId>langchain4j-azure-open-ai</artifactId>
-			<version>${langchain4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>dev.langchain4j</groupId>
-			<artifactId>langchain4j-mistral-ai</artifactId>
-			<version>${langchain4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>dev.langchain4j</groupId>
-			<artifactId>langchain4j-azure-ai-search</artifactId>
-			<version>${langchain4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>dev.langchain4j</groupId>
-			<artifactId>langchain4j-embeddings-all-minilm-l6-v2-q</artifactId>
-			<version>${langchain4j.version}</version>
-		</dependency>
-		-->
 
 		<!-- ================================================================= -->
 		<!-- Jakarta EE Frameworks (Required  from Java 17 onwards) -->

@@ -27,6 +27,19 @@ import dev.langchain4j.service.spring.AiService;
 @AiService
 public interface HAL9000Assistant {
 
+    /**
+     * HAL9000 Assistant
+     *
+     *   SystemMessage is a special type of message, so it is treated differently from other message types:
+     *
+     *    - Once added, a SystemMessage is always retained.
+     *    - Only one SystemMessage can be held at a time.
+     *    - If a new SystemMessage with the same content is added, it is ignored.
+     *    - If a new SystemMessage with different content is added, it replaces the previous one.
+     *
+     * @param _userMessage
+     * @return
+     */
     @SystemMessage("""
                             I am an IT Professional focusing on Cloud Native Architecture, Security, 
                             and Blockchain.  I focus on helping customers to migrate from their 

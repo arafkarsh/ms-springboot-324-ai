@@ -35,6 +35,13 @@ public interface LanguageAssistant {
     /**
      * Translate the message into the target language
      *
+     *   SystemMessage is a special type of message, so it is treated differently from other message types:
+     *
+     *    - Once added, a SystemMessage is always retained.
+     *    - Only one SystemMessage can be held at a time.
+     *    - If a new SystemMessage with the same content is added, it is ignored.
+     *    - If a new SystemMessage with different content is added, it replaces the previous one.
+     *
      * @param _text
      * @param _language
      * @return
@@ -45,6 +52,13 @@ public interface LanguageAssistant {
 
     /**
      * Summarize the message into specified set of bullet points.
+     *
+     *   SystemMessage is a special type of message, so it is treated differently from other message types:
+     *
+     *    - Once added, a SystemMessage is always retained.
+     *    - Only one SystemMessage can be held at a time.
+     *    - If a new SystemMessage with the same content is added, it is ignored.
+     *    - If a new SystemMessage with different content is added, it replaces the previous one.
      *
      * @param _text
      * @param _number

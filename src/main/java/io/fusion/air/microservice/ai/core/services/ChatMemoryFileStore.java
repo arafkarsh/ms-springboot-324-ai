@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.ai.core.utils;
+package io.fusion.air.microservice.ai.core.services;
 // LangChain4J
 import dev.langchain4j.data.message.ChatMessage;
 import dev.langchain4j.store.memory.chat.ChatMemoryStore;
-
 import static dev.langchain4j.data.message.ChatMessageDeserializer.messagesFromJson;
 import static dev.langchain4j.data.message.ChatMessageSerializer.messagesToJson;
-
 // MapDB
-// import org.mapdb.DB;
-// import org.mapdb.DBMaker;
-// import static org.mapdb.Serializer.INTEGER;
-// import static org.mapdb.Serializer.STRING;
+import org.mapdb.DB;
+import org.mapdb.DBMaker;
+import static org.mapdb.Serializer.STRING;
+import org.mapdb.HTreeMap;
+// Spring
 import org.springframework.stereotype.Component;
-
 // Java
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * File based Persistent Store for Chat Memory.
@@ -41,12 +38,19 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date:
  */
 @Component
-public class FilePersistentChatMemoryStore implements ChatMemoryStore {
-    // mapdb dependency has some issues.
-    // private final DB db = DBMaker.fileDB("multi-user-chat-memory.db").transactionEnable().make();
-    // private final Map<Integer, String> map = db.hashMap("messages", STRING, STRING).createOrOpen();
-    private ConcurrentHashMap<String, String> map = new ConcurrentHashMap<String, String>();
+public class ChatMemoryFileStore implements ChatMemoryStore {
+    // MapDB is a persistent store
+    private final DB db;
+    private final HTreeMap<String, String> map;
+    // private ConcurrentHashMap<String, String> map = new ConcurrentHashMap<String, String>();
 
+    /**
+     * Create the Persistent Map
+     */
+    public ChatMemoryFileStore() {
+        db = DBMaker.fileDB("multi-user-chat-memory.db").transactionEnable().make();
+        map = db.hashMap("messages", STRING, STRING).createOrOpen();
+    }
     /**
      * Get Messages
      * @param _memoryId
@@ -67,7 +71,7 @@ public class FilePersistentChatMemoryStore implements ChatMemoryStore {
     public void updateMessages(Object _memoryId, List<ChatMessage> _messages) {
         String json = messagesToJson(_messages);
         map.put((String) _memoryId, json);
-        // db.commit();
+        db.commit();
     }
 
     /**
@@ -77,6 +81,10 @@ public class FilePersistentChatMemoryStore implements ChatMemoryStore {
     @Override
     public void deleteMessages(Object memoryId) {
         map.remove((String) memoryId);
-        // db.commit();
+        db.commit();
+    }
+
+    public static void main(String[] args) {
+        ChatMemoryFileStore store = new ChatMemoryFileStore();
     }
 }

@@ -58,9 +58,16 @@ public class AiConstants {
     public static final String DALL_E_2            = "dall-e-2";
 
     // API Keys -----------------------------------------------------------------------
+    // OpenAI API key here: https://platform.openai.com/account/api-keys
     public static final String OPENAI_API_KEY = System.getenv("OPENAI_API_KEY");
+    // Cohere API key here: // https://dashboard.cohere.com/welcome/register
     public static final String COHERE_API_KEY = System.getenv("COHERE_API_KEY");
+    // Anthropic API key here:: https://console.anthropic.com/settings/keys
     public static final String ANTHROPIC_API_KEY = System.getenv("ANTHROPIC_API_KEY");
+    // HuggingFace API key here: https://huggingface.co/settings/tokens
+    public static final String HF_API_KEY = System.getenv("HF_API_KEY");
+    // Judge0 RapidAPI key here: https://rapidapi.com/judge0-official/api/judge0-ce
+    public static final String RAPID_API_KEY = System.getenv("RAPID_API_KEY");
 
     // Ollama Config --------------------------------------------------------------------
     @Value("${langchain4j.llama.url:http://localhost:11434/api/generate}")
@@ -76,11 +83,21 @@ public class AiConstants {
     public static String OLLAMA_GEMMA         = "gemma";
     public static String OLLAMA_FALCON_2      = "falcon2";
 
-    // Anthropic Config ----------------------------------------------------------------
+    // Anthropic Claude Config ----------------------------------------------------------
     public static final String ANTHROPIC_CLAUDE_3_HAIKU = "claude-3-haiku-20240307";
     public static final String ANTHROPIC_CLAUDE_3_OPUS  = "claude-3-opus-20240229";
 
-
+    /**
+     * 1. Log into Google Cloud Console
+     * 2. Ensure that you have a Billing Account
+     * 3. Create your project
+     * 4. Search for Vertex AI
+     * 5. Enable Vertex AI for your Project
+     */
+    // Google Gemini Config -------------------------------------------------------------
+    public static final String GEMINI_PROJECT = "FusionFire";
+    public static final String GEMINI_LOCATION = "us-central1";
+    public static final String GEMINI_MODEL_NAME = "gemini-pro";
 
     // Algo Config ----------------------------------------------------------------------
     @Value("${langchain4j.default.algo:gpt-4o-2024-05-13}")

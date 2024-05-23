@@ -20,13 +20,13 @@ import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.service.AiServices;
 import io.fusion.air.microservice.ai.core.assistants.Assistant;
-import io.fusion.air.microservice.ai.core.utils.FilePersistentChatMemoryStore;
+import io.fusion.air.microservice.ai.core.services.ChatMemoryFileStore;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 
 /**
  * Chat Memory Persistent Store Example.
- * Storing the Data to file based on FilePersistentChatMemoryStore.
+ * Storing the Data to file based on ChatMemoryFileStore.
  *
  * @author: Araf Karsh Hamid
  * @version:
@@ -42,7 +42,7 @@ public class _12_Persistent_ChatMemory_Store_Example {
 
     public static void setupContext() {
         // Create Persistent Store
-        FilePersistentChatMemoryStore store = new FilePersistentChatMemoryStore();
+        ChatMemoryFileStore store = new ChatMemoryFileStore();
         // Create Chat Memory Provider with the Store
         ChatMemoryProvider chatMemoryProvider = memoryId -> MessageWindowChatMemory.builder()
                 .id(memoryId)

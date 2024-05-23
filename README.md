@@ -88,13 +88,30 @@ To Install the Local LLMs using Ollama
 
 Check out the <a href="https://github.com/arafkarsh/ms-springboot-324-ai/blob/main/llms/README_LOCAL_LLMS.md">installation guide.</a>
 
-## Cloud Based LLMs
+## Get the Keys for Testing Cloud LLMs
 
-Register to get the API Keys 
+### Register to get the API Keys 
 
 1. Open AI - ChatGPT (API Key can be created here: https://platform.openai.com/api-keys)
 2. Anthropic - Claude 3 (API key can be created here: https://console.anthropic.com/settings/keys)
+3. Cohere - (API key here:  https://dashboard.cohere.com/welcome/register)
+4. HuggingFace - (API key here: https://huggingface.co/settings/tokens)
+5. Rapid - (API key here: https://rapidapi.com/judge0-official/api/judge0-ce)
 
+### Set these Keys in your environment
+```
+    // API Keys -----------------------------------------------------------------------
+    // OpenAI API key here: https://platform.openai.com/account/api-keys
+    public static final String OPENAI_API_KEY = System.getenv("OPENAI_API_KEY");
+    // Cohere API key here: // https://dashboard.cohere.com/welcome/register
+    public static final String COHERE_API_KEY = System.getenv("COHERE_API_KEY");
+    // Anthropic API key here:: https://console.anthropic.com/settings/keys
+    public static final String ANTHROPIC_API_KEY = System.getenv("ANTHROPIC_API_KEY");
+    // HuggingFace API key here: https://huggingface.co/settings/tokens
+    public static final String HF_API_KEY = System.getenv("HF_API_KEY");
+    // Judge0 RapidAPI key here: https://rapidapi.com/judge0-official/api/judge0-ce
+    public static final String RAPID_API_KEY = System.getenv("RAPID_API_KEY");
+```
 
 ## Gen AI - Code Package Structure 
 
