@@ -78,6 +78,7 @@ public class AiConstants {
 
     // Anthropic Config ----------------------------------------------------------------
     public static final String ANTHROPIC_CLAUDE_3_HAIKU = "claude-3-haiku-20240307";
+    public static final String ANTHROPIC_CLAUDE_3_OPUS  = "claude-3-opus-20240229";
 
 
 
