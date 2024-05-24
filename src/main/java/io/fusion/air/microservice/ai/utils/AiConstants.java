@@ -94,14 +94,16 @@ public class AiConstants {
      * 3. Create your project
      * 4. Search for Vertex AI
      * 5. Enable Vertex AI for your Project
+     * 6. Create a Service Account & Give Roles for Vertex AI
+     * 7. Create a Key and download in JSON format.
+     * 8. Give the Json file Path in the following ENV variable
+     *    export GOOGLE_APPLICATION_CREDENTIALS=/your-path/key.json
      */
     // Google Gemini Config -------------------------------------------------------------
-    public static final String GOOGLE_VERTEX_PROJECT     = "FusionAir";
+    public static final String GOOGLE_VERTEX_PROJECT     = "fusionair";
     public static final String GOOGLE_VERTEX_LOCATION   = "us-central1";
-    public static final String GOOGLE_GEMINI_PRO_PREV   = "gemini-1.5-pro-preview-0514";
-    public static final String GOOGLE_GEMINI_PRO           = "gemini-1.5-pro";
-
-    public static final String GOOGLE_GEMINI_FLASH        = "gemini-1.5-flash-preview-0514";
+    public static final String GOOGLE_GEMINI_PRO           = "gemini-1.5-pro-preview-0514";
+    public static final String GOOGLE_GEMINI_FLASH         = "gemini-1.5-flash-preview-0514";
     public static final String GOOGLE_GEMINI_NANO         = "gemini-nano";
 
 

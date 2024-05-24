@@ -80,7 +80,7 @@ public class _12_Persistent_ChatMemory_Store_Example {
         // Setup the Context
         setupContext();
         // Initialize with Data
-        persistInitialData();
+        // persistInitialData();
         // To Test the persisted Data.
         // Comment out the previous call "persistInitialData()"
         // UnComment the following call "testThePersistedData()"
