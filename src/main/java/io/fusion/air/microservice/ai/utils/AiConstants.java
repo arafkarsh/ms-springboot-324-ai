@@ -104,7 +104,7 @@ public class AiConstants {
     public static final String GOOGLE_VERTEX_LOCATION   = "us-central1";
     public static final String GOOGLE_GEMINI_PRO           = "gemini-1.5-pro-preview-0514";
     public static final String GOOGLE_GEMINI_FLASH         = "gemini-1.5-flash-preview-0514";
-    public static final String GOOGLE_GEMINI_NANO         = "gemini-nano";
+    public static final String GOOGLE_GEMINI_NANO         = "gemini-1.5-nano";
 
 
     // Algorithm Config ----------------------------------------------------------------------
