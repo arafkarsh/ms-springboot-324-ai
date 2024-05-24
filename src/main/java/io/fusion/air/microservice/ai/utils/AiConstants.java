@@ -95,11 +95,14 @@ public class AiConstants {
      * 5. Enable Vertex AI for your Project
      */
     // Google Gemini Config -------------------------------------------------------------
-    public static final String GEMINI_PROJECT = "FusionFire";
-    public static final String GEMINI_LOCATION = "us-central1";
-    public static final String GEMINI_MODEL_NAME = "gemini-pro";
+    public static final String GOOGLE_VERTEX_PROJECT     = "FusionFire";
+    public static final String GOOGLE_VERTEX_LOCATION   = "us-central1";
+    public static final String GOOGLE_GEMINI_PRO           = "gemini-1.5-pro-preview-0514";
+    public static final String GOOGLE_GEMINI_FLASH        = "gemini-1.5-flash-preview-0514";
+    public static final String GOOGLE_GEMINI_NANO         = "gemini-nano";
 
-    // Algo Config ----------------------------------------------------------------------
+
+    // Algorithm Config ----------------------------------------------------------------------
     @Value("${langchain4j.default.algo:gpt-4o-2024-05-13}")
     private  String defaultAlgo;
     private static String DEFAULT_ALGO;

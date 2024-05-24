@@ -15,6 +15,7 @@
  */
 package io.fusion.air.microservice.ai.utils;
 
+import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.image.ImageModel;
@@ -22,6 +23,7 @@ import dev.langchain4j.model.anthropic.AnthropicChatModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiImageModel;
 import dev.langchain4j.model.ollama.OllamaChatModel;
+import dev.langchain4j.model.vertexai.VertexAiGeminiChatModel;
 import dev.langchain4j.service.AiServices;
 // Custom
 import io.fusion.air.microservice.ai.core.assistants.HAL9000Assistant;
@@ -55,7 +57,7 @@ public class AiBeans {
      * @return
      */
     public static ChatLanguageModel getChatLanguageModelOpenAi() {
-        return new AiBeans().createChatLanguageModelOpenAi();
+        return getChatLanguageModelOpenAi(AiConstants.GPT_4o);
     }
 
     /**
@@ -76,7 +78,7 @@ public class AiBeans {
      * @return
      */
     public static ChatLanguageModel getChatLanguageModelLlama() {
-        return new AiBeans().createChatLanguageModelLlama();
+        return getChatLanguageModelLlama(AiConstants.OLLAMA_LLAMA3);
     }
 
     /**
@@ -113,6 +115,30 @@ public class AiBeans {
     public static ChatLanguageModel getChatLanguageModelAnthropic(String _model) {
         return new AiBeans().createChatLanguageModelAnthropic(_model);
     }
+
+    /**
+     * Get the Google (Vertex AI) Chat Language Model
+     * 1. Gemini Pro
+     * @return
+     */
+    public static ChatLanguageModel getChatLanguageModelGoogle() {
+        return getChatLanguageModelGoogle(AiConstants.GOOGLE_GEMINI_PRO);
+    }
+
+    /**
+     * Get the Google (Vertex AI) Chat Language Model
+     * 1. Gemini Pro
+     * 2. Gemini Flash
+     * 3. Gemini Nano
+     *
+     * @param _model
+     * @return
+     */
+    public static ChatLanguageModel getChatLanguageModelGoogle(String _model) {
+        return new AiBeans().createChatLanguageModelGoogle(_model);
+    }
+
+    // ------------------------------------------------------------------------------------------------
 
     /**
      * Returns Chat Language Model based on ChatGPT 3.5, 4.0, 4o (Omni)
@@ -163,6 +189,7 @@ public class AiBeans {
 
     /**
      * Returns Chat Language Model based on Llama 3
+     * 1. Llama 3
      * @return
      */
     @Bean(name = "ChatLanguageModelOllama")
@@ -216,6 +243,39 @@ public class AiBeans {
                 .modelName(_model) // claude-3-haiku-20240307
                 .logRequests(true)
                 .logResponses(true)
+                .build();
+    }
+
+    /**
+     * Returns Chat Language Model based on Google
+     * 1. Gemini Pro
+     * 2. Gemini Flash
+     * 3. Gemini Nano
+     *
+     * @return
+     */
+    @Bean(name = "ChatLanguageModelGoogle")
+    public ChatLanguageModel createChatLanguageModelGoogle() {
+        return createChatLanguageModelGoogle( AiConstants.GOOGLE_GEMINI_PRO);
+    }
+
+    /**
+     * Returns Chat Language Model based on Google
+     * 1. Gemini Pro
+     * 2. Gemini Flash
+     * 3. Gemini Nano
+     *
+     * @param _model
+     * @return
+     */
+    public ChatLanguageModel createChatLanguageModelGoogle(String _model) {
+        // Create Chat Language Model - Google Gemini Pro
+        return  VertexAiGeminiChatModel.builder()
+                .project(AiConstants.GOOGLE_VERTEX_PROJECT)
+                .location(AiConstants.GOOGLE_VERTEX_LOCATION)
+                .modelName(_model)
+                .maxRetries(1)
+                .temperature(0.2F)
                 .build();
     }
 
@@ -279,6 +339,18 @@ public class AiBeans {
                 // .tools(tool)
                 .build();
     }
+
+    /**
+     * This chat memory will be used by an {@link HAL9000Assistant}
+     */
+    @Bean(name = "SimpleChatMemory")
+    public ChatMemory chatMemory() {
+        return MessageWindowChatMemory.withMaxMessages(20);
+    }
+
+    // ==============================================================================================
+    // Utilities ----------------
+    // ==============================================================================================
 
     /**
      * Print Model Details

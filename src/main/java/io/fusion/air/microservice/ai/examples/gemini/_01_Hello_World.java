@@ -23,7 +23,6 @@ import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.openai.OpenAiTokenizer;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
-import dev.langchain4j.model.vertexai.VertexAiGeminiChatModel;
 
 import static dev.langchain4j.data.message.UserMessage.userMessage;
 
@@ -97,14 +96,7 @@ public class _01_Hello_World {
     public static void main(String[] args) {
 
         // Create Chat Language Model - Google Gemini Pro
-        ChatLanguageModel model =  VertexAiGeminiChatModel.builder()
-                .project(AiConstants.GEMINI_PROJECT)
-                .location(AiConstants.GEMINI_LOCATION)
-                .modelName(AiConstants.GEMINI_MODEL_NAME)
-                .build();
-
-        // Create Chat Language Model - Open AI GPT 4o
-        // ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
+        ChatLanguageModel model = AiBeans.getChatLanguageModelGoogle(AiConstants.GOOGLE_GEMINI_PRO);
 
         helloWorld(model);
         conversationChat(model);
