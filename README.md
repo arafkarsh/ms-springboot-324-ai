@@ -29,7 +29,7 @@ Here’s how it helps developers:
 
 ![Ai RAG-0](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/diagrams/Ai-Case-Study-Architecture.jpg)
 
-## Generative AI Examples: Comparison of 7 LLMs (2 remote & 5 Local)
+## Gen AI Examples: Comparison of 8 LLMs (3 Cloud based & 5 Local LLMs) on Enterprise Features
 
 | #   | Example             | GPT 4o             | Meta Llama3     | Mistral          | Microsoft Phi-3  | Google Gemma     | TII Falcon 2    | Claude 3       | Gemini 1.5     |
 |-----|---------------------|--------------------|-----------------|------------------|------------------|------------------|-----------------|----------------|----------------|
@@ -46,7 +46,7 @@ Here’s how it helps developers:
 | 11. | Data Extractor      | :orange_circle: O1 | :red_circle: L3 | :red_circle: M7  | :red_circle: P4  | :red_circle: G3  | :red_circle: F4 | :green_circle: |                |
 | 12. | Persistent Store    | :green_circle:     | :green_circle:  | :red_circle: M8  | :red_circle: P5  | :red_circle: G4  | :green_circle:  | :green_circle: |                |
 
-## Retrieval Augmented Generation (RAG) Examples
+## Retrieval Augmented Generation (RAG) Examples of 8 LLMs
 
 
 | #   | Example                     | GPT 4o         | Meta Llama3     | Mistral         | Microsoft Phi-3 | Google Gemma    | TII Falcon 2    | Claude 3       | Gemini 1.5    |
