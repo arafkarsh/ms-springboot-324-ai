@@ -95,9 +95,11 @@ Check out the <a href="https://github.com/arafkarsh/ms-springboot-324-ai/blob/ma
 
 1. Open AI - ChatGPT (API Key can be created here: https://platform.openai.com/api-keys)
 2. Anthropic - Claude 3 (API key can be created here: https://console.anthropic.com/settings/keys)
-3. Cohere - (API key here:  https://dashboard.cohere.com/welcome/register)
-4. HuggingFace - (API key here: https://huggingface.co/settings/tokens)
-5. Rapid - (API key here: https://rapidapi.com/judge0-official/api/judge0-ce)
+3. Google Cloud - (https://console.cloud.google.com/ - Check AiConstants.java for Instructions) 
+4. Cohere - (API key here:  https://dashboard.cohere.com/welcome/register)
+5. HuggingFace - (API key here: https://huggingface.co/settings/tokens)
+6. Rapid - (API key here: https://rapidapi.com/judge0-official/api/judge0-ce)
+
 
 ### Set these Keys in your environment
 ```
