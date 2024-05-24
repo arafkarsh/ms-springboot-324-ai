@@ -41,7 +41,7 @@ public class _01_Hello_World {
         // Start interacting
         String request = "Hello My Space...";
         String response = model.generate(request);
-        AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_VERTEX, AiConstants.GOOGLE_GEMINI_PRO);
         AiBeans.printResult(request, response);
     }
 
@@ -95,7 +95,7 @@ public class _01_Hello_World {
      */
     public static void main(String[] args) {
 
-        // Create Chat Language Model - Google Gemini Pro
+        // Create Chat Language Model - Google Gemini 1.5 Pro
         ChatLanguageModel model = AiBeans.getChatLanguageModelGoogle(AiConstants.GOOGLE_GEMINI_PRO);
 
         helloWorld(model);

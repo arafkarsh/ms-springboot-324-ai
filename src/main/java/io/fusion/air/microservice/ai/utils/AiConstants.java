@@ -38,6 +38,7 @@ public class AiConstants {
     public static final String LLM_OPENAI         = "OpenAI";
     public static final String LLM_OLLAMA        = "Ollama";
     public static final String LLM_ANTHROPIC    = "Anthropic";
+    public static final String LLM_VERTEX         = "Vertex";
 
     // ChatGPT ----------------------------------------------------------------------
     // INPUT = $0.005 / 1K tokens	   OUTPUT = $0.015 / 1K tokens
@@ -95,9 +96,11 @@ public class AiConstants {
      * 5. Enable Vertex AI for your Project
      */
     // Google Gemini Config -------------------------------------------------------------
-    public static final String GOOGLE_VERTEX_PROJECT     = "FusionFire";
+    public static final String GOOGLE_VERTEX_PROJECT     = "FusionAir";
     public static final String GOOGLE_VERTEX_LOCATION   = "us-central1";
-    public static final String GOOGLE_GEMINI_PRO           = "gemini-1.5-pro-preview-0514";
+    public static final String GOOGLE_GEMINI_PRO_PREV   = "gemini-1.5-pro-preview-0514";
+    public static final String GOOGLE_GEMINI_PRO           = "gemini-1.5-pro";
+
     public static final String GOOGLE_GEMINI_FLASH        = "gemini-1.5-flash-preview-0514";
     public static final String GOOGLE_GEMINI_NANO         = "gemini-nano";
 
