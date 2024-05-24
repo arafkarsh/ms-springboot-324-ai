@@ -31,35 +31,35 @@ Here’s how it helps developers:
 
 ## Generative AI Examples: Comparison of 7 LLMs (2 remote & 5 Local)
 
-| #   | Example             | GPT 4o             | Meta Llama3     | Mistral          | Microsoft Phi-3  | Google Gemma     | TII Falcon 2    | Claude 3       |
-|-----|---------------------|--------------------|-----------------|------------------|------------------|------------------|-----------------|----------------|
-| 1.  | Hello World         | :green_circle:     | :green_circle:  | :green_circle:   | :green_circle:   | :green_circle:   | :green_circle:  | :green_circle: |
-| 2.  | Complex World       | :green_circle:     | :green_circle:  | :red_circle: M1  | :green_circle:   | :green_circle:   | :green_circle:  | :green_circle: |
-| 3.  | Custom Data         | :green_circle:     | :green_circle:  | :green_circle:   | :green_circle:   | :green_circle:   | :red_circle: F1 | :green_circle: |
-| 4.  | Image Generation    | :green_circle:     | :red_circle: L1 | :red_circle: M2  | :red_circle: P1  | :orange_circle:  | :red_circle: F2 | :yellow_circle:|
-| 5.  | Prompt Template     | :green_circle:     | :green_circle:  | :red_circle: M3  | :green_circle:   | :green_circle:   | :green_circle:  | :green_circle: |
-| 6.  | Tools               | :green_circle:     | :red_circle: L2 | :red_circle: M4  | :red_circle: P2  | :red_circle: G1  | :red_circle: F3 | :green_circle: |
-| 7.  | Chat Memory         | :green_circle:     | :green_circle:  | :green_circle:   | :red_circle: P3  | :red_circle: G2  | :green_circle:  | :green_circle: |
-| 8.  | FewShot             | :green_circle:     | :green_circle:  | :red_circle: M5  | :green_circle:   | :green_circle:   | :green_circle:  | :green_circle: |
-| 9.  | Language Translator | :green_circle:     | :green_circle:  | :red_circle: M6  | :green_circle:   | :green_circle:   | :green_circle:  | :green_circle: |
-| 10. | Sentiment Analyzer  | :green_circle:     | :green_circle:  | :green_circle:   | :green_circle:   | :green_circle:   | :green_circle:  | :green_circle: |
-| 11. | Data Extractor      | :orange_circle: O1 | :red_circle: L3 | :red_circle: M7  | :red_circle: P4  | :red_circle: G3  | :red_circle: F4 | :green_circle: |
-| 12. | Persistent Store    | :green_circle:     | :green_circle:  | :red_circle: M8  | :red_circle: P5  | :red_circle: G4  | :green_circle:  | :green_circle: |
+| #   | Example             | GPT 4o             | Meta Llama3     | Mistral          | Microsoft Phi-3  | Google Gemma     | TII Falcon 2    | Claude 3       | Gemini 1.5     |
+|-----|---------------------|--------------------|-----------------|------------------|------------------|------------------|-----------------|----------------|----------------|
+| 1.  | Hello World         | :green_circle:     | :green_circle:  | :green_circle:   | :green_circle:   | :green_circle:   | :green_circle:  | :green_circle: | :green_circle: |
+| 2.  | Complex World       | :green_circle:     | :green_circle:  | :red_circle: M1  | :green_circle:   | :green_circle:   | :green_circle:  | :green_circle: |                |
+| 3.  | Custom Data         | :green_circle:     | :green_circle:  | :green_circle:   | :green_circle:   | :green_circle:   | :red_circle: F1 | :green_circle: |                |
+| 4.  | Image Generation    | :green_circle:     | :red_circle: L1 | :red_circle: M2  | :red_circle: P1  | :orange_circle:  | :red_circle: F2 | :yellow_circle:|                |
+| 5.  | Prompt Template     | :green_circle:     | :green_circle:  | :red_circle: M3  | :green_circle:   | :green_circle:   | :green_circle:  | :green_circle: |                |
+| 6.  | Tools               | :green_circle:     | :red_circle: L2 | :red_circle: M4  | :red_circle: P2  | :red_circle: G1  | :red_circle: F3 | :green_circle: |                |
+| 7.  | Chat Memory         | :green_circle:     | :green_circle:  | :green_circle:   | :red_circle: P3  | :red_circle: G2  | :green_circle:  | :green_circle: |                |
+| 8.  | FewShot             | :green_circle:     | :green_circle:  | :red_circle: M5  | :green_circle:   | :green_circle:   | :green_circle:  | :green_circle: |                |
+| 9.  | Language Translator | :green_circle:     | :green_circle:  | :red_circle: M6  | :green_circle:   | :green_circle:   | :green_circle:  | :green_circle: |                |
+| 10. | Sentiment Analyzer  | :green_circle:     | :green_circle:  | :green_circle:   | :green_circle:   | :green_circle:   | :green_circle:  | :green_circle: |                |
+| 11. | Data Extractor      | :orange_circle: O1 | :red_circle: L3 | :red_circle: M7  | :red_circle: P4  | :red_circle: G3  | :red_circle: F4 | :green_circle: |                |
+| 12. | Persistent Store    | :green_circle:     | :green_circle:  | :red_circle: M8  | :red_circle: P5  | :red_circle: G4  | :green_circle:  | :green_circle: |                |
 
 ## Retrieval Augmented Generation (RAG) Examples
 
 
-| #   | Example                     | GPT 4o         | Meta Llama3     | Mistral         | Microsoft Phi-3 | Google Gemma    | TII Falcon 2    | Claude 3       |
-|-----|-----------------------------|----------------|-----------------|-----------------|-----------------|-----------------|-----------------|----------------|
-| 13. | Simple                      | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: |
-| 14. | Segments                    | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: |
-| 15. | Query Transformer           | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: |
-| 16. | Query Router                | :green_circle: | :red_circle: L4 | :red_circle: M9 | :red_circle: P6 | :red_circle: G4 | :red_circle: F5 | :green_circle: |
-| 17. | Re-Ranking                  | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: |
-| 18. | MetaData                    | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: |
-| 19. | Multiple Content Retrievers | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: |
-| 20. | Skipping Content Retrieval  | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: |
-| 21. | Health Care App             | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: |
+| #   | Example                     | GPT 4o         | Meta Llama3     | Mistral         | Microsoft Phi-3 | Google Gemma    | TII Falcon 2    | Claude 3       | Gemini 1.5    |
+|-----|-----------------------------|----------------|-----------------|-----------------|-----------------|-----------------|-----------------|----------------|---------------|
+| 13. | Simple                      | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: |               |
+| 14. | Segments                    | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: |               |
+| 15. | Query Transformer           | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: |               |
+| 16. | Query Router                | :green_circle: | :red_circle: L4 | :red_circle: M9 | :red_circle: P6 | :red_circle: G4 | :red_circle: F5 | :green_circle: |               |
+| 17. | Re-Ranking                  | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: |               |
+| 18. | MetaData                    | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: |               |
+| 19. | Multiple Content Retrievers | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: |               |
+| 20. | Skipping Content Retrieval  | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: |               |
+| 21. | Health Care App             | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: |               |
 
 ## Top LLM Rankings based on Enterprise Features
 
