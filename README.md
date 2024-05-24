@@ -29,7 +29,7 @@ Here’s how it helps developers:
 
 ![Ai RAG-0](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/diagrams/Ai-Case-Study-Architecture.jpg)
 
-## Gen AI Examples: Comparison of 8 LLMs (3 Cloud based & 5 Local LLMs) on Enterprise Features
+## Gen AI Examples: Comparison of 8 LLMs (3 Cloud based & 5 Local) on Enterprise Features
 
 | #   | Example             | GPT 4o             | Meta Llama3     | Mistral          | Microsoft Phi-3  | Google Gemma     | TII Falcon 2    | Claude 3       | Gemini 1.5     |
 |-----|---------------------|--------------------|-----------------|------------------|------------------|------------------|-----------------|----------------|----------------|
