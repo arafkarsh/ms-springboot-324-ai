@@ -69,7 +69,7 @@ Here’s how it helps developers:
 | 2 |  2   | Open AI     | Chat GPT 4o           | 20/21 | Cloud    |
 | 3 |  3   | Meta        | Llama 3               | 17/21 | Local    |
 | 4 |  4   | TII         | Falcon 2              | 16/21 | Local    |
-| 5 |  4   | Google      | Gemini 1.5 Pro        | 15/21 | Cloud    |
+| 5 |  4   | Google      | Gemini 1.5 Pro        | 16/21 | Cloud    |
 | 6 |  4   | Google      | Gemma                 | 16/21 | Local    |
 | 7 |  5   | Microsoft   | PHI 3                 | 15/21 | Local    |
 | 8 |  6   | Mistral     | Mistral               | 12/21 | Local    |
