@@ -78,11 +78,12 @@ public class AiConstants {
     private  String llamaModel;
 
     public static String LLAMA_URL;
-    public static String OLLAMA_LLAMA3        = "llama3";
-    public static String OLLAMA_MISTRAL       = "mistral";
-    public static String OLLAMA_PHI_3           = "phi3";
-    public static String OLLAMA_GEMMA         = "gemma";
-    public static String OLLAMA_FALCON_2      = "falcon2";
+    public static String OLLAMA_LLAMA3                          = "llama3";
+    public static String OLLAMA_MISTRAL                         = "mistral";
+    public static String OLLAMA_PHI_3                             = "phi3";
+    public static String OLLAMA_GEMMA                           = "gemma";
+    public static String OLLAMA_FALCON_2                        = "falcon2";
+    public static String OLLAMA_WIZARD_MATH                  = "wizard-math";
 
     // Anthropic Claude Config ----------------------------------------------------------
     public static final String ANTHROPIC_CLAUDE_3_HAIKU = "claude-3-haiku-20240307";

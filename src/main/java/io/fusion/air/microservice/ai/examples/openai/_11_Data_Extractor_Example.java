@@ -46,7 +46,7 @@ import static java.util.Arrays.asList;
 public class _11_Data_Extractor_Example {
 
     // Create Chat Language Model - Open AI GPT 4o
-    private static ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_3_5_TURBO);
+    private static ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
     public static DataExtractorAssistant extractor = AiServices.create(DataExtractorAssistant.class, model);
 
     public static void numberExtractor() {

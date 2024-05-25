@@ -18,14 +18,14 @@ package io.fusion.air.microservice.ai.core.prompts;
 import dev.langchain4j.model.input.structured.StructuredPrompt;
 
 /**
- * iCare - Diagnosis Structure Prompt
+ * iCare - Diagnosis Structure Prompt for Patient Id
  *
  * @author: Araf Karsh Hamid
  * @version:
  * @date:
  */
 @StructuredPrompt({
-        "Convey the diagnosis for the patient based on the diagnosis available.",
+        "Convey the diagnosis for the patient Id {{patientId}} based on the diagnosis available.",
         "In the Diagnosis Summary, give the diagnosis as well as the prescription along with diagnosis",
         "Diagnosis must contain the date",
         "If the input contains time period like past 3 years or past 2 years, then calculate the time ",
@@ -41,11 +41,18 @@ import dev.langchain4j.model.input.structured.StructuredPrompt;
         "- ...",
         "- ..."
 })
-public class StructuredPromptDiagnosis {
+public class StructuredPromptPatientId {
+
+    private final long patientId;
 
     /**
-     * Generic Search
+     * @param _patientId
      */
-    public StructuredPromptDiagnosis() {
+    public StructuredPromptPatientId(long _patientId) {
+        this.patientId = _patientId;
+    }
+
+    public long getPatientId() {
+        return patientId;
     }
 }

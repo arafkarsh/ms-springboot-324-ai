@@ -18,7 +18,7 @@ package io.fusion.air.microservice.ai.utils;
 import dev.langchain4j.model.input.Prompt;
 import dev.langchain4j.model.input.structured.StructuredPromptProcessor;
 import io.fusion.air.microservice.ai.core.assistants.Assistant;
-import io.fusion.air.microservice.ai.core.prompts.StructuredPromptDiagnosis;
+import io.fusion.air.microservice.ai.core.prompts.StructuredPromptPatientName;
 import io.fusion.air.microservice.ai.core.prompts.StructuredPromptDiagnosisDetails;
 import io.fusion.air.microservice.ai.core.prompts.StructuredPromptDiagnosisSummary;
 import io.fusion.air.microservice.ai.core.services.CustomDataAnalyzer;
@@ -176,37 +176,12 @@ public class ConsoleRunner implements CommandLineRunner {
                             || "q".equalsIgnoreCase(userQuery)) {
                         break;
                     }
-                    String response = "";
-                    if (userQuery.startsWith("[P: ") || userQuery.startsWith("[p: ")) {
-                        String[] input1 = userQuery.split(":");
-                        String[] input = input1[1].split(",");
-                        if (input.length == 2) {
-                            // Structured Prompt
-                            StructuredPromptDiagnosisDetails diagnosisDetails =
-                                    new StructuredPromptDiagnosisDetails(input[0], input[1]);
-                            // Created Prompt
-                            Prompt prompt = StructuredPromptProcessor.toPrompt(diagnosisDetails);
-                            userQuery = prompt.text();
-                        } else {
-                            // Structured Prompt
-                            StructuredPromptDiagnosisSummary diagnosisSummary =
-                                    new StructuredPromptDiagnosisSummary(input[0]);
-                            // Created Prompt
-                            Prompt prompt = StructuredPromptProcessor.toPrompt(diagnosisSummary);
-                            userQuery = prompt.text();
-                        }
-                    } else {
-                        // Created Prompt
-                        Prompt prompt = StructuredPromptProcessor.toPrompt(new StructuredPromptDiagnosis());
-                        userQuery = prompt.text();
-                    }
-                    response = _assistant.chat(userQuery);
-
+                    String response = _assistant.chat(userQuery);
                     System.out.println("--[HAL9000]---------------------------------------------------------------------------");
                     System.out.println(response);
                     System.out.println("------------------------------------------------------------------------------------------");
                 } catch (Exception e) {
-                    System.out.println("Error: "+e.getMessage());
+                    System.out.println("iCare >> Error: "+e.getMessage());
                 }
             }
         }

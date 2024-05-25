@@ -18,6 +18,7 @@ package io.fusion.air.microservice.ai.examples.llama3;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import io.fusion.air.microservice.ai.core.assistants.HealthCareAssistant;
 import io.fusion.air.microservice.ai.core.services.RAGHealthCareBuilder;
+import io.fusion.air.microservice.ai.core.services.RAGHealthCareService;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 import io.fusion.air.microservice.ai.utils.ConsoleRunner;
@@ -40,7 +41,8 @@ public class _21_RAG_HealthCare_Example {
         AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_LLAMA3);
         // Create the Assistant
         // Setting up the Gen AI Context with Open AI LLM, and RAG
-        HealthCareAssistant assistant = RAGHealthCareBuilder.createDiagnosisSummary(model);
+        // HealthCareAssistant assistant = RAGHealthCareBuilder.createHealthCareAssistant(model);
+        HealthCareAssistant assistant = new RAGHealthCareService(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_LLAMA3);
         // Start the Conversation with iCare Health Care Diagnosis Service ChatBot
         // - Hi
         // - I need the diagnosis history of Akiera Kiera for the past 3 years
