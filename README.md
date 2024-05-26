@@ -131,7 +131,7 @@ Check out the <a href="https://github.com/arafkarsh/ms-springboot-324-ai/blob/ma
    3. prompts (Structured Prompts to have specific outputs)
    4. services (LLM Specific Business Logic re-used across all the examples. )
    5. tools (Functions getting invokved based on LLM search)
-3. examples (Claude 3, Falcon 2, GPT 4, Gemini, Gemma, Llama3,  Mistral, Phi-3, Wizard Math)
+3. examples (Claude 3, Falcon 2, GPT 4o, Gemini, Gemma, Llama3,  Mistral, Phi-3, Wizard Math)
 4. utils (Generic Code to create beans and configurations and Console Runner)
 
 ### Code Structure
