@@ -23,6 +23,7 @@ import dev.langchain4j.model.anthropic.AnthropicChatModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiImageModel;
 import dev.langchain4j.model.ollama.OllamaChatModel;
+import dev.langchain4j.model.openai.OpenAiModerationModel;
 import dev.langchain4j.model.vertexai.VertexAiGeminiChatModel;
 import dev.langchain4j.service.AiServices;
 // Custom
@@ -136,6 +137,14 @@ public class AiBeans {
      */
     public static ChatLanguageModel getChatLanguageModelGoogle(String _model) {
         return new AiBeans().createChatLanguageModelGoogle(_model);
+    }
+
+    /**
+     * Returns Open API Moderation Model
+     * @return
+     */
+    public static OpenAiModerationModel getOpenAiModerationModel() {
+        return new AiBeans().createOpenAPIModerationModel();
     }
 
     // ------------------------------------------------------------------------------------------------
@@ -320,6 +329,15 @@ public class AiBeans {
                 .logRequests(false)
                 .logResponses(false)
                 .build();
+    }
+
+    /**
+     * Returns Open API Moderation Model
+     * @return
+     */
+    @Bean(name = "OpenAPIModerationModel")
+    public OpenAiModerationModel createOpenAPIModerationModel() {
+        return OpenAiModerationModel.withApiKey(AiConstants.OPENAI_API_KEY);
     }
 
     /**

@@ -31,7 +31,7 @@ import io.fusion.air.microservice.ai.utils.ConsoleRunner;
  * @version:
  * @date:
  */
-public class _21_RAG_HealthCare_Example {
+public class _59_RAG_HealthCare_Example {
 
     /**
      * This example demonstrates how to implement Health Care Diagnosis Service Example

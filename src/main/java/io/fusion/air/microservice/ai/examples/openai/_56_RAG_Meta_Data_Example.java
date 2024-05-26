@@ -16,8 +16,6 @@
 package io.fusion.air.microservice.ai.examples.openai;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.rag.content.retriever.ContentRetriever;
-import dev.langchain4j.rag.query.router.QueryRouter;
 import io.fusion.air.microservice.ai.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.core.services.RAGBuilder;
 import io.fusion.air.microservice.ai.utils.AiBeans;
@@ -29,25 +27,11 @@ import io.fusion.air.microservice.ai.utils.ConsoleRunner;
  * @version:
  * @date:
  */
-public class _20_RAG_Skip_Retrieval_Example {
+public class _56_RAG_Meta_Data_Example {
 
     /**
-     * RAG - Skip Content Retrieval
-     *
-     * This example demonstrates how to conditionally skip retrieval.
-     * Sometimes, retrieval is unnecessary, for instance, when a user simply says "Hi".
-     * <p>
-     * There are multiple ways to implement this, but the simplest one is to use a custom {@link QueryRouter}.
-     * When retrieval should be skipped, QueryRouter will return an empty list,
-     * meaning that the query will not be routed to any {@link ContentRetriever}.
-     * <p>
-     * Decision-making can be implemented in various ways:
-     * - Using rules (e.g., depending on the user's privileges, location, etc.).
-     * - Using keywords (e.g., if a query contains specific words).
-     * - Using semantic similarity (see EmbeddingModelTextClassifierExample in this repository).
-     * - Using an LLM to make a decision.
-     * <p>
-     * In this example, we will use an LLM to decide whether a user query should do retrieval or not.
+     * RAG - Content Meta Data
+     * This example illustrates how to include document source and other metadata into the LLM prompt.
      */
 
     public static void main(String[] args) {
@@ -56,14 +40,11 @@ public class _20_RAG_Skip_Retrieval_Example {
         AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_4o);
         // Create the Assistant
         // Setting up the Gen AI Context with Open AI LLM, and RAG
-        Assistant assistant = RAGBuilder.createAssistantWithRetrievalSkipping(model);
+        Assistant assistant = RAGBuilder.createAssistantWithMetaData(model);
         // Start the Conversation with Multi Data Source ChatBot
-        // - Hi
-        // Notice how this query is not routed to any retrievers.
         // - I am Sam. Can I cancel my reservation?
         // - Please explain the refund policy.
-        // This query has been routed to our retriever.
-
-        ConsoleRunner.startConversationWith(assistant, "Ozazo Car Rental Service - Skipping Content Retrievers");
+        // - What is the name of the file where cancellation policy is defined?
+        ConsoleRunner.startConversationWith(assistant, "Ozazo Car Rental Service - MetaData");
     }
 }

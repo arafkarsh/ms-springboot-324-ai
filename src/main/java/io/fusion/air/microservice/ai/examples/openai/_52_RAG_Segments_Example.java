@@ -30,7 +30,7 @@ import io.fusion.air.microservice.ai.utils.ConsoleRunner;
  * @version:
  * @date:
  */
-public class _14_RAG_Segments_Example {
+public class _52_RAG_Segments_Example {
 
     /**
      * This example demonstrates how to implement a naive Retrieval-Augmented Generation (RAG) application.

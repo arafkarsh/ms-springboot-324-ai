@@ -145,6 +145,10 @@ Check out the <a href="https://github.com/arafkarsh/ms-springboot-324-ai/blob/ma
 
 ![Ai Sentiment](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/Ai-Ex-Sentiment-2.jpg)
 
+## Content Moderation using ChatGPT 4o
+
+![Ai-Content](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/Ai-Ex-Content-Moderation.jpg)
+
 ## ChatBot using RAG (Custom Data) - Case Study: Car Rental Service
 
 ### RAG Architecture

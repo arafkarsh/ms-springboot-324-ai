@@ -31,7 +31,7 @@ import io.fusion.air.microservice.ai.utils.ConsoleRunner;
  * @version:
  * @date:
  */
-public class _16_RAG_Query_Routing_Example {
+public class _54_RAG_Query_Routing_Example {
 
     /**
      * This example showcases the implementation of a more advanced RAG application

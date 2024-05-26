@@ -27,10 +27,10 @@ import io.fusion.air.microservice.ai.utils.ConsoleRunner;
  * @version:
  * @date:
  */
-public class _15_RAG_Query_Compression_Example {
+public class _53_RAG_Query_Compression_Example {
 
     /**
-     * Please refer to {@link _15_RAG_Query_Compression_Example} for a basic context.
+     * Please refer to {@link _53_RAG_Query_Compression_Example} for a basic context.
      *
      * This example illustrates the implementation of a more sophisticated RAG application
      * using a technique known as "query compression".
