@@ -122,17 +122,17 @@ Check out the <a href="https://github.com/arafkarsh/ms-springboot-324-ai/blob/ma
 
 ## Gen AI - Code Package Structure 
 
-### Package io.fuision.air.microservice.ai 
+### Package io.fusion.air.microservice.ai 
 
-1. controllers (Rest Endpoints for testing examples)
+1. controllers (Rest Endpoints for testing the examples)
 2. core
-   1. assistants (Based on AiService)
+   1. assistants (Based on LangChain4J AiService)
    2. models (Data Models used in the code)
    3. prompts (Structured Prompts to have specific outputs)
    4. services (LLM Specific Business Logic re-used across all the examples. )
-   5. tools (Functions getting invokved based on LLM search)
+   5. tools (Functions getting invoked based on LLM search)
 3. examples (Claude 3, Falcon 2, GPT 4o, Gemini, Gemma, Llama3,  Mistral, Phi-3, Wizard Math)
-4. utils (Generic Code to create beans and configurations and Console Runner)
+4. utils (Generic Code to create ChatLanguageModels and configurations, API Keys and Console Runner)
 
 ### Code Structure
 
