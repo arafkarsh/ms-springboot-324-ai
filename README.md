@@ -86,6 +86,7 @@ To Install the Local LLMs using Ollama
 3. Microsoft PHI-3
 4. TII Falcon 2
 5. Mistral
+6. Wizard Math
 
 Check out the <a href="https://github.com/arafkarsh/ms-springboot-324-ai/blob/main/llms/README_LOCAL_LLMS.md">installation guide.</a>
 
@@ -99,7 +100,6 @@ Check out the <a href="https://github.com/arafkarsh/ms-springboot-324-ai/blob/ma
 4. Cohere - (API key here:  https://dashboard.cohere.com/welcome/register)
 5. HuggingFace - (API key here: https://huggingface.co/settings/tokens)
 6. Rapid - (API key here: https://rapidapi.com/judge0-official/api/judge0-ce)
-
 
 ### Set these Keys in your environment
 ```
@@ -122,8 +122,21 @@ Check out the <a href="https://github.com/arafkarsh/ms-springboot-324-ai/blob/ma
 
 ## Gen AI - Code Package Structure 
 
-![Ai-Code](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/diagrams/Ai-Code-Base.jpg)
+### Package io.fuision.air.microservice.ai 
 
+1. controllers (Rest Endpoints for testing examples)
+2. core
+   1. assistants (Based on AiService)
+   2. models (Data Models used in the code)
+   3. prompts (Structured Prompts to have specific outputs)
+   4. services (LLM Specific Business Logic re-used across all the examples. )
+   5. tools (Functions getting invokved based on LLM search)
+3. examples (Claude 3, Falcon 2, GPT 4, Gemini, Gemma, Llama3,  Mistral, Phi-3, Wizard Math)
+4. utils (Generic Code to create beans and configurations and Console Runner)
+
+### Code Structure
+
+![Ai-Code](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/diagrams/Ai-Code-Base.jpg)
 
 ## Quick Test after starting the SpringBoot App
 ![Ai Prompt](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/Ai-Prompt.jpg)
