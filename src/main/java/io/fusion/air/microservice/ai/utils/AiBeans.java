@@ -271,7 +271,7 @@ public class AiBeans {
     public ChatLanguageModel createChatLanguageModelGoogle(String _model) {
         // Create Chat Language Model - Google Gemini Pro
         return  VertexAiGeminiChatModel.builder()
-                .project(AiConstants.GOOGLE_VERTEX_PROJECT)
+                .project(AiConstants.GOOGLE_VERTEX_PROJECT_ID)
                 .location(AiConstants.GOOGLE_VERTEX_LOCATION)
                 .modelName(_model)
                 // Top-k changes how the model selects tokens for output. A top-k of 1 means the

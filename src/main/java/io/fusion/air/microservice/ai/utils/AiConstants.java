@@ -40,7 +40,8 @@ public class AiConstants {
     public static final String LLM_ANTHROPIC    = "Anthropic";
     public static final String LLM_VERTEX         = "Vertex";
 
-    // ChatGPT ----------------------------------------------------------------------
+    // OpenAI ChatGPT ------------------------------------------------------------------
+    public static final String OPENAI_DEMO     = "demo";
     // INPUT = $0.005 / 1K tokens	   OUTPUT = $0.015 / 1K tokens
     public static final String GPT_4o               = "gpt-4o-2024-05-13";
     // INPUT = $0.01 / 1K tokens	   OUTPUT = $0.03 / 1K tokens
@@ -52,7 +53,7 @@ public class AiConstants {
     // INPUT = 	$0.0005 / 1K tokens   OUTPUT = $0.0015 / 1K tokens
     public static final String GPT_3_5_TURBO   = "gpt-3.5-turbo-0125";
 
-    // Dall-e ---------------------------------------------------------------------------
+    // OpenAI Dall-e --------------------------------------------------------------------
     // $0.040 / image, Standard 1024×1024
     public static final String DALL_E_3            = "dall-e-3";
     // $0.020 / image, 1024×1024
@@ -102,14 +103,21 @@ public class AiConstants {
      *    export GOOGLE_APPLICATION_CREDENTIALS=/your-path/key.json
      */
     // Google Gemini Config -------------------------------------------------------------
-    public static final String GOOGLE_VERTEX_PROJECT     = "fusionair";
-    public static final String GOOGLE_VERTEX_LOCATION   = "us-central1";
-    public static final String GOOGLE_GEMINI_PRO           = "gemini-1.5-pro-preview-0514";
-    public static final String GOOGLE_GEMINI_FLASH         = "gemini-1.5-flash-preview-0514";
-    public static final String GOOGLE_GEMINI_NANO         = "gemini-1.5-nano";
+    public static final String GOOGLE_VERTEX_PROJECT_ID    = "fusionair";         // Project ID
+    public static final String GOOGLE_VERTEX_LOCATION       = "us-central1";     // Location
+    // Google Gemini Models -------------------------------------------------------------
+    // https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versioning
+    public static final String GOOGLE_GEMINI_PRO               = "gemini-1.5-pro-001";          // Expires May 24, 2025
+    public static final String GOOGLE_GEMINI_FLASH             = "gemini-1.5-flash-001";       // Expires May 24, 2025
+    public static final String GOOGLE_GEMINI_NANO             = "gemini-1.5-nano";
+    public static final String GOOGLE_GEMINI_ULTRA            = "gemini-ultra";
+    public static final String GOOGLE_GEMINI_PRO_VISION    = "gemini-1.0-pro-vision-001";
+    public static final String GOOGLE_GEMINI_ULTRA_VISION = "gemini-ultra-vision";
+    // Google PaLM Models -------------------------------------------------------------
+    public static final String GOOGLE_PaLM_CHAT_BISON        = "chat-bison@002";              // Expires Oct 9, 2024
+    public static final String GOOGLE_PaLM_TEXT_BISON        = "text-bison@002";              // Expires Oct 9, 2024
 
-
-    // Algorithm Config ----------------------------------------------------------------------
+    // Model Config ----------------------------------------------------------------------
     @Value("${langchain4j.open-ai.model:gpt-4o-2024-05-13}")
     private  String openAIModel;
     private static String OPEN_AI_DEFAULT_MODEL;
