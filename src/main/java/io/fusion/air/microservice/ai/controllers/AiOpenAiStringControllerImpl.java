@@ -92,7 +92,7 @@ public class AiOpenAiStringControllerImpl extends AbstractController {
 	})
 	@PostMapping("/chat")
 	public String chat( @RequestBody String _msg) {
-		log.info("|"+name()+"|Chat Request to AI...  "+AiConstants.getAlgo()+" .. "+_msg);
+		log.info("|"+name()+"|Chat Request to AI...  "+AiConstants.getOpenAIDefaultModel()+" .. "+_msg);
 		// log.info("Open_API_KEY = "+OPENAI_API_KEY);
 		String response = chatLanguageModel.generate(_msg);
 		if(response != null) {
@@ -116,7 +116,7 @@ public class AiOpenAiStringControllerImpl extends AbstractController {
 	})
 	@PostMapping("/chat/custom")
 	public String chatCustomData(@RequestBody String _msg) {
-		log.info("|" + name() + "|Custom Chat Request to AI Engine "+AiConstants.getAlgo()+"... " + _msg);
+		log.info("|" + name() + "|Custom Chat Request to AI Engine "+AiConstants.getOpenAIDefaultModel()+"... " + _msg);
 		// log.info("Open_API_KEY = "+OPENAI_API_KEY);
 		String response = CustomDataAnalyzer.processFile(_msg);
 		if(response != null) {
@@ -136,7 +136,7 @@ public class AiOpenAiStringControllerImpl extends AbstractController {
 	})
 	@PostMapping("/chat/structured")
 	public String chatStructuredData(@RequestBody String _msg) {
-		log.info("|" + name() + "|Structured Chat Request to AI Engine "+AiConstants.getAlgo()+"... " + _msg);
+		log.info("|" + name() + "|Structured Chat Request to AI Engine "+AiConstants.getOpenAIDefaultModel()+"... " + _msg);
 		// log.info("Open_API_KEY = "+OPENAI_API_KEY);
 		String response = TemplateManager.structuredTemplate("[P1: "+_msg);
 		if(response != null) {
@@ -155,7 +155,7 @@ public class AiOpenAiStringControllerImpl extends AbstractController {
 	private String createResponse(String _response, String _msg) {
 		StringBuilder sb = new StringBuilder();
 		String request = _msg.replaceAll("\n", " ").trim();
-		sb.append("Algorithm = ").append(AiConstants.getAlgo()).append("\n");
+		sb.append("Algorithm = ").append(AiConstants.getOpenAIDefaultModel()).append("\n");
 		sb.append("Request   = ").append(request).append("\n");
 		sb.append("Response  = ").append("\n").append(_response);
 		return sb.toString();

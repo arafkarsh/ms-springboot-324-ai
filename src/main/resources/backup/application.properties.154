@@ -1,3 +1,8 @@
+# =======================================================================
+# Spring Service Properties
+# =======================================================================
+build.number=154
+build.date=Sun May 26 11:09:44 IST 2024
 # ------------------------------------------------------------------------
 # Spring Profile
 # ------------------------------------------------------------------------
@@ -26,10 +31,10 @@ server.resources.url=${service.url}${service.api.path}
 # =======================================================================
 # LangChain4J Properties
 # =======================================================================
-#langchain4j.open-ai.model=gpt-3.5-turbo-0125
-langchain4j.open-ai.model=gpt-4o-2024-05-13
-langchain4j.ollama.url=http://localhost:11434/api/generate/
-langchain4j.ollama.model=llama3
+#langchain4j.default.algo=gpt-3.5-turbo-0125
+langchain4j.default.algo=gpt-4o-2024-05-13
+langchain4j.llama.url=http://localhost:11434/api/generate/
+langchain4j.llama.model=llama3
 langchain4j.cohere-api-key=${COHERE_API_KEY}
 langchain4j.open-ai.chat-model.api-key=${OPENAI_API_KEY}
 langchain4j.anthropic.api.key=${ANTHROPIC_API_KEY}

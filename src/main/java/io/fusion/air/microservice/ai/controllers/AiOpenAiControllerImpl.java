@@ -107,7 +107,7 @@ public class AiOpenAiControllerImpl extends AbstractController {
 	})
 	@PostMapping("/chat")
 	public ResponseEntity<StandardResponse> chat( @RequestBody String _msg) {
-		log.info("|"+name()+"|Chat Request to AI...  "+AiConstants.getAlgo()+" .. "+_msg);
+		log.info("|"+name()+"|Chat Request to AI...  "+AiConstants.getOpenAIDefaultModel()+" .. "+_msg);
 		// log.info("Open_API_KEY = "+OPENAI_API_KEY);
 		String response = chatLanguageModel.generate(_msg);
 		if(response != null) {
@@ -131,7 +131,7 @@ public class AiOpenAiControllerImpl extends AbstractController {
 	})
 	@PostMapping("/chat/custom")
 	public ResponseEntity<StandardResponse> chatCustomData(@RequestBody String _msg) {
-		log.info("|" + name() + "|Custom Chat Request to AI Engine "+AiConstants.getAlgo()+"... " + _msg);
+		log.info("|" + name() + "|Custom Chat Request to AI Engine "+AiConstants.getOpenAIDefaultModel()+"... " + _msg);
 		// log.info("Open_API_KEY = "+OPENAI_API_KEY);
 		String response = CustomDataAnalyzer.processFile(_msg);
 		if(response != null) {
@@ -151,7 +151,7 @@ public class AiOpenAiControllerImpl extends AbstractController {
 	})
 	@PostMapping("/chat/structured")
 	public ResponseEntity<StandardResponse> chatStructuredData(@RequestBody String _msg) {
-		log.info("|" + name() + "|Structured Chat Request to AI Engine "+AiConstants.getAlgo()+"... " + _msg);
+		log.info("|" + name() + "|Structured Chat Request to AI Engine "+AiConstants.getOpenAIDefaultModel()+"... " + _msg);
 		// log.info("Open_API_KEY = "+OPENAI_API_KEY);
 		String response = TemplateManager.structuredTemplate("[P1: "+_msg);
 		if(response != null) {
@@ -198,7 +198,7 @@ public class AiOpenAiControllerImpl extends AbstractController {
 		String[] rows = _response.split("\n");
 		StandardResponse stdResponse = createSuccessResponse("AI Response");
 		LinkedHashMap<String, Object> data = new LinkedHashMap<String, Object>();
-		data.put("Algo", AiConstants.getAlgo());
+		data.put("Algo", AiConstants.getOpenAIDefaultModel());
 		data.put("Request", _msg);
 		data.put("Response", rows);
 		stdResponse.setPayload(data);

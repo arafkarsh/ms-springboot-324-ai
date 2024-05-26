@@ -146,7 +146,7 @@ public class AiBeans {
      */
     @Bean(name = "ChatLanguageModelGPT")
     public ChatLanguageModel createChatLanguageModelOpenAi() {
-        return createChatLanguageModelOpenAi(AiConstants.getAlgo(), false, false);
+        return createChatLanguageModelOpenAi(AiConstants.getOpenAIDefaultModel(), false, false);
     }
 
     /**
@@ -165,7 +165,7 @@ public class AiBeans {
      * @return
      */
     public ChatLanguageModel createChatLanguageModelOpenAi(boolean _req, boolean _res) {
-        return createChatLanguageModelOpenAi(AiConstants.getAlgo(), _req, _res);
+        return createChatLanguageModelOpenAi(AiConstants.getOpenAIDefaultModel(), _req, _res);
     }
 
     /**
@@ -328,7 +328,7 @@ public class AiBeans {
      */
     @Bean
     public HAL9000Assistant createHAL9000() {
-        return createHAL9000(AiConstants.getAlgo());
+        return createHAL9000(AiConstants.getOpenAIDefaultModel());
     }
 
     /**

@@ -71,13 +71,13 @@ public class AiConstants {
     public static final String RAPID_API_KEY = System.getenv("RAPID_API_KEY");
 
     // Ollama Config --------------------------------------------------------------------
-    @Value("${langchain4j.llama.url:http://localhost:11434/api/generate}")
-    private  String llamaBaseUrl;
+    @Value("${langchain4j.ollama.url:http://localhost:11434/api/generate}")
+    private  String ollamaBaseUrl;
 
-    @Value("${langchain4j.llama.model:llama3}")
-    private  String llamaModel;
+    @Value("${langchain4j.ollama.model:llama3}")
+    private  String ollamaModel;
 
-    public static String LLAMA_URL;
+    public static String OLLAMA_URL;
     public static String OLLAMA_LLAMA3                          = "llama3";
     public static String OLLAMA_MISTRAL                         = "mistral";
     public static String OLLAMA_PHI_3                             = "phi3";
@@ -110,23 +110,23 @@ public class AiConstants {
 
 
     // Algorithm Config ----------------------------------------------------------------------
-    @Value("${langchain4j.default.algo:gpt-4o-2024-05-13}")
-    private  String defaultAlgo;
-    private static String DEFAULT_ALGO;
+    @Value("${langchain4j.open-ai.model:gpt-4o-2024-05-13}")
+    private  String openAIModel;
+    private static String OPEN_AI_DEFAULT_MODEL;
 
     @PostConstruct
     public void init() {
-        DEFAULT_ALGO  = this.defaultAlgo;
-        LLAMA_URL       = this.llamaBaseUrl;
-        OLLAMA_LLAMA3 = this.llamaModel;
+        OPEN_AI_DEFAULT_MODEL = this.openAIModel;
+        OLLAMA_URL = this.ollamaBaseUrl;
+        OLLAMA_LLAMA3 = this.ollamaModel;
     }
 
     /**
-     * Get the default Algo
+     * Get the OPEN AI DEFAULT MODEL
      * @return
      */
-    public static String getAlgo() {
-        // System.out.println("<><><>---> ALGO = ["+DEFAULT_ALGO+"]>--------------------");
-        return (DEFAULT_ALGO == null) ? GPT_3_5_TURBO  : DEFAULT_ALGO;
+    public static String getOpenAIDefaultModel() {
+        // System.out.println("<><><>---> MODEL = ["+OPEN_AI_DEFAULT_MODEL+"]>--------------------");
+        return (OPEN_AI_DEFAULT_MODEL == null) ? GPT_3_5_TURBO  : OPEN_AI_DEFAULT_MODEL;
     }
 }

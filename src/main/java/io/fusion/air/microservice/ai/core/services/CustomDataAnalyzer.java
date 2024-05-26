@@ -44,7 +44,7 @@ public class CustomDataAnalyzer {
      */
     public static String processUserQuery(String _query) {
         ChatLanguageModel model = new AiBeans()
-                .createChatLanguageModelOpenAi(AiConstants.getAlgo(), false, false);
+                .createChatLanguageModelOpenAi(AiConstants.getOpenAIDefaultModel(), false, false);
         return processUserQuery( _query,  model);
     }
 

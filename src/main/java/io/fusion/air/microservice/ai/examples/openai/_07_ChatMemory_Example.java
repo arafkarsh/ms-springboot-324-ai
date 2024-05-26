@@ -44,7 +44,7 @@ public class _07_ChatMemory_Example {
     private static ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
 
     public static void chatMemoryConversations() {
-        Tokenizer tokenizer = new OpenAiTokenizer(AiConstants.getAlgo());
+        Tokenizer tokenizer = new OpenAiTokenizer(AiConstants.getOpenAIDefaultModel());
         ChatMemory chatMemory = TokenWindowChatMemory.withMaxTokens(2000, tokenizer);
 
         // Setting the Context

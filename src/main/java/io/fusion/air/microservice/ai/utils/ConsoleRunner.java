@@ -15,12 +15,7 @@
  */
 package io.fusion.air.microservice.ai.utils;
 // Custom
-import dev.langchain4j.model.input.Prompt;
-import dev.langchain4j.model.input.structured.StructuredPromptProcessor;
 import io.fusion.air.microservice.ai.core.assistants.Assistant;
-import io.fusion.air.microservice.ai.core.prompts.StructuredPromptPatientName;
-import io.fusion.air.microservice.ai.core.prompts.StructuredPromptDiagnosisDetails;
-import io.fusion.air.microservice.ai.core.prompts.StructuredPromptDiagnosisSummary;
 import io.fusion.air.microservice.ai.core.services.CustomDataAnalyzer;
 import io.fusion.air.microservice.ai.core.services.ImageBuilder;
 import io.fusion.air.microservice.ai.core.services.TemplateManager;
@@ -49,7 +44,7 @@ public class ConsoleRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("==========================================================================================");
-            System.out.println("Ask your questions to HAL 9000. Algo >> "+AiConstants.getAlgo());
+            System.out.println("Ask your questions to HAL 9000. Algo >> "+AiConstants.getOpenAIDefaultModel());
             System.out.println("To create an image, prefix the text with IMAGE:");
             System.out.println("To Analyze & Search Custom Data, prefix the text with CUSTOM:");
             System.out.println("To Get Structured data use [P1 for Recipe, [P2 for Movies etc.. ");
