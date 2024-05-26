@@ -83,7 +83,8 @@ public class AiConstants {
     public static String OLLAMA_PHI_3                             = "phi3";
     public static String OLLAMA_GEMMA                           = "gemma";
     public static String OLLAMA_FALCON_2                        = "falcon2";
-    public static String OLLAMA_WIZARD_MATH                  = "wizard-math";
+    public static String OLLAMA_WIZARD_MATH_7B             = "wizard-math:7b";
+    public static String OLLAMA_WIZARD_MATH_70B            = "wizard-math:70b";
 
     // Anthropic Claude Config ----------------------------------------------------------
     public static final String ANTHROPIC_CLAUDE_3_HAIKU = "claude-3-haiku-20240307";

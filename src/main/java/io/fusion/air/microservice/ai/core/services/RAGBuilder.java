@@ -184,8 +184,6 @@ public class RAGBuilder {
      * @return
      */
     public static Assistant createCarRentalAssistantSimple(ChatLanguageModel _model) {
-        // Setup the Language Model
-        ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
         // Documents for processing
         List<Document> documents = loadDocuments(Utils.toPath("static/data/e/"), Utils.getPathMatcher("*.txt"));
         // Embedding Model
@@ -208,7 +206,7 @@ public class RAGBuilder {
         // The final step is to build our AI Service,
         // Return the Assistant
         return  AiServices.builder(Assistant.class)
-                .chatLanguageModel(model)
+                .chatLanguageModel(_model)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
                 .contentRetriever(retriever)
                 .build();

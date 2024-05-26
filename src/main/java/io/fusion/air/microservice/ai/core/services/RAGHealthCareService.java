@@ -9,6 +9,7 @@ import io.fusion.air.microservice.ai.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.core.assistants.HealthCareAssistant;
 import io.fusion.air.microservice.ai.core.assistants.PatientDataExtractorAssistant;
 import io.fusion.air.microservice.ai.core.models.Patient;
+import io.fusion.air.microservice.ai.core.models.PatientRequest;
 import io.fusion.air.microservice.ai.core.prompts.StructuredPromptDiagnosisDetails;
 import io.fusion.air.microservice.ai.core.prompts.StructuredPromptDiagnosisSummary;
 import io.fusion.air.microservice.ai.core.prompts.StructuredPromptPatientId;
@@ -56,20 +57,24 @@ public class RAGHealthCareService implements HealthCareAssistant {
         if(_userQuery == null) {
             return "Invalid Input!";
         }
-        String userQuery = analyzeTheQuery(_userQuery);
-        return assistant.chat(userQuery);
+        PatientRequest request = analyzeTheQuery(_userQuery);
+        if(request.isValidData()) {
+            String patientRef = (request.getPatientName() != null) ? request.getPatientName() : request.getPatientId();
+            return assistant.chat(patientRef, request.getUserQuery());
+        }
+        return assistant.chat(request.getUserQuery());
     }
 
     /**
      * Chat Memory with a Memory ID
      *
-     * @param _memoryId
+     * @param _patient
      * @param _userMessage
      * @return
      */
     @Override
-    public String chat(String _memoryId, String _userMessage) {
-        return "";
+    public String chat(String _patient, String _userMessage) {
+        return assistant.chat(_patient, _userMessage);
     }
 
     /**
@@ -77,16 +82,30 @@ public class RAGHealthCareService implements HealthCareAssistant {
      * @param _userQuery
      * @return
      */
-    private String analyzeTheQuery(String _userQuery) {
+    private PatientRequest analyzeTheQuery(String _userQuery) {
+        String patientName = null, patientId = null, userQuery = null;
+        // Extract Patient Name
         Patient patient = patientNameExtractor(_userQuery);
         if(patient.isValid()) {
-            return  getPatientPrompt(patient).text();
+            patientName = patient.toString();
+            userQuery = getPatientPrompt(patient).text();
+            System.out.println(">> Patient:"+patientName+" << "+userQuery);
+            // return  getPatientPrompt(patient).text();
+        } else {
+            // Extract Patient ID
+            long patientLongId = patientIdExtractor(_userQuery);
+            if (patientLongId > 0) {
+                patientId = "" + patientLongId;
+                userQuery = getPatientIdPrompt(patientLongId).text();
+                System.out.println(">> Patient:"+patientId+" << "+userQuery);
+                // return  getPatientIdPrompt(patientId ).text();
+            }
         }
-        long patientId = patientIdExtractor(_userQuery);
-        if(patientId > 0) {
-            return  getPatientIdPrompt(patientId ).text();
+        // If UserQuery is still NULL then check for special commands starting with [P:
+        if(userQuery == null) {
+            userQuery = getDiagnosisQuery(_userQuery);
         }
-        return getDiagnosisQuery(_userQuery);
+        return new PatientRequest(patientName, patientId, userQuery) ;
     }
 
     /**

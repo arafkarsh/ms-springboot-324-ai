@@ -15,6 +15,7 @@
  */
 package io.fusion.air.microservice.ai.core.assistants;
 
+import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 
@@ -32,13 +33,13 @@ public interface HealthCareAssistant extends Assistant{
 
     /**
      * iCare Health Care
-     *
      *   SystemMessage is a special type of message, so it is treated differently from other message types:
-     *
      *    - Once added, a SystemMessage is always retained.
      *    - Only one SystemMessage can be held at a time.
      *    - If a new SystemMessage with the same content is added, it is ignored.
      *    - If a new SystemMessage with different content is added, it replaces the previous one.
+     *
+     *            Always try to answer for the proper time period. Check the date in the document.
      *
      * @param _userMessage
      * @return
@@ -46,11 +47,29 @@ public interface HealthCareAssistant extends Assistant{
     @SystemMessage("""
         You are iCare Health Care Hospital Support staff.
         Start the (first) conversation with a Greeting and be polite.
-        If the customer has given the name, Include the name in the conversation to have
-        personal touch and never start with name John Doe.
-        Always ask if there is any else you can assist with.  When customer says no. then end 
-        the conversation with a good bye greetings. 
-        Always try to answer for the proper time period. Check the date in the document.
+        You are having a conversation with a Doctor who is requesting for a patient details.
+        Always ask if there is anything else you can assist with.
+        When Doctor says no. then end the conversation with a good bye greetings.
         """)
     public String chat(@UserMessage String _userMessage);
+
+    /**
+     * Chat Memory with a Memory ID
+     *   SystemMessage is a special type of message, so it is treated differently from other message types:
+     *    - Once added, a SystemMessage is always retained.
+     *    - Only one SystemMessage can be held at a time.
+     *    - If a new SystemMessage with the same content is added, it is ignored.
+     *    - If a new SystemMessage with different content is added, it replaces the previous one.
+     * @param _memoryId
+     * @param _userMessage
+     * @return
+     */
+    @SystemMessage("""
+        You are iCare Health Care Hospital Support staff.
+        You are having a conversation with a Doctor who is requesting for a patient details.
+        Extract the diagnosis which matches the  Patient Name or Patient ID.
+        Always ask if there is anything else you can assist with.
+        When Doctor says no. then end the conversation with a good bye greetings. 
+        """)
+    public String chat(@MemoryId String _memoryId, @UserMessage String _userMessage);
 }
