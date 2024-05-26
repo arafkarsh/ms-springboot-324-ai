@@ -53,25 +53,26 @@ public class ImageBuilder {
 
     /**
      * Download Image
-     *
      * @param _response
      */
-    public static void downloadImage(Response<Image> _response) {
+    public static String downloadImage(Response<Image> _response) {
+        String error = "No image was returned.";
         if(_response == null) {
-            System.out.println("No image was returned. Invalid Input!");
-            return;
+            System.out.printf(">> %s Invalid Inputs!", error);
+            return error;
         }
         if (_response.content().url() != null) {
-            System.out.println("Image URL: " + _response.content().url());
+            System.out.println(">> Image URL: " + _response.content().url());
             try {
-                downloadImageFromUrl(_response.content().url().toString(), "downloaded_image.jpg");
+                // Returns Image URL
+                return downloadImageFromUrl(_response.content().url().toString(), "downloaded_image.jpg");
             } catch (IOException e) {
-                System.out.println("No image was returned.");
-                throw new RuntimeException(e);
+                System.out.println(">> No image was returned. "+e.getMessage());
+                return error + e.getMessage();
             }
-        } else {
-            System.out.println("No image was returned.");
         }
+        System.out.println(">> No image was returned. Response Content URL is NULL!");
+        return error;
     }
 
     /**
@@ -82,9 +83,10 @@ public class ImageBuilder {
      * @throws IOException
      */
     private static String downloadImageFromUrl(String _imageUrl, String _fileName) throws IOException {
+        String error = "Unable to download Image. Invalid Inputs!";
         if(_imageUrl == null || _fileName == null) {
-            System.out.println("Unable to download Image. Invalid Inputs!");
-            return null;
+            System.out.printf(">> %s "+error);
+            return error;
         }
         URL url = new URL(_imageUrl);
         Path targetPath = Paths.get(_fileName).toAbsolutePath();
@@ -96,7 +98,7 @@ public class ImageBuilder {
             while ((bytesRead = in.read(buffer)) != -1) {
                 out.write(buffer, 0, bytesRead);
             }
-            System.out.println("Image has been downloaded successfully to " + targetPath);
+            System.out.println(">> Image has been downloaded successfully to " + targetPath);
         }
         return targetPath.toString();
     }

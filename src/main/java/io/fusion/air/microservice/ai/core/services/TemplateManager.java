@@ -40,18 +40,27 @@ import static java.util.Arrays.asList;
  */
 public class TemplateManager {
 
+    /**
+     * Handle Multiple Structured Templates
+     * @param _data
+     * @return
+     */
+    public static String structuredTemplate(String _data) {
+        return structuredTemplate( _data,  true);
+    }
 
     /**
      * Handle Multiple Structured Templates
-     *
      * @param _data
      */
-    public static String structuredTemplate(String _data) {
+    public static String structuredTemplate(String _data, boolean _printResult) {
         if(_data == null) {
             return "Invalid Inputs";
         }
         String[] dArray = _data.split(":");
-        return structuredTemplate(dArray[0], dArray[1]);
+        ChatLanguageModel model = new AiBeans()
+                .createChatLanguageModelOpenAi(AiConstants.getOpenAIDefaultModel());
+        return structuredTemplate(dArray[0], dArray[1], model, _printResult);
     }
 
     /**
@@ -69,11 +78,21 @@ public class TemplateManager {
 
     /**
      * Handle Multiple Structured Templates
-     *
+     * @param _template
+     * @param _prompt
+     * @param _model
+     * @return
+     */
+    public static String structuredTemplate(String _template, String _prompt, ChatLanguageModel _model) {
+        return structuredTemplate( _template,  _prompt,  _model,  true);
+    }
+
+    /**
+     * Handle Multiple Structured Templates
      * @param _template
      * @param _prompt
      */
-    public static String structuredTemplate(String _template, String _prompt, ChatLanguageModel _model) {
+    public static String structuredTemplate(String _template, String _prompt, ChatLanguageModel _model, boolean _printResult) {
         if(_template == null || _template.length() == 0) {
             return "Invalid Inputs to Structured Template function!";
         }
@@ -82,7 +101,7 @@ public class TemplateManager {
             String[] data = _prompt.split(",");
             String dish = data[0];
             String ingredients = _prompt.replaceAll(dish+",", "").trim();
-             response = structuredPromptRecipe(dish, ingredients, _model);
+             response = structuredPromptRecipe(dish, ingredients, _model, _printResult);
         } else {
             System.out.println("No Template found!!! ........... ");
         }
@@ -267,7 +286,8 @@ public class TemplateManager {
      * @return
      */
     public static String structuredPromptRecipe(ChatLanguageModel _model) {
-        return structuredPromptRecipe("oven dish", "cucumber, potato, tomato, red meat, olives, olive oil", _model);
+        return structuredPromptRecipe("oven dish",
+                "cucumber, potato, tomato, red meat, olives, olive oil", _model, true);
     }
 
     /**
@@ -280,7 +300,7 @@ public class TemplateManager {
     public static String structuredPromptRecipe(String _dish, String _ingredients) {
         ChatLanguageModel model = new AiBeans()
                 .createChatLanguageModelOpenAi(AiConstants.getOpenAIDefaultModel());
-        return structuredPromptRecipe(_dish, _ingredients,  model);
+        return structuredPromptRecipe(_dish, _ingredients,  model, true);
     }
 
     /**
@@ -292,7 +312,8 @@ public class TemplateManager {
      * @see AiBeans
      * @see StructuredPromptRecipe
      */
-    public static String structuredPromptRecipe(String _dish, String _ingredients, ChatLanguageModel _model) {
+    public static String structuredPromptRecipe(String _dish, String _ingredients,
+                                                ChatLanguageModel _model, boolean _printResult) {
         if(_dish == null || _ingredients == null || _model == null) {
             return "Invalid Inputs";
         }
@@ -302,7 +323,7 @@ public class TemplateManager {
         Prompt prompt = StructuredPromptProcessor.toPrompt(recipePrompt);
         // Execute the Request
         String response = _model.generate(prompt.text());
-        AiBeans.printResult(prompt.text(), response);
+        if(_printResult) AiBeans.printResult(prompt.text(), response);
         return response;
     }
 

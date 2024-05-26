@@ -16,9 +16,7 @@
 package io.fusion.air.microservice.ai.utils;
 // Custom
 import io.fusion.air.microservice.ai.core.assistants.Assistant;
-import io.fusion.air.microservice.ai.core.services.CustomDataAnalyzer;
-import io.fusion.air.microservice.ai.core.services.ImageBuilder;
-import io.fusion.air.microservice.ai.core.services.TemplateManager;
+import io.fusion.air.microservice.ai.core.services.ConsoleChatService;
 // Spring
 import org.slf4j.Logger;
 import org.springframework.boot.CommandLineRunner;
@@ -40,6 +38,11 @@ public class ConsoleRunner implements CommandLineRunner {
     // Set Logger -> Lookup will automatically determine the class name.
     private static final Logger log = getLogger(lookup().lookupClass());
 
+    /**
+     * Test the Chat GPT in Console with Custom Data, Image Creation etc.
+     * @param args
+     * @throws Exception
+     */
     @Override
     public void run(String... args) throws Exception {
         try (Scanner scanner = new Scanner(System.in)) {
@@ -51,44 +54,11 @@ public class ConsoleRunner implements CommandLineRunner {
             System.out.println("Prompt Examples:");
             System.out.println("Recipe = [P1: oven dish, cucumber, potato, tomato, red meat, olives, olive oil");
             System.out.println("Movies = [P2: Bramayugam OR Malaikotai Vaaliban");
-            System.out.println("Type exit or quit, to quit the Prompt.");
+            System.out.println("Type exit or [q]uit, to QUIT the Prompt.");
             System.out.println("------------------------------------------------------------------------------------------");
+            ConsoleChatService chatAssistant = new ConsoleChatService();
             while (true) {
-                try {
-                    System.out.print("User: >>> ");
-                    String userQuery = scanner.nextLine();
-                    if (userQuery == null || userQuery.length() == 0) {
-                        continue;
-                    }
-                    System.out.println("==========================================================================================");
-                    if ("exit".equalsIgnoreCase(userQuery) || "quit".equalsIgnoreCase(userQuery)
-                            || "q".equalsIgnoreCase(userQuery)) {
-                        break;
-                    }
-                    if (userQuery.startsWith("IMAGE: ")) {
-                        String query = userQuery.replaceAll("IMAGE:", "");
-                        ImageBuilder.downloadImage(ImageBuilder.createImage(query));
-                        continue;
-                    } else if (userQuery.startsWith("CUSTOM: ")) {
-                        String query = userQuery.replaceAll("CUSTOM:", "");
-                        CustomDataAnalyzer.processFile(query);
-                        continue;
-                    } else if (userQuery.startsWith("[P1")) {
-                        TemplateManager.structuredTemplate(userQuery);
-                        continue;
-                    } else if (userQuery.startsWith("[P2")) {
-                        String[] dArray = userQuery.split(":");
-                        CustomDataAnalyzer.processMultiFiles(dArray[1]);
-                        continue;
-                    } else {
-                        String response = CustomDataAnalyzer.processUserQuery(userQuery);
-                        System.out.println("--[HAL9000]---------------------------------------------------------------------------");
-                        System.out.println(response);
-                    }
-                    System.out.println("------------------------------------------------------------------------------------------");
-                } catch (Exception e) {
-                    System.out.println("Error: "+e.getMessage());
-                }
+                if( handleUserRequests( chatAssistant,  scanner) < 0) break;
             }
         }
     }
@@ -116,27 +86,10 @@ public class ConsoleRunner implements CommandLineRunner {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("==========================================================================================");
             System.out.println(_header);
-            System.out.println("Type exit or [q]uit, to quit the Prompt.");
+            System.out.println("Type exit or [q]uit, to QUIT the Prompt.");
             System.out.println("------------------------------------------------------------------------------------------");
             while (true) {
-                try {
-                    System.out.print("User: >>> ");
-                    String userQuery = scanner.nextLine();
-                    if (userQuery == null || userQuery.length() == 0) {
-                        continue;
-                    }
-                    System.out.println("------------------------------------------------------------------------------------------");
-                    if ("exit".equalsIgnoreCase(userQuery) || "quit".equalsIgnoreCase(userQuery)
-                            || "q".equalsIgnoreCase(userQuery)) {
-                        break;
-                    }
-                    String response = _assistant.chat(userQuery);
-                    System.out.println("--[HAL9000]---------------------------------------------------------------------------");
-                    System.out.println(response);
-                    System.out.println("------------------------------------------------------------------------------------------");
-                } catch (Exception e) {
-                    System.out.println("Error: "+e.getMessage());
-                }
+                if( handleUserRequests( _assistant,  scanner) < 0) break;
             }
         }
     }
@@ -154,31 +107,48 @@ public class ConsoleRunner implements CommandLineRunner {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("==========================================================================================");
             System.out.println(_header);
+            System.out.println("Search Examples:");
+            System.out.println("I need the diagnosis history of Akiera Kiera for the past 3 years");
+            System.out.println("I need the diagnosis history of Jane Susan Wood for the past 4 years");
             System.out.println("Prompts Examples: ");
             System.out.println("[P: Patient Name");
             System.out.println("[P: Patient Name, Disease");
-            System.out.println("Type exit or [q]uit, to quit the Prompt.");
+            System.out.println("Type exit or [q]uit, to QUIT the Prompt.");
             System.out.println("------------------------------------------------------------------------------------------");
             while (true) {
-                try {
-                    System.out.print("User: >>> ");
-                    String userQuery = scanner.nextLine();
-                    if (userQuery == null || userQuery.length() == 0) {
-                        continue;
-                    }
-                    System.out.println("------------------------------------------------------------------------------------------");
-                    if ("exit".equalsIgnoreCase(userQuery) || "quit".equalsIgnoreCase(userQuery)
-                            || "q".equalsIgnoreCase(userQuery)) {
-                        break;
-                    }
-                    String response = _assistant.chat(userQuery);
-                    System.out.println("--[HAL9000]---------------------------------------------------------------------------");
-                    System.out.println(response);
-                    System.out.println("------------------------------------------------------------------------------------------");
-                } catch (Exception e) {
-                    System.out.println("iCare >> Error: "+e.getMessage());
-                }
+                if( handleUserRequests( _assistant,  scanner) < 0) break;
             }
         }
+    }
+
+    /**
+     * Handle User Requests
+     * @param _assistant
+     * @param _scanner
+     * @return
+     */
+    private static byte handleUserRequests(Assistant _assistant, Scanner _scanner) {
+        System.out.print("User: >>> ");
+        if(_assistant == null || _scanner == null) {
+            System.out.println("Invalid Inputs... Quiting the chat..... Have a nice day!");
+            return -2;
+        }
+        String userQuery = _scanner.nextLine();
+        if (userQuery == null || userQuery.length() == 0) return 1;
+        System.out.println("------------------------------------------------------------------------------------------");
+        if ("exit".equalsIgnoreCase(userQuery) || "quit".equalsIgnoreCase(userQuery)
+                || "q".equalsIgnoreCase(userQuery)) {
+            System.out.println("Quiting the chat..... Have a nice day!");
+            return -1;
+        }
+        try {
+            String response = _assistant.chat(userQuery);
+            System.out.println("--[HAL9000]---------------------------------------------------------------------------");
+            System.out.println(response);
+            System.out.println("---------------------------------------------------------------------------------------");
+        } catch (Exception e) {
+            System.out.println("Chat Error: "+e.getMessage());
+        }
+        return 0;
     }
 }
