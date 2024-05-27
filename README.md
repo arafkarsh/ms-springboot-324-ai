@@ -31,6 +31,9 @@ Here’s how it helps developers:
 
 ## Gen AI Examples: Comparison of 8 LLMs (3 Cloud based & 5 Local) on Enterprise Features
 
+Following comparison is based on the features available in LangChain4J API (which supported by OpenAI ChatGPT). These features are essential for Gen AI based Enterprise App Development.
+
+
 | #   | Example             | GPT 4o             | Meta Llama3     | Mistral          | Microsoft Phi-3  | Google Gemma     | TII Falcon 2    | Claude 3       | Gemini 1.5     |
 |-----|---------------------|--------------------|-----------------|------------------|------------------|------------------|-----------------|----------------|----------------|
 | 1.  | Hello World         | :green_circle:     | :green_circle:  | :green_circle:   | :green_circle:   | :green_circle:   | :green_circle:  | :green_circle: | :green_circle: |
@@ -51,15 +54,15 @@ Here’s how it helps developers:
 
 | #   | Example                     | GPT 4o         | Meta Llama3     | Mistral         | Microsoft Phi-3 | Google Gemma    | TII Falcon 2    | Claude 3       | Gemini 1.5     |
 |-----|-----------------------------|----------------|-----------------|-----------------|-----------------|-----------------|-----------------|----------------|----------------|
-| 13. | Simple                      | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: | :green_circle: |
-| 14. | Segments                    | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: | :green_circle: |
-| 15. | Query Transformer           | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: | :green_circle: |
-| 16. | Query Router                | :green_circle: | :red_circle: L4 | :red_circle: M9 | :red_circle: P6 | :red_circle: G4 | :red_circle: F5 | :green_circle: | :red_circle: G5|
-| 17. | Re-Ranking                  | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: | :green_circle: |
-| 18. | MetaData                    | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: | :green_circle: |
-| 19. | Multiple Content Retrievers | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: | :green_circle: |
-| 20. | Skipping Content Retrieval  | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: | :green_circle: |
-| 21. | Health Care App             | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: | :green_circle: |
+| 51. | Simple                      | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: | :green_circle: |
+| 52. | Segments                    | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: | :green_circle: |
+| 53. | Query Transformer           | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: | :green_circle: |
+| 54. | Query Router                | :green_circle: | :red_circle: L4 | :red_circle: M9 | :red_circle: P6 | :red_circle: G4 | :red_circle: F5 | :green_circle: | :red_circle: G5|
+| 55. | Re-Ranking                  | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: | :green_circle: |
+| 56. | MetaData                    | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: | :green_circle: |
+| 57. | Multiple Content Retrievers | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: | :green_circle: |
+| 58. | Skipping Content Retrieval  | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: | :green_circle: |
+| 59. | Health Care App             | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: | :green_circle: |
 
 ## Top LLM Rankings based on Enterprise Features
 

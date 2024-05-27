@@ -22,15 +22,15 @@
 
 | #   | Example                      | GPT 4o         | Meta Llama3     | Mistral         | Microsoft Phi-3 | Google Gemma    | TII Falcon 2    | Claude 3       | Details                                              |
 |-----|------------------------------|----------------|-----------------|-----------------|-----------------|-----------------|-----------------|----------------|------------------------------------------------------|
-| 13. | Simple                       | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: | Chat Bot Use Case: Car Rental Service                |
-| 14. | Segments                     | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: | Using Segments: Car Rental Service                   |
-| 15. | Query Transformer            | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: | Using Query Transformer: Biography                   |
-| 16. | Query Router                 | :green_circle: | :red_circle: L4 | :red_circle: M9 | :red_circle: P6 | :red_circle: G4 | :red_circle: F5 | :green_circle: | Query Routing between Car Rental Service & Biography |        
-| 17. | Re-Ranking                   | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: | Re-Ranking using Cohere API: Car Rental Service      |
-| 18. | MetaData                     | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: | MetaData (Data Source): Car Rental Service           |
-| 19. | Multiple Content Retrievers  | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: | Multi Content Retrievers. Car Rental & Biography     |
-| 20. | Skipping Content Retrieval   | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: | Content Retrieval Skipping: Car Rental Service       |
-| 21. | Health Care Diagnosis        | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: | Health Care Case Study: Diagnosis Summary & Details  | 
+| 51. | Simple                       | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: | Chat Bot Use Case: Car Rental Service                |
+| 52. | Segments                     | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: | Using Segments: Car Rental Service                   |
+| 53. | Query Transformer            | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: | Using Query Transformer: Biography                   |
+| 54. | Query Router                 | :green_circle: | :red_circle: L4 | :red_circle: M9 | :red_circle: P6 | :red_circle: G4 | :red_circle: F5 | :green_circle: | Query Routing between Car Rental Service & Biography |        
+| 55. | Re-Ranking                   | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: | Re-Ranking using Cohere API: Car Rental Service      |
+| 56. | MetaData                     | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: | MetaData (Data Source): Car Rental Service           |
+| 57. | Multiple Content Retrievers  | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :orange_circle: | :green_circle: | Multi Content Retrievers. Car Rental & Biography     |
+| 58. | Skipping Content Retrieval   | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: | Content Retrieval Skipping: Car Rental Service       |
+| 59. | Health Care Diagnosis        | :green_circle: | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle:  | :green_circle: | Health Care Case Study: Diagnosis Summary & Details  | 
 
 ## Top LLM Rankings based on Enterprise Features
 
