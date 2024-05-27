@@ -16,6 +16,8 @@
 package io.fusion.air.microservice.ai.examples.palm2;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
+import io.fusion.air.microservice.ai.core.assistants.HAL9000Assistant;
+import io.fusion.air.microservice.ai.core.services.CustomDataAnalyzer;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 
@@ -24,15 +26,31 @@ import io.fusion.air.microservice.ai.utils.AiConstants;
  * @version:
  * @date:
  */
-public class _01_Hello_World {
+public class _03_Custom_Data {
 
     public static void main(String[] args) {
         // Create Chat Language Model Google Vertex AI - PaLM 2
         ChatLanguageModel model = AiBeans.getChatLanguageModelGoogle(AiConstants.GOOGLE_PaLM_CHAT_BISON);
-        String request = "Explain French Revolution";
-        String response = model.generate(request);
-
         AiBeans.printModelDetails(AiConstants.LLM_VERTEX, AiConstants.GOOGLE_PaLM_CHAT_BISON);
-        AiBeans.printResult(request, response);
+
+        String request1 = """
+            Who were the Key Characters in the movie Bramayugam?
+            What was the rating?
+            Elaborate the Characters in the movie.
+            """;
+        CustomDataAnalyzer.processFile(request1,  "bramayugam.txt", model);
+
+        String request2 = """
+                Elaborate the key ideas behind the movie Malaikotai Vaaliban.
+                Elaborate each stage (in bullet points) in the movie and its significance.
+                What was the movie rating?
+                """;
+        CustomDataAnalyzer.processFile(request2,  "vaaliban.txt", model);
+
+        // Multi File Analysis
+        CustomDataAnalyzer.processMultiFiles("Malaikotai Vaaliban", model);
+        CustomDataAnalyzer.processMultiFiles("Bramayugam", model);
+
+        System.exit(0);
     }
 }

@@ -16,23 +16,36 @@
 package io.fusion.air.microservice.ai.examples.palm2;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
+import io.fusion.air.microservice.ai.core.services.TemplateManager;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 
+
 /**
+ * Prompt Examples
+ *
  * @author: Araf Karsh Hamid
  * @version:
  * @date:
  */
-public class _01_Hello_World {
+public class _05_Prompt_Templates {
 
     public static void main(String[] args) {
         // Create Chat Language Model Google Vertex AI - PaLM 2
         ChatLanguageModel model = AiBeans.getChatLanguageModelGoogle(AiConstants.GOOGLE_PaLM_CHAT_BISON);
-        String request = "Explain French Revolution";
-        String response = model.generate(request);
-
         AiBeans.printModelDetails(AiConstants.LLM_VERTEX, AiConstants.GOOGLE_PaLM_CHAT_BISON);
-        AiBeans.printResult(request, response);
+
+        System.out.println("Prompt Example 1 >>--------------------------------------------");
+        TemplateManager.simplePrompt(model);
+        System.out.println("Prompt Example 2 >>--------------------------------------------");
+        TemplateManager.complexPrompt(model);
+        System.out.println("Prompt Example 3 >>--------------------------------------------");
+        TemplateManager.structuredPromptRecipe(model);
+        System.out.println("Prompt Example 4 >>--------------------------------------------");
+        TemplateManager.structuredTemplate(
+                "[P1","oven dish, cucumber, potato, tomato, red meat, olives, olive oil",
+                model
+        );
     }
+
 }

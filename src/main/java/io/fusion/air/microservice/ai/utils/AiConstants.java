@@ -107,8 +107,10 @@ public class AiConstants {
     public static final String GOOGLE_VERTEX_LOCATION       = "us-central1";     // Location
     // Google Gemini Models -------------------------------------------------------------
     // https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versioning
-    public static final String GOOGLE_GEMINI_PRO               = "gemini-1.5-pro-001";          // Expires May 24, 2025
-    public static final String GOOGLE_GEMINI_FLASH             = "gemini-1.5-flash-001";       // Expires May 24, 2025
+    public static final String GOOGLE_GEMINI_PRO               = "gemini-1.5-pro-preview-0514";     // Expires June 24, 2024
+    // ""gemini-1.5-pro-001";          // Expires May 24, 2025
+    public static final String GOOGLE_GEMINI_FLASH             = "gemini-1.5-flash-preview-0514";   // Expires June 24, 2024
+    // ""gemini-1.5-flash-001";       // Expires May 24, 2025
     public static final String GOOGLE_GEMINI_NANO             = "gemini-1.5-nano";
     public static final String GOOGLE_GEMINI_ULTRA            = "gemini-ultra";
     public static final String GOOGLE_GEMINI_PRO_VISION    = "gemini-1.0-pro-vision-001";

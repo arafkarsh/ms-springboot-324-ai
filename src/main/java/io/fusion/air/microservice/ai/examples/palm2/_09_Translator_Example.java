@@ -16,23 +16,44 @@
 package io.fusion.air.microservice.ai.examples.palm2;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.service.AiServices;
+import io.fusion.air.microservice.ai.core.assistants.LanguageAssistant;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
+
+import java.util.List;
 
 /**
  * @author: Araf Karsh Hamid
  * @version:
  * @date:
  */
-public class _01_Hello_World {
+public class _09_Translator_Example {
 
     public static void main(String[] args) {
         // Create Chat Language Model Google Vertex AI - PaLM 2
         ChatLanguageModel model = AiBeans.getChatLanguageModelGoogle(AiConstants.GOOGLE_PaLM_CHAT_BISON);
-        String request = "Explain French Revolution";
-        String response = model.generate(request);
-
         AiBeans.printModelDetails(AiConstants.LLM_VERTEX, AiConstants.GOOGLE_PaLM_CHAT_BISON);
+
+        // Create Ai Assistant
+        LanguageAssistant utils = AiServices.create(LanguageAssistant.class, model);
+        String request = """
+                    Hello, how are you?
+                    What do you think about current weather and climate change?
+                    Do you think climate change is real?
+                """;
+        String response = utils.translate(request, "french");
         AiBeans.printResult(request, response);
+
+        request = """
+                    AI, or artificial intelligence, is a branch of computer science that aims to create 
+                    machines that mimic human intelligence. This can range from simple tasks such as recognizing 
+                    patterns or speech to more complex tasks like making decisions or predictions.
+                """;
+
+        List<String> bulletPoints = utils.summarize(request, 5);
+        // bulletPoints.forEach(System.out::println);
+        AiBeans.printResult(request, bulletPoints.toString());
+
     }
 }

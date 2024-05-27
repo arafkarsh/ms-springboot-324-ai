@@ -15,7 +15,12 @@
  */
 package io.fusion.air.microservice.ai.examples.palm2;
 
+
+import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.service.AiServices;
+import io.fusion.air.microservice.ai.core.assistants.Assistant;
+import io.fusion.air.microservice.ai.core.tools.CalculatorTool;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
 
@@ -24,15 +29,32 @@ import io.fusion.air.microservice.ai.utils.AiConstants;
  * @version:
  * @date:
  */
-public class _01_Hello_World {
+public class _06_Tools_Example {
 
+    /**
+     * Tools Are NOT Supported by Ollama Models - Llama3
+     *
+     * @param args
+     */
     public static void main(String[] args) {
+
         // Create Chat Language Model Google Vertex AI - PaLM 2
         ChatLanguageModel model = AiBeans.getChatLanguageModelGoogle(AiConstants.GOOGLE_PaLM_CHAT_BISON);
-        String request = "Explain French Revolution";
-        String response = model.generate(request);
-
         AiBeans.printModelDetails(AiConstants.LLM_VERTEX, AiConstants.GOOGLE_PaLM_CHAT_BISON);
-        AiBeans.printResult(request, response);
+
+        Assistant assistant = AiServices.builder(Assistant.class)
+                .chatLanguageModel(model)
+                .tools(new CalculatorTool())
+                .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
+                .build();
+
+        String question1 = "What is the square root of the sum of the numbers of letters in the words \"Hello\" and \"my Fusion world\"?";
+        String answer1 = assistant.chat(question1);
+        System.out.println(answer1);
+        // The square root of the sum of the number of letters in the words "hello" and "world" is approximately 4.47.
+        String question2 = "What is the sum of the numbers of letters in the words \"Hello\" and \"my Fusion world\"?";
+        String answer2 = assistant.chat(question2);
+        System.out.println(answer2);
+
     }
 }
