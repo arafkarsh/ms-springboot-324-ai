@@ -18,6 +18,7 @@ package io.fusion.air.microservice.ai.examples.llama3;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import io.fusion.air.microservice.ai.core.services.CustomDataAnalyzer;
 import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 
 /**
  * @author: Araf Karsh Hamid
@@ -28,7 +29,8 @@ public class _03_Custom_Data {
 
     public static void main(String[] args) {
         // Create Chat Language Model llama3
-        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama();;
+        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_LLAMA3);;
+        AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_LLAMA3);
 
         String request1 = """
             Who were the Key Characters in the movie Bramayugam?

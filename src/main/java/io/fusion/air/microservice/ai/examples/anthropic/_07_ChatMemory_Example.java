@@ -39,10 +39,7 @@ import static dev.langchain4j.data.message.UserMessage.userMessage;
  */
 public class _07_ChatMemory_Example {
 
-    // Create Chat Language Model - Anthropic Claude 3 Haiku
-    private static ChatLanguageModel model = AiBeans.getChatLanguageModelAnthropic(AiConstants.ANTHROPIC_CLAUDE_3_HAIKU);
-
-    public static void chatMemoryConversations() {
+    public static void chatMemoryConversations(ChatLanguageModel model) {
         Tokenizer tokenizer = new OpenAiTokenizer(AiConstants.GPT_4_TURBO);
         ChatMemory chatMemory = TokenWindowChatMemory.withMaxTokens(2000, tokenizer);
 
@@ -84,7 +81,7 @@ public class _07_ChatMemory_Example {
         AiBeans.sleep(55);
     }
 
-    public static void chatMemoryWithMultipleUsers() {
+    public static void chatMemoryWithMultipleUsers(ChatLanguageModel model) {
         Assistant assistant = AiServices.builder(Assistant.class)
                 .chatLanguageModel(model)
                 .chatMemoryProvider(memoryId -> MessageWindowChatMemory.withMaxMessages(10))
@@ -112,11 +109,13 @@ public class _07_ChatMemory_Example {
     }
 
     public static void main(String[] args) throws Exception {
+        // Create Chat Language Model - Anthropic Claude 3 Haiku
+        ChatLanguageModel model = AiBeans.getChatLanguageModelAnthropic(AiConstants.ANTHROPIC_CLAUDE_3_HAIKU);
         AiBeans.printModelDetails(AiConstants.LLM_ANTHROPIC, AiConstants.ANTHROPIC_CLAUDE_3_HAIKU);
         // Chat Memory Conversations
-        chatMemoryConversations();
+        chatMemoryConversations(model);
 
         // Chat Memory with Multiple user
-        chatMemoryWithMultipleUsers();
+        chatMemoryWithMultipleUsers(model);
     }
 }

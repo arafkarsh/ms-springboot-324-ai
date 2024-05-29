@@ -18,6 +18,7 @@ package io.fusion.air.microservice.ai.examples.llama3;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import io.fusion.air.microservice.ai.core.assistants.HAL9000Assistant;
 import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -31,9 +32,11 @@ public class _02_Complex_World {
 
     public static void main(String[] args) {
         // Create Chat Language Model llama3
-        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama();;
+        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_LLAMA3);;
         // Create the Ai Assistant
         HAL9000Assistant hal9k = new AiBeans().createHAL9000(model);
+        AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_LLAMA3);
+
         // Run the Test Cases
         complexWorld1(hal9k);
         complexWorld2(hal9k);

@@ -33,8 +33,6 @@ import java.util.List;
  */
 public class _08_FewShot_Example {
 
-    // Create Chat Language Model Mistral
-    private static ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_MISTRAL);        // Create the Ai Assistant
     private static List<ChatMessage> fewShotHistory = new ArrayList<>();
 
     /**
@@ -70,7 +68,7 @@ public class _08_FewShot_Example {
      * Send the Message
      * @param _request
      */
-    public static String sendChatMessage(String _request) {
+    public static String sendChatMessage(ChatLanguageModel model, String _request) {
         // Adding user message
         ChatMessage request = UserMessage.from(_request);
         fewShotHistory.add(request);
@@ -82,17 +80,18 @@ public class _08_FewShot_Example {
     }
 
     public static void main(String[] args) {
-      // Create the Ai Assistant
+        // Create Chat Language Model Mistral
+        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_MISTRAL);
         AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_MISTRAL);
-        // Build Chat Context
+      // Build Chat Context
         buildContext();
         // Message 1
-        sendChatMessage("How can your app be so slow? Please do something about it!");
+        sendChatMessage(model, "How can your app be so slow? Please do something about it!");
         // Message 2
-        sendChatMessage("The app is fantastic!");
+        sendChatMessage(model, "The app is fantastic!");
         // Message 3
-        sendChatMessage("Simplified my daily tasks! Good work team.");
+        sendChatMessage(model, "Simplified my daily tasks! Good work team.");
         // Message 4
-        sendChatMessage("App Crashes twice or thrice in a week. Stability is not that good.");
+        sendChatMessage(model, "App Crashes twice or thrice in a week. Stability is not that good.");
     }
 }

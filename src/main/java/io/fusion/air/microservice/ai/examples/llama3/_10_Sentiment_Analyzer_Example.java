@@ -20,6 +20,7 @@ import dev.langchain4j.service.AiServices;
 import io.fusion.air.microservice.ai.core.assistants.SentimentAssistant;
 import io.fusion.air.microservice.ai.core.services.SentimentAnalyzer;
 import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 
 /**
  * Sentiment Analyzer Example
@@ -35,7 +36,8 @@ public class _10_Sentiment_Analyzer_Example {
     public static void main(String[] args) {
 
         // Create Chat Language Model llama3
-        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama();
+        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_LLAMA3);;
+        AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_LLAMA3);
         // Create Ai Assistant
         SentimentAssistant sentimentAssistant = AiServices.create(SentimentAssistant.class, model);
         String request = """

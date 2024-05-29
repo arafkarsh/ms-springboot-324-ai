@@ -35,13 +35,7 @@ import io.fusion.air.microservice.ai.utils.AiConstants;
  */
 public class _12_Persistent_ChatMemory_Store_Example {
 
-    // Create Chat Language Model Microsoft PHI - 3
-    private static ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_PHI_3);
-
-    // Create Ai Assistant
-    private static Assistant assistant;
-
-    public static void setupContext() {
+    public static Assistant setupContext(ChatLanguageModel model) {
         // Create Persistent Store
         ChatMemoryFileStore store = new ChatMemoryFileStore();
         // Create Chat Memory Provider with the Store
@@ -51,13 +45,13 @@ public class _12_Persistent_ChatMemory_Store_Example {
                 .chatMemoryStore(store)
                 .build();
         // Create the Ai Assistant with model and Chat Memory Provider
-        assistant = AiServices.builder(Assistant.class)
+        return AiServices.builder(Assistant.class)
                 .chatLanguageModel(model)
                 .chatMemoryProvider(chatMemoryProvider)
                 .build();
     }
 
-    public static void persistInitialData() {
+    public static void persistInitialData(Assistant assistant ) {
         String request1 = "UUID-1 >> Hello, my name is John Sam Doe";
         String response1 = assistant.chat("UUID-1", request1);
         AiBeans.printResult(request1, response1);
@@ -67,7 +61,7 @@ public class _12_Persistent_ChatMemory_Store_Example {
         AiBeans.printResult(request2, response2);
     }
 
-    public static void testThePersistedData() {
+    public static void testThePersistedData(Assistant assistant ) {
         String request3 = "What is my name?";
         String response3 = assistant.chat("UUID-1", "UUID-1 >> "+request3);
         AiBeans.printResult("UUID-1 >> "+request3, response3);
@@ -77,14 +71,16 @@ public class _12_Persistent_ChatMemory_Store_Example {
     }
 
     public static void main(String[] args) {
+        // Create Chat Language Model Microsoft PHI - 3
+        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_PHI_3);
         AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_PHI_3);
         // Setup the Context
-        setupContext();
+        Assistant assistant = setupContext(model);
         // Initialize with Data
-        persistInitialData();
+        persistInitialData(assistant);
         // To Test the persisted Data.
         // Comment out the previous call "persistInitialData()"
         // UnComment the following call "testThePersistedData()"
-        testThePersistedData();
+        testThePersistedData(assistant);
     }
 }

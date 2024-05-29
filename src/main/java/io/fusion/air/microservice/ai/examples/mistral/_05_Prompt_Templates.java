@@ -32,7 +32,7 @@ public class _05_Prompt_Templates {
 
     public static void main(String[] args) {
         // Create Chat Language Model Mistral
-        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_MISTRAL);        // Create the Ai Assistant
+        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_MISTRAL);
         AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_MISTRAL);
 
         System.out.println("Prompt Example 1 >>--------------------------------------------");

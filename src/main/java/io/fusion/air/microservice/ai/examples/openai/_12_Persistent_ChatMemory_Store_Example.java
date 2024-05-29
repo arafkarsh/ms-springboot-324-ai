@@ -24,6 +24,7 @@ import io.fusion.air.microservice.ai.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.core.services.ChatMemoryFileStore;
 import io.fusion.air.microservice.ai.utils.AiBeans;
 import io.fusion.air.microservice.ai.utils.AiConstants;
+import org.springframework.data.annotation.Persistent;
 
 /**
  * Chat Memory Persistent Store Example.
@@ -35,28 +36,24 @@ import io.fusion.air.microservice.ai.utils.AiConstants;
  */
 public class _12_Persistent_ChatMemory_Store_Example {
 
-    public static Assistant setupContext() {
+    public static Assistant setupContext(ChatLanguageModel model ) {
         System.out.println("Setup in Progress.... ");
-        // Create Chat Language Model - Open AI GPT 4o
-        ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
-        AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_4o);
-        System.out.println("Pass 1: Language Model Created ...");
-        // Create Persistent Store
+        // Create a File-based Persistent Store.
         ChatMemoryFileStore chatFileStore = new ChatMemoryFileStore();
-        System.out.println("Pass 2: File Persistent Store Created ...");
-        // Create Chat Memory Provider with the Store
+        // Create Chat Memory Provider with the Persistent Store
         ChatMemoryProvider chatMemoryProvider = memoryId -> MessageWindowChatMemory.builder()
                 .id(memoryId)
                 .maxMessages(30)
+                // Currently MapDB Store saving data into a File System.
+                // Instead, this could be a RDBMS implementation too.
                 .chatMemoryStore(chatFileStore)
                 .build();
-        System.out.println("Pass 3: Chat Memory Provider Created...");
         // Create the Ai Assistant with model and Chat Memory Provider
         Assistant assistant = AiServices.builder(Assistant.class)
                 .chatLanguageModel(model)
                 .chatMemoryProvider(chatMemoryProvider)
                 .build();
-        System.out.println("Pass 4: Assistant Created...");
+        System.out.println("Setup Completed...");
         return assistant;
     }
 
@@ -80,8 +77,11 @@ public class _12_Persistent_ChatMemory_Store_Example {
     }
 
     public static void main(String[] args) {
+        // Create Chat Language Model - Open AI GPT 4o
+        ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_4o);
         // Setup the Context
-        Assistant assistant = setupContext();
+        Assistant assistant = setupContext(model);
         // Initialize with Data
         persistInitialData(assistant);
         // To Test the persisted Data.

@@ -28,7 +28,6 @@ import io.fusion.air.microservice.ai.utils.AiConstants;
 public class _03_Custom_Data {
 
     public static void main(String[] args) {
-
         // Create Chat Language Model - Open AI GPT 4o
         ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
         AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_4o);

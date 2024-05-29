@@ -39,10 +39,7 @@ import static dev.langchain4j.data.message.UserMessage.userMessage;
  */
 public class _07_ChatMemory_Example {
 
-    // Create Chat Language Model - Google Gemini 1.5 Pro
-    private static ChatLanguageModel model = AiBeans.getChatLanguageModelGoogle(AiConstants.GOOGLE_GEMINI_PRO);
-
-    public static void chatMemoryConversations() {
+    public static void chatMemoryConversations(ChatLanguageModel model ) {
         Tokenizer tokenizer = new OpenAiTokenizer(AiConstants.GPT_4_TURBO);
         ChatMemory chatMemory = TokenWindowChatMemory.withMaxTokens(2000, tokenizer);
 
@@ -82,7 +79,7 @@ public class _07_ChatMemory_Example {
         AiBeans.printResult(userMessage2.text(), response2.content().text());
     }
 
-    public static void chatMemoryWithMultipleUsers() {
+    public static void chatMemoryWithMultipleUsers(ChatLanguageModel model ) {
         Assistant assistant = AiServices.builder(Assistant.class)
                 .chatLanguageModel(model)
                 .chatMemoryProvider(memoryId -> MessageWindowChatMemory.withMaxMessages(10))
@@ -106,12 +103,13 @@ public class _07_ChatMemory_Example {
     }
 
     public static void main(String[] args) throws Exception {
-
+        // Create Chat Language Model - Google Gemini 1.5 Pro
+        ChatLanguageModel model = AiBeans.getChatLanguageModelGoogle(AiConstants.GOOGLE_GEMINI_PRO);
         AiBeans.printModelDetails(AiConstants.LLM_VERTEX, AiConstants.GOOGLE_GEMINI_PRO);
         // Chat Memory Conversations
-        chatMemoryConversations();
+        chatMemoryConversations( model );
 
         // Chat Memory with Multiple user
-        chatMemoryWithMultipleUsers();
+        chatMemoryWithMultipleUsers( model );
     }
 }

@@ -45,12 +45,7 @@ import static java.util.Arrays.asList;
  */
 public class _11_Data_Extractor_Example {
 
-    // Create Chat Language Model - Anthropic Claude 3 Haiku
-    private static ChatLanguageModel model = AiBeans.getChatLanguageModelAnthropic(AiConstants.ANTHROPIC_CLAUDE_3_HAIKU);
-    // Create Ai Assistant
-    public static DataExtractorAssistant extractor = AiServices.create(DataExtractorAssistant.class, model);
-
-    public static void numberExtractor() {
+    public static void numberExtractor(DataExtractorAssistant extractor ) {
         // Extract Numbers
         String request = """
                     After countless millennia of computation, the supercomputer Deep Thought 
@@ -62,7 +57,7 @@ public class _11_Data_Extractor_Example {
         AiBeans.sleep(55);
     }
 
-    public static void DateTimeExtractor() {
+    public static void DateTimeExtractor(DataExtractorAssistant extractor ) {
         // Extract Date and Time
         StringBuilder sb = new StringBuilder();
         String request = """
@@ -83,7 +78,7 @@ public class _11_Data_Extractor_Example {
 
     }
 
-    public static void pojoExtractor() {
+    public static void pojoExtractor(DataExtractorAssistant extractor ) {
         // POJO Person Extractor
         String request = """
                 In 1968, amidst the fading echoes of Indian Independence Day, 
@@ -95,7 +90,7 @@ public class _11_Data_Extractor_Example {
         AiBeans.sleep(55);
     }
 
-    public static void complexPojoExtractor() {
+    public static void complexPojoExtractor(ChatLanguageModel model) {
         ChefAssistant chefAssistant = AiServices.create(ChefAssistant.class, model);
         Recipe recipe = chefAssistant.createRecipeFrom("cucumber", "tomato", "feta", "onion", "olives", "lemon");
         System.out.println(recipe);
@@ -110,11 +105,15 @@ public class _11_Data_Extractor_Example {
     }
 
     public static void main(String[] args) {
+        // Create Chat Language Model - Anthropic Claude 3 Haiku
+        ChatLanguageModel model = AiBeans.getChatLanguageModelAnthropic(AiConstants.ANTHROPIC_CLAUDE_3_HAIKU);
         AiBeans.printModelDetails(AiConstants.LLM_ANTHROPIC, AiConstants.ANTHROPIC_CLAUDE_3_HAIKU);
+        // Create Data Extractor
+        DataExtractorAssistant extractor = AiServices.create(DataExtractorAssistant.class, model);
         try {
             System.out.println("Number Extractor =================================================");
             // Extract Numbers
-            numberExtractor();
+            numberExtractor(extractor);
         } catch (Exception e) {
             System.out.println("Error: "+e.getMessage());
             // e.printStackTrace();
@@ -122,7 +121,7 @@ public class _11_Data_Extractor_Example {
         try {
             System.out.println("Date & Time Extractor =============================================");
             // Extract Date and Time
-            DateTimeExtractor();
+            DateTimeExtractor(extractor);
         } catch (Exception e) {
             System.out.println("Error: "+e.getMessage());
             // e.printStackTrace();
@@ -130,7 +129,7 @@ public class _11_Data_Extractor_Example {
         try {
             System.out.println("Pojo Extractor ====================================================");
             // POJO Person Extractor
-             pojoExtractor();;
+             pojoExtractor(extractor);
         } catch (Exception e) {
             System.out.println("Error: "+e.getMessage());
             // e.printStackTrace();
@@ -138,7 +137,7 @@ public class _11_Data_Extractor_Example {
         try {
             System.out.println("Complex Pogo Extractor ============================================");
             // Complex Pojo Extractor with Descriptions (rules)
-            complexPojoExtractor();
+            complexPojoExtractor(model);
         } catch (Exception e) {
             System.out.println("Error: "+e.getMessage());
             // e.printStackTrace();

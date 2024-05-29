@@ -70,6 +70,8 @@ public class AiConstants {
     public static final String HF_API_KEY = System.getenv("HF_API_KEY");
     // Judge0 RapidAPI key here: https://rapidapi.com/judge0-official/api/judge0-ce
     public static final String RAPID_API_KEY = System.getenv("RAPID_API_KEY");
+    // LlamaIndex API Key here: https://cloud.llamaindex.ai/api-key
+    public static final String LLAMA_INDEX_API_KEY = System.getenv("LLAMA_INDEX_API_KEY");
 
     // Ollama Config --------------------------------------------------------------------
     @Value("${langchain4j.ollama.url:http://localhost:11434/api/generate}")

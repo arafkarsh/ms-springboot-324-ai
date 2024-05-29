@@ -33,8 +33,6 @@ import java.util.List;
  */
 public class _08_FewShot_Example {
 
-    // Create Chat Language Model - Open AI GPT 4o
-    private static ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
     private static List<ChatMessage> fewShotHistory = new ArrayList<>();
 
     /**
@@ -68,30 +66,35 @@ public class _08_FewShot_Example {
 
     /**
      * Send the Message
+     * @param _model
      * @param _request
+     * @return
      */
-    public static String sendChatMessage(String _request) {
+    public static String sendChatMessage(ChatLanguageModel _model, String _request) {
         // Adding user message
         ChatMessage request = UserMessage.from(_request);
         fewShotHistory.add(request);
         // Response from Ai
-        Response<AiMessage> response = model.generate(fewShotHistory);
-        AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_4o);
+        Response<AiMessage> response = _model.generate(fewShotHistory);
         // Print Result
         AiBeans.printResult(request.text(), response.content().text());
         return response.content().text();
     }
 
     public static void main(String[] args) {
+        // Create Chat Language Model - Open AI GPT 4o
+        ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
+        AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_4o);
+
         // Build Chat Context
         buildContext();
         // Message 1
-        sendChatMessage("How can your app be so slow? Please do something about it!");
+        sendChatMessage(model, "How can your app be so slow? Please do something about it!");
         // Message 2
-        sendChatMessage("The app is fantastic!");
+        sendChatMessage(model,"The app is fantastic!");
         // Message 3
-        sendChatMessage("Simplified my daily tasks! Good work team.");
+        sendChatMessage(model,"Simplified my daily tasks! Good work team.");
         // Message 4
-        sendChatMessage("App Crashes twice or thrice in a week. Stability is not that good.");
+        sendChatMessage(model,"App Crashes twice or thrice in a week. Stability is not that good.");
     }
 }

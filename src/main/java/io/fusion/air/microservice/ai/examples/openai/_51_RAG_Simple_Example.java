@@ -30,7 +30,6 @@ import io.fusion.air.microservice.ai.utils.ConsoleRunner;
  * @date:
  */
 public class _51_RAG_Simple_Example {
-
     /**
      * This example demonstrates how to implement an "Easy RAG" (Retrieval-Augmented Generation) application.
      */

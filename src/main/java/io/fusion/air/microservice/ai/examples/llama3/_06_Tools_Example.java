@@ -22,6 +22,7 @@ import dev.langchain4j.service.AiServices;
 import io.fusion.air.microservice.ai.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.core.tools.CalculatorTool;
 import io.fusion.air.microservice.ai.utils.AiBeans;
+import io.fusion.air.microservice.ai.utils.AiConstants;
 
 /**
  * @author: Araf Karsh Hamid
@@ -38,7 +39,8 @@ public class _06_Tools_Example {
     public static void main(String[] args) {
 
         // Create Chat Language Model llama3
-        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama();;
+        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_LLAMA3);;
+        AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_LLAMA3);
 
         Assistant assistant = AiServices.builder(Assistant.class)
                 .chatLanguageModel(model)

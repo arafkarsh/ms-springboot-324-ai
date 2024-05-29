@@ -36,7 +36,7 @@ public class _10_Sentiment_Analyzer_Example {
     public static void main(String[] args) {
 
         // Create Chat Language Model Mistral
-        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_MISTRAL);        // Create the Ai Assistant
+        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_MISTRAL);
         AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_MISTRAL);
 
         // Create Ai Assistant
