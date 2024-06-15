@@ -39,8 +39,6 @@ public interface HealthCareAssistant extends Assistant{
      *    - If a new SystemMessage with the same content is added, it is ignored.
      *    - If a new SystemMessage with different content is added, it replaces the previous one.
      *
-     *            Always try to answer for the proper time period. Check the date in the document.
-     *
      * @param _userMessage
      * @return
      */

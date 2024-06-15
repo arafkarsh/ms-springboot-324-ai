@@ -29,9 +29,7 @@ public interface CarRentalAssistant extends Assistant{
 
     /**
      * Car Rental Support Staff Conversation with Customer
-     *
      *   SystemMessage is a special type of message, so it is treated differently from other message types:
-     *
      *    - Once added, a SystemMessage is always retained.
      *    - Only one SystemMessage can be held at a time.
      *    - If a new SystemMessage with the same content is added, it is ignored.

@@ -34,6 +34,32 @@ import io.fusion.air.microservice.ai.utils.ConsoleRunner;
 public class _59_RAG_HealthCare_Example {
 
     /**
+     *
+     */
+    private static void testPatientDataExtractor() {
+        ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_3_5_TURBO);
+        AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_3_5_TURBO);
+        // Create the Assistant
+        // Setting up the Gen AI Context with Open AI LLM, and RAG
+        Patient patient0 = RAGHealthCareBuilder.patientNameExtractor("Hi", model);
+        Patient patient1 = RAGHealthCareBuilder.patientNameExtractor(
+                "I need the diagnosis history of Akiera Kiera for the past 3 years", model);
+        Patient patient2 = RAGHealthCareBuilder.patientNameExtractor(
+                "I need the diagnosis history of  Jane Susan Wood for the past 4 years", model);
+
+        long patientId1 = RAGHealthCareBuilder.patientIdExtractor(
+                "I need the diagnosis history of Patient Id 300100202",  model);
+        long patientId2 = RAGHealthCareBuilder.patientIdExtractor(
+                "I need the diagnosis history of Patient 400100201",  model);
+
+        Patient patient3 = RAGHealthCareBuilder.patientNameExtractor(
+                "I need the diagnosis history for the past 4 years", model);
+
+        long patientId3 = RAGHealthCareBuilder.patientIdExtractor(
+                "I need the diagnosis history of Sam",  model);
+    }
+
+    /**
      * This example demonstrates how to implement Health Care Diagnosis Service Example
      */
     public static void main(String[] args) {
@@ -55,28 +81,5 @@ public class _59_RAG_HealthCare_Example {
         // - I need the diagnosis history of Patient Id 400100201
         // - No, thank you.
         ConsoleRunner.startConversationWithPrompts(assistant, "iCare - Health Care Hospitals");
-    }
-
-    public static void testPatientDataExtractor() {
-        ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_3_5_TURBO);
-        AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_3_5_TURBO);
-        // Create the Assistant
-        // Setting up the Gen AI Context with Open AI LLM, and RAG
-        Patient patient0 = RAGHealthCareBuilder.patientNameExtractor("Hi", model);
-        Patient patient1 = RAGHealthCareBuilder.patientNameExtractor(
-                "I need the diagnosis history of Akiera Kiera for the past 3 years", model);
-        Patient patient2 = RAGHealthCareBuilder.patientNameExtractor(
-                "I need the diagnosis history of  Jane Susan Wood for the past 4 years", model);
-
-        long patientId1 = RAGHealthCareBuilder.patientIdExtractor(
-                "I need the diagnosis history of Patient Id 300100202",  model);
-        long patientId2 = RAGHealthCareBuilder.patientIdExtractor(
-                "I need the diagnosis history of Patient 400100201",  model);
-
-        Patient patient3 = RAGHealthCareBuilder.patientNameExtractor(
-                "I need the diagnosis history for the past 4 years", model);
-
-        long patientId3 = RAGHealthCareBuilder.patientIdExtractor(
-                "I need the diagnosis history of Sam",  model);
     }
 }

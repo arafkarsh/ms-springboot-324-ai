@@ -36,6 +36,19 @@ public interface DataExtractorAssistant {
     // Number Extractor
     @UserMessage("Extract number from {{it}}")
     public int extractInt(String _text);
+    // Date & Time Extractor
+    @UserMessage("Extract date from {{it}}")
+    public LocalDate extractDateFrom(String _text);
+
+    @UserMessage("Extract time from {{it}}")
+    public LocalTime extractTimeFrom(String _text);
+
+    @UserMessage("Extract date and time from {{it}}")
+    public LocalDateTime extractDateTimeFrom(String _text);
+
+    // POJO Extractor
+    @UserMessage("Extract information about a person from {{it}}")
+    public Person extractPersonFrom(String _text);
 
     @UserMessage("Extract number from {{it}}")
     public long extractLong(String _text);
@@ -51,18 +64,4 @@ public interface DataExtractorAssistant {
 
     @UserMessage("Extract number from {{it}}")
     public BigDecimal extractBigDecimal(String _text);
-
-    // Date & Time Extractor
-    @UserMessage("Extract date from {{it}}")
-    public LocalDate extractDateFrom(String _text);
-
-    @UserMessage("Extract time from {{it}}")
-    public LocalTime extractTimeFrom(String _text);
-
-    @UserMessage("Extract date and time from {{it}}")
-    public LocalDateTime extractDateTimeFrom(String _text);
-
-    // POJO Extractor
-    @UserMessage("Extract information about a person from {{it}}")
-    public Person extractPersonFrom(String _text);
 }

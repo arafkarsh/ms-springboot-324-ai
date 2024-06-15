@@ -60,14 +60,17 @@
 		<!-- Spring Kafka ================================================= -->
 		<spring.kafka.version>3.0.7</spring.kafka.version>
 
-		<!-- Open API v3 - Swagger UI ===================================== -->
+		<!-- Open API v3 - Swagger UI =================================== -->
 		<openapi.version>1.7.0</openapi.version>
 
-		<!-- LangChain4J API  ============================================= -->
+		<!-- Gen AI : LangChain4J  ======================================= -->
 		<langchain4j.version>0.30.0</langchain4j.version>
 		<mapdb.version>3.1.0</mapdb.version>
 		<eclipse.collection.version>11.0.0</eclipse.collection.version>
 
+		<!-- AI/ML : Deep Learning 4 J  ================================== -->
+		<dl4j.version>1.0.0-M2.1</dl4j.version>
+		<nd4j.version>1.0.0-M2.1</nd4j.version>
 	</properties>
 
 	<!-- ================================================================= -->
@@ -161,6 +164,34 @@
 			<artifactId>eclipse-collections</artifactId>
 			<version>${eclipse.collection.version}</version>
 		</dependency>
+		<!-- ================================================================= -->
+		<!-- Deep Learning 4 Java  -->
+		<!-- ================================================================= -->
+		<!-- Deeplearning4j core -->
+		<dependency>
+			<groupId>org.deeplearning4j</groupId>
+			<artifactId>deeplearning4j-core</artifactId>
+			<version>${dl4j.version}</version>
+		</dependency>
+		<!-- ND4J: N-Dimensional Arrays for Java -->
+		<dependency>
+			<groupId>org.nd4j</groupId>
+			<artifactId>nd4j-native-platform</artifactId>
+			<version>${nd4j.version}</version>
+		</dependency>
+		<!-- DataVec: Machine Learning Data Preprocessing -->
+		<dependency>
+			<groupId>org.datavec</groupId>
+			<artifactId>datavec-api</artifactId>
+			<version>${dl4j.version}</version>
+		</dependency>
+		<!-- Canova: DataVec dependency for data loading and transformation -->
+		<dependency>
+			<groupId>org.datavec</groupId>
+			<artifactId>datavec-spark_2.12</artifactId>
+			<version>${dl4j.version}</version>
+		</dependency>
+
 		<!-- ================================================================= -->
 		<!-- Jakarta EE Frameworks (Required  from Java 17 onwards) -->
 		<!-- ================================================================= -->

@@ -212,6 +212,8 @@ public class AiBeans {
      * 2. Misrtal (mistral)
      * 3. Phi-3 (phi-3)
      * 4. Gemma (gemma)
+     * 5. Falcon (falcon2)
+     * 6. Wizard Math (wizard-math:7b)
      *
      * @param _model
      * @return
