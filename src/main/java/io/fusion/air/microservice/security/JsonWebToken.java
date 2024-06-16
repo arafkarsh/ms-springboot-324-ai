@@ -714,7 +714,7 @@ public final class JsonWebToken {
 	}
 
 	/**
-	 * Test JWT Creation
+	 * DownloadAllData JWT Creation
 	 * @param _tokenType
 	 */
 	protected static void testJWTCreation(int _tokenType) {

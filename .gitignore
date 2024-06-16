@@ -12,7 +12,9 @@ src/docker/Dockerfile-r
 privateKey.pem
 
 ### GPT Images
+downloaded_image-conf.jpg
 downloaded_image.jpg
+multi-user-chat-memory.db
 
 ### STS ###
 .apt_generated

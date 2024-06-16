@@ -124,7 +124,7 @@ public class EchoController extends AbstractController {
 	}
 
     /**
-     * Remote Echo Test
+     * Remote Echo DownloadAllData
      * @param echoData
      * @return
      */
@@ -161,7 +161,7 @@ public class EchoController extends AbstractController {
     }
 
 	/**
-	 * Remote Echo Test
+	 * Remote Echo DownloadAllData
 	 * @param echoData
 	 * @return
 	 */

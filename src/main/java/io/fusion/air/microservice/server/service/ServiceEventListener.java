@@ -73,7 +73,7 @@ public class ServiceEventListener {
 	private boolean devMode;
 
 	/**
-	 * Shows Logo and Generate Test Tokens
+	 * Shows Logo and Generate DownloadAllData Tokens
 	 */
 	@EventListener(ApplicationReadyEvent.class)
 	public void doSomethingAfterStartup() {
@@ -83,7 +83,7 @@ public class ServiceEventListener {
 		// Initialize the Token
 		jsonWebToken.init(serviceConfig.getTokenType());
 		if(serverTokenTest && devMode) {
-			log.debug("Generate Test Tokens = {} ", serverTokenTest);
+			log.debug("Generate DownloadAllData Tokens = {} ", serverTokenTest);
 			generateTestToken();
 		}
 	}

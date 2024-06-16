@@ -321,7 +321,7 @@ public class CPU {
 	}
 
 	/**
-	 * Test CPU Utility
+	 * DownloadAllData CPU Utility
 	 *
 	 * @param args
 	 * @throws InterruptedException

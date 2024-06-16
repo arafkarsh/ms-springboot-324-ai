@@ -346,7 +346,7 @@ public class SecureData {
     }
 
     /**
-     * Test Encryption Decryption
+     * DownloadAllData Encryption Decryption
      * @param _cnt
      */
     public static void testEncryption(int _cnt) {

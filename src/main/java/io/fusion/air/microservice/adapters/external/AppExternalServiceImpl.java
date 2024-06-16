@@ -218,7 +218,7 @@ public class AppExternalServiceImpl {
     }
 
     /**
-     * Test the External Client
+     * DownloadAllData the External Client
      * @param args
      */
     public static void main(String[] args) {

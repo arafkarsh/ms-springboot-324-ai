@@ -125,7 +125,7 @@ Check out the <a href="https://github.com/arafkarsh/ms-springboot-324-ai/blob/ma
 
 ## Gen AI - Code Package Structure 
 
-### Package io.fusion.air.microservice.ai 
+### Package io.fusion.air.microservice.ai.genai 
 
 1. controllers (Rest Endpoints for testing the examples)
 2. core

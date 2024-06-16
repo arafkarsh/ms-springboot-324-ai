@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.fusion.air.ai</groupId>
 	<artifactId>ai-service</artifactId>
-	<version>0.1.0</version>
+	<version>0.2.0</version>
 	<packaging>jar</packaging>
 	<name>GenAiFusionService</name>
 	<description>Gen AI Fusion Template</description>
@@ -295,7 +295,7 @@
 		    <artifactId>spring-boot-starter-test</artifactId>
 		    <version>${spring.boot.version}</version>
 		    <scope>test</scope>
-		    <!-- Exclude JUnit as Spring Boot Starter Test uses JUnit 4 -->
+		    <!-- Exclude JUnit as Spring Boot Starter DownloadAllData uses JUnit 4 -->
 			<exclusions>
 				<exclusion>
 					<groupId>junit</groupId>
@@ -568,6 +568,7 @@
 			</plugin>
 			<!-- Maven Jar Plugin with dependencies in libs folder -->
 			<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-dependency-plugin -->
+			<!--
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
@@ -587,7 +588,9 @@
 					</execution>
 				</executions>
 			</plugin>
+			-->
 			<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
+			<!--
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -605,6 +608,7 @@
 					</archive>
 				</configuration>
 			</plugin>
+			-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>

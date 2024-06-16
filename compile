@@ -35,14 +35,16 @@ echo "--------------------------------------------------------------------------
 mvn -e package
 mvnCompRV=$?
 # -------------------------------------------------------------------------------------------
+# Remove this file
+rm target/ai-service*?.?.?.jar
 if [ $mvnCompRV == 0 ] 
 then
 	echo "---------------------------------------------------------------------------------------"
 	echo "Compiling Service > $ORG/$SERVICE :: SUCCESS"
 	echo "---------------------------------------------------------------------------------------"
 	echo "Copy the Fat and Thin jar files and the libs to the Docker Directory (src/docker)"
-	cp target/*service*-spring-boot.jar src/docker/$CONTAINER-spring-boot.jar
-	cp target/*service*?.?.?.jar src/docker/$CONTAINER-thin.jar
+	#cp target/*service*-spring-boot.jar src/docker/$CONTAINER-spring-boot.jar
+	#cp target/*service*?.?.?.jar src/docker/$CONTAINER-thin.jar
 	#cp target/libs/* src/docker/libs/
 	echo "Copy the application.properties File to the Docker Directory (src/docker)"
 	cp src/main/resources/application.properties src/docker/
@@ -57,7 +59,7 @@ then
 	echo "Building the Cocntainer for $ORG/$SERVICE Service ..... "
 	echo "---------------------------------------------------------------------------------------"
 	cd src/docker
-	build
+	# build
 	echo "---------------------------------------------------------------------------------------"
 	echo "$SERVICE Microservice Build Process Completed Successfully! ........... "
 	echo "---------------------------------------------------------------------------------------"
