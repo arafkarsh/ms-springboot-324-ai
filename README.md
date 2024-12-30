@@ -1,5 +1,9 @@
 # Gen Ai - Springboot / Langchain4J Examples
 
+- Java 21
+- SpringBoot 3.2.4
+- LangChain4J 0.2.0
+
 Generative AI refers to a subset of artificial intelligence that can generate new content based 
 on input data. This encompasses models that can create text, images, music, and even videos. 
 Examples of generative AI include language models like OpenAI's GPT-3 and DALL-E, which can 
