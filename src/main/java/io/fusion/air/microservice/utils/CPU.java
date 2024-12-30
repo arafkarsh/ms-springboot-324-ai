@@ -39,10 +39,8 @@ public class CPU {
 	private static final Logger log = getLogger(lookup().lookupClass());
 
 	// https://docs.oracle.com/javase/8/docs/api/index.html?java/lang/management/OperatingSystemMXBean.html
-	private static final OperatingSystemMXBean osMXBean
-			= ManagementFactory.getOperatingSystemMXBean();
-	private static final LinkedHashMap<String, Method> methodsMap
-			= new LinkedHashMap<String, Method>();
+	private static final OperatingSystemMXBean osMXBean = ManagementFactory.getOperatingSystemMXBean();
+	private static final LinkedHashMap<String, Method> methodsMap = new LinkedHashMap<>();
 	/**
 	 * Set up the CPU Stats with all the necessary Methods
 	 */
@@ -54,77 +52,65 @@ public class CPU {
 	 * Load All Methods
 	 */
 	private static void loadMethods() {
-		// System.out.println("Initializing CPU..");
 		for (Method method : osMXBean.getClass().getDeclaredMethods()) {
 			try {
-				// System.out.println("CPU.loadMethods() => Loading methods... "+method.getName()+"()");
 				method.setAccessible(true);
 				if (method.getName().startsWith("get") && Modifier.isPublic(method.getModifiers())) {
 					methodsMap.put(method.getName(), method);
 				}
 			} catch (Exception ex) {
-				// System.out.println("Error in CPU.loadMethods() : "+ex.getMessage());
-				log.info("Error in CPU.loadMethods() : "+ex.getMessage());
-				// ex.printStackTrace();
+				log.info("Error in CPU.loadMethods() : {} ", ex.getMessage());
 			}
 		} // Loop
 	}
 
 	/**
 	 * Invoke the Method
-	 * @param _methodName
+	 * @param methodName
 	 * @return
 	 */
-	private static Object invoke(String _methodName, OperatingSystemMXBean _osMXBean) {
-		if(_methodName == null) {
-			// System.out.println("Method "+_methodName+"() Invalid!");
-			log.info("Method "+_methodName+"() Invalid!");
+	private static Object invoke(String methodName, OperatingSystemMXBean osMXBean) {
+		if(methodName == null) {
+			log.info("Method {}() Invalid!", methodName);
 			return "";
 		}
-		if(_osMXBean == null) {
-			// System.out.println("OS MXBean "+_osMXBean+"() Invalid!");
-			log.info("OS MXBean "+_osMXBean+"() Invalid!");
+		if(osMXBean == null) {
+			log.info("OS MXBean {}() Invalid!", osMXBean);
 			return "";
 		}
-		Object value = new Long("0");
-		Method method = methodsMap.get(_methodName);
+		Object value =  Long.valueOf("0");
+		Method method = methodsMap.get(methodName);
 		if(method != null) {
 			try {
-				value = method.invoke(_osMXBean);
+				value = method.invoke(osMXBean);
 			} catch (Exception e) {
-				// System.out.println("Exception in method "+_methodName+".invoke(_osMXBean) " +"ERROR="+e.getMessage());
-				log.info("Exception in method "+_methodName+".invoke(_osMXBean) " +"ERROR="+e.getMessage());
-				// e.printStackTrace();
+				log.info("Exception in method {}.invoke(_osMXBean) ERROR={}", methodName,e.getMessage());
 			}
 		} else {
-			// System.out.println("Method "+_methodName+"() Not Found!");
-			log.debug("Method "+_methodName+"() Not Found!");
+			log.debug("Method {}() Not Found!", methodName);
 		}
-		// System.out.println(method.getName() + " = " + value);
 		return value;
 	}
 
 	// ---------------------------------------------------------------------------
-
 	/**
 	 * Prints All the CPU Stats
 	 */
 	public static void printAllCpuStats() {
 		for(String methodName : methodsMap.keySet()) {
-			System.out.println(methodName+"() = "+invoke(methodName, osMXBean));
+			Std.println(methodName+"() = "+invoke(methodName, osMXBean));
 		}
 	}
 
 	// ============  All CPU Stat Public Methods =================================
 	//  Memory Details -----------------------------------------------------------
-
 	/**
 	 * Get Committed Virtual Memory Size
 	 * @return
 	 */
 	public static long getCommittedVirtualMemorySize() {
 		try {	return (Long) invoke("getCommittedVirtualMemorySize", osMXBean); }
-		catch (Exception ignored) { ignored.printStackTrace(); }
+		catch (Exception ignored) { Std.printError(ignored); }
 		return 0;
 	}
 
@@ -134,7 +120,7 @@ public class CPU {
 	 */
 	public static long getTotalSwapSpaceSize() {
 		try {	return (Long) invoke("getTotalSwapSpaceSize", osMXBean); }
-		catch (Exception ignored) { ignored.printStackTrace(); }
+		catch (Exception ignored) { Std.printError(ignored);  }
 		return 0;
 	}
 
@@ -144,7 +130,7 @@ public class CPU {
 	 */
 	public static long getFreeSwapSpaceSize() {
 		try {	return (Long) invoke("getFreeSwapSpaceSize", osMXBean); }
-		catch (Exception ignored) { ignored.printStackTrace(); }
+		catch (Exception ignored) { Std.printError(ignored);  }
 		return 0;
 	}
 
@@ -154,7 +140,7 @@ public class CPU {
 	 */
 	public static int getProcessCpuTime() {
 		try {	return (Integer) invoke("getProcessCpuTime", osMXBean); }
-		catch (Exception ignored) { ignored.printStackTrace(); }
+		catch (Exception ignored) { Std.printError(ignored);  }
 		return 0;
 	}
 
@@ -164,7 +150,7 @@ public class CPU {
 	 */
 	public static long getFreePhysicalMemorySize() {
 		try {	return (Long) invoke("getFreePhysicalMemorySize", osMXBean); }
-		catch (Exception ignored) { ignored.printStackTrace(); }
+		catch (Exception ignored) { Std.printError(ignored);  }
 		return 0;
 	}
 
@@ -174,12 +160,11 @@ public class CPU {
 	 */
 	public static long getTotalPhysicalMemorySize() {
 		try {	return (Long) invoke("getTotalPhysicalMemorySize", osMXBean); }
-		catch (Exception ignored) { ignored.printStackTrace(); }
+		catch (Exception ignored) { Std.printError(ignored);  }
 		return 0;
 	}
 
 	//  File Descriptor Count ----------------------------------------------------
-
 	/**
 	 * Get Open File Descriptor Count
 	 * @return
@@ -187,7 +172,8 @@ public class CPU {
 	public static long getOpenFileDescriptorCount() {
 		try {	return  (Long) invoke("getOpenFileDescriptorCount", osMXBean); }
 		catch (Exception ignored) {
-			/* ignored.printStackTrace(); */ }
+			Std.println(ignored.getMessage());
+		}
 		return 0;
 	}
 
@@ -198,18 +184,18 @@ public class CPU {
 	public static long getMaxFileDescriptorCount() {
 		try {	return  (Long) invoke("getMaxFileDescriptorCount", osMXBean); }
 		catch (Exception ignored) {
-			/* ignored.printStackTrace(); */}
+			Std.println(ignored.getMessage());
+		}
 		return 0;
 	}
 
 	// CPU LOAD -------------------------------------------------------------------
-
 	/**
 	 * Get System CPU Load
 	 * @return
 	 */
 	public static double getSystemCpuLoad2() {
-		// System.out.println("getSystemCpuLoad() <=> "+invoke("getSystemCpuLoad"));
+		// Std.println("getSystemCpuLoad() <=> "+invoke("getSystemCpuLoad"));
 		try {	return  (Double) invoke("getSystemCpuLoad",osMXBean); }
 		catch (Exception ignored) {
 			/* ignored.printStackTrace(); */}
@@ -217,9 +203,10 @@ public class CPU {
 	}
 
 	public static Object getSystemCpuLoad() {
-		// System.out.println("getSystemCpuLoad() <=> "+invoke("getSystemCpuLoad"));
 		try {	return  invoke("getSystemCpuLoad", osMXBean); }
-		catch (Exception ignored) { ignored.printStackTrace(); }
+		catch (Exception ignored) {
+			Std.println(ignored.getMessage());
+		}
 		return "0.0";
 	}
 
@@ -229,31 +216,33 @@ public class CPU {
 	 */
 	public static double getProcessCpuLoad2() {
 		try {	return  (Double) invoke("getProcessCpuLoad", osMXBean); }
-		catch (Exception ignored) { ignored.printStackTrace(); }
+		catch (Exception ignored) {
+			Std.println(ignored.getMessage());
+		}
 		return 0.0;
 	}
 	public static Object getProcessCpuLoad() {
 		try {	return  invoke("getProcessCpuLoad", osMXBean); }
-		catch (Exception ignored) { ignored.printStackTrace(); }
+		catch (Exception ignored) { Std.printError(ignored);  }
 		return "0.0";
 	}
 
 	/**
 	 * Returns in MB
-	 * @param _bytes
+	 * @param bytes
 	 * @return
 	 */
-	public static long toMB(long _bytes) {
-		return (_bytes > 0) ? _bytes / (1024 * 1024) : 0;
+	public static long toMB(long bytes) {
+		return (bytes > 0) ? bytes / (1024 * 1024) : 0;
 	}
 
 	/**
 	 *
-	 * @param _bytes
+	 * @param bytes
 	 * @return
 	 */
-	public static String toMBString(long _bytes) {
-		long mb = toMB(_bytes);
+	public static String toMBString(long bytes) {
+		long mb = toMB(bytes);
 		return (mb > 1024) ? String.format("%.02f",((double)mb/1024)) + " GB" : mb + " MB";
 	}
 
@@ -321,7 +310,7 @@ public class CPU {
 	}
 
 	/**
-	 * DownloadAllData CPU Utility
+	 * Test CPU Utility
 	 *
 	 * @param args
 	 * @throws InterruptedException
@@ -332,11 +321,11 @@ public class CPU {
 
 		int sleepTime = 3000;
 		for(int x=0; x<7; x++) {
-			System.out.println(x+")> Sleeping for "+sleepTime+" ms : "+new Date());
+			Std.println(x+")> Sleeping for "+sleepTime+" ms : "+new Date());
 			Thread.sleep(sleepTime);
-			System.out.println(new Date()+printCpuStats());
+			Std.println(new Date()+printCpuStats());
 		}
-		System.out.println(new Date()+printCpuStats());
+		Std.println(new Date()+printCpuStats());
 	}
 
 }

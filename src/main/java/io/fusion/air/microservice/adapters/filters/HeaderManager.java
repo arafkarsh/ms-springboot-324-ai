@@ -15,17 +15,22 @@
  */
 package io.fusion.air.microservice.adapters.filters;
 
-import io.fusion.air.microservice.adapters.aop.AuthorizeRequestAspect;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+// Custom
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.Enumeration;
+
+import static io.fusion.air.microservice.security.jwt.core.JsonWebTokenConstants.REFRESH_TOKEN;
+import static io.fusion.air.microservice.security.jwt.core.JsonWebTokenConstants.TX_TOKEN;
+import static java.lang.invoke.MethodHandles.lookup;
+import static org.slf4j.LoggerFactory.getLogger;
 
 /**
  * @author: Araf Karsh Hamid
@@ -36,11 +41,26 @@ import java.util.Enumeration;
 @RequestScope
 public class HeaderManager {
 
-    @Autowired
-    private HttpServletRequest request;
+    // Set Logger -> Lookup will automatically determine the class name.
+    private static final Logger log = getLogger(lookup().lookupClass());
 
-    @Autowired
-    private HttpServletResponse response;
+    // Autowired using the Constructor
+    private final HttpServletRequest request;
+
+    // Autowired using the Constructor
+    private final HttpServletResponse response;
+
+    private static final String BEARER = "Bearer";
+
+    /**
+     * Autowired using the Constructor
+     * @param req
+     * @param res
+     */
+    public HeaderManager(HttpServletRequest req, HttpServletResponse res) {
+        request = req;
+        response = res;
+    }
 
     /**
      * Adds Response Header
@@ -103,13 +123,13 @@ public class HeaderManager {
         if(token != null) {
             response.setHeader(HttpHeaders.AUTHORIZATION, token);
         }
-        String refresh = request.getHeader(AuthorizeRequestAspect.REFRESH_TOKEN);
+        String refresh = request.getHeader(REFRESH_TOKEN);
         if(refresh != null) {
-            response.setHeader(AuthorizeRequestAspect.REFRESH_TOKEN, refresh);
+            response.setHeader(REFRESH_TOKEN, refresh);
         }
-        String txToken = request.getHeader(AuthorizeRequestAspect.TX_TOKEN);
+        String txToken = request.getHeader(TX_TOKEN);
         if (txToken != null) {
-            response.setHeader(AuthorizeRequestAspect.TX_TOKEN, txToken);
+            response.setHeader(TX_TOKEN, txToken);
         }
     }
 
@@ -121,7 +141,7 @@ public class HeaderManager {
     public static String getAuthToken(HttpServletRequest request) {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         if(token != null) {
-            token = token.replaceAll("Bearer", "");
+            token = token.replace(BEARER, "");
         }
         return token;
     }
@@ -132,9 +152,9 @@ public class HeaderManager {
      * @return
      */
     public static String getRefreshToken(HttpServletRequest request) {
-        String token = request.getHeader(AuthorizeRequestAspect.REFRESH_TOKEN);
+        String token = request.getHeader(REFRESH_TOKEN);
         if(token != null) {
-            token = token.replaceAll("Bearer", "");
+            token = token.replace(BEARER, "");
         }
         return token;
     }
@@ -145,9 +165,9 @@ public class HeaderManager {
      * @return
      */
     public static String getTxToken(HttpServletRequest request) {
-        String token = request.getHeader(AuthorizeRequestAspect.TX_TOKEN);
+        String token = request.getHeader(TX_TOKEN);
         if(token != null) {
-            token = token.replaceAll("Bearer", "");
+            token = token.replace(BEARER, "");
         }
         return token;
     }
@@ -163,7 +183,8 @@ public class HeaderManager {
         while(hNames.hasMoreElements()) {
             String name = hNames.nextElement();
             headers.addIfAbsent(name, request.getHeader(name));
-            System.out.println(name + " = " + request.getHeader(name));
+            Object o = request.getHeader(name);
+            log.info("{} = {}",name, o);
         }
         return headers;
     }
@@ -182,13 +203,13 @@ public class HeaderManager {
             if (token != null) {
                 headers.addIfAbsent(HttpHeaders.AUTHORIZATION, token);
             }
-            String refresh = request.getHeader(AuthorizeRequestAspect.REFRESH_TOKEN);
+            String refresh = request.getHeader(REFRESH_TOKEN);
             if (refresh != null) {
-                headers.addIfAbsent(AuthorizeRequestAspect.REFRESH_TOKEN, refresh);
+                headers.addIfAbsent(REFRESH_TOKEN, refresh);
             }
-            String txToken = request.getHeader("TX-TOKEN");
+            String txToken = request.getHeader(TX_TOKEN);
             if (txToken != null) {
-                headers.addIfAbsent("TX-TOKEN", txToken);
+                headers.addIfAbsent(TX_TOKEN, txToken);
             }
         }
         return headers;

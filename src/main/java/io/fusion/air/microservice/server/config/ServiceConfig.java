@@ -15,16 +15,16 @@
  */
 package io.fusion.air.microservice.server.config;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.fusion.air.microservice.utils.Utils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
+
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * Service Configuration
@@ -49,38 +49,26 @@ public class ServiceConfig implements Serializable {
 	// Health Path
 	public static final String HEALTH_PATH = "/service";
 
-	public static final String DB_H2 		= "H2";
-	public static final String DB_POSTGRESQL = "PostgreSQL";
-	public static final String DB_MYSQL 		= "MySQL";
-	public static final String DB_ORACLE 	= "Oracle";
-
-	@JsonIgnore
-	private ConfigMap configMap = new ConfigMap();
-
 	/**
-	 * Returns the ConfigMap
-	 * @return
+	 * To be used outside SpringBoot Context
+	 * For WireMock Testing the External Services
 	 */
-	public ConfigMap getConfigMap() {
-		configMap.setServiceOrg(serviceOrg);
-		configMap.setServiceName( serviceName);
-		configMap.setServiceApiPrefix( serviceApiPrefix);
-		configMap.setServiceApiVersion( serviceApiVersion);
-		configMap.setServiceApiName( serviceApiName);
-		configMap.setServiceApiPath( serviceApiPath);
-		configMap.setServiceApiErrorPrefix( serviceApiErrorPrefix);
-		configMap.setServiceContainer( serviceContainer);
-		configMap.setServiceUrl( serviceUrl);
-		configMap.setApiDocPath( apiDocPath) ;
-		configMap.setBuildNumber( buildNumber);
-		configMap.setBuildDate( buildDate) ;
-		configMap.setServerVersion( serverVersion);
-		configMap.setServerHost( serverHost) ;
-		configMap.setAppPropertyList( appPropertyList);
-		configMap.setAppPropertyMap( appPropertyMap);
-		return configMap;
+	@Autowired
+	public ServiceConfig() {
+		this("localhost", 8080);
 	}
 
+	/**
+	 * To be used outside SpringBoot Context
+	 * For WireMock Testing the External Services
+	 *
+	 * @param rHost
+	 * @param rPort
+	 */
+	public ServiceConfig(String rHost, int rPort) {
+		this.remoteHost = rHost;
+		this.remotePort = rPort;
+	}
 
 	/**
 	 * Return the JSON String
@@ -106,6 +94,23 @@ public class ServiceConfig implements Serializable {
 		sb.append("\"app.property.map\": ").append(Utils.toJsonString(appPropertyMap));
 		sb.append("}");
 		return sb.toString();
+	}
+
+	/**
+	 * Returns Basic Info about the Server
+	 * @return
+	 */
+	public Map<String, String> getConfigMap() {
+		HashMap<String,String> map = new LinkedHashMap<>();
+		map.put("swagger.api.path", apiDocPath);
+		map.put("service.org", serviceOrg);
+		map.put("service.name",  serviceName);
+		map.put("service.url", serviceUrl);
+		map.put("service.api.version", serviceApiVersion);
+		map.put("build.number", ""+buildNumber);
+		map.put("build.date", buildDate);
+		map.put("serverVersion", serverVersion);
+		return map;
 	}
 
 	@Value("${service.org:OrgNotDefined}")
@@ -141,6 +146,9 @@ public class ServiceConfig implements Serializable {
 	@Value("${service.license:MIT License}")
 	private String serviceLicense;
 
+	@Value("${service.license.url}")
+	private String serviceLicenseURL;
+
 	@Value("${springdoc.swagger-ui.path}")
 	private String apiDocPath;
 
@@ -156,7 +164,6 @@ public class ServiceConfig implements Serializable {
 	@Value("${server.host:localhost}")
 	private String serverHost;
 
-	// server.resources.url=${service.url}${service.api.path}
 	@Value("${server.resources.url}")
 	private String serverResourceUrl;
 
@@ -191,113 +198,38 @@ public class ServiceConfig implements Serializable {
 	@Value("${server.restart}")
 	private boolean serverRestart;
 
-	// server.crypto.public.key=publicKey.pem
-	@Value("${server.crypto.public.key:publicKey.pem}")
-	private String cryptoPublicKeyFile;
+	@Value("${server.api.url.print}")
+	private boolean serverPrintAPIUrl;
 
-	// server.crypto.private.key=privateKey.pem
-	@Value("${server.crypto.private.key:privateKey.pem}")
-	private String cryptoPrivateKeyFile;
+	@Value("${spring.profiles.default:dev}")
+	private String activeProfile;
 
-	// server.token.issuer=${service.org}
-	@Value("${server.token.issuer}")
-	private String tokenIssuer;
-
-	// server.token.type=1
-	// (Type 1 = secret key, 2 = public / private key)
-	@Value("${server.token.type:1}")
-	private int tokenType;
-
-	@Value("${server.token.test}")
-	private boolean serverTokenTest;
-
-	// server.token.auth.expiry=300000
-	@Value("${server.token.auth.expiry:300000}")
-	private long tokenAuthExpiry;
-
-	// server.token.refresh.expiry=1800000
-	@Value("${server.token.refresh.expiry:1800000}")
-	private long tokenRefreshExpiry;
-
-	@Value("${server.token.key:sigmaEpsilon6109871597}")
-	private String tokenKey;
-
-	// server.secure.data.key
-	@Value("${server.secure.data.key:alphaHawk6109871597}")
-	private String secureDataKey;
-
-	// Database Configurations
-	@Value("${db.server:localhost}")
-	private String dataSourceServer;
-
-	@Value("${db.port:5432}")
-	private int dataSourcePort;
-
-	@Value("${db.name:demo}")
-	private String dataSourceName;
-
-	@Value("${db.schema:demo}")
-	private String dataSourceSchema;
-
-	@Value("${db.vendor:H2}")
-	private String dataSourceVendor;
-
-	@Value("${spring.datasource.url:jdbc:h2:mem:demo;DB_CLOSE_ON_EXIT=FALSE}")
-	private String dataSourceURL;
-
-	@Value("${spring.datasource.driverClassName:org.h2.Driver}")
-	private String dataSourceDriverClassName;
-
-	@Value("${spring.datasource.username:sa}")
-	private String dataSourceUserName;
-
-	@Value("${spring.datasource.password:password}")
-	private String dataSourcePassword;
-
-	@Value("${spring.jpa.database-platform:org.hibernate.dialect.H2Dialect}")
-	private String dataSourceDialect;
-
-	// @Value("${logging.level}")
-	// private String loggingLevel;
-	
 	@Value("${spring.codec.max-in-memory-size:3MB}")
 	private String springCodecMaxMemory;
-
 
 	// Get All the System Properties
 	@JsonIgnore
 	@Value("#{systemProperties}")
 	private HashMap<String, String> systemProperties;
-	
+
+	// Property Type - Product
+	@Value("${app.property.product:fusion.air.product}")
+	private String appPropertyProduct;
+
+	// Deployed App Property Product List
+	@JsonIgnore
+	@Value("${app.property.product.list}")
+	private ArrayList<String> appPropertyProductList;
+
 	// Deployed App Property List
 	@JsonIgnore
 	@Value("${app.property.list}")
 	private ArrayList<String> appPropertyList;
-	
+
 	// Deployed App Properties Map
 	@JsonIgnore
 	@Value("#{${app.property.map}}")
 	private HashMap<String, String> appPropertyMap;
-	
-	/**
-	 * To be used outside SpringBoot Context
-	 * For WireMock Testing the External Services
-	 */
-	public ServiceConfig() {
-		this("localhost", 8080);
-	}
-	
-	/**
-	 * To be used outside SpringBoot Context
-	 * For WireMock Testing the External Services
-	 * 
-	 * @param rHost
-	 * @param rPort
-	 */
-	public ServiceConfig(String rHost, int rPort) {
-		this.remoteHost = rHost;
-		this.remotePort = rPort;
-	}
 
 	/**
 	 * Returns Service Details as HTML
@@ -360,13 +292,6 @@ public class ServiceConfig implements Serializable {
 	public String getSpringCodecMaxMemory() {
 		return springCodecMaxMemory;
 	}
-
-	/**
-	 * @return the tokenKey
-	 */
-	public String getTokenKey() {
-		return tokenKey;
-	}
 	
 	/**
 	 * @return the serverVersion
@@ -380,14 +305,6 @@ public class ServiceConfig implements Serializable {
 	 */
 	public boolean isServerRestart() {
 		return serverRestart;
-	}
-
-	/**
-	 *
-	 * @return
-	 */
-	public boolean isServerTokenTest() {
-		return serverTokenTest;
 	}
 
 	/**
@@ -412,23 +329,39 @@ public class ServiceConfig implements Serializable {
 	}
 
 	/**
-	 * @return the appPropertyList
+	 * Get Property Product Name
+	 * @return
 	 */
-	public ArrayList<String> getAppPropertyList() {
+	public String getAppPropertyProduct() {
+		return appPropertyProduct;
+	}
+
+	/**
+	 * @return the appPropertyProductList
+	 */
+	public List<String> getAppPropertyProductList() {
+		return appPropertyProductList;
+	}
+
+	/**
+	 * Get Property List
+	 * @return
+	 */
+	public List<String> getAppPropertyList() {
 		return appPropertyList;
 	}
 
 	/**
 	 * @return the appPropertyMap
 	 */
-	public HashMap<String, String> getAppPropertyMap() {
+	public Map<String, String> getAppPropertyMap() {
 		return appPropertyMap;
 	}
 	
 	/**
 	 * @return the systemProperties
 	 */
-	public HashMap<String, String> systemProperties() {
+	public Map<String, String> systemProperties() {
 		return getSystemProperties();
 	}
 
@@ -473,11 +406,11 @@ public class ServiceConfig implements Serializable {
 	}
 
 	/**
-	 * Retuurns Service API Error Prefix
+	 * Returns Service API Error Prefix
 	 * @return
 	 */
-	public String getServiceAPIErrorPrefix() {
-		return (getServiceApiErrorPrefix() != null) ? getServiceApiErrorPrefix() : "99";
+	public String getServiceApiErrorPrefix() {
+		return (serviceApiErrorPrefix != null) ? serviceApiErrorPrefix : "99";
 	}
 
 	/**
@@ -557,156 +490,11 @@ public class ServiceConfig implements Serializable {
 	}
 
 	/**
-	 * Returns Database URL
-	 * @return
-	 */
-	public String getDataSourceURL() {
-		return dataSourceURL;
-	}
-
-	/**
-	 * Returns Driver ClassNames
-	 * @return
-	 */
-	public String getDataSourceDriverClassName() {
-		return dataSourceDriverClassName;
-	}
-
-	/**
-	 * Returns Database User Name
-	 * @return
-	 */
-	public String getDataSourceUserName() {
-		return dataSourceUserName;
-	}
-
-	/**
-	 * Returns Database Password
-	 * @return
-	 */
-	public String getDataSourcePassword() {
-		return dataSourcePassword;
-	}
-
-	/***
-	 * Returns Dialect
-	 * @return
-	 */
-	public String getDataSourceDialect() {
-		return dataSourceDialect;
-	}
-
-	/**
-	 * DataSource Server
-	 * @return
-	 */
-	public String getDataSourceServer() {
-		return dataSourceServer;
-	}
-
-	/**
-	 * DataSource Port
-	 * @return
-	 */
-	public int getDataSourcePort() {
-		return dataSourcePort;
-	}
-
-	/**
-	 * DataSource DB Name
-	 * @return
-	 */
-	public String getDataSourceName() {
-		return dataSourceName;
-	}
-
-	/**
-	 * Returns DB Schema Name
-	 * @return
-	 */
-	public String getDataSourceSchema() {
-		return dataSourceSchema;
-	}
-
-	/**
-	 * Returns the Data Source Vendor (Ex. H2, PostgreSQL)
-	 * @return
-	 */
-	public String getDataSourceVendor() {
-		return dataSourceVendor;
-	}
-
-	/**
 	 * Returns System Properties
 	 * @return
 	 */
-	public HashMap<String, String> getSystemProperties() {
+	public Map<String, String> getSystemProperties() {
 		return systemProperties;
-	}
-
-	/**
-	 * Returns the Service API Error Prefix
-	 * @return
-	 */
-	public String getServiceApiErrorPrefix() {
-		return serviceApiErrorPrefix;
-	}
-
-	/**
-	 * Returns the Auth Token Expiry
-	 * @return
-	 */
-	public long getTokenAuthExpiry() {
-		return tokenAuthExpiry;
-	}
-
-	/**
-	 * Returns the Refresh Token Expiry
-	 */
-	public long getTokenRefreshExpiry() {
-		return tokenRefreshExpiry;
-	}
-
-	/**
-	 * Secure Data Key
-	 * @return
-	 */
-	public String getSecureDataKey() {
-		return secureDataKey;
-	}
-
-	/**
-	 * Returns Token Type
-	 * Token Type is used to sign the JWTs.
-	 * 1 = secret key,
-	 * 2 = public / private key
-	 * @return
-	 */
-	public int getTokenType() {
-		return tokenType;
-	}
-
-	/**
-	 * Returns the Public Key File Name
-	 * @return
-	 */
-	public String getCryptoPublicKeyFile() {
-		return cryptoPublicKeyFile;
-	}
-
-	/**
-	 * Returns the Private Key File Name
-	 * @return
-	 */
-	public String getCryptoPrivateKeyFile() {
-		return cryptoPrivateKeyFile;
-	}
-
-	/**
-	 * Returns the Token Issuer
-	 */
-	public String getTokenIssuer() {
-		return tokenIssuer;
 	}
 
 	/**
@@ -715,5 +503,29 @@ public class ServiceConfig implements Serializable {
 	 */
 	public String getServerResourceUrl() {
 		return serverResourceUrl;
+	}
+
+	/**
+	 * Returns if the API URL can be printed
+	 * @return
+	 */
+	public boolean isServerPrintAPIUrl() {
+		return serverPrintAPIUrl;
+	}
+
+	/**
+	 * Returns the Active Profile Name
+	 * @return
+	 */
+	public String getActiveProfile() {
+		return activeProfile;
+	}
+
+	/**
+	 * Return Service License URL
+	 * @return
+	 */
+	public String getServiceLicenseURL() {
+		return serviceLicenseURL;
 	}
 }

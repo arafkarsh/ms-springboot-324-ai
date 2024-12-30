@@ -15,20 +15,15 @@
  */
 package io.fusion.air.microservice;
 
+// Custom
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.fusion.air.microservice.server.config.ServiceConfig;
+import io.fusion.air.microservice.utils.Utils;
 import jakarta.annotation.PostConstruct;
-// import javax.servlet.MultipartConfigElement;
-// import jakarta.servlet.MultipartConfigElement;
 import jakarta.servlet.http.HttpServletRequest;
-
-import io.fusion.air.microservice.adapters.aop.ExceptionHandlerAdvice;
-import io.fusion.air.microservice.server.controllers.HealthController;
-
 import org.slf4j.Logger;
-
-// Spring Framework
-import org.springdoc.core.GroupedOpenApi;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.CommandLineRunner;
@@ -37,45 +32,28 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Primary;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-// Open API Imports
-import io.swagger.v3.oas.models.ExternalDocumentation;
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.info.License;
-import io.swagger.v3.oas.models.Components;
-import io.swagger.v3.oas.models.security.SecurityScheme;
-import io.swagger.v3.oas.models.servers.Server;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static java.lang.invoke.MethodHandles.lookup;
-import static org.slf4j.LoggerFactory.getLogger;
-
-// Cache
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.web.filter.ForwardedHeaderFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.Arrays;
+
+import static java.lang.invoke.MethodHandles.lookup;
+import static org.slf4j.LoggerFactory.getLogger;
 
 /**
  * Micro Service - Spring Boot Application
- * API URL : http://localhost:9090/service/api/v1/swagger-ui.html
+ * API URL : http://localhost:19090/ai-service/api/v1/swagger-ui.html
  *
  * @author arafkarsh
  */
@@ -93,28 +71,34 @@ public class ServiceBootStrap {
 	private static final Logger log = getLogger(lookup().lookupClass());
 
 	// All CAPS Words will be replaced using data from application.properties
-	private final String title = "<h1>Welcome to MICRO service<h1/>"
+	private  static final String SERVICE_TITLE = "<h1>Welcome to MICRO service</h1>"
 			+"<h3>Copyright (c) COMPANY, 2022</h3>"
 			+"<h5>Build No: BN :: Build Date: BD :: </h5>";
 
 	private static ConfigurableApplicationContext context;
 
-	@Autowired
-	private ServiceConfig serviceConfig;
+	// Autowired using Constructor Injection
+	private final ServiceConfig serviceConfig;
 
-	// Get the Service Name from the properties file
-	@Value("${service.name:NameNotDefined}")
-	private String serviceName = "Unknown";
+	@Value("${spring.profiles.default:dev}")
+	private static String activeProfile;
+
+	/**
+	 * Autowired using the Constructor Injection
+	 * Microservice Bootstrap
+	 * @param serviceConfig
+	 */
+	public ServiceBootStrap(ServiceConfig serviceConfig) {
+		this.serviceConfig = serviceConfig;
+	}
 	
 	/**
 	 * Start the Microservice
-	 *
+	 * API URL : http://localhost:19090/ai-service/api/v1/swagger-ui.html
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// Start the Server
-		start(args);
-		// API URL : http://localhost:19090/ms-ai/api/v1/swagger-ui.html
+		start(args);			// Start the Server
 	}
 
 	/**
@@ -122,12 +106,18 @@ public class ServiceBootStrap {
 	 * @param args
 	 */
 	public static void start(String[] args) {
-		log.info("Booting Service ..... ..");
+		log.info("Booting AI-MicroService ..... ..");
 		try {
 			context = SpringApplication.run(ServiceBootStrap.class, args);
-			log.info("Booting Service ..... ...Startup completed!");
+			// Set a default profile if no other profile is specified
+			ConfigurableEnvironment environment = context.getEnvironment();
+			if (environment.getActiveProfiles().length == 0) {
+				log.info("Profile is missing, so defaulting to {} Profile!", activeProfile);
+				environment.addActiveProfile(activeProfile);
+			}
+			log.info("Booting AI-Microservice... Startup completed!");
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.debug(Utils.getStackTraceAsString(e));
 		}
 	}
 
@@ -135,15 +125,13 @@ public class ServiceBootStrap {
 	 * Restart the Server
 	 */
 	public static void restart() {
-		log.info("Restarting Service ..... .. 1");
+		log.info("Restarting Service.... .. ");
 		ApplicationArguments args = context.getBean(ApplicationArguments.class);
-		log.info("Restarting Service ..... .. 2");
-
 		Thread thread = new Thread(() -> {
 			context.close();
 			start(args.getSourceArgs());
 		});
-		log.info("Restarting Service ..... .. 3");
+		log.info("Restarting Service.... Completed");
 
 		thread.setDaemon(false);
 		thread.start();
@@ -154,15 +142,15 @@ public class ServiceBootStrap {
 	 */
 	@PostConstruct
 	public void configure() {
+		log.debug("For Future Usage..");
 	}
 
 	@Bean
-	public WebMvcConfigurer corsConfigurer()
-	{
+	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("*");
+				registry.addMapping("/**").allowedOrigins("host*");
 			}
 		};
 	}
@@ -173,12 +161,13 @@ public class ServiceBootStrap {
 	 */
 	@GetMapping("/root")
 	public String home(HttpServletRequest request) {
-		log.info("Request to Home Page of Service... "+printRequestURI(request));
-		return (serviceConfig == null) ? this.title :
-				this.title.replaceAll("MICRO", serviceConfig.getServiceName())
-						.replaceAll("COMPANY", serviceConfig.getServiceOrg())
-						.replaceAll("BN", "" + serviceConfig.getBuildNumber())
-						.replaceAll("BD", serviceConfig.getBuildDate());
+		String result = printRequestURI(request);
+		log.info("Request to Home Page of Service...{} ",  result);
+		return (serviceConfig == null) ? SERVICE_TITLE :
+				SERVICE_TITLE.replace("MICRO", serviceConfig.getServiceName())
+						.replace("COMPANY", serviceConfig.getServiceOrg())
+						.replace("BN", "" + serviceConfig.getBuildNumber())
+						.replace("BD", serviceConfig.getBuildDate());
 	}
 
 	/**
@@ -196,12 +185,13 @@ public class ServiceBootStrap {
 			sb.append(req[x]).append("|");
 		}
 		sb.append("\n");
-		log.info("HttpServletRequest: ["+sb.toString()+"]");
-		return sb.toString();
+		String result = sb.toString();
+		log.info("HttpServletRequest: [ {} ]", result);
+		return result;
 	}
 
 	/**
-	 * ConsoleRunner Prints all the Beans defined ...
+	 * CommandLineRunner Prints all the Beans defined ...
 	 * @param ctx
 	 * @return
 	 */
@@ -217,111 +207,8 @@ public class ServiceBootStrap {
 		};
 	}
 
-	/**
-	 * Open API v3 Docs - All
-	 * Reference: https://springdoc.org/faq.html
-	 * @return
-	 */
 	@Bean
-	public GroupedOpenApi allPublicApi() {
-		return GroupedOpenApi.builder()
-				.group(serviceConfig.getServiceName()+"-service")
-				.pathsToMatch(serviceConfig.getServiceApiPath()+"/**")
-				.build();
-	}
-
-	/**
-	 * Open API v3 Docs - MicroService
-	 * Reference: https://springdoc.org/faq.html
-	 * @return
-	 */
-	@Bean
-	public GroupedOpenApi appPublicApi() {
-		return GroupedOpenApi.builder()
-				.group(serviceConfig.getServiceName()+"-service-core")
-				.pathsToMatch(serviceConfig.getServiceApiPath()+"/**")
-				.pathsToExclude(serviceConfig.getServiceApiPath()+"/service/**", serviceConfig.getServiceApiPath()+"/config/**")
-				.build();
-	}
-
-	/**
-	 * Open API v3 Docs - Core Service
-	 * Reference: https://springdoc.org/faq.html
-	 * Change the Resource Mapping in HealthController
-	 *
-	 * @see HealthController
-	 */
-	@Bean
-	public GroupedOpenApi configPublicApi() {
-		// System.out.println;
-		return GroupedOpenApi.builder()
-				.group(serviceConfig.getServiceName()+"-service-config")
-				.pathsToMatch(serviceConfig.getServiceApiPath()+"/config/**")
-				.build();
-	}
-
-	@Bean
-	public GroupedOpenApi systemPublicApi() {
-		return GroupedOpenApi.builder()
-				.group(serviceConfig.getServiceName()+"-service-health")
-				.pathsToMatch(serviceConfig.getServiceApiPath()+"/service/**")
-				.build();
-	}
-
-	/**
-	 * Open API v3
-	 * Reference: https://springdoc.org/faq.html
-	 * @return
-	 */
-	@Bean
-	public OpenAPI buildOpenAPI() {
-		return new OpenAPI()
-				.servers(getServers())
-				.info(new Info()
-						.title(serviceConfig.getServiceName()+" Service")
-						.description(serviceConfig.getServiceDetails())
-						.version(serviceConfig.getServerVersion())
-						.license(new License().name("License: "+serviceConfig.getServiceLicense())
-								.url(serviceConfig.getServiceUrl()))
-				)
-				.externalDocs(new ExternalDocumentation()
-						.description(serviceConfig.getServiceName()+" Service Source Code")
-						.url(serviceConfig.getServiceApiRepository())
-				)
-				.components(new Components().addSecuritySchemes("bearer-key",
-						new SecurityScheme()
-								.type(SecurityScheme.Type.HTTP)
-								.scheme("bearer")
-								.bearerFormat("JWT"))
-				);
-	}
-
-	/**
-	 * Get the List of Servers for Open API Docs - Swagger
-	 * @return
-	 */
-	private List<Server> getServers() {
-		List<Server> serverList = new ArrayList<Server>();
-
-		Server dev = new Server();
-		dev.setUrl(serviceConfig.getServerHostDev());
-		dev.setDescription(serviceConfig.getServerHostDevDesc());
-		Server uat = new Server();
-		uat.setUrl(serviceConfig.getServerHostUat());
-		uat.setDescription(serviceConfig.getServerHostUatDesc());
-		Server prod = new Server();
-		prod.setUrl(serviceConfig.getServerHostProd());
-		prod.setDescription(serviceConfig.getServerHostProdDesc());
-
-		serverList.add(dev);
-		serverList.add(uat);
-		serverList.add(prod);
-
-		return serverList;
-	}
-
-	@Bean
-	ForwardedHeaderFilter forwardedHeaderFilter() {
+	public ForwardedHeaderFilter forwardedHeaderFilter() {
 		return new ForwardedHeaderFilter();
 	}
 	/**
@@ -343,26 +230,5 @@ public class ServiceBootStrap {
 		return new ObjectMapper()
 				.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 				.findAndRegisterModules();
-	}
-
-	/**
-	 * All file upload till 512 MB
-	 * returns MultipartConfigElement
-	 * @return
-	 */
-	/**
-	 * Deprecated from SpringBoot 3.1
-	@Bean
-	public MultipartConfigElement multipartConfigElement() {
-		MultipartConfigFactory factory = new MultipartConfigFactory();
-		factory.setMaxFileSize(DataSize.ofBytes(500000000L));
-		return factory.createMultipartConfig();
-	}
-	 */
-
-	@Primary
-	@Bean
-	public ExceptionHandlerAdvice serviceExceptionAdvisor(){
-		return new ExceptionHandlerAdvice();
 	}
 }

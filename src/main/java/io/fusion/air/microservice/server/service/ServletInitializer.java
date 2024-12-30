@@ -15,10 +15,9 @@
  */
 package io.fusion.air.microservice.server.service;
 
+import io.fusion.air.microservice.ServiceBootStrap;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-
-import io.fusion.air.microservice.ServiceBootStrap;
 
 /**
  * SpringBootServletInitializer is an interface to run SpringApplication 

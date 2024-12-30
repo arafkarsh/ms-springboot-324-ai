@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package io.fusion.air.microservice.adapters.aop;
+// Aspect J
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -23,17 +24,21 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Configuration;
+
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
 
 /**
  * Time Tracker Aspect
  * Log Messages
+ *
  * Keep Track of Time for Every Category Function Calls like:
- *  1. WS = Rest Controller (Pkg = com....adapters.controllers.*, com....adapters.controllers.secured.*)
- *  2. BS = Business Services (Pkg = com....adapters.services.*)
- *  3. DS = Database Services (SQL / NoSQL) (Pkg = com....adapters.repository.*)
- *  4. ES = External Services (External Calls like REST, GRPC, SOAP etc) (Pkg = com....adapters.external.*)
+ *
+ *  1. WS = Rest Controller (Pkg = io.fusion.air.microservice.adapters.controllers.*)
+ *  2. BS = Business Services (Pkg = io.fusion.air.microservice.adapters..services.*)
+ *  3. DS = Database Services (SQL / NoSQL) (Pkg = io.fusion.air.microservice.adapters.repository.*)
+ *  4. ES = External Services (External Calls like REST, GRPC, SOAP etc) (Pkg = io.fusion.air.microservice.adapters.external.*)
+ *
  * Throw Exceptions (Throwable) for the Exception Handler Advice to Handle
  *
  * @author  Araf Karsh Hamid
@@ -49,53 +54,50 @@ public class TimeTrackerAspect {
 
     /**
      * Log Message before the Log Execution
+     * For All Classes = "execution(* io.fusion.air.microservice.adapters.controllers.*.*(..))")
+     * With Sub Pkgs = "execution(* io.fusion.air.microservice.adapters.controllers..*.*(..))")
      * @param joinPoint
      */
-    @Before(value = "execution(* io.fusion.air.microservice.adapters.controllers.*.*(..))")
+    @Before(value = "execution(* io.fusion.air.microservice.adapters.controllers..*.*(..))")
     public void logStatementBefore(JoinPoint joinPoint) {
-        log.debug("1|TA|TIME=|STATUS=START|CLASS={}",joinPoint);
+        log.debug("1|TT|TIME=|STATUS=START|CLASS={}",joinPoint);
     }
 
     /**
      * Log Message after the Method Execution
+     * For All Classes = "execution(* io.fusion.air.microservice.adapters.controllers.*.*(..))")
+     * With Sub Pkgs = "execution(* io.fusion.air.microservice.adapters.controllers..*.*(..))")
      * @param joinPoint
      */
-    @After(value = "execution(* io.fusion.air.microservice.adapters.controllers.*.*(..))")
+    @After(value = "execution(* io.fusion.air.microservice.adapters.controllers..*.*(..))")
     public void logStatementAfter(JoinPoint joinPoint) {
-        log.debug("9|TA|TIME=|STATUS=END|CLASS={}",joinPoint);
+        log.debug("5|TT|TIME=|STATUS=END|CLASS={}",joinPoint);
     }
 
     /**
      * Capture Overall Method Execution Time For Controllers
+     * For All Classes = "execution(* io.fusion.air.microservice.adapters.controllers.*.*(..))")
+     * With Sub Pkgs = "execution(* io.fusion.air.microservice.adapters.controllers..*.*(..))")
      * @param joinPoint
      * @return
      * @throws Throwable
      */
-    @Around(value = "execution(* io.fusion.air.microservice.adapters.controllers.*.*(..))")
+    @Around(value = "execution(* io.fusion.air.microservice.adapters.controllers..*.*(..))")
     public Object timeTrackerRest(ProceedingJoinPoint joinPoint) throws Throwable {
-        return trackTime("WS", joinPoint);
-    }
-
-    /**
-     * Capture Overall Method Execution Time for Secured Controllers
-     * @param joinPoint
-     * @return
-     * @throws Throwable
-     */
-    @Around(value = "execution(* io.fusion.air.microservice.adapters.controllers.secured.*.*(..))")
-    public Object timeTrackerRestSecured(ProceedingJoinPoint joinPoint) throws Throwable {
-        return trackTime("WS", joinPoint);
+        return trackTime(4, "WS", joinPoint);
     }
 
     /**
      * Capture Overall Method Execution Time for Business Services
+     * For All Classes = "execution(* io.fusion.air.microservice.adapters.controllers.*.*(..))")
+     * With Sub Pkgs = "execution(* io.fusion.air.microservice.adapters.controllers..*.*(..))")
      * @param joinPoint
      * @return
      * @throws Throwable
      */
-    @Around(value = "execution(* io.fusion.air.microservice.adapters.service.*.*(..))")
+    @Around(value = "execution(* io.fusion.air.microservice.adapters.service..*.*(..))")
     public Object timeTrackerBusinessService(ProceedingJoinPoint joinPoint) throws Throwable {
-        return trackTime("BS", joinPoint);
+        return trackTime(3, "BS", joinPoint);
     }
 
     /**
@@ -104,9 +106,9 @@ public class TimeTrackerAspect {
      * @return
      * @throws Throwable
      */
-    @Around(value = "execution(* io.fusion.air.microservice.adapters.repository.*.*(..))")
+    @Around(value = "execution(* io.fusion.air.microservice.adapters.repository..*.*(..))")
     public Object timeTrackerRepository(ProceedingJoinPoint joinPoint) throws Throwable {
-        return trackTime("DS", joinPoint);
+        return trackTime(2, "DS", joinPoint);
     }
 
     /**
@@ -115,40 +117,39 @@ public class TimeTrackerAspect {
      * @return
      * @throws Throwable
      */
-    @Around(value = "execution(* io.fusion.air.microservice.adapters.external.*.*(..))")
+    @Around(value = "execution(* io.fusion.air.microservice.adapters.external..*.*(..))")
     public Object timeTrackerExternal(ProceedingJoinPoint joinPoint) throws Throwable {
-        return trackTime("ES", joinPoint);
+        return trackTime(3, "ES", joinPoint);
     }
 
     /**
      * Track Time
-     * @param _method
+     * @param method
      * @param joinPoint
      * @return
      * @throws Throwable
      */
-    private Object trackTime(String _method, ProceedingJoinPoint joinPoint) throws Throwable {
+    private Object trackTime(int level, String method, ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
         String status = "STATUS=SUCCESS";
-        try {
-            return joinPoint.proceed();
-        }catch(Throwable e) {
+        try { return joinPoint.proceed(); }
+        catch(Throwable e) {
             status = "STATUS=ERROR:"+e.getMessage();
             throw e;
         } finally {
-            logTime(_method, startTime, status, joinPoint);
+            logTime(level, method, startTime, status, joinPoint);
         }
     }
 
     /**
      * Log Time Taken to Execute the Function
-     * @param _startTime
-     * @param _status
+     * @param startTime
+     * @param status
      * @param joinPoint
      */
-    private void logTime(String _method, long _startTime, String _status, ProceedingJoinPoint joinPoint) {
-        long timeTaken=System.currentTimeMillis() - _startTime;
-        log.info("3|{}|TIME={} ms|{}|CLASS={}|",_method, timeTaken, _status,joinPoint);
+    private void logTime(int level, String method, long startTime, String status, ProceedingJoinPoint joinPoint) {
+        long timeTaken=System.currentTimeMillis() - startTime;
+        log.info("{}|{}|TIME={} ms|{}|CLASS={}|",level, method, timeTaken, status,joinPoint);
     }
 }
 
