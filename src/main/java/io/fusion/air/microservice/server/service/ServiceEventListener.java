@@ -17,10 +17,9 @@ package io.fusion.air.microservice.server.service;
  
 import io.fusion.air.microservice.security.JsonWebToken;
 import io.fusion.air.microservice.security.TokenManager;
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
+import io.fusion.air.microservice.server.config.ServiceConfig;
 import io.fusion.air.microservice.server.config.ServiceHelp;
 
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,7 +52,7 @@ public class ServiceEventListener {
 	private static final Logger log = getLogger(lookup().lookupClass());
 
 	@Autowired
-	private ServiceConfiguration serviceConfig;
+	private ServiceConfig serviceConfig;
 
 	@Autowired
 	JsonWebToken jsonWebToken;

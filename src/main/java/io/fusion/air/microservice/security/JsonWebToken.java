@@ -21,7 +21,7 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.Function;
 
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
+import io.fusion.air.microservice.server.config.ServiceConfig;
 import io.jsonwebtoken.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +72,7 @@ public final class JsonWebToken {
 	public static final int PUBLIC_KEY				= 2;
 
 	@Autowired
-	private ServiceConfiguration serviceConfig;
+	private ServiceConfig serviceConfig;
 
 	@Autowired
 	private CryptoKeyGenerator cryptoKeys;
@@ -175,7 +175,7 @@ public final class JsonWebToken {
 
 	/**
 	 * Returns Token Key -
-	 * In SpringBooT Context from ServiceConfiguration
+	 * In SpringBooT Context from ServiceConfig
 	 * Else from Static TOKEN Key
 	 * @return
 	 */

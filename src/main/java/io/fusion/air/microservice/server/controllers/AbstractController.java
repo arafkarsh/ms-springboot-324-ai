@@ -15,9 +15,9 @@
  */
 package io.fusion.air.microservice.server.controllers;
 
-import io.fusion.air.microservice.adapters.security.ClaimsManager;
+import io.fusion.air.microservice.adapters.security.jwt.ClaimsManager;
 import io.fusion.air.microservice.domain.models.core.StandardResponse;
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
+import io.fusion.air.microservice.server.config.ServiceConfig;
 import io.fusion.air.microservice.server.config.ServiceHelp;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public abstract class AbstractController {
 	public static final Logger log = getLogger(lookup().lookupClass());
 	
 	@Autowired
-	private ServiceConfiguration serviceConfig;
+	private ServiceConfig serviceConfig;
 	private String serviceName;
 
 	@Autowired

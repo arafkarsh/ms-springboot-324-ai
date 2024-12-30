@@ -26,8 +26,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
-import io.fusion.air.microservice.server.config.ConfigMap;
-
 /**
  * Service Configuration
  *
@@ -43,7 +41,7 @@ import io.fusion.air.microservice.server.config.ConfigMap;
 		// Expects the file in src/main/resources folder
 		// value = "classpath:application.properties")
 		// value = "classpath:application2.properties,file:./application.properties")
-public class ServiceConfiguration implements Serializable {
+public class ServiceConfig implements Serializable {
 
 	// Config Path
 	public static final String CONFIG_PATH = "/config";
@@ -285,7 +283,7 @@ public class ServiceConfiguration implements Serializable {
 	 * To be used outside SpringBoot Context
 	 * For WireMock Testing the External Services
 	 */
-	public ServiceConfiguration() {
+	public ServiceConfig() {
 		this("localhost", 8080);
 	}
 	
@@ -296,7 +294,7 @@ public class ServiceConfiguration implements Serializable {
 	 * @param rHost
 	 * @param rPort
 	 */
-	public ServiceConfiguration(String rHost, int rPort) {
+	public ServiceConfig(String rHost, int rPort) {
 		this.remoteHost = rHost;
 		this.remotePort = rPort;
 	}

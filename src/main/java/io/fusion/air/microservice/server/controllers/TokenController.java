@@ -15,15 +15,15 @@
  */
 package io.fusion.air.microservice.server.controllers;
 
-import io.fusion.air.microservice.adapters.security.AuthorizationRequired;
+import io.fusion.air.microservice.adapters.security.jwt.AuthorizationRequired;
 import io.fusion.air.microservice.domain.exceptions.*;
 import io.fusion.air.microservice.domain.models.core.StandardResponse;
-import io.fusion.air.microservice.adapters.security.AuthorizeRequestAspect;
-import io.fusion.air.microservice.adapters.security.ValidateRefreshToken;
+import io.fusion.air.microservice.adapters.aop.AuthorizeRequestAspect;
+import io.fusion.air.microservice.adapters.security.jwt.ValidateRefreshToken;
 import io.fusion.air.microservice.security.CryptoKeyGenerator;
 import io.fusion.air.microservice.security.JsonWebToken;
 import io.fusion.air.microservice.security.TokenManager;
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
+import io.fusion.air.microservice.server.config.ServiceConfig;
 import io.jsonwebtoken.Claims;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -69,7 +69,7 @@ public class TokenController extends AbstractController {
 	private static final Logger log = getLogger(lookup().lookupClass());
 
 	@Autowired
-	private ServiceConfiguration serviceConfig;
+	private ServiceConfig serviceConfig;
 	private String serviceName;
 
 	@Autowired

@@ -1,4 +1,4 @@
-package io.fusion.air.microservice.adapters.security;
+package io.fusion.air.microservice.adapters.security.service;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

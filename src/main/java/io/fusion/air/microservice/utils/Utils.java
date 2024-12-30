@@ -34,12 +34,12 @@ import java.util.stream.Stream;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.fusion.air.microservice.server.config.ServiceConfig;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
 import io.fusion.air.microservice.domain.models.core.StandardResponse;
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
 import org.slf4j.MDC;
 
 import jakarta.servlet.http.Cookie;
@@ -486,6 +486,6 @@ public final class Utils {
 	 */
 	public static void main(String[] args) throws Exception {
 
-		System.out.println("Utils.toJsonString() = "+Utils.toJsonString(new ServiceConfiguration("localhost", 9090)));
+		System.out.println("Utils.toJsonString() = "+Utils.toJsonString(new ServiceConfig("localhost", 9090)));
 	}
 }

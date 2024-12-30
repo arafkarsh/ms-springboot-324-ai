@@ -16,7 +16,7 @@
 package io.fusion.air.microservice.server.controllers;
 
 import io.fusion.air.microservice.domain.exceptions.ResourceNotFoundException;
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
+import io.fusion.air.microservice.server.config.ServiceConfig;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -57,7 +57,7 @@ public class ResourceController extends AbstractController {
 	private static final Logger log = getLogger(lookup().lookupClass());
 
 	@Autowired
-	private ServiceConfiguration serviceConfig;
+	private ServiceConfig serviceConfig;
 	private String serviceName;
 
 	/**

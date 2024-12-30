@@ -15,8 +15,7 @@
  */
 package io.fusion.air.microservice.adapters.filters;
 
-import io.fusion.air.microservice.security.JsonWebToken;
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
+import io.fusion.air.microservice.server.config.ServiceConfig;
 import io.fusion.air.microservice.utils.Utils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import jakarta.servlet.*;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -46,7 +44,7 @@ public class SecurityFilter implements Filter {
     private static final Logger log = getLogger(lookup().lookupClass());
 
     @Autowired
-    private ServiceConfiguration serviceConfig;
+    private ServiceConfig serviceConfig;
 
     @Override
     public void doFilter(ServletRequest _servletRequest, ServletResponse _servletResponse, FilterChain _filterChain)

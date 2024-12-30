@@ -15,7 +15,7 @@
  */
 package io.fusion.air.microservice.security;
 
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
+import io.fusion.air.microservice.server.config.ServiceConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -29,7 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class PasswordManager {
 
     @Autowired
-    private ServiceConfiguration serviceConfig;
+    private ServiceConfig serviceConfig;
 
     /**
      * Return the Decrypted User Name

@@ -23,7 +23,7 @@ import java.util.UUID;
 
 import io.fusion.air.microservice.domain.models.example.PaymentDetails;
 import io.fusion.air.microservice.domain.models.example.PaymentStatus;
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
+import io.fusion.air.microservice.server.config.ServiceConfig;
 import io.fusion.air.microservice.server.models.EchoData;
 import io.fusion.air.microservice.server.models.EchoResponseData;
 import io.fusion.air.microservice.utils.Utils;
@@ -43,7 +43,7 @@ import org.springframework.stereotype.Service;
 public class AppExternalServiceImpl {
 
     @Autowired
-    private ServiceConfiguration serviceConfig;
+    private ServiceConfig serviceConfig;
 
     private String payments 	= "/payments";
     private String remoteEcho 	= "/service/echo";
@@ -69,7 +69,7 @@ public class AppExternalServiceImpl {
      */
     public AppExternalServiceImpl(String _host, int _port) {
         System.out.println(LocalDateTime.now()+"|PaymentGW Constructor(host,port) ...");
-        serviceConfig = new ServiceConfiguration(_host, _port);
+        serviceConfig = new ServiceConfig(_host, _port);
         restClient = new RestClientService();
         setURLs();
     }

@@ -43,7 +43,7 @@ public class ServiceHelp {
 	private static int counter;
 	
 	@Autowired
-	private ServiceConfiguration serviceConfig;
+	private ServiceConfig serviceConfig;
 	
 	public static final String NL = System.getProperty("line.separator");
 	

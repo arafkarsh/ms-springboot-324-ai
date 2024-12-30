@@ -17,12 +17,12 @@ package io.fusion.air.microservice.server.filters;
 
 import java.util.UUID;
 
+import io.fusion.air.microservice.server.config.ServiceConfig;
 import jakarta.servlet.ServletRequestEvent;
 import jakarta.servlet.ServletRequestListener;
 import jakarta.servlet.annotation.WebListener;
 import jakarta.servlet.http.HttpServletRequest;
 
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +67,7 @@ public class ServiceRequestFilter implements ServletRequestListener {
 	private static final Logger log = getLogger(lookup().lookupClass());
 
 	@Autowired
-	private ServiceConfiguration serviceConfig;
+	private ServiceConfig serviceConfig;
 
 	/**
 	 * Add the following values into the log for the request

@@ -16,7 +16,7 @@
 package io.fusion.air.microservice.adapters.aop;
 
 import io.fusion.air.microservice.domain.models.core.StandardResponse;
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
+import io.fusion.air.microservice.server.config.ServiceConfig;
 import io.fusion.air.microservice.utils.Utils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import jakarta.validation.ConstraintViolationException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -50,9 +49,9 @@ public class InputValidatorAdvice extends ResponseEntityExceptionHandler {
     // Set Logger -> Lookup will automatically determine the class name.
     private static final Logger log = getLogger(lookup().lookupClass());
 
-    // ServiceConfiguration
+    // ServiceConfig
     @Autowired
-    private ServiceConfiguration serviceConfig;
+    private ServiceConfig serviceConfig;
 
     /**
      * Handling Invalid Input in Requests

@@ -17,10 +17,9 @@ package io.fusion.air.microservice.server.controllers;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.fusion.air.microservice.adapters.security.AuthorizationRequired;
+import io.fusion.air.microservice.adapters.security.jwt.AuthorizationRequired;
 import io.fusion.air.microservice.domain.models.core.StandardResponse;
-import io.fusion.air.microservice.server.config.ConfigMap;
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
+import io.fusion.air.microservice.server.config.ServiceConfig;
 import io.fusion.air.microservice.server.config.ServiceHelp;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -37,7 +36,6 @@ import org.springframework.web.context.annotation.RequestScope;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
-import java.util.Map;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -51,7 +49,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 @Configuration
 @RestController
 //  "/service-name/api/v1/config"
-@RequestMapping("${service.api.path}"+ ServiceConfiguration.CONFIG_PATH)
+@RequestMapping("${service.api.path}"+ ServiceConfig.CONFIG_PATH)
 @RequestScope
 @Tag(name = "System - Config", description = "Config (Environment, Secrets, ConfigMap.. etc)")
 public class ConfigController extends AbstractController {
@@ -66,7 +64,7 @@ public class ConfigController extends AbstractController {
 					;
 
 	@Autowired
-	private ServiceConfiguration serviceConfig;
+	private ServiceConfig serviceConfig;
 	private String serviceName;
 
 	/**
@@ -118,7 +116,7 @@ public class ConfigController extends AbstractController {
 				.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 				.findAndRegisterModules();
 		String json = serviceConfig.toJSONString();
-		log.debug(name()+"|Request to Get ServiceConfiguration .1. "+json);
+		log.debug(name()+"|Request to Get ServiceConfig .1. "+json);
 		stdResponse.setPayload(serviceConfig.getConfigMap());
 		return ResponseEntity.ok(stdResponse);
 	}

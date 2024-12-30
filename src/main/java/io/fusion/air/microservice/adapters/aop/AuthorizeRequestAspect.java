@@ -13,8 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fusion.air.microservice.adapters.security;
+package io.fusion.air.microservice.adapters.aop;
 
+import io.fusion.air.microservice.adapters.security.core.UserRole;
+import io.fusion.air.microservice.adapters.security.jwt.AuthorizationRequired;
+import io.fusion.air.microservice.adapters.security.jwt.ClaimsManager;
+import io.fusion.air.microservice.adapters.security.service.UserDetailsServiceImpl;
 import io.fusion.air.microservice.domain.exceptions.*;
 import io.fusion.air.microservice.security.JsonWebToken;
 import io.jsonwebtoken.Claims;
@@ -82,7 +86,7 @@ public class AuthorizeRequestAspect {
      * @return
      * @throws Throwable
      */
-    @Around("@annotation(io.fusion.air.microservice.adapters.security.ValidateRefreshToken)")
+    @Around("@annotation(io.fusion.air.microservice.adapters.security.jwt.ValidateRefreshToken)")
     public Object validateRefreshRequest(ProceedingJoinPoint joinPoint) throws Throwable {
         return validateRequest(false, REFRESH_TOKEN, joinPoint, CONSUMERS);
     }
@@ -94,7 +98,7 @@ public class AuthorizeRequestAspect {
      * @return
      * @throws Throwable
      */
-    @Around("@annotation(io.fusion.air.microservice.adapters.security.SingleTokenAuthorizationRequired)")
+    @Around("@annotation(io.fusion.air.microservice.adapters.security.jwt.SingleTokenAuthorizationRequired)")
     public Object validateSingleTokenRequest(ProceedingJoinPoint joinPoint) throws Throwable {
         return validateRequest(true, SINGLE_TOKEN, joinPoint, CONSUMERS);
     }
@@ -106,7 +110,7 @@ public class AuthorizeRequestAspect {
      * @return
      * @throws Throwable
      */
-    @Around("@annotation(io.fusion.air.microservice.adapters.security.AuthorizationRequired)")
+    @Around("@annotation(io.fusion.air.microservice.adapters.security.jwt.AuthorizationRequired)")
     public Object validateAnnotatedRequest(ProceedingJoinPoint joinPoint) throws Throwable {
         return validateRequest(false, AUTH_TOKEN, joinPoint, CONSUMERS);
     }

@@ -15,13 +15,13 @@
  */
 package io.fusion.air.microservice;
 
+import io.fusion.air.microservice.server.config.ServiceConfig;
 import jakarta.annotation.PostConstruct;
 // import javax.servlet.MultipartConfigElement;
 // import jakarta.servlet.MultipartConfigElement;
 import jakarta.servlet.http.HttpServletRequest;
 
 import io.fusion.air.microservice.adapters.aop.ExceptionHandlerAdvice;
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
 import io.fusion.air.microservice.server.controllers.HealthController;
 
 import org.slf4j.Logger;
@@ -100,7 +100,7 @@ public class ServiceBootStrap {
 	private static ConfigurableApplicationContext context;
 
 	@Autowired
-	private ServiceConfiguration serviceConfig;
+	private ServiceConfig serviceConfig;
 
 	// Get the Service Name from the properties file
 	@Value("${service.name:NameNotDefined}")

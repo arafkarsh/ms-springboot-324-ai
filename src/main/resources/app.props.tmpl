@@ -6,7 +6,7 @@ spring.profiles.default=dev
 # Service Name & API Details -  Version, Path
 # =======================================================================
 service.org=orgname
-service.name=Spring AI LangChain4J
+service.name=Spring_AI_LangChain4J
 service.api.name=ai-service
 service.api.prefix=api
 service.api.version=v1
@@ -16,13 +16,15 @@ service.api.repository=https://github.com/arafkarsh/ms-springboot-324-ai
 service.api.path=/${service.api.name}/${service.api.prefix}/${service.api.version}
 service.url=http://www.arafkarsh.com/
 service.license=Apache 2 License
+service.license.url=https://github.com/arafkarsh/ms-springboot-324-ai?tab=Apache-2.0-1-ov-file
 # =======================================================================
 # Ai Server Properties
 # =======================================================================
 server.port=19090
-server.version=0.2.0
+server.version=0.3.0
 server.restart=false
 server.resources.url=${service.url}${service.api.path}
+server.api.url.print=true
 # =======================================================================
 # LangChain4J Properties
 # =======================================================================
@@ -43,8 +45,10 @@ logging.level.dev.ai4j.openai4j = DEBUG
 server.crypto.public.key=publicKey.pem
 server.crypto.private.key=privateKey.pem
 server.token.issuer=${service.org}
+# Type 1 = Secret, Type 2 = Public / Private Key
 server.token.type=1
 server.token.test=true
+# Token Expiry Times - Security Policy will reject High Expiry Time
 server.token.auth.expiry=600000
 server.token.refresh.expiry=3600000
 server.token.key=<([1234567890SecretKey!!To??Encrypt##Data@12345%6790])>
@@ -68,13 +72,31 @@ app.property.map={key1:'val1', key2 : 'val2', key3 : 'val3'}
 # ------------------------------------------------------------------------
 # Log Details
 # ------------------------------------------------------------------------
-server.dev.mode=true
+# Log Groups
+logging.group.tomcat=org.apache.catalina, org.apache.coyote, org.apache.tomcat
+# Logging Levels for various components
+logging.level.org.springframework.boot.web.servlet=INFO
+logging.level.org.springframework.web.servlet.DispatcherServlet=INFO
+logging.level.org.springframework.security.web.FilterChainProxy=INFO
+# Spring Default Groups
+logging.level.web=INFO
+logging.level.sql=INFO
+logging.level.tomcat=INFO
+# Root level logging
 logging.level.root=INFO
+# Specify the logback configuration file
 logging.config=classpath:logback-spring.xml
+# Supported Log Format plain / json
+logging.format=plain
+# Log file paths and rolling policy
 logging.path=/tmp/logs/${service.api.name}
-logging.file.name=${service.api.name}.log
-logging.pattern.rolling-file-name=${service.api.name}.%d{yyyy-MM-dd}.%i.log
-logging.file.max-size=30MB
+# Log File Name. File Extension .log or .json is added dynamically based on logging format.
+logging.file.name=${service.api.name}.v${server.version}
+# Log File Pattern for Size and Time based File Roll Over Name
+logging.pattern.rolling-file-name=${logging.path}/${logging.file.name}-%d{yyyy-MM-dd}-%i
+# Max Single File Size = 30 MB
+logging.file.max-size=10MB
+# Retention and total size cap for logs
 # Keep Log Files for 100 Days with Max Cap at 3 GB
 logging.file.max-history=100
 logging.file.total-size-cap=3GB

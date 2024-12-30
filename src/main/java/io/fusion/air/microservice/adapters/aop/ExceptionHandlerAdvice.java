@@ -18,7 +18,7 @@ package io.fusion.air.microservice.adapters.aop;
 import io.fusion.air.microservice.domain.exceptions.*;
 import io.fusion.air.microservice.domain.exceptions.SecurityException;
 import io.fusion.air.microservice.domain.models.core.StandardResponse;
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
+import io.fusion.air.microservice.server.config.ServiceConfig;
 import io.fusion.air.microservice.utils.Utils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.firewall.RequestRejectedException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -55,9 +54,9 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
     // Set Logger -> Lookup will automatically determine the class name.
     private static final Logger log = getLogger(lookup().lookupClass());
 
-    // ServiceConfiguration
+    // ServiceConfig
     @Autowired
-    private ServiceConfiguration serviceConfig;
+    private ServiceConfig serviceConfig;
 
     /**
      * Handle All Exceptions

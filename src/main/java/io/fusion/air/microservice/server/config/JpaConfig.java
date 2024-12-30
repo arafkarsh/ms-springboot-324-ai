@@ -18,17 +18,12 @@ package io.fusion.air.microservice.server.config;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import jakarta.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -46,7 +41,7 @@ import javax.sql.DataSource;
 public class JpaConfig {
 
     @Autowired
-    private ServiceConfiguration serviceConfig;
+    private ServiceConfig serviceConfig;
 
     /**
      * Create the DataSource for H2 Database
@@ -55,11 +50,11 @@ public class JpaConfig {
     // @Bean
     public DataSource dataSource() {
         switch(serviceConfig.getDataSourceVendor()) {
-            case ServiceConfiguration.DB_H2:
+            case ServiceConfig.DB_H2:
                 // For H2 Database
                 EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
                 return builder.setType(EmbeddedDatabaseType.H2).build();
-            case ServiceConfiguration.DB_POSTGRESQL:
+            case ServiceConfig.DB_POSTGRESQL:
                 // For PostgreSQL Database
                 HikariConfig config = new HikariConfig();
 

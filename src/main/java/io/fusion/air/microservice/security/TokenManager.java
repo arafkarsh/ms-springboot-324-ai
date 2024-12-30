@@ -16,9 +16,9 @@
 package io.fusion.air.microservice.security;
 
 import io.fusion.air.microservice.adapters.filters.HeaderManager;
-import io.fusion.air.microservice.adapters.security.AuthorizeRequestAspect;
-import io.fusion.air.microservice.adapters.security.ClaimsManager;
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
+import io.fusion.air.microservice.adapters.aop.AuthorizeRequestAspect;
+import io.fusion.air.microservice.adapters.security.jwt.ClaimsManager;
+import io.fusion.air.microservice.server.config.ServiceConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -46,7 +46,7 @@ public class TokenManager {
     public final static String TX_EXTERNAL  = "tx-external";
 
     @Autowired
-    private ServiceConfiguration serviceConfig;
+    private ServiceConfig serviceConfig;
 
     @Autowired
     private ClaimsManager claimsManager;
@@ -66,7 +66,7 @@ public class TokenManager {
      * For External Testing
      * @param _serviceConfig
      */
-    public TokenManager(ServiceConfiguration _serviceConfig, long tknExpiry, long tknRefreshExpiry) {
+    public TokenManager(ServiceConfig _serviceConfig, long tknExpiry, long tknRefreshExpiry) {
         this.serviceConfig = _serviceConfig;
         tokenAuthExpiry = tknExpiry;
         tokenRefreshExpiry = tknRefreshExpiry;

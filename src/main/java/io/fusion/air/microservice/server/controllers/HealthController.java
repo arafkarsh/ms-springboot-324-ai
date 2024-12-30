@@ -15,14 +15,12 @@
  */
 package io.fusion.air.microservice.server.controllers;
 
+import io.fusion.air.microservice.server.config.ServiceConfig;
 import jakarta.servlet.http.HttpServletRequest;
 
-import io.fusion.air.microservice.adapters.security.AuthorizationRequired;
-import io.fusion.air.microservice.domain.exceptions.InputDataException;
+import io.fusion.air.microservice.adapters.security.jwt.AuthorizationRequired;
 import io.fusion.air.microservice.domain.models.core.StandardResponse;
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
 import io.fusion.air.microservice.server.config.ServiceHelp;
-import io.fusion.air.microservice.server.models.EchoResponseData;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +28,6 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,15 +39,11 @@ import static org.slf4j.LoggerFactory.getLogger;
 import static java.lang.invoke.MethodHandles.lookup;
 
 import io.fusion.air.microservice.ServiceBootStrap;
-import io.fusion.air.microservice.server.models.EchoData;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Health Controller for the Service
@@ -62,7 +55,7 @@ import java.util.Map;
 @Configuration
 @RestController
 // "/service-name/api/v1/service"
-@RequestMapping("${service.api.path}"+ ServiceConfiguration.HEALTH_PATH)
+@RequestMapping("${service.api.path}"+ ServiceConfig.HEALTH_PATH)
 @RequestScope
 @Tag(name = "System - Health", description = "Health (Liveness, Readiness, ReStart.. etc)")
 public class HealthController extends AbstractController {
@@ -78,7 +71,7 @@ public class HealthController extends AbstractController {
 
 
 	@Autowired
-	private ServiceConfiguration serviceConfig;
+	private ServiceConfig serviceConfig;
 	private String serviceName;
 
 	/**
