@@ -1,8 +1,8 @@
 # =======================================================================
 # Ai-GenAI Service Properties
 # =======================================================================
-build.number=189
-build.date=Tue Dec 31 15:21:07 IST 2024
+build.number=187
+build.date=Tue Dec 31 15:11:04 IST 2024
 # ------------------------------------------------------------------------
 # Spring Profile
 # ------------------------------------------------------------------------
@@ -26,7 +26,7 @@ service.license.url=https://github.com/arafkarsh/ms-springboot-324-ai?tab=Apache
 # Ai Server Properties
 # =======================================================================
 server.port=19090
-server.version=0.3.1
+server.version=0.3.0
 server.restart=false
 server.resources.url=${service.url}${service.api.path}
 server.api.url.print=true

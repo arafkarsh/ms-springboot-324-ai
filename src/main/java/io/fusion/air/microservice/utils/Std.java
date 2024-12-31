@@ -132,6 +132,14 @@ public class Std {
     }
 
     /**
+     * Prints the String without adding a New Line at the end.
+     * @param s
+     */
+    public static final void print(String s) {
+        System.out.print(s);
+    }
+
+    /**
      * Print Error
      * @param msg
      */

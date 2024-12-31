@@ -40,6 +40,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.LinkedHashMap;
 import java.util.List;
 import org.slf4j.Logger;
+import org.springframework.web.util.HtmlUtils;
+
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -102,6 +104,7 @@ public class AiOpenAiControllerImpl extends AbstractController {
 	})
 	@PostMapping("/chat")
 	public ResponseEntity<StandardResponse> chat( @RequestBody String msg) {
+		msg = HtmlUtils.htmlEscape(msg);
 		log.info("|Chat Request to AI... {} ... {} ", defaultMode, msg);
 		String response = chatLanguageModel.generate(msg);
 		if(response != null) {
@@ -125,6 +128,7 @@ public class AiOpenAiControllerImpl extends AbstractController {
 	})
 	@PostMapping("/chat/custom")
 	public ResponseEntity<StandardResponse> chatCustomData(@RequestBody String msg) {
+		msg = HtmlUtils.htmlEscape(msg);
 		log.info("|Custom Chat Request to AI Engine {} ... {} ", defaultMode, msg);
 		String response = CustomDataAnalyzer.processFile(msg);
 		if(response != null) {
@@ -144,6 +148,7 @@ public class AiOpenAiControllerImpl extends AbstractController {
 	})
 	@PostMapping("/chat/structured")
 	public ResponseEntity<StandardResponse> chatStructuredData(@RequestBody String msg) {
+		msg = HtmlUtils.htmlEscape(msg);
 		log.info("|Structured Chat Request to AI Engine {} ... {} ", defaultMode, msg);
 		String response = TemplateManager.structuredTemplate("[P1: "+msg);
 		if(response != null) {
@@ -168,6 +173,7 @@ public class AiOpenAiControllerImpl extends AbstractController {
 	})
 	@GetMapping("/chat/userid/{userId}")
 	public ResponseEntity<StandardResponse> getProductStatus(@PathVariable("userId") String userId)  {
+		userId = HtmlUtils.htmlEscape(userId);
 		log.info("|Request to Get ChatMessages by User ID.. {} ", userId);
 		List<ChatMessageEntity> chats = chatMessageService.fetchByUserId(userId);
 		if(chats.isEmpty()) {
@@ -186,6 +192,8 @@ public class AiOpenAiControllerImpl extends AbstractController {
 	 * @return
 	 */
 	private StandardResponse createResponse(String response, String msg) {
+		response = HtmlUtils.htmlEscape(response);
+		msg = HtmlUtils.htmlEscape(msg);
 		String[] rows = response.split("\n");
 		StandardResponse stdResponse = createSuccessResponse("AI Response");
 		LinkedHashMap<String, Object> data = new LinkedHashMap<>();

@@ -18,9 +18,7 @@ package io.fusion.air.microservice.adapters.service;
 import io.fusion.air.microservice.domain.entities.example.CountryEntity;
 import io.fusion.air.microservice.adapters.repository.CountryRepository;
 import io.fusion.air.microservice.domain.ports.services.CountryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.List;
 
@@ -32,11 +30,19 @@ import java.util.List;
 @Service
 public class CountryServiceImpl implements CountryService {
 
-    @Autowired
+    // Autowired using Constructor Injection
     CountryRepository countryRepositoryImpl;
+
+    /**
+     * Autowired using Constructor Injection
+     * @param countryRepositoryImpl
+     */
+    public CountryServiceImpl(CountryRepository countryRepositoryImpl) {
+        this.countryRepositoryImpl = countryRepositoryImpl;
+    }
 
     @Override
     public List<CountryEntity> getAllCountries() {
-        return (List<CountryEntity>) countryRepositoryImpl.findAll();
+        return countryRepositoryImpl.findAll();
     }
 }
