@@ -48,7 +48,6 @@ import static org.slf4j.LoggerFactory.getLogger;
  * @date:
  */
 @Service
-@RequestScope
 @Transactional
 public class ProductServiceImpl implements ProductService {
 

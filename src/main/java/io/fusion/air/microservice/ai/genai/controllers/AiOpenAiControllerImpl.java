@@ -59,20 +59,15 @@ import static org.slf4j.LoggerFactory.getLogger;
  * @version 1.0
  * 
  */
-@CrossOrigin
 @Configuration
 @RestController
 // "/ms-ai/api/v1"
 @RequestMapping("${service.api.path}/ai/openai")
-@RequestScope
 @Tag(name = "AI - OpenAi", description = "GPT 3.5, GPT 3.5 Turbo, GPT 4, GPT 4o, Dall-E 3")
 public class AiOpenAiControllerImpl extends AbstractController {
 
 	// Set Logger -> Lookup will automatically determine the class name.
 	private static final Logger log = getLogger(lookup().lookupClass());
-
-	@Value("${openai.api.key}")
-	private String OPENAI_API_KEY;
 
 	@Autowired
 	private ChatMessageService chatMessageService;

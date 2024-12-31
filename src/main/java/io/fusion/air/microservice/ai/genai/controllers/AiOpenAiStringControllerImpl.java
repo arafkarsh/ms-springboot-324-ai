@@ -47,12 +47,10 @@ import static org.slf4j.LoggerFactory.getLogger;
  * @version 1.0
  * 
  */
-@CrossOrigin
 @Configuration
 @RestController
 // "/ms-ai/api/v1"
 @RequestMapping("${service.api.path}/ai/openai/string")
-@RequestScope
 @Tag(name = "AI - OpenAi", description = "GPT 3.5, GPT 3.5 Turbo, GPT 4, GPT 4o, Dall-E 3")
 public class AiOpenAiStringControllerImpl extends AbstractController {
 
