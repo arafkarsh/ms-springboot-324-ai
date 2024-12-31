@@ -40,21 +40,18 @@ various features, an encrypted password is utilized for connecting to H2 and Pos
 The template includes utilities for encrypting and decrypting passwords, ensuring that the encryption
 key is securely stored outside the application’s runtime context.
 
-To know more about how to setup these passwords (for H2 & PostgreSQL) and environment variables
-checkout Session 1.2
-
 Encrypted H2 (In Memory) Database Password. Uses H2 database in Dev (Profile) mode.
-![Package Structure](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/encrypt/Security-H2-psd.jpg)
+![Package Structure](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/encrypt/Security-H2-psd.jpg)
 Encrypted PostgreSQL Database Password. Uses PostgreSQL DB in Staging & Prod (profile) mode.
-![Package Structure](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/encrypt/Security-PostgreSQL-psd.jpg)
+![Package Structure](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/encrypt/Security-PostgreSQL-psd.jpg)
 Password can be decrypted only using an Encryption Key stored in System Enviornment variable
-![Package Structure](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/encrypt/Security-Encryption-pro.jpg)
-
+![Package Structure](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/encrypt/Security-Encryption-pro.jpg)
 If the Quality Gate check fails, it's because the password is encrypted within the application’s
 properties file, with the encryption key stored externally, outside the application’s context.
 
 However, quality standards mandate that passwords should be securely stored in a vault, such as
-HashiCorp Vault, for enhanced security.
+HashiCorp Vault, for enhanced security. To know more about how to setup these passwords (for H2 
+& PostgreSQL) and environment variables checkout Session 1.2
 
 ### AI-Service Package Structure
 
@@ -268,7 +265,7 @@ Run the follwing command line option
 ```
 $ source encrypt your-db-password your-encrypton-key
 ```
-![Passowrd-Gen](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/Password-Gen.jpg)
+![Passowrd-Gen](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/Password-Gen.jpg)
 
 Your encryption key will be set in the following Environment variable. SpringBoot Will automatically
 pickup the encryption key from this environment variable.
@@ -301,7 +298,7 @@ You can use the following REST Endpoint to encrypt the sensitive data. This will
 the environment variable JASYPT_ENCRYPTOR_PASSWORD and creating the first DB password
 using the command line options.
 
-![Passowrd-Van](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ms-vanilla-encrypt.jpg)
+![Passowrd-Van](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/ms-vanilla-encrypt.jpg)
 
 ###  Step 1.3 - Compile (Once your code is ready)
 
