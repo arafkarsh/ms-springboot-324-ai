@@ -510,7 +510,7 @@ The Vector Store API provides portability across different providers, featuring 
 
 Check the <a href="https://github.com/arafkarsh/ms-springboot-324-ai/blob/main/CRUD_Examples.md">CRUD_Examples</a>.md</a>
 
-(C) Copyright 2024 : Apache 2 License : Author: Araf Karsh Hamid
+(C) Copyright 2024-25 : Apache 2 License : Author: Araf Karsh Hamid
 
 <pre>
  * Licensed under the Apache License, Version 2.0 (the "License");
