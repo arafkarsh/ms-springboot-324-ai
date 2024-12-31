@@ -28,11 +28,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.RequestScope;
-
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -57,23 +54,25 @@ public class AiOpenAiStringControllerImpl extends AbstractController {
 	// Set Logger -> Lookup will automatically determine the class name.
 	private static final Logger log = getLogger(lookup().lookupClass());
 
-	@Value("${openai.api.key}")
-	private String OPENAI_API_KEY;
 
 	// Chat Language Model is automatically injected by the constructor
 	// based on the Qualifier "ChatLanguageModelGPT"
 	private final ChatLanguageModel chatLanguageModel;
+
+	private final String defaultMode;
 
 	/**
 	 * Auto Wire the Language Model
 	 * Loading the Bean with the name ChatLanguageModelGPT (defined in AiBeans).
 	 * The Qualifier is to ensure that the right Bean is Autowired.
 	 *
-	 * @param _chatLanguageModel
+	 * @param chatLanguageModel
 	 */
 	public AiOpenAiStringControllerImpl(@Qualifier("ChatLanguageModelGPT")
-							ChatLanguageModel _chatLanguageModel) {
-		this.chatLanguageModel = _chatLanguageModel;
+							ChatLanguageModel chatLanguageModel) {
+		this.chatLanguageModel = chatLanguageModel;
+		this.defaultMode = AiConstants.getOpenAIDefaultModel();
+
 	}
 
 	/**
@@ -89,12 +88,11 @@ public class AiOpenAiStringControllerImpl extends AbstractController {
 					content = @Content)
 	})
 	@PostMapping("/chat")
-	public String chat( @RequestBody String _msg) {
-		log.info("|"+name()+"|Chat Request to AI...  "+AiConstants.getOpenAIDefaultModel()+" .. "+_msg);
-		// log.info("Open_API_KEY = "+OPENAI_API_KEY);
-		String response = chatLanguageModel.generate(_msg);
+	public String chat( @RequestBody String msg) {
+		log.info("|Chat Request to AI...  {} ... {} ", defaultMode, msg);
+		String response = chatLanguageModel.generate(msg);
 		if(response != null) {
-			return createResponse(response, _msg);
+			return createResponse(response, msg);
 		}
 		throw new DataNotFoundException("Unable to retrieve data... !");
 	}
@@ -113,12 +111,11 @@ public class AiOpenAiStringControllerImpl extends AbstractController {
 					content = @Content)
 	})
 	@PostMapping("/chat/custom")
-	public String chatCustomData(@RequestBody String _msg) {
-		log.info("|" + name() + "|Custom Chat Request to AI Engine "+AiConstants.getOpenAIDefaultModel()+"... " + _msg);
-		// log.info("Open_API_KEY = "+OPENAI_API_KEY);
-		String response = CustomDataAnalyzer.processFile(_msg);
+	public String chatCustomData(@RequestBody String msg) {
+		log.info("|Custom Chat Request to AI Engine {} ... {} ", defaultMode, msg);
+		String response = CustomDataAnalyzer.processFile(msg);
 		if(response != null) {
-			return createResponse(response, _msg);
+			return createResponse(response, msg);
 		}
 		throw new DataNotFoundException("Unable to retrieve data... !");
 	}
@@ -133,29 +130,28 @@ public class AiOpenAiStringControllerImpl extends AbstractController {
 					content = @Content)
 	})
 	@PostMapping("/chat/structured")
-	public String chatStructuredData(@RequestBody String _msg) {
-		log.info("|" + name() + "|Structured Chat Request to AI Engine "+AiConstants.getOpenAIDefaultModel()+"... " + _msg);
-		// log.info("Open_API_KEY = "+OPENAI_API_KEY);
-		String response = TemplateManager.structuredTemplate("[P1: "+_msg);
+	public String chatStructuredData(@RequestBody String msg) {
+		log.info("|Structured Chat Request to AI Engine {} ... {} ", defaultMode, msg);
+		String response = TemplateManager.structuredTemplate("[P1: "+msg);
 		if(response != null) {
-			return createResponse(response, _msg);
+			return createResponse(response, msg);
 		}
-		throw new DataNotFoundException("Unable to retrieve data... !");
+		throw new DataNotFoundException("Unable to Fetch data... !");
 	}
 
 	/**
      * Create Response as Standard Response
 	 *
-	 * @param _response
-     * @param _msg
+	 * @param response
+     * @param msg
      * @return
 	 */
-	private String createResponse(String _response, String _msg) {
+	private String createResponse(String response, String msg) {
 		StringBuilder sb = new StringBuilder();
-		String request = _msg.replaceAll("\n", " ").trim();
+		String request = msg.replace("\n", " ").trim();
 		sb.append("Algorithm = ").append(AiConstants.getOpenAIDefaultModel()).append("\n");
 		sb.append("Request   = ").append(request).append("\n");
-		sb.append("Response  = ").append("\n").append(_response);
+		sb.append("Response  = ").append("\n").append(response);
 		return sb.toString();
 	}
  }
