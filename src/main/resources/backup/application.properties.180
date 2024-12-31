@@ -1,3 +1,8 @@
+# =======================================================================
+# Ai Service Properties
+# =======================================================================
+build.number=181
+build.date=Tue Dec 31 12:03:37 IST 2024
 # ------------------------------------------------------------------------
 # Spring Profile
 # ------------------------------------------------------------------------
@@ -6,7 +11,7 @@ spring.profiles.default=dev
 # Service Name & API Details -  Version, Path
 # =======================================================================
 service.org=orgname
-service.name=Ai-GenAI
+service.name=Ai Service
 service.api.name=ai-service
 service.api.prefix=api
 service.api.version=v1

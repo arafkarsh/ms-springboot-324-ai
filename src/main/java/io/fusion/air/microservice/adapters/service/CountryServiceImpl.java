@@ -30,7 +30,6 @@ import java.util.List;
  * @date:
  */
 @Service
-@RequestScope
 public class CountryServiceImpl implements CountryService {
 
     @Autowired

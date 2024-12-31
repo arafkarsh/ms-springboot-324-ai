@@ -21,7 +21,6 @@ import io.fusion.air.microservice.domain.models.example.PaymentDetails;
 import io.fusion.air.microservice.domain.models.example.PaymentStatus;
 import io.fusion.air.microservice.domain.models.example.PaymentType;
 
-import io.fusion.air.microservice.server.config.ServiceConfig;
 import io.fusion.air.microservice.server.controllers.AbstractController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -32,12 +31,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.RequestScope;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -56,21 +53,15 @@ import static org.slf4j.LoggerFactory.getLogger;
  * @version 1.0
  * 
  */
-@CrossOrigin
 @Configuration
 @RestController
 // "/ms-cache/api/v1"
 @RequestMapping("${service.api.path}/payment")
-@RequestScope
 @Tag(name = "Secured Payments API", description = "Ex. io.f.a.m.adapters.controllers.secured.PaymentControllerImpl")
 public class PaymentControllerImpl extends AbstractController {
 
 	// Set Logger -> Lookup will automatically determine the class name.
 	private static final Logger log = getLogger(lookup().lookupClass());
-	
-	@Autowired
-	private ServiceConfig serviceConfig;
-	private String serviceName;
 
 	/**
 	 * Get Method Call to Check the Health of the App
@@ -87,21 +78,15 @@ public class PaymentControllerImpl extends AbstractController {
             content = @Content)
     })
 	@GetMapping("/status/{referenceNo}")
-	@ResponseBody
-	public ResponseEntity<StandardResponse> getStatus(@PathVariable("referenceNo") String _referenceNo,
-														HttpServletRequest request) throws Exception {
-		log.debug("|"+name()+"|Request to Payment Status of Service... ");
+	public ResponseEntity<StandardResponse> getStatus(@PathVariable("referenceNo") String referenceNo,
+														HttpServletRequest request)  {
+		log.debug("|Request to Payment Status of Service... ");
 		StandardResponse stdResponse = createSuccessResponse("Processing Success!");
 		// Response Object
-		HashMap<String,Object> status = new HashMap<String,Object>();
-		status.put("ReferenceNo", _referenceNo);
-		status.put("Message","Payment Status is good!");
+		HashMap<String,String> status = getStatus( referenceNo,  "Payment Status is good!!");
 		stdResponse.setPayload(status);
-		// Additional Headers
-		// HttpHeaders headers = new HttpHeaders();
-		// headers.add(HttpHeaders.CACHE_CONTROL, "no-cache");
 		// Return the Response
-		return new ResponseEntity<StandardResponse>(stdResponse, HttpStatus.OK);
+		return new ResponseEntity<>(stdResponse, HttpStatus.OK);
 	}
 
 	/**
@@ -117,8 +102,8 @@ public class PaymentControllerImpl extends AbstractController {
             content = @Content)
     })
     @PostMapping("/processPayments")
-    public ResponseEntity<StandardResponse> processPayments(@Valid @RequestBody PaymentDetails _payDetails) {
-		log.debug("|"+name()+"|Request to process payments... ");
+    public ResponseEntity<StandardResponse> processPayments(@Valid @RequestBody PaymentDetails payDetails) {
+		log.debug("|Request to process payments... ");
 		StandardResponse stdResponse = createSuccessResponse("Processing Success!");
 		PaymentStatus ps = new PaymentStatus(
 				"fb908151-d249-4d30-a6a1-4705729394f4",
@@ -144,12 +129,10 @@ public class PaymentControllerImpl extends AbstractController {
 					content = @Content)
 	})
 	@DeleteMapping("/cancel/{referenceNo}")
-	public ResponseEntity<StandardResponse> cancel(@PathVariable("referenceNo") String _referenceNo) {
-		log.debug("|"+name()+"|Request to Cancel the payments... ");
+	public ResponseEntity<StandardResponse> cancel(@PathVariable("referenceNo") String referenceNo) {
+		log.debug("|Request to Cancel the payments... ");
 		StandardResponse stdResponse = createSuccessResponse("Cancelled!");
-		HashMap<String,Object> status = new HashMap<String,Object>();
-		status.put("ReferenceNo", _referenceNo);
-		status.put("Message","Payment cancelled!");
+		HashMap<String,String> status = getStatus( referenceNo,  "Payment cancelled!");
 		stdResponse.setPayload(status);
 		return ResponseEntity.ok(stdResponse);
 	}
@@ -167,13 +150,18 @@ public class PaymentControllerImpl extends AbstractController {
 					content = @Content)
 	})
 	@PutMapping("/update/{referenceNo}")
-	public ResponseEntity<StandardResponse> updatePayment(@PathVariable("referenceNo") String _referenceNo) {
-		log.debug("|"+name()+"|Request to Update Payment... "+_referenceNo);
+	public ResponseEntity<StandardResponse> updatePayment(@PathVariable("referenceNo") String referenceNo) {
+		log.debug("|Request to Update Payment... {}",referenceNo);
 		StandardResponse stdResponse = createSuccessResponse("Updated!");
-		HashMap<String,Object> status = new HashMap<String,Object>();
-		status.put("ReferenceNo", _referenceNo);
-		status.put("Message","Product updated!");
+		HashMap<String,String> status = getStatus( referenceNo,  "Product updated!");
 		stdResponse.setPayload(status);
 		return ResponseEntity.ok(stdResponse);
 	}
- }
+
+	private HashMap<String,String> getStatus(String referenceNo, String mesg) {
+		HashMap<String,String> status = new HashMap<>();
+		status.put("ReferenceNo", referenceNo);
+		status.put("Message",mesg);
+		return status;
+	}
+}

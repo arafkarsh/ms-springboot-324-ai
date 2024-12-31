@@ -31,20 +31,15 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
-import org.slf4j.Logger;
 // Spring
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.RequestScope;
 // Java
 import java.util.LinkedHashMap;
 import java.util.List;
-
+import org.slf4j.Logger;
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -59,38 +54,38 @@ import static org.slf4j.LoggerFactory.getLogger;
  * @version 1.0
  * 
  */
-@CrossOrigin
 @Configuration
 @RestController
 // "/ms-ai/api/v1"
 @RequestMapping("${service.api.path}/ai/openai")
-@RequestScope
 @Tag(name = "AI - OpenAi", description = "GPT 3.5, GPT 3.5 Turbo, GPT 4, GPT 4o, Dall-E 3")
 public class AiOpenAiControllerImpl extends AbstractController {
 
 	// Set Logger -> Lookup will automatically determine the class name.
 	private static final Logger log = getLogger(lookup().lookupClass());
 
-	@Value("${openai.api.key}")
-	private String OPENAI_API_KEY;
-
-	@Autowired
+	// Autowired using Constructor Injection
 	private ChatMessageService chatMessageService;
 
 	// Chat Language Model is automatically injected by the constructor
 	// based on the Qualifier "ChatLanguageModelGPT"
 	private final ChatLanguageModel chatLanguageModel;
 
+	private final String defaultMode;
+
+
 	/**
 	 * Auto Wire the Language Model
 	 * Loading the Bean with the name ChatLanguageModelGPT (defined in AiBeans).
 	 * The Qualifier is to ensure that the right Bean is Autowired.
 	 *
-	 * @param _chatLanguageModel
+	 * @param chatLanguageModel
 	 */
 	public AiOpenAiControllerImpl(@Qualifier("ChatLanguageModelGPT")
-							ChatLanguageModel _chatLanguageModel) {
-		this.chatLanguageModel = _chatLanguageModel;
+							ChatLanguageModel chatLanguageModel, ChatMessageService chatMessageService) {
+		this.chatLanguageModel = chatLanguageModel;
+		this.chatMessageService = chatMessageService;
+		this.defaultMode = AiConstants.getOpenAIDefaultModel();
 	}
 
 	/**
@@ -106,14 +101,13 @@ public class AiOpenAiControllerImpl extends AbstractController {
 					content = @Content)
 	})
 	@PostMapping("/chat")
-	public ResponseEntity<StandardResponse> chat( @RequestBody String _msg) {
-		log.info("|"+name()+"|Chat Request to AI...  "+AiConstants.getOpenAIDefaultModel()+" .. "+_msg);
-		// log.info("Open_API_KEY = "+OPENAI_API_KEY);
-		String response = chatLanguageModel.generate(_msg);
+	public ResponseEntity<StandardResponse> chat( @RequestBody String msg) {
+		log.info("|Chat Request to AI... {} ... {} ", defaultMode, msg);
+		String response = chatLanguageModel.generate(msg);
 		if(response != null) {
-			return ResponseEntity.ok(createResponse(response, _msg));
+			return ResponseEntity.ok(createResponse(response, msg));
 		}
-		throw new DataNotFoundException("Unable to retrieve data... !");
+		throw new DataNotFoundException("Unable to Fetch data... !");
 	}
 
 	@Operation(summary = "AI Chat - Custom Data")
@@ -130,12 +124,11 @@ public class AiOpenAiControllerImpl extends AbstractController {
 					content = @Content)
 	})
 	@PostMapping("/chat/custom")
-	public ResponseEntity<StandardResponse> chatCustomData(@RequestBody String _msg) {
-		log.info("|" + name() + "|Custom Chat Request to AI Engine "+AiConstants.getOpenAIDefaultModel()+"... " + _msg);
-		// log.info("Open_API_KEY = "+OPENAI_API_KEY);
-		String response = CustomDataAnalyzer.processFile(_msg);
+	public ResponseEntity<StandardResponse> chatCustomData(@RequestBody String msg) {
+		log.info("|Custom Chat Request to AI Engine {} ... {} ", defaultMode, msg);
+		String response = CustomDataAnalyzer.processFile(msg);
 		if(response != null) {
-			return ResponseEntity.ok(createResponse(response, _msg));
+			return ResponseEntity.ok(createResponse(response, msg));
 		}
 		throw new DataNotFoundException("Unable to retrieve data... !");
 	}
@@ -150,12 +143,11 @@ public class AiOpenAiControllerImpl extends AbstractController {
 					content = @Content)
 	})
 	@PostMapping("/chat/structured")
-	public ResponseEntity<StandardResponse> chatStructuredData(@RequestBody String _msg) {
-		log.info("|" + name() + "|Structured Chat Request to AI Engine "+AiConstants.getOpenAIDefaultModel()+"... " + _msg);
-		// log.info("Open_API_KEY = "+OPENAI_API_KEY);
-		String response = TemplateManager.structuredTemplate("[P1: "+_msg);
+	public ResponseEntity<StandardResponse> chatStructuredData(@RequestBody String msg) {
+		log.info("|Structured Chat Request to AI Engine {} ... {} ", defaultMode, msg);
+		String response = TemplateManager.structuredTemplate("[P1: "+msg);
 		if(response != null) {
-			return ResponseEntity.ok(createResponse(response, _msg));
+			return ResponseEntity.ok(createResponse(response, msg));
 		}
 		throw new DataNotFoundException("Unable to retrieve data... !");
 	}
@@ -175,31 +167,30 @@ public class AiOpenAiControllerImpl extends AbstractController {
 					content = @Content)
 	})
 	@GetMapping("/chat/userid/{userId}")
-	@ResponseBody
-	public ResponseEntity<StandardResponse> getProductStatus(@PathVariable("userId") String _userId) throws Exception {
-		log.info("|"+name()+"|Request to Get ChatMessages by User ID.. "+ _userId);
-		List<ChatMessageEntity> chats = chatMessageService.fetchByUserId(_userId);
-		if(chats.size() > 0) {
+	public ResponseEntity<StandardResponse> getProductStatus(@PathVariable("userId") String userId)  {
+		log.info("|Request to Get ChatMessages by User ID.. {} ", userId);
+		List<ChatMessageEntity> chats = chatMessageService.fetchByUserId(userId);
+		if(chats.isEmpty()) {
 			StandardResponse stdResponse = createSuccessResponse("Chats Fetch Success!");
 			stdResponse.setPayload(chats);
 			return ResponseEntity.ok(stdResponse);
 		}
-		throw new DataNotFoundException("Chats not found for User Id "+ _userId);
+		throw new DataNotFoundException("Chats not found for User Id "+ userId);
 	}
 
 	/**
 	 * Create Response as Standard Response
 	 *
-	 * @param _response
-	 * @param _msg
+	 * @param response
+	 * @param msg
 	 * @return
 	 */
-	private StandardResponse createResponse(String _response, String _msg) {
-		String[] rows = _response.split("\n");
+	private StandardResponse createResponse(String response, String msg) {
+		String[] rows = response.split("\n");
 		StandardResponse stdResponse = createSuccessResponse("AI Response");
-		LinkedHashMap<String, Object> data = new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> data = new LinkedHashMap<>();
 		data.put("Algo", AiConstants.getOpenAIDefaultModel());
-		data.put("Request", _msg);
+		data.put("Request", msg);
 		data.put("Response", rows);
 		stdResponse.setPayload(data);
 		return stdResponse;
