@@ -32,11 +32,11 @@ public class _02_Complex_World {
 
     public static void main(String[] args) {
         // Create Chat Language Model Google Vertex AI - PaLM 2
-        ChatLanguageModel model = AiBeans.getChatLanguageModelGoogle(AiConstants.GOOGLE_PaLM_CHAT_BISON);
+        ChatLanguageModel model = AiBeans.getChatLanguageModelGoogle(AiConstants.GOOGLE_PALM_CHAT_BISON);
         // Create the Ai Assistant
         HAL9000Assistant hal9k = new AiBeans().createHAL9000(model);
 
-        AiBeans.printModelDetails(AiConstants.LLM_VERTEX, AiConstants.GOOGLE_PaLM_CHAT_BISON);
+        AiBeans.printModelDetails(AiConstants.LLM_VERTEX, AiConstants.GOOGLE_PALM_CHAT_BISON);
         // Run the DownloadAllData Cases
         complexWorld1(hal9k);
         complexWorld2(hal9k);

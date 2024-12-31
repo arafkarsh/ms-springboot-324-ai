@@ -104,8 +104,8 @@ public class _07_ChatMemory_Example {
 
     public static void main(String[] args) throws Exception {
         // Create Chat Language Model Google Vertex AI - PaLM 2
-        ChatLanguageModel model = AiBeans.getChatLanguageModelGoogle(AiConstants.GOOGLE_PaLM_CHAT_BISON);
-        AiBeans.printModelDetails(AiConstants.LLM_VERTEX, AiConstants.GOOGLE_PaLM_CHAT_BISON);
+        ChatLanguageModel model = AiBeans.getChatLanguageModelGoogle(AiConstants.GOOGLE_PALM_CHAT_BISON);
+        AiBeans.printModelDetails(AiConstants.LLM_VERTEX, AiConstants.GOOGLE_PALM_CHAT_BISON);
         // Chat Memory Conversations
         chatMemoryConversations(model);
 

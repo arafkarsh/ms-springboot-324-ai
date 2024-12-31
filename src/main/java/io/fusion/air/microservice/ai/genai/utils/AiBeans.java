@@ -29,6 +29,7 @@ import dev.langchain4j.service.AiServices;
 // Custom
 import io.fusion.air.microservice.ai.genai.core.assistants.HAL9000Assistant;
 // Spring
+import io.fusion.air.microservice.utils.Std;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -67,11 +68,11 @@ public class AiBeans {
      * 2. GPT 4
      * 3. GPT 4o
      *
-     * @param _model
+     * @param model
      * @return
      */
-    public static ChatLanguageModel getChatLanguageModelOpenAi(String _model) {
-        return new AiBeans().createChatLanguageModelOpenAi(_model);
+    public static ChatLanguageModel getChatLanguageModelOpenAi(String model) {
+        return new AiBeans().createChatLanguageModelOpenAi(model);
     }
 
     /**
@@ -89,11 +90,11 @@ public class AiBeans {
      * 3. Phi-3 (phi-3)
      * 4. Gemma (gemma)
      *
-     * @param _model
+     * @param model
      * @return
      */
-    public static ChatLanguageModel getChatLanguageModelLlama(String _model) {
-        return new AiBeans().createChatLanguageModelLlama(_model);
+    public static ChatLanguageModel getChatLanguageModelLlama(String model) {
+        return new AiBeans().createChatLanguageModelLlama(model);
     }
 
     /**
@@ -110,11 +111,11 @@ public class AiBeans {
      * Get the Anthropic Chat Language Models
      * 1. Claude 3 Haiku
      *
-     * @param _model
+     * @param model
      * @return
      */
-    public static ChatLanguageModel getChatLanguageModelAnthropic(String _model) {
-        return new AiBeans().createChatLanguageModelAnthropic(_model);
+    public static ChatLanguageModel getChatLanguageModelAnthropic(String model) {
+        return new AiBeans().createChatLanguageModelAnthropic(model);
     }
 
     /**
@@ -132,11 +133,11 @@ public class AiBeans {
      * 2. Gemini Flash
      * 3. Gemini Nano
      *
-     * @param _model
+     * @param model
      * @return
      */
-    public static ChatLanguageModel getChatLanguageModelGoogle(String _model) {
-        return new AiBeans().createChatLanguageModelGoogle(_model);
+    public static ChatLanguageModel getChatLanguageModelGoogle(String model) {
+        return new AiBeans().createChatLanguageModelGoogle(model);
     }
 
     /**
@@ -160,29 +161,29 @@ public class AiBeans {
 
     /**
      * Returns Chat Language Model based on ChatGPT 3.5, 4.0, 4o (Omni)
-     * @param _model
+     * @param model
      * @return
      */
-    public ChatLanguageModel createChatLanguageModelOpenAi(String _model) {
-        return createChatLanguageModelOpenAi(_model, false, false);
+    public ChatLanguageModel createChatLanguageModelOpenAi(String model) {
+        return createChatLanguageModelOpenAi(model, false, false);
     }
 
     /**
      * Returns Chat Language Model based on ChatGPT 3.5, 4.0, 4o (Omni)
-     * @param _req
-     * @param _res
+     * @param req
+     * @param res
      * @return
      */
-    public ChatLanguageModel createChatLanguageModelOpenAi(boolean _req, boolean _res) {
-        return createChatLanguageModelOpenAi(AiConstants.getOpenAIDefaultModel(), _req, _res);
+    public ChatLanguageModel createChatLanguageModelOpenAi(boolean req, boolean res) {
+        return createChatLanguageModelOpenAi(AiConstants.getOpenAIDefaultModel(), req, res);
     }
 
     /**
      * Returns Chat Language Model based on ChatGPT 3.5, 4.0, 4o (Omni)
-     * @param _model
+     * @param model
      * @return
      */
-    public ChatLanguageModel createChatLanguageModelOpenAi(String _model, boolean _req, boolean _res) {
+    public ChatLanguageModel createChatLanguageModelOpenAi(String model, boolean req, boolean res) {
        return OpenAiChatModel.builder()
                 .apiKey(AiConstants.OPENAI_API_KEY)
                 // Higher the Temperature, Higher the Randomness.
@@ -190,9 +191,9 @@ public class AiBeans {
                 .temperature(0.0)
                 .timeout(ofSeconds(60))
                  // AI Models are defined in AiConstants -  GPT_4_TURBO, GPT_3_5_TURBO
-                .modelName(_model)
-                .logRequests(_req)
-                .logResponses(_res)
+                .modelName(model)
+                .logRequests(req)
+                .logResponses(res)
                 .build();
     }
 
@@ -215,13 +216,13 @@ public class AiBeans {
      * 5. Falcon (falcon2)
      * 6. Wizard Math (wizard-math:7b)
      *
-     * @param _model
+     * @param model
      * @return
      */
-    public ChatLanguageModel createChatLanguageModelLlama(String _model) {
+    public ChatLanguageModel createChatLanguageModelLlama(String model) {
             return OllamaChatModel.builder()
                     .baseUrl("http://localhost:11434/api/generate/")
-                    .modelName(_model)
+                    .modelName(model)
                     // Higher the Temperature, Higher the Randomness.
                     // For Accurate deterministic results keep the temperature low
                     .temperature(0.0)
@@ -244,14 +245,14 @@ public class AiBeans {
      * Returns Chat Language Model based on
      * 1. Claude 3 Haiku
      *
-     * @param _model
+     * @param model
      * @return
      */
-    public ChatLanguageModel createChatLanguageModelAnthropic(String _model) {
+    public ChatLanguageModel createChatLanguageModelAnthropic(String model) {
         return  AnthropicChatModel.builder()
                 // API key can be created here: https://console.anthropic.com/settings/keys
                 .apiKey(AiConstants.ANTHROPIC_API_KEY)
-                .modelName(_model) // claude-3-haiku-20240307
+                .modelName(model) // claude-3-haiku-20240307
                 .logRequests(true)
                 .logResponses(true)
                 .build();
@@ -276,15 +277,15 @@ public class AiBeans {
      * 2. Gemini Flash
      * 3. Gemini Nano
      *
-     * @param _model
+     * @param model
      * @return
      */
-    public ChatLanguageModel createChatLanguageModelGoogle(String _model) {
+    public ChatLanguageModel createChatLanguageModelGoogle(String model) {
         // Create Chat Language Model - Google Gemini Pro
         return  VertexAiGeminiChatModel.builder()
                 .project(AiConstants.GOOGLE_VERTEX_PROJECT_ID)
                 .location(AiConstants.GOOGLE_VERTEX_LOCATION)
-                .modelName(_model)
+                .modelName(model)
                 // Top-k changes how the model selects tokens for output. A top-k of 1 means the
                 // selected token is the most probable among all tokens in the model’s vocabulary
                 // (also called greedy decoding), while a top-k of 3 means that the next token is
@@ -319,15 +320,15 @@ public class AiBeans {
 
     /**
      * Returns the Image Model
-     * @param _model
+     * @param model
      * @return
      */
-    public ImageModel createImageModel(String _model) {
+    public ImageModel createImageModel(String model) {
         return OpenAiImageModel.builder()
                 .apiKey(AiConstants.OPENAI_API_KEY)
                 .timeout(ofSeconds(60))
                 // AI Models are defined in AiConstants -  DALL_E_3, DALL_E_2
-                .modelName(_model)
+                .modelName(model)
                 .logRequests(false)
                 .logResponses(false)
                 .build();
@@ -353,11 +354,11 @@ public class AiBeans {
 
     /**
      * Creates Ai Assistant
-     * @param _model
+     * @param model
      * @return
      */
-    public HAL9000Assistant createHAL9000(String _model) {
-        ChatLanguageModel chatLanguageModel = createChatLanguageModelOpenAi(_model);
+    public HAL9000Assistant createHAL9000(String model) {
+        ChatLanguageModel chatLanguageModel = createChatLanguageModelOpenAi(model);
         return AiServices.builder(HAL9000Assistant.class)
                 .chatLanguageModel(chatLanguageModel)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
@@ -367,12 +368,12 @@ public class AiBeans {
 
     /**
      * Create Ai Assistant
-     * @param _chatLanguageModel
+     * @param chatLanguageModel
      * @return
      */
-    public HAL9000Assistant createHAL9000(ChatLanguageModel _chatLanguageModel) {
+    public HAL9000Assistant createHAL9000(ChatLanguageModel chatLanguageModel) {
         return AiServices.builder(HAL9000Assistant.class)
-                .chatLanguageModel(_chatLanguageModel)
+                .chatLanguageModel(chatLanguageModel)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
                 // .tools(tool)
                 .build();
@@ -392,26 +393,26 @@ public class AiBeans {
 
     /**
      * Print Model Details
-     * @param _llm
-     * @param _model
+     * @param llm
+     * @param model
      */
-    public static void printModelDetails(String _llm, String _model) {
-        System.out.println("--[Model]----------------------------------------------------------");
-        System.out.println(">>> "+_llm+" : "+_model);
+    public static void printModelDetails(String llm, String model) {
+        Std.println("--[Model]----------------------------------------------------------");
+        Std.println(">>> "+llm+" : "+model);
     }
 
     /**
      * Print Request & Response
      *
-     * @param _request
-     * @param _response
+     * @param request
+     * @param response
      */
-    public static void printResult(String _request, String _response) {
-        System.out.println("--[Human]----------------------------------------------------------");
-        System.out.println(_request);
-        System.out.println("--[HAL9000]-------------------------------------------------------");
-        System.out.println(_response);
-        System.out.println("-------------------------------------------------------------------");
+    public static void printResult(String request, String response) {
+        Std.println("--[Human]----------------------------------------------------------");
+        Std.println(request);
+        Std.println("--[HAL9000]-------------------------------------------------------");
+        Std.println(response);
+        Std.println("-------------------------------------------------------------------");
     }
 
     /**
@@ -427,8 +428,10 @@ public class AiBeans {
      */
     public static void sleep(long seconds) {
         try {
-            System.out.println("Sleeping for "+seconds+" Seconds to avoid per minute rate limit issues with Claude LLM...");
+            Std.println("Sleeping for "+seconds+" Seconds to avoid per minute rate limit issues with Claude LLM...");
             Thread.sleep(Duration.ofSeconds(seconds));
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException e) {
+            // Nothing to print
+        }
     }
 }

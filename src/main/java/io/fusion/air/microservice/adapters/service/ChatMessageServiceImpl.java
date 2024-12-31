@@ -18,7 +18,6 @@ package io.fusion.air.microservice.adapters.service;
 import io.fusion.air.microservice.domain.entities.example.ChatMessageEntity;
 import io.fusion.air.microservice.adapters.repository.ChatMessageRepository;
 import io.fusion.air.microservice.domain.ports.services.ChatMessageService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,17 +30,25 @@ import java.util.List;
 @Service
 public class ChatMessageServiceImpl implements ChatMessageService {
 
-    @Autowired
+    // Autowired using Constructor Injection
     private ChatMessageRepository chatMessageRepository;
+
+    /**
+     * Autowired using Constructor Injection
+     * @param chatMessageRepository
+     */
+    public ChatMessageServiceImpl(ChatMessageRepository chatMessageRepository) {
+        this.chatMessageRepository = chatMessageRepository;
+    }
 
     /**
      * Returns List of Chat Messages from ChatMessages
      *
-     * @param _userId
+     * @param userId
      * @return
      */
     @Override
-    public List<ChatMessageEntity> fetchByUserId(String _userId) {
-        return chatMessageRepository.fetchByUserId(_userId);
+    public List<ChatMessageEntity> fetchByUserId(String userId) {
+        return chatMessageRepository.fetchByUserId(userId);
     }
 }

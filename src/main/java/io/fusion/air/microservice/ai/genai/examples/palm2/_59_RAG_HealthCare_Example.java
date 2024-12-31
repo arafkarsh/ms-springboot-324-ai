@@ -41,8 +41,8 @@ public class _59_RAG_HealthCare_Example {
         // testPatientDataExtractor();
 
         // Create Chat Language Model Google Vertex AI - PaLM 2
-        ChatLanguageModel model = AiBeans.getChatLanguageModelGoogle(AiConstants.GOOGLE_PaLM_CHAT_BISON);
-        AiBeans.printModelDetails(AiConstants.LLM_VERTEX, AiConstants.GOOGLE_PaLM_CHAT_BISON);
+        ChatLanguageModel model = AiBeans.getChatLanguageModelGoogle(AiConstants.GOOGLE_PALM_CHAT_BISON);
+        AiBeans.printModelDetails(AiConstants.LLM_VERTEX, AiConstants.GOOGLE_PALM_CHAT_BISON);
         // Create the Assistant
         // Setting up the Gen AI Context with Open AI LLM, and RAG
         // HealthCareAssistant assistant = RAGHealthCareBuilder.createHealthCareAssistant(model);

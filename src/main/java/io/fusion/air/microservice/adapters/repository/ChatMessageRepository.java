@@ -36,10 +36,10 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessageEntity, 
 
     /**
      * Find By ChatMessage UUID
-     * @param _uuid
+     * @param uuid
      * @return
      */
-    public Optional<ChatMessageEntity> findById(UUID _uuid);
+    public Optional<ChatMessageEntity> findById(UUID uuid);
 
     /**
      * Search for the ChatMessage By User ID

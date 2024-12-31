@@ -81,13 +81,13 @@ public class AiConstants {
     private  String ollamaModel;
 
     public static String OLLAMA_URL;
-    public static String OLLAMA_LLAMA3                          = "llama3";
-    public static String OLLAMA_MISTRAL                         = "mistral";
-    public static String OLLAMA_PHI_3                             = "phi3";
-    public static String OLLAMA_GEMMA                           = "gemma";
-    public static String OLLAMA_FALCON_2                        = "falcon2";
-    public static String OLLAMA_WIZARD_MATH_7B             = "wizard-math:7b";
-    public static String OLLAMA_WIZARD_MATH_70B            = "wizard-math:70b";
+    public static final String OLLAMA_LLAMA3                          = "llama3";
+    public static final String OLLAMA_MISTRAL                         = "mistral";
+    public static final String OLLAMA_PHI_3                             = "phi3";
+    public static final String OLLAMA_GEMMA                           = "gemma";
+    public static final String OLLAMA_FALCON_2                        = "falcon2";
+    public static final String OLLAMA_WIZARD_MATH_7B             = "wizard-math:7b";
+    public static final String OLLAMA_WIZARD_MATH_70B            = "wizard-math:70b";
 
     // Anthropic Claude Config ----------------------------------------------------------
     public static final String ANTHROPIC_CLAUDE_3_HAIKU = "claude-3-haiku-20240307";
@@ -118,8 +118,8 @@ public class AiConstants {
     public static final String GOOGLE_GEMINI_PRO_VISION    = "gemini-1.0-pro-vision-001";
     public static final String GOOGLE_GEMINI_ULTRA_VISION = "gemini-ultra-vision";
     // Google PaLM Models -------------------------------------------------------------
-    public static final String GOOGLE_PaLM_CHAT_BISON        = "chat-bison@002";              // Expires Oct 9, 2024
-    public static final String GOOGLE_PaLM_TEXT_BISON        = "text-bison@002";              // Expires Oct 9, 2024
+    public static final String GOOGLE_PALM_CHAT_BISON = "chat-bison@002";              // Expires Oct 9, 2024
+    public static final String GOOGLE_PALM_TEXT_BISON = "text-bison@002";              // Expires Oct 9, 2024
 
     // Model Config ----------------------------------------------------------------------
     @Value("${langchain4j.open-ai.model:gpt-4o-2024-05-13}")
@@ -130,7 +130,7 @@ public class AiConstants {
     public void init() {
         OPEN_AI_DEFAULT_MODEL = this.openAIModel;
         OLLAMA_URL = this.ollamaBaseUrl;
-        OLLAMA_LLAMA3 = this.ollamaModel;
+        // OLLAMA_LLAMA3 = this.ollamaModel;
     }
 
     /**
@@ -138,7 +138,6 @@ public class AiConstants {
      * @return
      */
     public static String getOpenAIDefaultModel() {
-        // System.out.println("<><><>---> MODEL = ["+OPEN_AI_DEFAULT_MODEL+"]>--------------------");
         return (OPEN_AI_DEFAULT_MODEL == null) ? GPT_3_5_TURBO  : OPEN_AI_DEFAULT_MODEL;
     }
 }
