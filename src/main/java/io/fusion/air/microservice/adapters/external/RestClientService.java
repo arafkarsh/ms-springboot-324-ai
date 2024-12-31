@@ -14,15 +14,10 @@
  * limitations under the License.
  */
 package io.fusion.air.microservice.adapters.external;
+// Java
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static java.lang.invoke.MethodHandles.lookup;
-import static java.util.Arrays.asList;
-import static org.slf4j.LoggerFactory.getLogger;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.slf4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -31,9 +26,13 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static java.lang.invoke.MethodHandles.lookup;
+import static java.util.Arrays.asList;
+import static org.slf4j.LoggerFactory.getLogger;
 
 /**
  *
@@ -51,7 +50,7 @@ public class RestClientService  extends RestTemplate {
         // Set Object Mapper For Serialization
         log.debug("Initialized RestClientService.... 1");
         setMessageConverters(getDataConverters1());
-
+        // Set Factory to RestTemplate
         log.debug("Initialized RestClientService.... 2");
     }
 
@@ -73,7 +72,7 @@ public class RestClientService  extends RestTemplate {
      * Returns Converters 2
      * @return
      */
-    public List<HttpMessageConverter<?>> getDataConverters2() {
+    public List<HttpMessageConverter<Object>> getDataConverters2() {
         return asList(
                 new MappingJackson2HttpMessageConverter(
                         getObjectMapper())
@@ -94,7 +93,6 @@ public class RestClientService  extends RestTemplate {
      * Return HttpComponentsClientHttpRequestFactory
      * Spring throws Error saying Apache HttpClient Not Found1!!!!!
      * @return
-     * @deprecated
      */
     public HttpComponentsClientHttpRequestFactory getHttpFactory() {
         log.debug("Initialized RestClientService.... setRequestFactory()... 2");
@@ -102,7 +100,6 @@ public class RestClientService  extends RestTemplate {
                 = new HttpComponentsClientHttpRequestFactory();
         log.debug("Initialized RestClientService.... setRequestFactory()... 3");
         factory.setConnectTimeout(10000);
-        // factory.setReadTimeout(10000);
         log.debug("Initialized RestClientService.... setRequestFactory()... 4");
         return factory;
     }

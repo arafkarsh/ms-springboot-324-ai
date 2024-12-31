@@ -30,6 +30,8 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
+
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -89,6 +91,7 @@ public class AiOpenAiStringControllerImpl extends AbstractController {
 	})
 	@PostMapping("/chat")
 	public String chat( @RequestBody String msg) {
+		msg = HtmlUtils.htmlEscape(msg);
 		log.info("|Chat Request to AI...  {} ... {} ", defaultMode, msg);
 		String response = chatLanguageModel.generate(msg);
 		if(response != null) {
@@ -112,6 +115,7 @@ public class AiOpenAiStringControllerImpl extends AbstractController {
 	})
 	@PostMapping("/chat/custom")
 	public String chatCustomData(@RequestBody String msg) {
+		msg = HtmlUtils.htmlEscape(msg);
 		log.info("|Custom Chat Request to AI Engine {} ... {} ", defaultMode, msg);
 		String response = CustomDataAnalyzer.processFile(msg);
 		if(response != null) {
@@ -131,6 +135,7 @@ public class AiOpenAiStringControllerImpl extends AbstractController {
 	})
 	@PostMapping("/chat/structured")
 	public String chatStructuredData(@RequestBody String msg) {
+		msg = HtmlUtils.htmlEscape(msg);
 		log.info("|Structured Chat Request to AI Engine {} ... {} ", defaultMode, msg);
 		String response = TemplateManager.structuredTemplate("[P1: "+msg);
 		if(response != null) {
