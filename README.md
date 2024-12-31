@@ -33,6 +33,27 @@ Here’s how it helps developers:
 
 ![Ai RAG-0](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/diagrams/Ai-Case-Study-Architecture.jpg)
 
+This ai-service template offers a range of built-in functionalities. To simplify the demonstration of
+various features, an encrypted password is utilized for connecting to H2 and PostgreSQL databases.
+The template includes utilities for encrypting and decrypting passwords, ensuring that the encryption
+key is securely stored outside the application’s runtime context.
+
+To know more about how to setup these passwords (for H2 & PostgreSQL) and environment variables
+checkout Session 1.2
+
+Encrypted H2 (In Memory) Database Password. Uses H2 database in Dev (Profile) mode.
+![Package Structure](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/encrypt/Security-H2-psd.jpg)
+Encrypted PostgreSQL Database Password. Uses PostgreSQL DB in Staging & Prod (profile) mode.
+![Package Structure](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/encrypt/Security-PostgreSQL-psd.jpg)
+Password can be decrypted only using an Encryption Key stored in System Enviornment variable
+![Package Structure](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/encrypt/Security-Encryption-pro.jpg)
+
+If the Quality Gate check fails, it's because the password is encrypted within the application’s
+properties file, with the encryption key stored externally, outside the application’s context.
+
+However, quality standards mandate that passwords should be securely stored in a vault, such as
+HashiCorp Vault, for enhanced security.
+
 ## Gen AI Examples: Comparison of 8 LLMs (3 Cloud based & 5 Local) on Enterprise Features
 
 Following comparison is based on the features available in LangChain4J API (which supported by OpenAI ChatGPT). These features are essential for Gen AI based Enterprise App Development.
