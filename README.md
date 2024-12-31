@@ -1,5 +1,10 @@
 # Gen Ai - Springboot / Langchain4J Examples
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=arafkarsh_ms-springboot-324-ai&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=arafkarsh_ms-springboot-324-ai)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=arafkarsh_ms-springboot-324-ai&metric=bugs)](https://sonarcloud.io/summary/new_code?id=arafkarsh_ms-springboot-324-ai)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=arafkarsh_ms-springboot-324-ai&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=arafkarsh_ms-springboot-324-ai)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=arafkarsh_ms-springboot-324-ai&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=arafkarsh_ms-springboot-324-ai)
+
 - Java 23
 - SpringBoot 3.3.4
 - LangChain4J 0.36.0
