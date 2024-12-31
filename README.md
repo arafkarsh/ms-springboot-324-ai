@@ -1,8 +1,8 @@
 # Gen Ai - Springboot / Langchain4J Examples
 
-- Java 21
-- SpringBoot 3.2.4
-- LangChain4J 0.2.0
+- Java 23
+- SpringBoot 3.3.4
+- LangChain4J 0.30.0
 
 Generative AI refers to a subset of artificial intelligence that can generate new content based 
 on input data. This encompasses models that can create text, images, music, and even videos. 
@@ -32,6 +32,40 @@ Here’s how it helps developers:
 ## Case Study: Health Care App - Gen Ai Enabled Diagnosis Microservices
 
 ![Ai RAG-0](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/ai/diagrams/Ai-Case-Study-Architecture.jpg)
+
+## Setup Database Password Encryption
+
+This ai-service template offers a range of built-in functionalities. To simplify the demonstration of
+various features, an encrypted password is utilized for connecting to H2 and PostgreSQL databases.
+The template includes utilities for encrypting and decrypting passwords, ensuring that the encryption
+key is securely stored outside the application’s runtime context.
+
+Encrypted H2 (In Memory) Database Password. Uses H2 database in Dev (Profile) mode.
+![Package Structure](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/encrypt/Security-H2-psd.jpg)
+Encrypted PostgreSQL Database Password. Uses PostgreSQL DB in Staging & Prod (profile) mode.
+![Package Structure](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/encrypt/Security-PostgreSQL-psd.jpg)
+Password can be decrypted only using an Encryption Key stored in System Enviornment variable
+![Package Structure](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/encrypt/Security-Encryption-pro.jpg)
+If the Quality Gate check fails, it's because the password is encrypted within the application’s
+properties file, with the encryption key stored externally, outside the application’s context.
+
+However, quality standards mandate that passwords should be securely stored in a vault, such as
+HashiCorp Vault, for enhanced security. To know more about how to setup these passwords (for H2 
+& PostgreSQL) and environment variables checkout Session 1.2
+
+### AI-Service Package Structure
+
+![Package Structure](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/MS-Pkg-Structure.jpg)
+
+io.fusion.air.microservice
+1. adapters (All the Implementations from App/Service perspective)
+2. ai (All AI Code Examples. ML, Gen AI Examples)
+3. domain (All Entities, Models, Interfaces for the implementations)
+4. security (All Security related modules)
+5. server (Managing the Service - from a server perspective, Setups (DB, Configs)
+6. utils (Standard Utilities)
+
+# Gen AI Examples
 
 ## Gen AI Examples: Comparison of 8 LLMs (3 Cloud based & 5 Local) on Enterprise Features
 
@@ -202,37 +236,79 @@ into the sources and processes the LLM uses to formulate its responses.
 ![LangChain4J](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/langchain4j-components.png)
 Read more... <a href="https://docs.langchain4j.dev/intro">LangChain4J Introduction</a>
 
-## Package Structure
+# Package Structure
 
 ![Package Structure](https://raw.githubusercontent.com/arafkarsh/ms-springboot-324-ai/main/diagrams/MS-Pkg-Structure.jpg)
 
-## Pre-Requisites
+### Pre-Requisites
 
-1. SpringBoot 3.2.4
-2. Java 22
-3. Jakarta EE 10 (jakarta.servlet.*, jakarta.persistence.*, javax.validation.*)
-4. PostgreSQL Database 14
-5. Ollama 0.1.38
+1. Java 23
+2. SpringBoot 3.3.4
+3. LangChain4J 0.30.0
+4. Jakarta EE 10 (jakarta.servlet.*, jakarta.persistence.*, javax.validation.*)
 
-By default the app will use H2 In-Memory Database. No Database setup required for this.
+## 1. Setting up the Template
 
-## Step 1.1 - Getting Started
+### Step 1.1 - Getting Started
 
 1. git clone [https://github.com/arafkarsh/ms-springboot-324-ai.git](https://github.com/arafkarsh/ms-springboot-324-ai.git)
 2. cd ms-springboot-324-ai
-3. cd database
-4. Read the README.md to setup your database (PostgreSQL Database)
-5. By Default (Dev Mode) the App will use In-Memory H2 Database
 
-##  Step 1.2 - Compile (Once your code is ready)
+###  Step 1.2 - Setup Encrypted DB Password in Property files
 
-### 1.2.1 Compile the Code
-Run the "compile" from ms-springboot-324-ai
+#### 1.2.1 Encrypt the Database passwords for H2 and PostgreSQL
+
+If you dont encrypt the password with your Encryption Key it will throw an exception saying unable to decrypt the password.
+Here are the steps to encrypt the password.
+
+Run the follwing command line option
+```
+$ source encrypt your-db-password your-encrypton-key
+```
+![Passowrd-Gen](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/Password-Gen.jpg)
+
+Your encryption key will be set in the following Environment variable. SpringBoot Will automatically
+pickup the encryption key from this environment variable.
+```
+JASYPT_ENCRYPTOR_PASSWORD=your-encrypton-key
+```
+
+#### 1.2.2 Update the Database passwords for H2 and PostgreSQL in the Property files
+
+Update the property file in the local file
+```
+spring.datasource.password=ENC(kkthRIyJ7ogLJP8PThfXjqko33snTUa9lY1GkyFpzr7KFRVhRVXLOMwNSIzr4EjFGAOWLhWTH5cAWzRzAfs33g==)
+```
+AND
+- the property template in src/main/resources/app.props.tmpl
+- dev src/main/resources/application-dev.properties
+```
+spring.datasource.password=ENC(kkthRIyJ7ogLJP8PThfXjqko33snTUa9lY1GkyFpzr7KFRVhRVXLOMwNSIzr4EjFGAOWLhWTH5cAWzRzAfs33g==)
+```
+AND
+the property files for
+- staging src/main/resources/application-staging.properties
+- prod src/main/resources/application-prod.properties
+```
+spring.datasource.password=ENC(/J0gRHIdlhBHFwpNo3a+1q3+8Uig5+uSNQHO/lCGOrfg/e8Wt2o3v1eC4TaquaDVGREOEFphpw1B84lOtxgeIA==)
+```
+#### 1.2.3 - Generating the Encrypted Text from REST Endpoint
+
+You can use the following REST Endpoint to encrypt the sensitive data. This will work only after setting
+the environment variable JASYPT_ENCRYPTOR_PASSWORD and creating the first DB password
+using the command line options.
+
+![Passowrd-Van](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/ms-vanilla-encrypt.jpg)
+
+###  Step 1.3 - Compile (Once your code is ready)
+
+#### 1.3.1 Compile the Code
+Execute the "compile" from ms-springboot-334-vanilla
 1. compile OR ./compile (Runs in Linux and Mac OS)
 2. mvn clean; mvn -e package; (All Platforms)
 3. Use the IDE Compile options
 
-### 1.2.2 What the "Compile" Script will do
+#### 1.3.2 What the "Compile" Script will do
 
 1. Clean up the target folder
 2. Generate the build no. and build date (takes application.properties backup)
@@ -240,20 +316,134 @@ Run the "compile" from ms-springboot-324-ai
 4. copy the jar files (and dependencies) to src/docker folder
 5. copy the application.properties file to current folder and src/docker folder
 
-In Step 1.2.2 application.properties file will be auto generated by the "compile" script. This is a critical step.
+In Step 1.3.2 application.properties file will be auto generated by the "compile" script. This is a critical step.
 Without generated application.properties file the service will NOT be running. There is pre-built application properties file.
+Following three property files are critical (to be used with Spring Profiles)
 
-##  Step 1.3 - Run
+1. application.properties
+2. application-dev.properties
+3. application-staging.properties
+4. application-prod.properties
 
-### 1.3.1 Start the Service
-1. run OR ./run (Runs in Linux or Mac OS)
-2. run prod (to run the production profile, default is dev profile)
-3. mvn spring-boot:run (All Platforms - Profile dev H2 In-Memory Database)
-4. mvn spring-boot:run -Dspring-boot.run.profiles=prod (All platforms - Profile prod PostgreSQL DB)
+### Step 1.4 - Run the Application
 
-### 1.3.2 Test the Service
+#### 1.4.1 - Spring Profiles
+
+1. dev (Development Mode)
+2. staging (Staging Mode)
+3. prod (Production Mode)
+
+#### 1.4.2 - Start the Service
+1. Linux or Mac OS - Profiles (dev, staging, or prod)
+```aiignore
+run 
+```
+```aiignore
+run dev 
+```
+```aiignore
+run staging 
+```
+```aiignore
+run prod 
+```
+
+2. All Platforms - Profiles (dev, staging, or prod)
+```aiignore
+ mvn spring-boot:run -Dspring-boot.run.profiles=dev
+```
+```aiignore
+ mvn spring-boot:run -Dspring-boot.run.profiles=staging
+```
+```aiignore
+ mvn spring-boot:run -Dspring-boot.run.profiles=prod
+```
+
+3. Microsoft Windows - Profiles (dev, staging, or prod)
+```aiignore
+java -jar target/ai-service-*-spring-boot.jar --spring.profiles.active=dev  -Djava.security.manager=java.lang.SecurityManager -Djava.security.policy=./vanilla.policy
+```
+```aiignore
+java -jar target/ai-service-*-spring-boot.jar --spring.profiles.active=staging  -Djava.security.manager=java.lang.SecurityManager -Djava.security.policy=./vanilla.policy
+```
+```aiignore
+java -jar target/ai-service-*-spring-boot.jar --spring.profiles.active=prod  -Djava.security.manager=java.lang.SecurityManager -Djava.security.policy=./vanilla.policy
+```
+
+#### 1.4.3 - Test the Service
 1. test OR ./test (Runs in Linux or Mac OS)
 2. Execute the curl commands directly (from the test script)
+
+#### 1.4.4 - Running through IDE
+Check the application.properties (in the project root directory) to change the profile Ex. spring.profiles.default=dev
+
+#### 1.4.5 - $ run prod (Result)
+![Run Results](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/MS-Run-Result.jpg)
+
+
+#### 1.4.6 - MS Cache Swagger UI Docs for Testing
+![Swagger Docs](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/MS-Vanilla-Swagger-UI.jpg)
+
+### Step 1.5 - Testing the APIs Using Swagger API Docs or Postman
+
+To test the APIs (in secure mode - you will see a lock icon in the Swagger Docs). These test tokens are generated
+based on the flag server.token.test=true in the application.properties file. (Change the app.props.tmpl if you want to
+change in the build process.) In the Production environment, this flag should be false. These tokens can be generated only in
+an Auth Service. All the services need not generate these tokens unless for the developers to test it out.
+In a real world scenario, disable (Comment out the function generateTestToken() from the code  java file
+ServiceEventListener.java in the package documentation io.fusion.air.microservice.server.service)  this feature for
+production environment.
+
+#### Step 1.5.1: Copy the Auth Token
+![Authorize Request](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/ms-vanilla-with-Test-Tokens.jpg)
+
+#### Step 1.5.2: Click on the Authorize Button (Top Left the Swagger UI)
+
+![Authorize Request](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/ms-vanilla-with-Test-Tokens-2.jpg)
+
+#### Step 1.5.3: Enter the Token and Click Authorize
+
+![Authorize Request](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/ms-vanilla-with-Test-Tokens-3.jpg)
+
+#### Step 1.5.4: Enter the Refresh Token & Tx Token with every request that needs authorization
+
+![Authorize Request](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/ms-vanilla-with-Test-Tokens-4.jpg)
+
+### Step 1.6 -  Import Swagger API Docs Into Postman
+
+What is Postman?
+- Postman is an API platform for building and using APIs. Postman simplifies each step of the API
+  lifecycle and streamlines collaboration so you can create better APIs—faster.
+- Download Postman for Windows, Mac & Linux. https://www.postman.com/
+
+#### Step 1.6.1: Swagger Open API 3.0 Docs JSON Format
+![Swagger JSON](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/Import-API-into-Postman-0.jpg)
+
+#### Step 1.6.2: Import Into Postman - Set the Link
+![Postman Import](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/Import-API-Into-Postman-1.jpg)
+
+#### Step 1.6.3: Import Into Postman - Confirm
+![Postman Import](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/Import-API-into-Postman-2.jpg)
+![Postman Import](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/Import-API-into-Postman-3.jpg)
+
+#### Step 1.6.4: Test the API
+![Postman Import](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/Import-API-into-Postman-4.jpg)
+
+### Step 1.7 - JWT Token Validation example
+
+####  1.7.1 Public API (Without Token Validation) - ...adapters.controllers.open.*
+![No-Authorizet](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/JWT-Public.jpg)
+
+#### 1.7.2 Secure API with a Single Token (Primarily to be used by ADMIN)
+![Authorizet-Single](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/JWT-Single.jpg)
+
+#### 1.7.3 Secure API with an Additional Tx Token which contains App Specific Claims.
+![Authorize-Tx](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/JWT-Tx.jpg)
+
+#### 1.7.4 All the APIs under the Secure Package (under ...adapters.controllers.secured.*)
+![Secured-Pkg](https://raw.githubusercontent.com/arafkarsh/ms-springboot-334-vanilla/master/diagrams/JWT-Secured-Pkg.jpg)
+
+# LangChain 4 J
 
 ## Chat Models
 
@@ -320,7 +510,7 @@ The Vector Store API provides portability across different providers, featuring 
 
 Check the <a href="https://github.com/arafkarsh/ms-springboot-324-ai/blob/main/CRUD_Examples.md">CRUD_Examples</a>.md</a>
 
-(C) Copyright 2024 : Apache 2 License : Author: Araf Karsh Hamid
+(C) Copyright 2024-25 : Apache 2 License : Author: Araf Karsh Hamid
 
 <pre>
  * Licensed under the Apache License, Version 2.0 (the "License");

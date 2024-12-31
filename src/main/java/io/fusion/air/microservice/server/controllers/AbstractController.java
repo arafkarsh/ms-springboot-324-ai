@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 package io.fusion.air.microservice.server.controllers;
+// Custom
 
-import io.fusion.air.microservice.adapters.security.ClaimsManager;
+import io.fusion.air.microservice.adapters.security.jwt.ClaimsManager;
 import io.fusion.air.microservice.domain.models.core.StandardResponse;
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
-import io.fusion.air.microservice.server.config.ServiceHelp;
+import io.fusion.air.microservice.server.config.ServiceConfig;
+import io.fusion.air.microservice.server.setup.ServiceHelp;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -41,7 +41,7 @@ public abstract class AbstractController {
 	public static final Logger log = getLogger(lookup().lookupClass());
 	
 	@Autowired
-	private ServiceConfiguration serviceConfig;
+	private ServiceConfig serviceConfig;
 	private String serviceName;
 
 	@Autowired
@@ -73,24 +73,32 @@ public abstract class AbstractController {
 	}
 
 	/**
-	 * Returns StandardResponse for Success
-	 * @param _msg
+	 * Returns the User Name
 	 * @return
 	 */
-	public final StandardResponse createSuccessResponse(String _msg) {
-		return createSuccessResponse("200", _msg);
+	public final String getUserName() {
+		return (claimsManager != null) ? claimsManager.getUserName() : "Unknown";
 	}
 
 	/**
 	 * Returns StandardResponse for Success
-	 * @param _statusCode
-	 * @param _msg
+	 * @param msg
 	 * @return
 	 */
-	public final StandardResponse createSuccessResponse(String _statusCode, String _msg) {
-		String prefix = (serviceConfig != null) ? serviceConfig.getServiceAPIErrorPrefix() : "99";
+	public final StandardResponse createSuccessResponse(String msg) {
+		return createSuccessResponse("200", msg);
+	}
+
+	/**
+	 * Returns StandardResponse for Success
+	 * @param statusCode
+	 * @param msg
+	 * @return
+	 */
+	public final StandardResponse createSuccessResponse(String statusCode, String msg) {
+		String prefix = (serviceConfig != null) ? serviceConfig.getServiceApiErrorPrefix() : "99";
 		StandardResponse stdResponse = new StandardResponse();
-		stdResponse.initSuccess(prefix + _statusCode, _msg);
+		stdResponse.initSuccess(prefix + statusCode, msg);
 		return stdResponse;
 	}
 	
@@ -108,7 +116,8 @@ public abstract class AbstractController {
 			sb.append(req[x]).append("|");
 		}
  		sb.append("\n");
-		log.info(sb.toString());
-		return sb.toString();
+		String s = sb.toString();
+		log.info(s);
+		return s;
 	}
  }

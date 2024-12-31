@@ -15,35 +15,40 @@
  */
 
 package io.fusion.air.microservice.utils;
+// Faster XML
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+// Custom
+import io.fusion.air.microservice.domain.exceptions.InvalidInputException;
+import io.fusion.air.microservice.domain.models.core.StandardResponse;
+// Spring
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.ResponseCookie;
+// Java
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
+import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
-import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Stream;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-
-import io.fusion.air.microservice.domain.models.core.StandardResponse;
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
 import org.slf4j.MDC;
-
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * 
@@ -54,25 +59,27 @@ public final class Utils {
 
 	private static final char[] hexArray = "0123456789ABCDEF".toCharArray();
 
+	private static final SecureRandom random = new SecureRandom();
+
 	/**
 	 * Returns UUID Object from a Byte Array
 	 * Reference: https://www.baeldung.com/java-uuid
-	 * @param _byteArray
+	 * @param byteArray
 	 * @return
 	 */
-	public static UUID getUUID(byte[] _byteArray) {
-		return  UUID.nameUUIDFromBytes(_byteArray);
+	public static UUID getUUID(byte[] byteArray) {
+		return  UUID.nameUUIDFromBytes(byteArray);
 	}
 
 	/**
 	 * Returns UUID Object from a UUID String
 	 * Reference: https://www.baeldung.com/java-uuid
 	 * A UUID represents a 128-bit value (36 Characters long)
-	 * @param _uuid
+	 * @param uuid
 	 * @return
 	 */
-	public static UUID getUUID(String _uuid) {
-		return  UUID.fromString(_uuid);
+	public static UUID getUUID(String uuid) {
+		return  UUID.fromString(uuid);
 	}
 
 	/**
@@ -145,7 +152,6 @@ public final class Utils {
 	 * @return
 	 */
 	public static long get64LeastSignificantBitsForVersion1() {
-		Random random = new Random();
 		long random63BitLong = random.nextLong() & 0x3FFFFFFFFFFFFFFFL;
 		long variant3BitFlag = 0x8000000000000000L;
 		return random63BitLong + variant3BitFlag;
@@ -171,7 +177,7 @@ public final class Utils {
 	 * @param bytes
 	 * @return
 	 */
-	private static String bytesToHex(byte[] bytes) {
+	public static String bytesToHex(byte[] bytes) {
 		final char[] hexChars = new char[bytes.length * 2];
 		for (int j = 0; j < bytes.length; j++) {
 			final int v = bytes[j] & 0xFF;
@@ -258,24 +264,46 @@ public final class Utils {
 
 	/***
 	 * 
-	 * @param _object
+	 * @param object
 	 * @return
 	 */
-	public static String toJsonString(Object _object) {
-		if(_object == null) {
+	public static String toJsonString(Object object) {
+		if(object == null) {
 			return "";
 		}
 		try {
 			return new ObjectMapper()
 					.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 					.findAndRegisterModules()
-					.writeValueAsString(_object);
+					.writeValueAsString(object);
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			Std.println("Error: "+e);
 		}
 		return "";
 	}
-	
+
+	private static final ObjectMapper objectMapper = new ObjectMapper();
+
+	static {
+		// Configure objectMapper for your needs
+		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+	}
+
+	/**
+	 * Convert JSON to Object
+	 * @param jsonString
+	 * @param targetClass
+	 * @return
+	 * @param <T>
+	 */
+	public static <T> T fromJsonToObject(String jsonString, Class<T> targetClass) {
+		try {
+			return objectMapper.readValue(jsonString, targetClass);
+		} catch (JsonProcessingException e) {
+			throw new InvalidInputException("Failed to convert JSON string to object: " + e.getMessage(), e);
+		}
+	}
+
 	/**
 	 * String Utilities
 	 * 
@@ -283,6 +311,9 @@ public final class Utils {
 	 *
 	 */
 	public static class Strings {
+
+		private Strings() {
+		}
 
 		/**
 		 * Returns True if the String is NULL or Empty
@@ -306,7 +337,9 @@ public final class Utils {
 	 *
 	 */
 	public static class Numbers {
-		
+
+		private Numbers() {}
+
 		/**
 		 * Returns True if the Number is an Odd Number
 		 * @param number
@@ -320,12 +353,16 @@ public final class Utils {
 	/**
 	 * Create Cookie
 	 * @param request
-	 * @param _key
-	 * @param _value
+	 * @param key
+	 * @param value
+	 * @deprecated Use createSecureCookie(String _key, String _value)
+	 * @see #createSecureCookie(String, String)
 	 * @return
 	 */
-	public static Cookie createCookie(HttpServletRequest request, String _key, String _value) {
-		Cookie c = new Cookie(_key, _value);
+	/**
+	@Deprecated(since="0.1.2", forRemoval=true)
+	public static Cookie createSecureCookie(HttpServletRequest request, String key, String value) {
+		Cookie c = new Cookie(key, value);
 		// c.setDomain(serviceConfig.getServerHost());
 		c.setSecure(true);
 		c.setHttpOnly(true);
@@ -333,51 +370,189 @@ public final class Utils {
 		// c.setPath(request.getRequestURI());
 		return c;
 	}
+	*/
 
 	/**
 	 * Create Cookie
 	 * @param request
-	 * @param _key
-	 * @param _value
-	 * @param _age
+	 * @param key
+	 * @param value
+	 * @param age
 	 * @return
+	 * @deprecated Use createSecureCookie(String _key, String value)
+	 *  @see #createSecureCookie(String, String, String, int)
 	 */
-	public static Cookie createCookie(HttpServletRequest request, String _key, String _value, int _age) {
-		Cookie c = new Cookie(_key, _value);
+	/**
+	@Deprecated(since="0.1.2", forRemoval=true)
+	public static Cookie createSecureCookie(HttpServletRequest request, String key, String value, int age) {
+		Cookie c = new Cookie(key, value);
 		// c.setDomain(serviceConfig.getServerHost());
 		c.setSecure(true);
 		c.setHttpOnly(true);
-		c.setMaxAge(_age);
-		// c.setPath(request.getRequestURI());
+		c.setMaxAge(age);
+		c.setPath(request.getRequestURI());
 		return c;
+	}
+	*/
+
+	/**
+	 * Create Secure Cookie
+	 *
+	 * @param key
+	 * @param value
+	 * @return
+	 */
+	public static String createSecureCookie(String key, String value) {
+		return createSecureCookie( MDC.get("URI"), key, value, 3600);
+	}
+
+	/**
+	 * Create Secure Cookie
+	 * @param key
+	 * @param value
+	 * @param age
+	 * @return
+	 */
+	public static String createSecureCookie(String key, String value, int age) {
+		return createSecureCookie( MDC.get("URI"), key, value, age);
+	}
+	/**
+	 * Create Secure Cookie
+	 *
+	 * @param pth
+	 * @param key
+	 * @param value
+	 * @param age
+	 * @return
+	 */
+	public static String createSecureCookie(String pth, String key, String value, int age) {
+		if(value == null || value.isEmpty()) {
+			throw new IllegalArgumentException("Invalid Value for the Cookie: "+value);
+		}
+		if (value.matches("[\\r\\n]")) {
+			throw new IllegalArgumentException("Invalid characters For the Cookie Value: "+value);
+		}
+		String path = (pth == null) ? "/" : pth;
+		ResponseCookie cookie = ResponseCookie.from(key, value)
+				.httpOnly(true)         // Protects against XSS attacks.
+				.secure(true)           // Cookie will only be sent over HTTPS, not with unsecured HTTP.
+				.path(path)             // Define the path for the cookie.
+				.maxAge(age)    		// Expire the cookie after X mins.
+				.sameSite("Strict")     // Mitigate CSRF attacks by restricting the sending of the cookie to same-site requests only.
+				.build();
+		return cookie.toString();
+	}
+
+	/**
+	 * Returns HttpHeaders with Secure Cookie
+	 *
+	 * @param key
+	 * @param value
+	 * @return
+	 */
+	public static HttpHeaders createSecureCookieHeaders(String key, String value) {
+		return createSecureCookieHeaders(null, key, value);
+	}
+
+	/**
+	 * Returns HttpHeaders with Secure Cookie
+	 *
+	 * @param key
+	 * @param value
+	 * @param age
+	 * @return
+	 */
+	public static HttpHeaders createSecureCookieHeaders(String key, String value, int age) {
+		return createSecureCookieHeaders(null, key, value, age);
+	}
+
+	/**
+	 * Returns HttpHeaders with Secure Cookie
+	 *
+	 * @param headers
+	 * @param key
+	 * @param value
+	 * @return
+	 */
+	public static HttpHeaders createSecureCookieHeaders(HttpHeaders headers, String key, String value) {
+		return createSecureCookieHeaders(headers, key, value, 3600);
+	}
+
+	/**
+	 * Returns HttpHeaders with Secure Cookie
+	 *
+	 * @param headers
+	 * @param key
+	 * @param value
+	 * @param age
+	 * @return
+	 */
+	public static HttpHeaders createSecureCookieHeaders(HttpHeaders headers, String key, String value, int age) {
+		return createSecureCookieHeaders(headers,MDC.get("URI"), key, value, age);
+	}
+
+	/**
+	 * Returns HttpHeaders with Secure Cookie
+	 *
+	 * @param headers
+	 * @param path
+	 * @param key
+	 * @param value
+	 * @param age
+	 * @return
+	 */
+	public static HttpHeaders createSecureCookieHeaders(HttpHeaders headers, String path, String key, String value, int age) {
+		if(headers == null) {
+			headers = new HttpHeaders();
+		}
+		if(path == null) {
+			path = MDC.get("URI");
+		}
+		headers.add(HttpHeaders.SET_COOKIE, createSecureCookie(path, key, value, age));
+		return headers;
+	}
+
+	/**
+	 * Returns the Cookie Map
+	 * @param request
+	 * @return
+	 */
+	public static Map<String, String> getCookieMap(HttpServletRequest request) {
+		Cookie[] cookies = request.getCookies();
+		HashMap<String, String> cookieMap = new HashMap<>();
+		if(cookies != null) {
+			for(Cookie cookie : cookies) {
+				cookieMap.put(cookie.getName(), cookie.getValue());
+			}
+		}
+		return cookieMap;
 	}
 
 	/**
 	 * Create Standard Error Response
-	 * @param _inputErrors
+	 * @param inputErrors
 	 * @param servicePrefix
-	 * @param _httpStatus
-	 * @param _errorCode
-	 * @param _message
+	 * @param httpStatus
+	 * @param errorCode
+	 * @param message
 	 * @return
 	 */
-	public static StandardResponse createErrorResponse(Object _inputErrors, String servicePrefix,
-							 String _errorCode, HttpStatus _httpStatus, String _message) {
+	public static StandardResponse createErrorResponse(Object inputErrors, String servicePrefix,
+							 String errorCode, HttpStatus httpStatus, String message) {
 
 		// Initialize Standard Error Response
 		StandardResponse stdResponse = new StandardResponse();
-		stdResponse.initFailure(servicePrefix + _errorCode, _message);
-		LinkedHashMap<String, Object> payload = new LinkedHashMap<String,Object>();
+		stdResponse.initFailure(servicePrefix + errorCode, message);
+		LinkedHashMap<String, Object> payload = new LinkedHashMap<>();
 
 		// Add Input Errors If Available
-		if(_inputErrors != null) {
-			payload.put("input", _inputErrors);
+		if(inputErrors != null) {
+			payload.put("input", inputErrors);
 		}
-
 		// Add Error Details
-		LinkedHashMap<String,Object> errorData = new LinkedHashMap<String,Object>();
-		errorData.put("code", _httpStatus.value());
-		errorData.put("mesg", _httpStatus.name());
+		LinkedHashMap<String,Object> errorData = new LinkedHashMap<>();
+		errorData.put("code", httpStatus.value());
+		errorData.put("mesg", httpStatus.name());
 		errorData.put("srv", MDC.get("Service"));
 		errorData.put("reqId", MDC.get("ReqId"));
 		errorData.put("http", MDC.get("Protocol"));
@@ -413,7 +588,7 @@ public final class Utils {
 		if(headers != null) {
 			for (String key : headers.keySet()) {
 				List<String> val = headers.get(key);
-				if (val != null && val.size() > 0) {
+				if (val != null && val.isEmpty()) {
 					sb.append(" -H ").append("'").append(key).append(": ");
 					int x = 0;
 					for (String v : val) {
@@ -441,11 +616,11 @@ public final class Utils {
 	 * conciseness.
 	 *
 	 * Common Glob Patterns:
-	    '*': Matches zero or more characters (e.g., *.txt matches all .txt files).
-	     ?: Matches exactly one character (e.g., file?.txt matches file1.txt, file2.txt, but not file10.txt).
+	 '*': Matches zero or more characters (e.g., *.txt matches all .txt files).
+	 ?: Matches exactly one character (e.g., file?.txt matches file1.txt, file2.txt, but not file10.txt).
 	 *
-	@param glob
-	 * @return
+	 @param glob
+	  * @return
 	 */
 	public static PathMatcher getPathMatcher(String glob) {
 		return FileSystems.getDefault().getPathMatcher("glob:" + glob);
@@ -474,9 +649,26 @@ public final class Utils {
 				throw new IllegalStateException("Resource not found: " + fileName);
 			}
 			return Paths.get(fileUrl.toURI());
-		} catch (URISyntaxException | IOException  e) {
+		} catch (URISyntaxException | IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public static void generateUUIDs() {
+		for(int x=0; x<10; x++) {
+			Std.println(x+" UUID = "+UUID.randomUUID());
+		}
+	}
+
+	/**
+	 * Returns Stack Trace as a String
+	 * @param e
+	 * @return
+	 */
+	public static String getStackTraceAsString(Throwable e) {
+		StringWriter stringWriter = new StringWriter();
+		e.printStackTrace(new PrintWriter(stringWriter));
+		return stringWriter.toString();
 	}
 
 	/**
@@ -484,8 +676,7 @@ public final class Utils {
 	 * @param args
 	 * @throws Exception
 	 */
-	public static void main(String[] args) throws Exception {
-
-		System.out.println("Utils.toJsonString() = "+Utils.toJsonString(new ServiceConfiguration("localhost", 9090)));
+	public static void main(String[] args)  {
+		generateUUIDs();
 	}
 }

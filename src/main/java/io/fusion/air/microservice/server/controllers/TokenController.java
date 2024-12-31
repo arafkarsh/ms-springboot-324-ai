@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 package io.fusion.air.microservice.server.controllers;
+// Custom
 
-import io.fusion.air.microservice.adapters.security.AuthorizationRequired;
-import io.fusion.air.microservice.domain.exceptions.*;
+import io.fusion.air.microservice.adapters.security.jwt.AuthorizationRequired;
+import io.fusion.air.microservice.adapters.security.jwt.ValidateRefreshToken;
+import io.fusion.air.microservice.domain.exceptions.AbstractServiceException;
+import io.fusion.air.microservice.domain.exceptions.JWTTokenExtractionException;
 import io.fusion.air.microservice.domain.models.core.StandardResponse;
-import io.fusion.air.microservice.adapters.security.AuthorizeRequestAspect;
-import io.fusion.air.microservice.adapters.security.ValidateRefreshToken;
-import io.fusion.air.microservice.security.CryptoKeyGenerator;
-import io.fusion.air.microservice.security.JsonWebToken;
-import io.fusion.air.microservice.security.TokenManager;
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
+import io.fusion.air.microservice.security.crypto.CryptoKeyGenerator;
+import io.fusion.air.microservice.security.jwt.client.JsonWebTokenValidator;
+import io.fusion.air.microservice.security.jwt.core.JsonWebTokenConfig;
+import io.fusion.air.microservice.security.jwt.core.TokenData;
+import io.fusion.air.microservice.security.jwt.server.TokenManager;
 import io.jsonwebtoken.Claims;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -31,19 +33,21 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.RequestScope;
-import org.springframework.http.HttpHeaders;
-import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.Map;
 
+import static io.fusion.air.microservice.security.jwt.core.JsonWebTokenConstants.REFRESH_TOKEN;
+import static io.fusion.air.microservice.security.jwt.core.JsonWebTokenConstants.TX_USERS;
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -57,28 +61,39 @@ import static org.slf4j.LoggerFactory.getLogger;
  * @version 1.0
  * 
  */
-@Configuration
 @RestController
 // "/service-name/api/v1/tokens
 @RequestMapping("${service.api.path}/tokens")
-@RequestScope
 @Tag(name = "System - Tokens", description = "Token (Auth Token, Refresh Tokens")
 public class TokenController extends AbstractController {
 
 	// Set Logger -> Lookup will automatically determine the class name.
 	private static final Logger log = getLogger(lookup().lookupClass());
 
-	@Autowired
-	private ServiceConfiguration serviceConfig;
+	// Autowired using the Constructor
+	private JsonWebTokenConfig jwtConfig;
 	private String serviceName;
 
-	@Autowired
-	private JsonWebToken jsonWebToken;
-
-	@Autowired
+	// Autowired using the Constructor
 	private CryptoKeyGenerator cryptoKeys;
-	@Autowired
+
+	// Autowired using the Constructor
 	private TokenManager tokenManager;
+
+	/**
+	 * Autowired using the Constructor
+	 * @param jwtConfig
+	 * @param cryptoKeys
+	 * @param tokenManager
+	 */
+	public TokenController(JsonWebTokenConfig jwtConfig,
+						   CryptoKeyGenerator cryptoKeys, TokenManager tokenManager ) {
+		this.jwtConfig = jwtConfig;
+		this.cryptoKeys = cryptoKeys;
+		this.tokenManager = tokenManager;
+		this.serviceName = super.name();
+
+	}
 
 	@Value("${server.token.auth.expiry:300000}")
 	private long tokenAuthExpiry;
@@ -97,14 +112,13 @@ public class TokenController extends AbstractController {
 					content = @Content)
 	})
 	@GetMapping("/publickey")
-	@ResponseBody
-	public ResponseEntity<StandardResponse> getPublicKey(HttpServletRequest request) throws Exception {
-		log.debug(name()+"|Request to Generate Tokens... ");
+	public ResponseEntity<StandardResponse> getPublicKey(HttpServletRequest request) throws AbstractServiceException {
+		log.debug("{} |Request to Generate Tokens... ", serviceName);
 		cryptoKeys.setKeyFiles(getCryptoPublicKeyFile(), getCryptoPrivateKeyFile())
 				.readRSAKeyFiles();
 		StandardResponse stdResponse = createSuccessResponse("Public Key Retrieved!");
 		// Send the Token in the Body (This is NOT Required and ONLY for Testing Purpose)
-		HashMap<String,String> data = new HashMap<String,String>();
+		HashMap<String,String> data = new HashMap<>();
 		data.put("type", "Public-Key");
 		data.put("format", cryptoKeys.getPublicKey().getFormat());
 		data.put("key", cryptoKeys.getPublicKeyPEMFormat());
@@ -117,7 +131,7 @@ public class TokenController extends AbstractController {
 	 * @return
 	 */
 	private String getCryptoPublicKeyFile() {
-		return (serviceConfig != null) ? serviceConfig.getCryptoPublicKeyFile() : "publicKey.pem";
+		return (jwtConfig != null) ? jwtConfig.getCryptoPublicKeyFile() : "publicKey.pem";
 	}
 
 	/**
@@ -125,7 +139,7 @@ public class TokenController extends AbstractController {
 	 * @return
 	 */
 	private String getCryptoPrivateKeyFile() {
-		return (serviceConfig != null) ? serviceConfig.getCryptoPrivateKeyFile() : "privateKey.pem";
+		return (jwtConfig != null) ? jwtConfig.getCryptoPrivateKeyFile() : "privateKey.pem";
 	}
 
 	/**
@@ -151,28 +165,27 @@ public class TokenController extends AbstractController {
             content = @Content)
     })
 	@GetMapping("/refresh")
-	@ResponseBody
-	public ResponseEntity<StandardResponse> generate(HttpServletRequest request) throws Exception {
-		log.debug(name()+"|Request to Generate Refresh Tokens... ");
-
+	public ResponseEntity<StandardResponse> generate(HttpServletRequest request) throws AbstractServiceException {
+		log.debug("{} |Request to Generate Refresh Tokens... ", serviceName);
 		// Step 1:
-		//  final String authToken = getToken(request.getHeader(AuthorizeRequestAspect.AUTH_TOKEN));
-		final String refreshToken = getToken(request.getHeader(AuthorizeRequestAspect.REFRESH_TOKEN));
-		String subject = jsonWebToken.getSubjectFromToken(refreshToken);
+		final String refreshToken = getToken(request.getHeader(REFRESH_TOKEN));
+		TokenData tokenData = tokenManager.createTokenData(refreshToken);
+		String subject = JsonWebTokenValidator.getSubjectFromToken(tokenData);
+		Claims refreshTokenClaims = JsonWebTokenValidator.getAllClaims(tokenData);
 
-		// Claims authTokenClaims = jwtUtil.getAllClaims(authToken);
-		Claims refreshTokenClaims = jsonWebToken.getAllClaims(refreshToken);
-		HashMap<String, String> tokens = refreshTokens(subject, refreshTokenClaims, refreshTokenClaims);
-
-		// Step 2: Generate Authorize Tokens
+		// Step 2: Generate Authorize Tokens (Auth and Refresh Tokens)
 		HttpHeaders headers = new HttpHeaders();
-		HashMap<String, String> allTokens = tokenManager.createAuthorizationToken(subject, headers);
-		String txToken = tokenManager.createTXToken(subject, TokenManager.TX_USERS, headers);
+		Map<String, String> allTokens = tokenManager.createAuthorizationToken(subject, headers, refreshTokenClaims);
+
+		// Step 3: Generate Tx Tokens
+		String txToken = tokenManager.createTXToken(subject, TX_USERS, headers);
 		allTokens.putIfAbsent("TX-Token", txToken);
+
+		// Step 4: Create a Payload with all the Tokens
 		StandardResponse stdResponse = createSuccessResponse("Auth & Refresh Tokens Generated!!!");
 		// Send the Token in the Body (This is NOT Required and ONLY for Testing Purpose)
 		stdResponse.setPayload(allTokens);
-		return new ResponseEntity<StandardResponse>(stdResponse, headers, HttpStatus.OK );
+		return new ResponseEntity<>(stdResponse, headers, HttpStatus.OK );
 	}
 
 	/**
@@ -186,30 +199,6 @@ public class TokenController extends AbstractController {
 		}
 		String msg = "Access Denied: Unable to extract token from Header = ";
 		throw new JWTTokenExtractionException(msg);
-	}
-
-	/**
-	 * Refresh Tokens
-	 * 1. Auth Token
-	 * 2. Refresh Token
-	 * @param subject
-	 * @param authTokenClaims
-	 * @param refreshTokenClaims
-	 * @return
-	 */
-	private HashMap<String, String> refreshTokens(String subject,
-												  Claims authTokenClaims, Claims refreshTokenClaims) {
-		tokenAuthExpiry = (tokenAuthExpiry < 10) ? JsonWebToken.EXPIRE_IN_FIVE_MINS : tokenAuthExpiry;
-		tokenRefreshExpiry = (tokenRefreshExpiry < 10) ? JsonWebToken.EXPIRE_IN_THIRTY_MINS : tokenRefreshExpiry;
-		return jsonWebToken
-				.init(serviceConfig.getTokenType())
-				.setSubject(subject)
-				.setIssuer(serviceConfig.getServiceOrg())
-				.setTokenAuthExpiry(tokenAuthExpiry)
-				.setTokenRefreshExpiry(tokenRefreshExpiry)
-				.addAllTokenClaims(authTokenClaims)
-				.addAllRefreshTokenClaims(refreshTokenClaims)
-				.generateTokens();
 	}
  }
 

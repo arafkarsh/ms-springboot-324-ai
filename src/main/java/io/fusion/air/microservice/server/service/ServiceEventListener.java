@@ -14,35 +14,35 @@
  * limitations under the License.
  */
 package io.fusion.air.microservice.server.service;
- 
-import io.fusion.air.microservice.security.JsonWebToken;
-import io.fusion.air.microservice.security.TokenManager;
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
-import io.fusion.air.microservice.server.config.ServiceHelp;
+// Custom
 
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.fusion.air.microservice.security.jwt.core.JsonWebTokenConstants;
+import io.fusion.air.microservice.security.jwt.server.TokenManager;
+import io.fusion.air.microservice.server.config.ServiceConfig;
+import io.fusion.air.microservice.server.setup.ServiceHelp;
+import io.fusion.air.microservice.utils.CPU;
+import io.fusion.air.microservice.utils.Std;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
+import org.slf4j.Logger;
 import org.slf4j.MDC;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringBootVersion;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.env.ConfigurableEnvironment;
 
-import io.fusion.air.microservice.utils.CPU;
-
-//Logging System
-import org.slf4j.Logger;
-
-import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
+import static io.fusion.air.microservice.security.jwt.core.JsonWebTokenConstants.AUTH_TOKEN;
+import static io.fusion.air.microservice.security.jwt.core.JsonWebTokenConstants.REFRESH_TOKEN;
+import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
 
-import static java.lang.invoke.MethodHandles.lookup;
-
 /**
- * 
+ * Service Event Listener
+ * This Service is called (by the Spring Framework) when the Application is Ready.
+ *
  * @author arafkarsh
  * @version 1.0
  */
@@ -52,45 +52,102 @@ public class ServiceEventListener {
 	// Set Logger -> Lookup will automatically determine the class name.
 	private static final Logger log = getLogger(lookup().lookupClass());
 
-	@Autowired
-	private ServiceConfiguration serviceConfig;
+	// Autowired using the Constructor
+	private ServiceConfig serviceConfig;
 
-	@Autowired
-	JsonWebToken jsonWebToken;
+	// Autowired using the Constructor
+	private TokenManager tokenManager;
 
-	@Value("${server.token.test}")
-	private boolean serverTokenTest;
+	// Autowired using the Constructor
+	private  MeterRegistry meterRegistry;
 
-	// server.token.auth.expiry=300000
-	@Value("${server.token.auth.expiry:300000}")
-	private long tokenAuthExpiry;
-
-	// server.token.refresh.expiry=1800000
-	@Value("${server.token.refresh.expiry:1800000}")
-	private long tokenRefreshExpiry;
-
-	@Value("${server.dev.mode:true}")
-	private boolean devMode;
+	// Autowired using the Constructor
+	private ConfigurableEnvironment environment;
 
 	/**
-	 * Shows Logo and Generate DownloadAllData Tokens
+	 * Autowired using the Constructor
+	 *
+	 * @param serviceConfig
+	 * @param tokenManager
+	 * @param meterRegistry
+	 * @param environment
+	 */
+	public ServiceEventListener(ServiceConfig serviceConfig, TokenManager tokenManager,
+								MeterRegistry meterRegistry, ConfigurableEnvironment environment) {
+		this.serviceConfig = serviceConfig;
+		this.tokenManager = tokenManager;
+
+		this.meterRegistry = meterRegistry;
+		this.environment = environment;
+	}
+
+	/**
+	 * Check the Dev Mode
+	 * @return
+	 */
+	private boolean  getDevMode() {
+		String activeProfile = getActiveProfile();
+		return (activeProfile != null && activeProfile.equalsIgnoreCase("prod")) ? false : true;
+	}
+
+	/**
+	 * Get Active Profile
+	 * @return
+	 */
+	private String getActiveProfile() {
+		if (environment.getActiveProfiles().length == 0) {
+			log.info("Spring Profile is missing, so defaulting to {}  Profile!", serviceConfig.getActiveProfile());
+			environment.addActiveProfile(serviceConfig.getActiveProfile());
+		}
+		StringBuilder sb = new StringBuilder();
+		for(String profile : environment.getActiveProfiles()) {
+			sb.append(profile).append(" ");
+		}
+		String profile = sb.toString().trim().replace(" ", ", ");
+		log.info("Spring Active Profiles = {} ", profile);
+		return profile;
+	}
+
+	/**
+	 * Register the Product API List for Micrometer
+	 */
+	private void registerAPICallsForMicroMeter() {
+		int totalApis = 0;
+		String apiClass = serviceConfig.getAppPropertyProduct();
+		for(String apiName : serviceConfig.getAppPropertyProductList()) {
+			String fullCounterName = apiClass + (apiName.isEmpty() ? "" : apiName.replace("/", "."));
+			// Create and Register the counter
+			 Counter.builder(fullCounterName).register(meterRegistry);
+			totalApis++;
+		}
+		log.info("Total fusion.air.product APIs registered with MicroMeter = {} ", totalApis);
+	}
+
+	/**
+	 * Shows Logo and Generate Test Tokens
+	 * This method is automatically called by the SpringBoot Application when the Application
+	 * is ready.
 	 */
 	@EventListener(ApplicationReadyEvent.class)
-	public void doSomethingAfterStartup() {
+	public void setupLogoMetricsTokens() {
 		log.info("Service is getting ready. Getting the CPU Stats ... ");
-		log.info(CPU.printCpuStats());
+		String s = CPU.printCpuStats();
+		log.info("{}", s);
+		// 1: Setup Logo
 		showLogo();
-		// Initialize the Token
-		jsonWebToken.init(serviceConfig.getTokenType());
-		if(serverTokenTest && devMode) {
-			log.debug("Generate DownloadAllData Tokens = {} ", serverTokenTest);
+		// 2: Register the APIs with Micrometer
+		registerAPICallsForMicroMeter();
+		// 3: Generate Tokens - ONLY For Dev Mode (For Developer Testing)
+		if(tokenManager.getJsonWebTokenConfig().isServerTokenTest() && getDevMode() ) {
 			generateTestToken();
 		}
 	}
 
 	/**
+	 * ----------------------------------------------------------------------------------------------------------
 	 * WARNING:
-	 * These tokens can be generated only in an Auth Service. All the services need not generate these tokens
+	 * ----------------------------------------------------------------------------------------------------------
+	 * These tokens MUST be generated only in an Auth Service. All the services need not generate these tokens
 	 * unless for the developers to test it out. In a real world scenario, disable (Comment out the function
 	 * generateTestToken()) this feature for production environment.
 	 * THIS IS ONLY FOR TESTING PURPOSES.
@@ -102,96 +159,85 @@ public class ServiceEventListener {
 	 * serverTestToken=false
 	 */
 	private void generateTestToken() {
-		log.info("Token Type = {}", serviceConfig.getTokenType());
-		tokenAuthExpiry = (tokenAuthExpiry < 10) ? JsonWebToken.EXPIRE_IN_FIVE_MINS : tokenAuthExpiry;
-		tokenRefreshExpiry = (tokenRefreshExpiry < 10) ? JsonWebToken.EXPIRE_IN_THIRTY_MINS : tokenRefreshExpiry;
-
+		log.info("Generate Test Tokens = {} ", tokenManager.getJsonWebTokenConfig().isServerTokenTest());
+		// Step 1: Set Expiry Time & Subject
+		long tokenAuthExpiry = tokenManager.getJsonWebTokenConfig().getAuthTokenExpiry();
+		long tokenRefreshExpiry = tokenManager.getJsonWebTokenConfig().getRefreshTokenExpiry();
 		String subject	 = "jane.doe";
-		String issuer    = serviceConfig.getServiceOrg();
-		String type 	 = TokenManager.TX_USERS;
 
-		TokenManager tokenManager = new TokenManager(serviceConfig, tokenAuthExpiry, tokenRefreshExpiry);
+		// Step 2: Generate Authorize Tokens
+		Map<String, String> tokens = tokenManager.createAuthorizationToken(subject, null);
+		String token = tokens.get(AUTH_TOKEN);
+		String refresh = tokens.get(REFRESH_TOKEN);
+		String txToken = tokenManager.createTXToken(subject, JsonWebTokenConstants.TX_USERS, null);
+		String admToken = tokenManager.adminToken(subject, serviceConfig.getServiceOrg());
 
-		// Step 4: Generate Authorize Tokens
-		HashMap<String, String> tokens = tokenManager.createAuthorizationToken(subject, null);
-
-		String token = tokens.get("token");
-		String refresh = tokens.get("refresh");
-		log.debug("\nToken Expiry in Days:Hours:Mins  {} ", JsonWebToken.printExpiryTime(tokenAuthExpiry));
-		jsonWebToken.tokenStats(token, false, false);
-
-		log.debug("\nRefresh Token Expiry in Days:Hours:Mins  {}", JsonWebToken.printExpiryTime(tokenRefreshExpiry));
-		jsonWebToken.tokenStats(refresh, false, false);
-
-		log.debug("\nTx-Token Expiry in Days:Hours:Mins  {}", JsonWebToken.printExpiryTime(tokenRefreshExpiry));
-		String txToken = tokenManager.createTXToken(subject, type, null);
-		jsonWebToken.tokenStats(txToken, false, false);
-
-		String admToken = adminToken(subject);
-		jsonWebToken.tokenStats(admToken, false, false);
+		// Step 3: Print Token Stats
+		printTokenStats( token,  "Auth",  1,  tokenAuthExpiry);
+		printTokenStats( refresh,  "Refresh",  2,  tokenRefreshExpiry);
+		printTokenStats( txToken,  "Tx",  3,  tokenRefreshExpiry);
+		printTokenStats( admToken,  "Admin",  4,  tokenRefreshExpiry);
+		log.info("Token Creation done for Dev Testing. COMPLETE!!");
 	}
 
 	/**
-	 * Create Admin Token
-	 * @param subject
-	 * @return
+	 * Print the Token Stats
+	 * @param token
+	 * @param name
+	 * @param counter
 	 */
-	private String adminToken(String subject) {
-		String issuer    = serviceConfig.getServiceOrg();
-		Map<String, Object> claims = getClaims( subject,  issuer);
-		claims.put("rol", "Admin");
-
-		long txTokenExpiry = (tokenRefreshExpiry < 50) ? JsonWebToken.EXPIRE_IN_ONE_HOUR : tokenRefreshExpiry;;
-		log.info("\nAdmin Token Expiry in Days:Hours:Mins  {}", JsonWebToken.printExpiryTime(txTokenExpiry));
-		return jsonWebToken
-				.init(serviceConfig.getTokenType())
-				.setSubject(subject)
-				.setIssuer(serviceConfig.getServiceOrg())
-				.generateToken( subject,  serviceConfig.getServiceOrg(),  txTokenExpiry,  claims);
-	}
-
-	/**
-	 * Create Claims
-	 * @param subject
-	 * @param issuer
-	 * @return
-	 */
-	private Map<String, Object> getClaims(String subject, String issuer) {
-		Map<String, Object> claims = new HashMap<>();
-		claims.put("aud", serviceConfig.getServiceName());
-		claims.put("jti", UUID.randomUUID().toString());
-		claims.put("sub", subject);
-		claims.put("iss", issuer);
-		claims.put("type",TokenManager.TX_USERS);
-		claims.put("rol", "User");
-		return claims;
+	private void printTokenStats(String token, String name, int counter, long expiry) {
+		String jStats = tokenManager.printExpiryTime(expiry);
+		Std.println("---------------------------------------------------");
+		Std.printf("[%s]>> %s Token Expiry in Days:Hours:Mins %s\n", counter, name, jStats);
+		tokenManager.printTokenStats(token, false, false);
+		Std.printf("[%s]>> %s Token End -------------------------------\n", counter, name);
 	}
 
 	/**
 	 * Shows the Service Logo and Version Details.
 	 */
 	public void showLogo() {
-		String version="v0.1.0", name="NoName";
+		String version="v0.1.0";
+		String name="NoName";
+		String javaVersion="21";
+		String sbVersion="3.1.0";
+		int buildNo = 0;
+		String buildDt = "";
+		String apiURL = "";
+		String depModel = geDeploymentMode();
+
 		if(serviceConfig != null) {
 			version = serviceConfig.getServerVersion();
 			name =serviceConfig.getServiceName();
+			javaVersion = System.getProperty("java.version");
+			sbVersion = SpringBootVersion.getVersion();
+			buildNo = serviceConfig.getBuildNumber();
+			buildDt = serviceConfig.getBuildDate();
+			apiURL = serviceConfig.apiURL();
 		}
 		MDC.put("Service", name);
-		String logo =ServiceHelp.LOGO.replaceAll("SIGMA", name).replaceAll("VERSION", version);
-		log.info(name+" Service is ready! ... .."
-				+ logo
-				+ "Build No. = "+serviceConfig.getBuildNumber()
-				+ " :: Build Date = "+serviceConfig.getBuildDate()
-				+ " :: Mode = "+geDeploymentMode()
-				+ " :: Restart = "+ServiceHelp.getCounter()
-				+ ServiceHelp.NL + ServiceHelp.DL);
-		if(devMode) {
-			log.info(ServiceHelp.NL + "API URL : " + serviceConfig.apiURL()
-					+ ServiceHelp.NL + ServiceHelp.DL
-			);
+		String logo =ServiceHelp.LOGO
+				.replace("SIGMA", name)
+				.replace("MSVERSION", version)
+				.replace("JAVAVERSION", javaVersion)
+				.replace("SPRINGBOOTVERSION", sbVersion);
+		log.info("{} Service is ready! ... .. {}"
+				+ "Build No. = {} "
+				+ " :: Build Date = {} "
+				+ " :: Mode = {} "
+				+ " :: Restart = {} {} {} ",
+				name, logo, buildNo, buildDt, depModel, ServiceHelp.getCounter(), ServiceHelp.NL , ServiceHelp.DL);
+		if(serviceConfig.isServerPrintAPIUrl()) {
+			log.info("{} API URL : {} {} {} ", ServiceHelp.NL, apiURL, ServiceHelp.NL, ServiceHelp.DL);
 		}
 	}
 	private String geDeploymentMode() {
-		return (devMode) ? "Staging" : "Production";
+		return switch (getActiveProfile()) {
+            case "staging" -> "Staging";
+            case "prod" -> "Production";
+			case "dev" -> "Development";
+			default -> "Development";
+        };
 	}
 }

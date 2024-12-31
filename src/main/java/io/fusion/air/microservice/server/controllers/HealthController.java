@@ -14,43 +14,30 @@
  * limitations under the License.
  */
 package io.fusion.air.microservice.server.controllers;
-
-import jakarta.servlet.http.HttpServletRequest;
-
-import io.fusion.air.microservice.adapters.security.AuthorizationRequired;
-import io.fusion.air.microservice.domain.exceptions.InputDataException;
-import io.fusion.air.microservice.domain.models.core.StandardResponse;
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
-import io.fusion.air.microservice.server.config.ServiceHelp;
-import io.fusion.air.microservice.server.models.EchoResponseData;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.ResponseEntity;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.annotation.RequestScope;
-
-// Logging System
-import org.slf4j.Logger;
-import static org.slf4j.LoggerFactory.getLogger;
-import static java.lang.invoke.MethodHandles.lookup;
+// Custom
 
 import io.fusion.air.microservice.ServiceBootStrap;
-import io.fusion.air.microservice.server.models.EchoData;
+import io.fusion.air.microservice.adapters.security.jwt.AuthorizationRequired;
+import io.fusion.air.microservice.domain.exceptions.AbstractServiceException;
+import io.fusion.air.microservice.domain.models.core.StandardResponse;
+import io.fusion.air.microservice.server.config.ServiceConfig;
+import io.fusion.air.microservice.server.setup.ServiceHelp;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
+import static java.lang.invoke.MethodHandles.lookup;
+import static org.slf4j.LoggerFactory.getLogger;
 
 /**
  * Health Controller for the Service
@@ -59,27 +46,33 @@ import java.util.Map;
  * @version 1.0
  * 
  */
-@Configuration
 @RestController
 // "/service-name/api/v1/service"
-@RequestMapping("${service.api.path}"+ ServiceConfiguration.HEALTH_PATH)
-@RequestScope
+@RequestMapping("${service.api.path}"+ ServiceConfig.HEALTH_PATH)
 @Tag(name = "System - Health", description = "Health (Liveness, Readiness, ReStart.. etc)")
 public class HealthController extends AbstractController {
 
 	// Set Logger -> Lookup will automatically determine the class name.
 	private static final Logger log = getLogger(lookup().lookupClass());
 	
-	private final String title = "<h1>Welcome to Health Service<h1/>"
+	private static final String TITLE = "<h1>Welcome to Health Service<h1/>"
 					+ ServiceHelp.NL
 					+"<h3>Copyright (c) COMPANY Pvt Ltd, 2022</h3>"
 					+ ServiceHelp.NL
 					;
 
-
-	@Autowired
-	private ServiceConfiguration serviceConfig;
+	// Autowired using the Constructor
+	private ServiceConfig serviceConfig;
 	private String serviceName;
+
+	/**
+	 * Autowired using the Constructor
+	 * @param serviceConfig
+	 */
+	public HealthController(ServiceConfig serviceConfig) {
+		this.serviceConfig = serviceConfig;
+		this.serviceName = super.name();
+	}
 
 	/**
 	 * Get Method Call to Check the Health of the App
@@ -96,9 +89,8 @@ public class HealthController extends AbstractController {
             content = @Content)
     })
 	@GetMapping("/live")
-	@ResponseBody
-	public ResponseEntity<StandardResponse> getHealth(HttpServletRequest request) throws Exception {
-		log.debug(name()+"|Request to Health of Service... ");
+	public ResponseEntity<StandardResponse> getHealth(HttpServletRequest request) throws AbstractServiceException {
+		log.debug("{} |Request to Health of Service... ",serviceName);
 		StandardResponse stdResponse = createSuccessResponse("Service is OK!");
 		return ResponseEntity.ok(stdResponse);
 	}
@@ -113,9 +105,8 @@ public class HealthController extends AbstractController {
             content = @Content)
     })
 	@GetMapping("/ready")
-	@ResponseBody
-	public ResponseEntity<StandardResponse> isReady(HttpServletRequest request) throws Exception {
-		log.debug(name()+"|Request to Ready Check.. ");
+	public ResponseEntity<StandardResponse> isReady(HttpServletRequest request) throws AbstractServiceException {
+		log.debug("{} |Request to Ready Check.. ", serviceName);
 		StandardResponse stdResponse = createSuccessResponse("Service is Ready!");
 		return ResponseEntity.ok(stdResponse);
 	}
@@ -135,9 +126,9 @@ public class HealthController extends AbstractController {
     })
     @PostMapping("/restart")
     public void restart() {
-		log.info(name()+"|Server Restart Request Received ....");
+		log.info("{} |Server Restart Request Received ....", serviceName);
 		if(serviceConfig != null && serviceConfig.isServerRestart()) {
-    		log.info(name()+"|Restarting the service........");
+    		log.info("{} |Restarting the service........", serviceName);
     		ServiceBootStrap.restart();
     	}
     }
@@ -159,11 +150,10 @@ public class HealthController extends AbstractController {
             content = @Content)
     })
 	@GetMapping("/home")
-	@ResponseBody
 	public String apiHome(HttpServletRequest request) {
 		log.info("|Request to /home/ path... ");
 		StringBuilder sb = new StringBuilder();
-		sb.append(title);
+		sb.append(TITLE);
 		sb.append("<br>");
 		sb.append(printRequestURI(request));
 		return sb.toString();

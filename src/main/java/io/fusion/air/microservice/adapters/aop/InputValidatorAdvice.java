@@ -15,104 +15,113 @@
  */
 package io.fusion.air.microservice.adapters.aop;
 
+// Custom
+
 import io.fusion.air.microservice.domain.models.core.StandardResponse;
-import io.fusion.air.microservice.server.config.ServiceConfiguration;
+import io.fusion.air.microservice.server.config.ServiceConfig;
 import io.fusion.air.microservice.utils.Utils;
+import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import jakarta.validation.ConstraintViolationException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
 
 /**
+ * Input Validator Advice
+ *
+ * This (AOP) Advice will validate all the inputs at a central location.
+ *
  * @author: Araf Karsh Hamid
  * @version:
  * @date:
  */
 @ControllerAdvice
-@Order(1)
-public class InputValidatorAdvice extends ResponseEntityExceptionHandler {
+@Order(1) // Don't Change this Order Precedences. Changing this affect the Error Reporting.
+public class InputValidatorAdvice {
 
     // Set Logger -> Lookup will automatically determine the class name.
     private static final Logger log = getLogger(lookup().lookupClass());
 
-    // ServiceConfiguration
-    @Autowired
-    private ServiceConfiguration serviceConfig;
+    // Autowired using Constructor
+    private ServiceConfig serviceConfig;
 
     /**
-     * Handling Invalid Input in Requests
-     * @param _manvEx
-     * @param _headers
-     * @param _status
-     * @param _request
-     * @return
+     * Autowired using Constructor
+     * @param serviceCfg
      */
-    // @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException _manvEx,
-                                      HttpHeaders _headers, HttpStatus _status, WebRequest _request) {
-
-        String errorPrefix = (serviceConfig != null) ? serviceConfig.getServiceAPIErrorPrefix() : "AK";
-        String errorMsg = "Input Errors: Invalid Method Arguments";
-        long startTime = System.currentTimeMillis();
-        String status = "STATUS=ERROR: "+errorMsg;
-        // Create Input Errors
-        List<String> errors = new ArrayList<String>();
-        _manvEx.getBindingResult().getAllErrors().forEach((error) -> {
-            try {
-                errors.add(((FieldError) error).getField() + "|" + error.getDefaultMessage());
-            } catch (Exception ignored) {}
-        });
-        Collections.sort(errors);
-        StandardResponse stdResponse = Utils.createErrorResponse(errors, errorPrefix,"461", _status,errorMsg);
-        logTime(startTime, status);
-        return new ResponseEntity<>(stdResponse, _headers, HttpStatus.BAD_REQUEST);
+    public InputValidatorAdvice(ServiceConfig serviceCfg) {
+        serviceConfig = serviceCfg;
     }
 
     /**
-     * Constraints Violation Exceptions
-     * @param _cvEx
-     * @param _request
+     * Validating Complex Object Rules
+     * @param ex
+     * @param request
+     * @return
+     */
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, WebRequest request) {
+        List<String> errors =  ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(error -> error.getField() + " | " + error.getDefaultMessage())
+                .collect(Collectors.toCollection(ArrayList::new));
+        log.debug("462: List Errors = {} ", errors);
+        return createErrorResponse( "462",  "Errors: Invalid Method Arguments",  errors );
+    }
+
+    /**
+     * Validating Method Parameters
+     * @param ex
+     * @param request
      * @return
      */
     @ExceptionHandler(value = ConstraintViolationException.class)
-    public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException _cvEx,  WebRequest _request) {
+    public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex,  WebRequest request) {
+        List<String> errors = ex.getConstraintViolations()
+                .stream()
+                .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())
+                .collect(Collectors.toCollection(ArrayList::new));
+        log.debug("463: List Errors = {} ", errors);
+        return createErrorResponse( "463",  "Errors: Input Constraint Violations",  errors );
+    }
 
-        String errorPrefix = (serviceConfig != null) ? serviceConfig.getServiceAPIErrorPrefix() : "AK";
-        String errorMsg = "Input Errors: Constraint Violations";
+    /**
+     * Create the Error Response
+     * @param errorCode
+     * @param errorMsg
+     * @param errors
+     * @return
+     */
+    private ResponseEntity<Object> createErrorResponse(String errorCode, String errorMsg, List<String> errors ) {
+        String errorPrefix = (serviceConfig != null) ? serviceConfig.getServiceApiErrorPrefix() : "AKH";
         long startTime = System.currentTimeMillis();
         String status = "STATUS=ERROR: "+errorMsg;
-
-        List<String> errors = new ArrayList<>();
-        _cvEx.getConstraintViolations().forEach(cv -> errors.add(cv.getMessage()));
-
-        StandardResponse stdResponse = Utils.createErrorResponse(
-                errors, errorPrefix, "461", HttpStatus.BAD_REQUEST, "Input Errors: Constraint Violations");
+        Collections.sort(errors);
+        StandardResponse stdResponse = Utils.createErrorResponse(errors, errorPrefix, errorCode, HttpStatus.BAD_REQUEST, errorMsg);
         logTime(startTime, status);
         return new ResponseEntity<>(stdResponse, null, HttpStatus.BAD_REQUEST);
     }
 
     /**
      * Log Time with Input Validation Errors
-     * @param _startTime
-     * @param _status
+     * @param startTime
+     * @param status
      */
-    private void logTime(long _startTime, String _status) {
-        long timeTaken=System.currentTimeMillis() - _startTime;
-        log.info("2|IV|TIME={} ms|{}|CLASS=|", timeTaken, _status);
+    private void logTime(long startTime, String status) {
+        long timeTaken=System.currentTimeMillis() - startTime;
+        log.info("2|IV|TIME={} ms|{}|CLASS=|", timeTaken, status);
     }
 }
