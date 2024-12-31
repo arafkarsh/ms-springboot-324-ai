@@ -189,6 +189,8 @@ public class AiOllamaControllerImpl extends AbstractController {
 	 * @return
 	 */
 	private StandardResponse createResponse(String response, String msg) {
+		response = HtmlUtils.htmlEscape(response);
+		msg = HtmlUtils.htmlEscape(msg);
 		String[] rows = response.split("\n");
 		StandardResponse stdResponse = createSuccessResponse("AI Response");
 		LinkedHashMap<String, Object> data = new LinkedHashMap<>();

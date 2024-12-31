@@ -152,6 +152,8 @@ public class AiOpenAiStringControllerImpl extends AbstractController {
      * @return
 	 */
 	private String createResponse(String response, String msg) {
+		response = HtmlUtils.htmlEscape(response);
+		msg = HtmlUtils.htmlEscape(msg);
 		StringBuilder sb = new StringBuilder();
 		String request = msg.replace("\n", " ").trim();
 		sb.append("Algorithm = ").append(AiConstants.getOpenAIDefaultModel()).append("\n");
