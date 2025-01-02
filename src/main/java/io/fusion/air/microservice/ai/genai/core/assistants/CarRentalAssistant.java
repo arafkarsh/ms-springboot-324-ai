@@ -35,7 +35,7 @@ public interface CarRentalAssistant extends Assistant{
      *    - If a new SystemMessage with the same content is added, it is ignored.
      *    - If a new SystemMessage with different content is added, it replaces the previous one.
      *
-     * @param _userMessage
+     * @param userMessage
      * @return
      */
     @SystemMessage("""
@@ -47,5 +47,5 @@ public interface CarRentalAssistant extends Assistant{
         the conversation with a good bye greetings. 
         Always try to answer with proper clause number in the terms of usage.
         """)
-    public String chat(@UserMessage String _userMessage);
+    public String chat(@UserMessage String userMessage);
 }

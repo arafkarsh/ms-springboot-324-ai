@@ -37,6 +37,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.util.HtmlUtils;
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.UUID;
@@ -151,6 +153,7 @@ public class PaymentControllerImpl extends AbstractController {
 	})
 	@PutMapping("/update/{referenceNo}")
 	public ResponseEntity<StandardResponse> updatePayment(@PathVariable("referenceNo") String referenceNo) {
+		referenceNo = HtmlUtils.htmlEscape(referenceNo);
 		log.debug("|Request to Update Payment... {}",referenceNo);
 		StandardResponse stdResponse = createSuccessResponse("Updated!");
 		HashMap<String,String> status = getStatus( referenceNo,  "Product updated!");

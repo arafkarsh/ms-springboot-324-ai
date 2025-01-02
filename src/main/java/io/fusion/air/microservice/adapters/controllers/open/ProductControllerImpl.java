@@ -42,6 +42,8 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.springframework.web.util.HtmlUtils;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -172,6 +174,7 @@ public class ProductControllerImpl extends AbstractController {
 	})
 	@GetMapping("/search/product/{productName}")
 	public ResponseEntity<StandardResponse> searchProductsByName(@PathVariable("productName") String productName) {
+		productName = HtmlUtils.htmlEscape(productName);
 		log.debug("|Request to Search the Product By Name ...  {} ", productName);
 		List<ProductEntity> products = productServiceImpl.fetchProductsByName(productName);
 		StandardResponse stdResponse = createSuccessResponse("Products Found For Search Term = "+productName);
