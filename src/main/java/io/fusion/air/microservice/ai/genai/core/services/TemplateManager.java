@@ -23,6 +23,7 @@ import io.fusion.air.microservice.ai.genai.core.prompts.StructuredPromptFeelings
 import io.fusion.air.microservice.ai.genai.core.prompts.StructuredPromptRecipe;
 import io.fusion.air.microservice.ai.genai.utils.AiBeans;
 import io.fusion.air.microservice.ai.genai.utils.AiConstants;
+import io.fusion.air.microservice.utils.Std;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,70 +41,72 @@ import static java.util.Arrays.asList;
  */
 public class TemplateManager {
 
+    private TemplateManager() {}
+
     /**
      * Handle Multiple Structured Templates
-     * @param _data
+     * @param data
      * @return
      */
-    public static String structuredTemplate(String _data) {
-        return structuredTemplate( _data,  true);
+    public static String structuredTemplate(String data) {
+        return structuredTemplate( data,  true);
     }
 
     /**
      * Handle Multiple Structured Templates
-     * @param _data
+     * @param data
      */
-    public static String structuredTemplate(String _data, boolean _printResult) {
-        if(_data == null) {
+    public static String structuredTemplate(String data, boolean printResult) {
+        if(data == null) {
             return "Invalid Inputs";
         }
-        String[] dArray = _data.split(":");
+        String[] dArray = data.split(":");
         ChatLanguageModel model = new AiBeans()
                 .createChatLanguageModelOpenAi(AiConstants.getOpenAIDefaultModel());
-        return structuredTemplate(dArray[0], dArray[1], model, _printResult);
+        return structuredTemplate(dArray[0], dArray[1], model, printResult);
     }
 
     /**
      * Handle Multiple Structured Templates
      *
-     * @param _template
-     * @param _prompt
+     * @param template
+     * @param prompt
      * @return
      */
-    public static String structuredTemplate(String _template, String _prompt) {
+    public static String structuredTemplate(String template, String prompt) {
         ChatLanguageModel model = new AiBeans()
                 .createChatLanguageModelOpenAi(AiConstants.getOpenAIDefaultModel());
-        return structuredTemplate( _template,  _prompt, model);
+        return structuredTemplate( template,  prompt, model);
     }
 
     /**
      * Handle Multiple Structured Templates
-     * @param _template
-     * @param _prompt
-     * @param _model
+     * @param template
+     * @param prompt
+     * @param model
      * @return
      */
-    public static String structuredTemplate(String _template, String _prompt, ChatLanguageModel _model) {
-        return structuredTemplate( _template,  _prompt,  _model,  true);
+    public static String structuredTemplate(String template, String prompt, ChatLanguageModel model) {
+        return structuredTemplate( template,  prompt,  model,  true);
     }
 
     /**
      * Handle Multiple Structured Templates
-     * @param _template
-     * @param _prompt
+     * @param template
+     * @param prompt
      */
-    public static String structuredTemplate(String _template, String _prompt, ChatLanguageModel _model, boolean _printResult) {
-        if(_template == null || _template.length() == 0) {
+    public static String structuredTemplate(String template, String prompt, ChatLanguageModel model, boolean printResult) {
+        if(template == null || template.isEmpty()) {
             return "Invalid Inputs to Structured Template function!";
         }
         String response = "No Template Found!";
-        if("[P1".equalsIgnoreCase(_template)) {
-            String[] data = _prompt.split(",");
+        if("[P1".equalsIgnoreCase(template)) {
+            String[] data = prompt.split(",");
             String dish = data[0];
-            String ingredients = _prompt.replaceAll(dish+",", "").trim();
-             response = structuredPromptRecipe(dish, ingredients, _model, _printResult);
+            String ingredients = prompt.replaceAll(dish+",", "").trim();
+             response = structuredPromptRecipe(dish, ingredients, model, printResult);
         } else {
-            System.out.println("No Template found!!! ........... ");
+            Std.println("No Template found!!! ........... ");
         }
         return response;
     }
@@ -122,47 +125,47 @@ public class TemplateManager {
 
     /**
      * Simple Template
-     * @param _model
+     * @param model
      * @return
      */
-    public static String simplePrompt(ChatLanguageModel _model) {
+    public static String simplePrompt(ChatLanguageModel model) {
         Map<String, Object> params = new HashMap<>();
         params.put("DishType", "oven dish");
         params.put("Ingredients", "cucumber, potato, tomato, red meat, olives, olive oil");
-        return simplePrompt(params, _model);
+        return simplePrompt(params, model);
     }
 
     /**
      * Simple Template
      *
-     * @param _params
+     * @param params
      * @return
      */
-    public static String simplePrompt(Map<String, Object> _params) {
+    public static String simplePrompt(Map<String, Object> params) {
         ChatLanguageModel model = new AiBeans()
                 .createChatLanguageModelOpenAi(AiConstants.getOpenAIDefaultModel());
-        return simplePrompt(_params, model);
+        return simplePrompt(params, model);
     }
 
     /**
      * Simple Template
      *
-     * @param _params
-     * @param _model
+     * @param params
+     * @param model
      * @return
      */
-    public static String simplePrompt(Map<String, Object> _params, ChatLanguageModel _model) {
-        if(_params == null || _params.size() == 0 || _model == null) {
+    public static String simplePrompt(Map<String, Object> params, ChatLanguageModel model) {
+        if(params == null || params.size() == 0 || model == null) {
             return "Invalid Input";
         }
         // Template
         String template = "Create a recipe for a {{DishType}} with the following ingredients: {{Ingredients}}";
         PromptTemplate promptTemplate = PromptTemplate.from(template);
         // Apply Template to the Prompt
-        Prompt prompt = promptTemplate.apply(_params);
+        Prompt prompt = promptTemplate.apply(params);
 
         // Execute the Request
-        String response = _model.generate(prompt.text());
+        String response = model.generate(prompt.text());
         AiBeans.printResult(prompt.text(), response);
 
         return response;
@@ -180,37 +183,37 @@ public class TemplateManager {
 
     /**
      * Complex Template
-     * @param _model
+     * @param model
      * @return
      */
-    public static String complexPrompt(ChatLanguageModel _model) {
+    public static String complexPrompt(ChatLanguageModel model) {
         Map<String, Object> params = new HashMap<>();
         params.put("DishType", "oven dish");
         params.put("Ingredients", "cucumber, potato, tomato, red meat, olives, olive oil");
-        return complexPrompt(params, _model);
+        return complexPrompt(params, model);
     }
 
     /**
      * Complex Template
-     * @param _params
+     * @param params
      * @return
      */
-    public static String complexPrompt(Map<String, Object> _params) {
+    public static String complexPrompt(Map<String, Object> params) {
         // Checkout the ChatLanguageModel Implementation details in AiBeans.java
         ChatLanguageModel model = new AiBeans()
                 .createChatLanguageModelOpenAi(AiConstants.getOpenAIDefaultModel());
-        return complexPrompt(_params, model);
+        return complexPrompt(params, model);
     }
 
     /**
      * Complex Template
      *
-     * @param _params
-     * @param _model
+     * @param params
+     * @param model
      * @return
      */
-    public static String complexPrompt(Map<String, Object> _params, ChatLanguageModel _model) {
-        if(_params == null || _params.size() == 0 || _model == null) {
+    public static String complexPrompt(Map<String, Object> params, ChatLanguageModel model) {
+        if(params == null || params.size() == 0 || model == null) {
             return "Invalid Inputs";
         }
         // Complex Template
@@ -232,10 +235,10 @@ public class TemplateManager {
                 """;
         PromptTemplate promptTemplate = PromptTemplate.from(template);
         // Apply Template to the Prompt
-        Prompt prompt = promptTemplate.apply(_params);
+        Prompt prompt = promptTemplate.apply(params);
 
         // Execute the Request
-        String response = _model.generate(prompt.text());
+        String response = model.generate(prompt.text());
         AiBeans.printResult(prompt.text(), response);
         return response;
     }
@@ -282,97 +285,97 @@ public class TemplateManager {
 
     /**
      * Structured Prompt Example - Recipe
-     * @param _model
+     * @param model
      * @return
      */
-    public static String structuredPromptRecipe(ChatLanguageModel _model) {
+    public static String structuredPromptRecipe(ChatLanguageModel model) {
         return structuredPromptRecipe("oven dish",
-                "cucumber, potato, tomato, red meat, olives, olive oil", _model, true);
+                "cucumber, potato, tomato, red meat, olives, olive oil", model, true);
     }
 
     /**
      * Structured Prompt Example - Recipe
      *
-     * @param _dish
-     * @param _ingredients
+     * @param dish
+     * @param ingredients
      * @return
      */
-    public static String structuredPromptRecipe(String _dish, String _ingredients) {
+    public static String structuredPromptRecipe(String dish, String ingredients) {
         ChatLanguageModel model = new AiBeans()
                 .createChatLanguageModelOpenAi(AiConstants.getOpenAIDefaultModel());
-        return structuredPromptRecipe(_dish, _ingredients,  model, true);
+        return structuredPromptRecipe(dish, ingredients,  model, true);
     }
 
     /**
      * Structured Prompt Example - Recipe
      *
-     * @param _dish
-     * @param _ingredients
-     * @param _model
+     * @param dish
+     * @param ingredients
+     * @param model
      * @see AiBeans
      * @see StructuredPromptRecipe
      */
-    public static String structuredPromptRecipe(String _dish, String _ingredients,
-                                                ChatLanguageModel _model, boolean _printResult) {
-        if(_dish == null || _ingredients == null || _model == null) {
+    public static String structuredPromptRecipe(String dish, String ingredients,
+                                                ChatLanguageModel model, boolean printResult) {
+        if(dish == null || ingredients == null || model == null) {
             return "Invalid Inputs";
         }
         // Structured Prompt
-        StructuredPromptRecipe recipePrompt = new StructuredPromptRecipe(_dish, asList(_ingredients));
+        StructuredPromptRecipe recipePrompt = new StructuredPromptRecipe(dish, asList(ingredients));
         // Created Prompt
         Prompt prompt = StructuredPromptProcessor.toPrompt(recipePrompt);
         // Execute the Request
-        String response = _model.generate(prompt.text());
-        if(_printResult) AiBeans.printResult(prompt.text(), response);
+        String response = model.generate(prompt.text());
+        if(printResult) AiBeans.printResult(prompt.text(), response);
         return response;
     }
 
     /**
      * Structured Prompt Example - Feelings
      *
-     * @param _feelings
-     * @param _content
+     * @param feelings
+     * @param content
      * @return
      */
-    public static String structuredPromptFeelings(String _feelings, String _content) {
-        return structuredPromptFeelings( _feelings,  _content,  false);
+    public static String structuredPromptFeelings(String feelings, String content) {
+        return structuredPromptFeelings( feelings,  content,  false);
     }
 
     /**
      * Structured Prompt Example - Feelings
      *
-     * @param _feelings
-     * @param _content
-     * @param _print
+     * @param feelings
+     * @param content
+     * @param print
      * @return
      */
-    public static String structuredPromptFeelings(String _feelings, String _content, boolean _print) {
+    public static String structuredPromptFeelings(String feelings, String content, boolean print) {
         ChatLanguageModel model = new AiBeans()
                 .createChatLanguageModelOpenAi(AiConstants.getOpenAIDefaultModel());
-        return structuredPromptFeelings( _feelings,  _content, model,  _print);
+        return structuredPromptFeelings( feelings,  content, model,  print);
     }
 
     /**
      * Structured Prompt Example - Feelings
      *
-     * @param _feelings
-     * @param _content
-     * @param _model
-     * @param _print
+     * @param feelings
+     * @param content
+     * @param model
+     * @param print
      * @return
      */
-    public static String structuredPromptFeelings(String _feelings, String _content,
-                                                  ChatLanguageModel _model, boolean _print) {
-        if(_feelings == null || _content == null || _model == null ){
+    public static String structuredPromptFeelings(String feelings, String content,
+                                                  ChatLanguageModel model, boolean print) {
+        if(feelings == null || content == null || model == null ){
             return "Invalid Input";
         }
         // Structured Prompt
-        StructuredPromptFeelings feelingsPrompt = new StructuredPromptFeelings(_feelings, _content);
+        StructuredPromptFeelings feelingsPrompt = new StructuredPromptFeelings(feelings, content);
         // Created Prompt
         Prompt prompt = StructuredPromptProcessor.toPrompt(feelingsPrompt);
         // Execute the Request
-        String response = _model.generate(prompt.text());
-        if(_print) {
+        String response = model.generate(prompt.text());
+        if(print) {
             AiBeans.printResult(prompt.text(), response);
         }
         return response;

@@ -20,6 +20,7 @@ import dev.langchain4j.model.image.ImageModel;
 import dev.langchain4j.model.output.Response;
 import io.fusion.air.microservice.ai.genai.utils.AiBeans;
 import io.fusion.air.microservice.ai.genai.utils.AiConstants;
+import io.fusion.air.microservice.utils.Std;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -37,59 +38,61 @@ import java.nio.file.Paths;
  */
 public class ImageBuilder {
 
+    private ImageBuilder() {
+    }
+
     /**
      * Create Image
-     * @param _text
+     * @param text
      * @return
      */
-    public static Response<Image> createImage(String _text) {
-        if(_text == null) {
+    public static Response<Image> createImage(String text) {
+        if(text == null) {
             return null;
         }
         ImageModel model = new AiBeans().createImageModel(AiConstants.DALL_E_3);
-        Response<Image> response = model.generate(_text);
-        return response;
+        return model.generate(text);
     }
 
     /**
      * Download Image
-     * @param _response
+     * @param response
      */
-    public static String downloadImage(Response<Image> _response) {
+    public static String downloadImage(Response<Image> response) {
         String error = "No image was returned.";
-        if(_response == null) {
-            System.out.printf(">> %s Invalid Inputs!", error);
+        if(response == null) {
+            Std.printf(">> %s Invalid Inputs!", error);
             return error;
         }
-        if (_response.content().url() != null) {
-            System.out.println(">> Image URL: " + _response.content().url());
+        if (response.content().url() != null) {
+            Std.println(">> Image URL: " + response.content().url());
             try {
                 // Returns Image URL
-                return downloadImageFromUrl(_response.content().url().toString(), "downloaded_image.jpg");
+                return downloadImageFromUrl(response.content().url().toString(), "downloaded_image.jpg");
             } catch (IOException e) {
-                System.out.println(">> No image was returned. "+e.getMessage());
+                Std.println(">> No image was returned. "+e.getMessage());
                 return error + e.getMessage();
             }
         }
-        System.out.println(">> No image was returned. Response Content URL is NULL!");
+        Std.println(">> No image was returned. Response Content URL is NULL!");
         return error;
     }
 
     /**
      * Download the image from the URL
      *
-     * @param _imageUrl
-     * @param _fileName
+     * @param imageUrl
+     * @param fileName
      * @throws IOException
      */
-    private static String downloadImageFromUrl(String _imageUrl, String _fileName) throws IOException {
+    private static String downloadImageFromUrl(String imageUrl, String fileName) throws IOException {
         String error = "Unable to download Image. Invalid Inputs!";
-        if(_imageUrl == null || _fileName == null) {
-            System.out.printf(">> %s "+error);
+        if(imageUrl == null || fileName == null) {
+            Std.printf(">> %s "+error);
             return error;
         }
-        URL url = new URL(_imageUrl);
-        Path targetPath = Paths.get(_fileName).toAbsolutePath();
+        URL url = new URL(imageUrl);
+        Path targetPath = Paths.get(fileName).toAbsolutePath();
 
         try (InputStream in = url.openStream();
              OutputStream out = new FileOutputStream(targetPath.toString())) {
@@ -98,7 +101,7 @@ public class ImageBuilder {
             while ((bytesRead = in.read(buffer)) != -1) {
                 out.write(buffer, 0, bytesRead);
             }
-            System.out.println(">> Image has been downloaded successfully to " + targetPath);
+            Std.println(">> Image has been downloaded successfully to " + targetPath);
         }
         return targetPath.toString();
     }

@@ -35,12 +35,12 @@ public class SentimentAnalyzer {
      * Rating based on Positive, Neutral and Negative
      * Analyze the feelings of the user based on the content.
      *
-     * @param _request
+     * @param request
      * @return
      */
-    public static String analyzeSentiment(String _request) {
+    public static String analyzeSentiment(String request) {
         ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
-        return analyzeSentiment(_request, model, false);
+        return analyzeSentiment(request, model, false);
     }
 
     /**
@@ -48,13 +48,13 @@ public class SentimentAnalyzer {
      * Rating based on Positive, Neutral and Negative
      * Analyze the feelings of the user based on the content.
      *
-     * @param _request
-     * @param _print
+     * @param request
+     * @param print
      * @return
      */
-    public static String analyzeSentiment(String _request, boolean _print) {
+    public static String analyzeSentiment(String request, boolean print) {
         ChatLanguageModel model = new AiBeans().createChatLanguageModelOpenAi();
-        return analyzeSentiment( _request, model, _print);
+        return analyzeSentiment( request, model, print);
     }
 
     /**
@@ -62,24 +62,24 @@ public class SentimentAnalyzer {
      * Rating based on Positive, Neutral and Negative
      * Analyze the feelings of the user based on the content.
      *
-     * @param _request
+     * @param request
      * @param model
-     * @param _print
+     * @param print
      * @return
      */
-    public static String analyzeSentiment(String _request, ChatLanguageModel model,  boolean _print) {
-        if(_request == null || model == null) {
+    public static String analyzeSentiment(String request, ChatLanguageModel model,  boolean print) {
+        if(request == null || model == null) {
             return "Invalid Inputs";
         }
         SentimentAssistant sentimentAssistant = AiServices.create(SentimentAssistant.class, model);
-        Sentiment sentiment = sentimentAssistant.analyzeSentimentOf(_request);
-        boolean positive = sentimentAssistant.isPositive(_request);
-        String feelings = TemplateManager.structuredPromptFeelings(sentiment.name(), _request);
+        Sentiment sentiment = sentimentAssistant.analyzeSentimentOf(request);
+        boolean positive = sentimentAssistant.isPositive(request);
+        String feelings = TemplateManager.structuredPromptFeelings(sentiment.name(), request);
         String response = "Rating of the content = "+sentiment.name() + "\n"
                         +"Is Sentiment Positive?     = "+((positive) ? "Yes" : "No")
                         +"\n"+feelings;
-        if(_print) {
-            AiBeans.printResult(_request,response);
+        if(print) {
+            AiBeans.printResult(request,response);
         }
         return response;
     }

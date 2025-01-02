@@ -58,6 +58,7 @@ import io.fusion.air.microservice.ai.genai.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.genai.core.assistants.CarRentalAssistant;
 import io.fusion.air.microservice.ai.genai.utils.AiBeans;
 import io.fusion.air.microservice.ai.genai.utils.AiConstants;
+import io.fusion.air.microservice.utils.Std;
 import io.fusion.air.microservice.utils.Utils;
 // Java
 import java.util.Collection;
@@ -86,30 +87,32 @@ import static java.util.Arrays.asList;
  */
 public class RAGBuilder {
 
+    private RAGBuilder() {}
+
     /**
      * Get Default Language Model
      * @return
      */
-    private static ChatLanguageModel getDefaultLanguageModel() {
+    public static ChatLanguageModel getDefaultLanguageModel() {
         return new AiBeans().createChatLanguageModelOpenAi();
     }
     /**
      * Read and Analyze the Local Data
-     * @param _fileName
+     * @param fileName
      * @return
      */
-    public static ConversationalRetrievalChain createConversationalRetrievalChain(String _fileName) {
-        return createConversationalRetrievalChain( _fileName, AiBeans.getDefaultLanguageModel());
+    public static ConversationalRetrievalChain createConversationalRetrievalChain(String fileName) {
+        return createConversationalRetrievalChain( fileName, AiBeans.getDefaultLanguageModel());
     }
     /**
      * Read and Analyze the Local Data
      *
-     * @param _fileName
-     * @param _chatLanguageModel
+     * @param fileName
+     * @param chatLanguageModel
      * @return
      */
-    public static ConversationalRetrievalChain createConversationalRetrievalChain(String _fileName,
-                                                                                  ChatLanguageModel _chatLanguageModel) {
+    public static ConversationalRetrievalChain createConversationalRetrievalChain(String fileName,
+                                                                                  ChatLanguageModel chatLanguageModel) {
         EmbeddingModel embeddingModel = new AllMiniLmL6V2EmbeddingModel();
         EmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
 
@@ -119,11 +122,11 @@ public class RAGBuilder {
                 .embeddingStore(embeddingStore)
                 .build();
 
-        Document document = loadDocument(Utils.toPath("static/data/p/"+_fileName), new TextDocumentParser());
+        Document document = loadDocument(Utils.toPath("static/data/p/"+fileName), new TextDocumentParser());
         ingestor.ingest(document);
 
         return ConversationalRetrievalChain.builder()
-                .chatLanguageModel(_chatLanguageModel)
+                .chatLanguageModel(chatLanguageModel)
                 .retriever(EmbeddingStoreRetriever.from(embeddingStore, embeddingModel))
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(20)) // you can override default chat memory
                 // .promptTemplate() // you can override default prompt template
@@ -140,10 +143,10 @@ public class RAGBuilder {
 
     /**
      * Multi Document
-     * @param _chatLanguageModel
+     * @param chatLanguageModel
      * @return
      */
-    public static ConversationalRetrievalChain createMovieDatabaseChain(ChatLanguageModel _chatLanguageModel) {
+    public static ConversationalRetrievalChain createMovieDatabaseChain(ChatLanguageModel chatLanguageModel) {
         EmbeddingModel embeddingModel = new AllMiniLmL6V2EmbeddingModel();
         EmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
 
@@ -159,7 +162,7 @@ public class RAGBuilder {
         ingestor.ingest(document2);
 
         return ConversationalRetrievalChain.builder()
-                .chatLanguageModel(_chatLanguageModel)
+                .chatLanguageModel(chatLanguageModel)
                 .retriever(EmbeddingStoreRetriever.from(embeddingStore, embeddingModel))
                 // .promptTemplate(TemplateManager.createMoviePrompt()) // you can override default prompt template
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(20)) // you can override default chat memory
@@ -180,10 +183,10 @@ public class RAGBuilder {
 
     /**
      * Create a Simple RAG for the Car Rental Service
-     * @param _model
+     * @param model
      * @return
      */
-    public static Assistant createCarRentalAssistantSimple(ChatLanguageModel _model) {
+    public static Assistant createCarRentalAssistantSimple(ChatLanguageModel model) {
         // Documents for processing
         List<Document> documents = loadDocuments(Utils.toPath("static/data/e/"), Utils.getPathMatcher("*.txt"));
         // Embedding Model
@@ -206,7 +209,7 @@ public class RAGBuilder {
         // The final step is to build our AI Service,
         // Return the Assistant
         return  AiServices.builder(Assistant.class)
-                .chatLanguageModel(_model)
+                .chatLanguageModel(model)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
                 .contentRetriever(retriever)
                 .build();
@@ -301,10 +304,10 @@ public class RAGBuilder {
     /**
      * RAG - Query Transformer
      *
-     * @param _chatLanguageModel
+     * @param chatLanguageModel
      * @return
      */
-    public static Assistant createAssistantWithQueryTransformer(ChatLanguageModel _chatLanguageModel) {
+    public static Assistant createAssistantWithQueryTransformer(ChatLanguageModel chatLanguageModel) {
         // Load the documents
         Document document = loadDocument(Utils.toPath("static/data/e/akiera-kiera_biography.txt"), new TextDocumentParser());
         EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
@@ -319,7 +322,7 @@ public class RAGBuilder {
         // We will create a CompressingQueryTransformer, which is responsible for compressing
         // the user's query and the preceding conversation into a single, stand-alone query.
         // This should significantly improve the quality of the retrieval process.
-        QueryTransformer queryTransformer = new CompressingQueryTransformer(_chatLanguageModel);
+        QueryTransformer queryTransformer = new CompressingQueryTransformer(chatLanguageModel);
         // Content Retriever
         ContentRetriever contentRetriever = EmbeddingStoreContentRetriever.builder()
                 .embeddingStore(embeddingStore)
@@ -337,7 +340,7 @@ public class RAGBuilder {
                 .build();
 
         return AiServices.builder(Assistant.class)
-                .chatLanguageModel(_chatLanguageModel)
+                .chatLanguageModel(chatLanguageModel)
                 .retrievalAugmentor(retrievalAugmentor)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
                 .build();
@@ -353,10 +356,10 @@ public class RAGBuilder {
 
     /**
      * RAG - Query Router
-     * @param _chatLanguageModel
+     * @param chatLanguageModel
      * @return
      */
-    public static Assistant createAssistantWithQueryRouter(ChatLanguageModel _chatLanguageModel) {
+    public static Assistant createAssistantWithQueryRouter(ChatLanguageModel chatLanguageModel) {
         // Load the documents
         EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
         // Create Embedding Store for Biography
@@ -373,14 +376,14 @@ public class RAGBuilder {
         Map<ContentRetriever, String> retrieverToDescription = new HashMap<>();
         retrieverToDescription.put(biographyCR, "Biography of Akiera Kiera");
         retrieverToDescription.put(rentalCR, "Terms of use of Ozazo Car Rental Company");
-        QueryRouter queryRouter = new LanguageModelQueryRouter(_chatLanguageModel, retrieverToDescription);
+        QueryRouter queryRouter = new LanguageModelQueryRouter(chatLanguageModel, retrieverToDescription);
         // Retrieval Augmentor
         RetrievalAugmentor retrievalAugmentor = DefaultRetrievalAugmentor.builder()
                 .queryRouter(queryRouter)
                 .build();
         // Create Assistant
         return AiServices.builder(Assistant.class)
-                .chatLanguageModel(_chatLanguageModel)
+                .chatLanguageModel(chatLanguageModel)
                 .retrievalAugmentor(retrievalAugmentor)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
                 .build();
@@ -396,10 +399,10 @@ public class RAGBuilder {
 
     /**
      * RAG - ReRanking
-     * @param _chatLanguageModel
+     * @param chatLanguageModel
      * @return
      */
-    public static Assistant createAssistantWithReRanking(ChatLanguageModel _chatLanguageModel ) {
+    public static Assistant createAssistantWithReRanking(ChatLanguageModel chatLanguageModel ) {
         // Load the documents
         EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
         // Create Embedding Store for Car Rental Service
@@ -422,7 +425,7 @@ public class RAGBuilder {
                 .build();
 
         return AiServices.builder(Assistant.class)
-                .chatLanguageModel(_chatLanguageModel)
+                .chatLanguageModel(chatLanguageModel)
                 .retrievalAugmentor(retrievalAugmentor)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
                 .build();
@@ -438,10 +441,10 @@ public class RAGBuilder {
 
     /**
      * RAG - Meta Data
-     * @param _chatLanguageModel
+     * @param chatLanguageModel
      * @return
      */
-    public static Assistant createAssistantWithMetaData(ChatLanguageModel _chatLanguageModel ) {
+    public static Assistant createAssistantWithMetaData(ChatLanguageModel chatLanguageModel ) {
         // Load the documents
         EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
         // Create Embedding Store for Car Rental Service
@@ -461,7 +464,7 @@ public class RAGBuilder {
                 .build();
         // Create Assistant
         return AiServices.builder(Assistant.class)
-                .chatLanguageModel(_chatLanguageModel)
+                .chatLanguageModel(chatLanguageModel)
                 .retrievalAugmentor(retrievalAugmentor)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
                 .build();
@@ -477,10 +480,10 @@ public class RAGBuilder {
 
     /**
      * RAG - Multiple Content Retrievers
-     * @param _chatLanguageModel
+     * @param chatLanguageModel
      * @return
      */
-    public static Assistant createAssistantWithMultiContentRetrievers(ChatLanguageModel _chatLanguageModel) {
+    public static Assistant createAssistantWithMultiContentRetrievers(ChatLanguageModel chatLanguageModel) {
         // Load the documents
         EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
         // Create Embedding Store for Biography
@@ -503,7 +506,7 @@ public class RAGBuilder {
                 .build();
         // Create Assistant
         return AiServices.builder(Assistant.class)
-                .chatLanguageModel(_chatLanguageModel)
+                .chatLanguageModel(chatLanguageModel)
                 .retrievalAugmentor(retrievalAugmentor)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
                 .build();
@@ -519,10 +522,10 @@ public class RAGBuilder {
 
     /**
      * RAG - Content Retrieval Skipping
-     * @param _chatLanguageModel
+     * @param chatLanguageModel
      * @return
      */
-    public static Assistant createAssistantWithRetrievalSkipping(ChatLanguageModel _chatLanguageModel) {
+    public static Assistant createAssistantWithRetrievalSkipping(ChatLanguageModel chatLanguageModel) {
         // Load the documents
         EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
         // Create Embedding Store for Car Rental Service
@@ -544,8 +547,8 @@ public class RAGBuilder {
             @Override
             public Collection<ContentRetriever> route(Query query) {
                 Prompt prompt = PROMPT_TEMPLATE.apply(query.text());
-                AiMessage aiMessage = _chatLanguageModel.generate(prompt.toUserMessage()).content();
-                System.out.println(">>> HAL9000 decided to: " + aiMessage.text());
+                AiMessage aiMessage = chatLanguageModel.generate(prompt.toUserMessage()).content();
+                Std.println(">>> HAL9000 decided to: " + aiMessage.text());
                 if (aiMessage.text().toLowerCase().contains("skip")) {
                     return emptyList();
                 }
@@ -558,7 +561,7 @@ public class RAGBuilder {
                 .build();
         // Create Assistant
         return AiServices.builder(Assistant.class)
-                .chatLanguageModel(_chatLanguageModel)
+                .chatLanguageModel(chatLanguageModel)
                 .retrievalAugmentor(retrievalAugmentor)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
                 .build();
@@ -568,18 +571,18 @@ public class RAGBuilder {
     /**
      * Create EmbeddingStore<TextSegment>
      *
-     * @param _documentName
-     * @param _embeddingModel
+     * @param documentName
+     * @param embeddingModel
      * @return
      */
-    private static EmbeddingStore<TextSegment> createEmbeddingStore(String _documentName, EmbeddingModel _embeddingModel) {
+    private static EmbeddingStore<TextSegment> createEmbeddingStore(String documentName, EmbeddingModel embeddingModel) {
         DocumentParser documentParser = new TextDocumentParser();
-        Document document = loadDocument(Utils.toPath("static/data/e/"+ _documentName), documentParser);
+        Document document = loadDocument(Utils.toPath("static/data/e/"+ documentName), documentParser);
 
         DocumentSplitter splitter = DocumentSplitters.recursive(300, 0);
         List<TextSegment> segments = splitter.split(document);
 
-        List<Embedding> embeddings = _embeddingModel.embedAll(segments).content();
+        List<Embedding> embeddings = embeddingModel.embedAll(segments).content();
         EmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
         embeddingStore.addAll(embeddings, segments);
         return embeddingStore;
@@ -588,15 +591,15 @@ public class RAGBuilder {
     /**
      * Create Content Retriever
      *
-     * @param _embeddingStore
-     * @param _embeddingModel
+     * @param embeddingStore
+     * @param embeddingModel
      * @return
      */
     private static ContentRetriever createContentRetriever(
-            EmbeddingStore<TextSegment> _embeddingStore, EmbeddingModel _embeddingModel) {
+            EmbeddingStore<TextSegment> embeddingStore, EmbeddingModel embeddingModel) {
         return  EmbeddingStoreContentRetriever.builder()
-                .embeddingStore(_embeddingStore)
-                .embeddingModel(_embeddingModel)
+                .embeddingStore(embeddingStore)
+                .embeddingModel(embeddingModel)
                 .maxResults(2)
                 .minScore(0.6)
                 .build();

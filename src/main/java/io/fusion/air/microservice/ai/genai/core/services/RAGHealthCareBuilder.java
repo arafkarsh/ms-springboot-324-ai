@@ -50,13 +50,15 @@ import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.load
  */
 public class RAGHealthCareBuilder {
 
+    private RAGHealthCareBuilder() {}
+
     /**
      * Return the Diagnosis of the Patient
      *
-     * @param _model
+     * @param model
      * @return
      */
-    public static HealthCareAssistant createHealthCareAssistant(ChatLanguageModel _model) {
+    public static HealthCareAssistant createHealthCareAssistant(ChatLanguageModel model) {
         // Documents for processing
         List<Document> documents = loadDocuments(Utils.toPath("static/data/health/"), Utils.getPathMatcher("*.txt"));
         // Embedding Model
@@ -73,7 +75,7 @@ public class RAGHealthCareBuilder {
         // The final step is to build our AI Service,
         // Return the Assistant
         return AiServices.builder(HealthCareAssistant.class)
-                .chatLanguageModel(_model)
+                .chatLanguageModel(model)
                 // .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
                 .contentRetriever(retriever)
                 .build();
@@ -83,18 +85,18 @@ public class RAGHealthCareBuilder {
     /**
      * Create EmbeddingStore<TextSegment>
      *
-     * @param _documentName
-     * @param _embeddingModel
+     * @param documentName
+     * @param embeddingModel
      * @return
      */
-    private static EmbeddingStore<TextSegment> createEmbeddingStore(String _documentName, EmbeddingModel _embeddingModel) {
+    public static EmbeddingStore<TextSegment> createEmbeddingStore(String documentName, EmbeddingModel embeddingModel) {
         DocumentParser documentParser = new TextDocumentParser();
-        Document document = loadDocument(Utils.toPath("static/data/health/"+ _documentName), documentParser);
+        Document document = loadDocument(Utils.toPath("static/data/health/"+ documentName), documentParser);
 
         DocumentSplitter splitter = DocumentSplitters.recursive(300, 0);
         List<TextSegment> segments = splitter.split(document);
 
-        List<Embedding> embeddings = _embeddingModel.embedAll(segments).content();
+        List<Embedding> embeddings = embeddingModel.embedAll(segments).content();
         EmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
         embeddingStore.addAll(embeddings, segments);
         return embeddingStore;
@@ -102,30 +104,30 @@ public class RAGHealthCareBuilder {
 
     /**
      * Create EmbeddingStoreIngestor
-     * @param _embeddingModel
-     * @param _embeddingStore
+     * @param embeddingModel
+     * @param embeddingStore
      * @return
      */
     private static EmbeddingStoreIngestor createEmbeddingStoreIngestor(
-            EmbeddingModel _embeddingModel, EmbeddingStore<TextSegment> _embeddingStore) {
+            EmbeddingModel embeddingModel, EmbeddingStore<TextSegment> embeddingStore) {
         return EmbeddingStoreIngestor.builder()
-                .embeddingModel(_embeddingModel)
-                .embeddingStore(_embeddingStore)
+                .embeddingModel(embeddingModel)
+                .embeddingStore(embeddingStore)
                 .build();
     }
 
     /**
      * Create Content Retriever
      *
-     * @param _embeddingStore
-     * @param _embeddingModel
+     * @param embeddingStore
+     * @param embeddingModel
      * @return
      */
     private static ContentRetriever createContentRetriever(
-            EmbeddingModel _embeddingModel, EmbeddingStore<TextSegment> _embeddingStore) {
+            EmbeddingModel embeddingModel, EmbeddingStore<TextSegment> embeddingStore) {
         return EmbeddingStoreContentRetriever.builder()
-                .embeddingModel(_embeddingModel)
-                .embeddingStore(_embeddingStore)
+                .embeddingModel(embeddingModel)
+                .embeddingStore(embeddingStore)
                 // .maxResults(2)
                 // .minScore(0.3)
                 // .dynamicFilter(query -> metadataKey("Patient-Name").isEqualTo(query.metadata().chatMemoryId().toString()))
@@ -134,28 +136,30 @@ public class RAGHealthCareBuilder {
 
     /**
      * Extract Patient Info from the message
-     * @param _request
-     * @param _model
+     * @param request
+     * @param model
      * @return
      */
-    public static Patient patientNameExtractor(String _request, ChatLanguageModel _model) {
-        PatientDataExtractorAssistant extractor = AiServices.create(PatientDataExtractorAssistant.class, _model);
-        Patient patient = extractor.extractPatientNameFrom(_request);
-        AiBeans.printResult(_request, patient.toString());
+    public static Patient patientNameExtractor(String request, ChatLanguageModel model) {
+        PatientDataExtractorAssistant extractor = AiServices.create(PatientDataExtractorAssistant.class, model);
+        Patient patient = extractor.extractPatientNameFrom(request);
+        AiBeans.printResult(request, patient.toString());
         return patient;
     }
 
     /**
      * Extract Patient Id from the message
-     * @param _request
-     * @param _model
+     * @param request
+     * @param model
      * @return
      */
-    public static long patientIdExtractor(String _request, ChatLanguageModel _model) {
-        PatientDataExtractorAssistant extractor = AiServices.create(PatientDataExtractorAssistant.class, _model);
+    public static long patientIdExtractor(String request, ChatLanguageModel model) {
+        PatientDataExtractorAssistant extractor = AiServices.create(PatientDataExtractorAssistant.class, model);
         long patientId = -1;
-        try { patientId = extractor.extractPatientId(_request); } catch (NumberFormatException e) {}
-        AiBeans.printResult(_request, ""+patientId);
+        try { patientId = extractor.extractPatientId(request); } catch (NumberFormatException e) {
+            // Nothing to Print
+        }
+        AiBeans.printResult(request, ""+patientId);
         return patientId;
     }
 }
