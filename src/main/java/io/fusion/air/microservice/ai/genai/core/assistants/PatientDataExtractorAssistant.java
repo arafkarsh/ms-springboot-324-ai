@@ -28,9 +28,9 @@ import io.fusion.air.microservice.ai.genai.core.models.Patient;
 public interface PatientDataExtractorAssistant {
 
     @UserMessage("Extract Patient ID from {{it}}")
-    public long extractPatientId(String _text);
+    public long extractPatientId(String text);
 
     // POJO Extractor
     @UserMessage("Extract the Patient Name from {{it}}")
-    public Patient extractPatientNameFrom(String _text);
+    public Patient extractPatientNameFrom(String text);
 }

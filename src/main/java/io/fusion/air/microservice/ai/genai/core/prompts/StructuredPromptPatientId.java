@@ -46,10 +46,10 @@ public class StructuredPromptPatientId {
     private final long patientId;
 
     /**
-     * @param _patientId
+     * @param patientId
      */
-    public StructuredPromptPatientId(long _patientId) {
-        this.patientId = _patientId;
+    public StructuredPromptPatientId(long patientId) {
+        this.patientId = patientId;
     }
 
     public long getPatientId() {

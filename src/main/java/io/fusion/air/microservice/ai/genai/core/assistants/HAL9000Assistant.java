@@ -35,7 +35,7 @@ public interface HAL9000Assistant {
      *    - If a new SystemMessage with the same content is added, it is ignored.
      *    - If a new SystemMessage with different content is added, it replaces the previous one.
      *
-     * @param _userMessage
+     * @param userMessage
      * @return
      */
     @SystemMessage("""
@@ -53,5 +53,5 @@ public interface HAL9000Assistant {
                             formal mode. If it takes more data to elaborate on a concept, please feel 
                             free to elaborate with as many details as possible.
                          """)
-    public String chat(String _userMessage);
+    public String chat(String userMessage);
 }

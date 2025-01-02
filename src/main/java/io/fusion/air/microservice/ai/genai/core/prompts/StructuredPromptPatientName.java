@@ -46,10 +46,10 @@ public class StructuredPromptPatientName {
     private final String patient;
 
     /**
-     * @param _patient
+     * @param patient
      */
-    public StructuredPromptPatientName(String _patient) {
-        this.patient = _patient;
+    public StructuredPromptPatientName(String patient) {
+        this.patient = patient;
     }
 
     public String getPatient() {

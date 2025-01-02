@@ -130,7 +130,6 @@ public class AiConstants {
     public void init() {
         OPEN_AI_DEFAULT_MODEL = this.openAIModel;
         OLLAMA_URL = this.ollamaBaseUrl;
-        // OLLAMA_LLAMA3 = this.ollamaModel;
     }
 
     /**

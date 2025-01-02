@@ -50,7 +50,7 @@ public class Patient {
     @Override
     @JsonIgnore
     public String toString() {
-        return (middleName != null || middleName.trim().length() == 0)
+        return (middleName != null || middleName.isEmpty())
                     ? firstName + " "  + lastName
                     : firstName + " " + middleName + " " + lastName;
     }
@@ -65,6 +65,6 @@ public class Patient {
      * @return
      */
     public boolean isValid() {
-        return (toString().trim().length() == 0) ? false : true;
+        return (!toString().isEmpty());
     }
 }

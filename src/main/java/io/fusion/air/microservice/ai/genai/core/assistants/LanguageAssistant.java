@@ -40,13 +40,13 @@ public interface LanguageAssistant {
      *    - If a new SystemMessage with the same content is added, it is ignored.
      *    - If a new SystemMessage with different content is added, it replaces the previous one.
      *
-     * @param _text
-     * @param _language
+     * @param text
+     * @param language
      * @return
      */
     @SystemMessage("You are a professional translator. Translate into {{language}}")
     @UserMessage("Translate the following text: {{text}}")
-    public String translate(@V("text") String _text, @V("language") String _language);
+    public String translate(@V("text") String text, @V("language") String language);
 
     /**
      * Summarize the message into specified set of bullet points.
@@ -56,10 +56,10 @@ public interface LanguageAssistant {
      *    - If a new SystemMessage with the same content is added, it is ignored.
      *    - If a new SystemMessage with different content is added, it replaces the previous one.
      *
-     * @param _text
-     * @param _number
+     * @param text
+     * @param number
      * @return
      */
     @SystemMessage("Summarize every message from the user in {{n}} bullet points. Provide only bullet points.")
-    public List<String> summarize(@UserMessage String _text, @V("n") int _number);
+    public List<String> summarize(@UserMessage String text, @V("n") int number);
 }

@@ -31,15 +31,15 @@ public class PatientRequest {
     /**
      * Create Patient Request
      *
-     * @param _patientName
-     * @param _patientId
-     * @param _userQuery
+     * @param patientName
+     * @param patientId
+     * @param userQuery
      */
-    public PatientRequest(String _patientName, String _patientId, String _userQuery) {
-        patientName   = (_patientName == null || _patientName.trim().length() == 0) ? null : _patientName;
-        patientId       = (_patientId == null || _patientId.trim().length() == 0) ? null : _patientId;;
-        userQuery      = _userQuery;
-        validData       = (patientName == null && patientId == null) ? false : true;
+    public PatientRequest(String patientName, String patientId, String userQuery) {
+        this.patientName = (patientName == null || patientName.isEmpty()) ? null : patientName;
+        this.patientId = (patientId == null || patientId.isEmpty()) ? null : patientId;
+        this.userQuery = userQuery;
+        validData       = (this.patientName != null && this.patientId != null);
     }
 
     /**

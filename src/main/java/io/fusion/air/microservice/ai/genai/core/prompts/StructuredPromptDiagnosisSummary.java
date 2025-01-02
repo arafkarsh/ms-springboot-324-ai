@@ -46,10 +46,10 @@ public class StructuredPromptDiagnosisSummary {
     private final String patient;
 
     /**
-     * @param _patient
+     * @param patient
      */
-    public StructuredPromptDiagnosisSummary(String _patient) {
-        this.patient = _patient;
+    public StructuredPromptDiagnosisSummary(String patient) {
+        this.patient = patient;
     }
 
     public String getPatient() {

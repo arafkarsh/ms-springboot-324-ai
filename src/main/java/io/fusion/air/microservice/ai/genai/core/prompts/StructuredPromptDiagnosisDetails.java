@@ -54,12 +54,12 @@ public class StructuredPromptDiagnosisDetails {
     private final String disease;
 
     /**
-     * @param _patient
-     * @param _disease
+     * @param patient
+     * @param disease
      */
-    public StructuredPromptDiagnosisDetails(String _patient, String _disease) {
-        this.patient = _patient;
-        this.disease = _disease;
+    public StructuredPromptDiagnosisDetails(String patient, String disease) {
+        this.patient = patient;
+        this.disease = disease;
     }
 
     public String getPatient() {
