@@ -49,14 +49,14 @@ public class RAGHealthCareService implements HealthCareAssistant {
 
     /**
      * Analyze the User Query and Return the response
-     * @param _userQuery
+     * @param userMessage
      * @return
      */
-    public String chat(String _userQuery) {
-        if(_userQuery == null) {
+    public String chat(String userMessage) {
+        if(userMessage == null) {
             return "Invalid Input!";
         }
-        PatientRequest request = analyzeTheQuery(_userQuery);
+        PatientRequest request = analyzeTheQuery(userMessage);
         if(request.isValidData()) {
             String patientRef = (request.getPatientName() != null) ? request.getPatientName() : request.getPatientId();
             return assistant.chat(patientRef, request.getUserQuery());
@@ -67,13 +67,13 @@ public class RAGHealthCareService implements HealthCareAssistant {
     /**
      * Chat Memory with a Memory ID
      *
-     * @param _patient
-     * @param _userMessage
+     * @param memoryId
+     * @param userMessage
      * @return
      */
     @Override
-    public String chat(String _patient, String _userMessage) {
-        return assistant.chat(_patient, _userMessage);
+    public String chat(String memoryId, String userMessage) {
+        return assistant.chat(memoryId, userMessage);
     }
 
     /**

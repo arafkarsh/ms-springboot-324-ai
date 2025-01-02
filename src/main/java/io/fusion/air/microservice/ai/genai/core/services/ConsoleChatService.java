@@ -26,35 +26,35 @@ public class ConsoleChatService implements Assistant {
     /**
      * Chat Conversation
      *
-     * @param userQuery
+     * @param userMessage
      * @return
      */
     @Override
-    public String chat(String userQuery) {
-        if (userQuery.startsWith("IMAGE: ")) {
-            String query = userQuery.replaceAll("IMAGE:", "");
+    public String chat(String userMessage) {
+        if (userMessage.startsWith("IMAGE: ")) {
+            String query = userMessage.replaceAll("IMAGE:", "");
             return ImageBuilder.downloadImage(ImageBuilder.createImage(query));
-        } else if (userQuery.startsWith("CUSTOM: ")) {
-            String query = userQuery.replaceAll("CUSTOM:", "");
+        } else if (userMessage.startsWith("CUSTOM: ")) {
+            String query = userMessage.replaceAll("CUSTOM:", "");
             return CustomDataAnalyzer.processFile(query, false);
-        } else if (userQuery.startsWith("[P1")) {
-            return TemplateManager.structuredTemplate(userQuery, false);
-        } else if (userQuery.startsWith("[P2")) {
-            String[] dArray = userQuery.split(":");
+        } else if (userMessage.startsWith("[P1")) {
+            return TemplateManager.structuredTemplate(userMessage, false);
+        } else if (userMessage.startsWith("[P2")) {
+            String[] dArray = userMessage.split(":");
             return CustomDataAnalyzer.processMultiFiles(dArray[1]);
         }
-        return CustomDataAnalyzer.processUserQuery(userQuery);
+        return CustomDataAnalyzer.processUserQuery(userMessage);
     }
 
     /**
      * Chat Memory with a Memory ID
      *
-     * @param _memoryId
-     * @param _userMessage
+     * @param memoryId
+     * @param userMessage
      * @return
      */
     @Override
-    public String chat(String _memoryId, String _userMessage) {
+    public String chat(String memoryId, String userMessage) {
         return "";
     }
 }

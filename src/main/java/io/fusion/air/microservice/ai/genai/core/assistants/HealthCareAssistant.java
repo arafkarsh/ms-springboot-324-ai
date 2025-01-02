@@ -39,7 +39,7 @@ public interface HealthCareAssistant extends Assistant{
      *    - If a new SystemMessage with the same content is added, it is ignored.
      *    - If a new SystemMessage with different content is added, it replaces the previous one.
      *
-     * @param _userMessage
+     * @param userMessage
      * @return
      */
     @SystemMessage("""
@@ -49,7 +49,7 @@ public interface HealthCareAssistant extends Assistant{
         Always ask if there is anything else you can assist with.
         When Doctor says no. then end the conversation with a good bye greetings.
         """)
-    public String chat(@UserMessage String _userMessage);
+    public String chat(@UserMessage String userMessage);
 
     /**
      * Chat Memory with a Memory ID
@@ -58,8 +58,8 @@ public interface HealthCareAssistant extends Assistant{
      *    - Only one SystemMessage can be held at a time.
      *    - If a new SystemMessage with the same content is added, it is ignored.
      *    - If a new SystemMessage with different content is added, it replaces the previous one.
-     * @param _memoryId
-     * @param _userMessage
+     * @param memoryId
+     * @param userMessage
      * @return
      */
     @SystemMessage("""
@@ -69,5 +69,5 @@ public interface HealthCareAssistant extends Assistant{
         Always ask if there is anything else you can assist with.
         When Doctor says no. then end the conversation with a good bye greetings. 
         """)
-    public String chat(@MemoryId String _memoryId, @UserMessage String _userMessage);
+    public String chat(@MemoryId String memoryId, @UserMessage String userMessage);
 }
