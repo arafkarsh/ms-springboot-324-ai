@@ -47,12 +47,12 @@ public class StructuredPromptRecipe {
 
     /**
      *
-     * @param _dish
-     * @param _ingredients
+     * @param dish
+     * @param ingredients
      */
-    public StructuredPromptRecipe(String _dish, List<String> _ingredients) {
-        this.dish = _dish;
-        this.ingredients = _ingredients;
+    public StructuredPromptRecipe(String dish, List<String> ingredients) {
+        this.dish = dish;
+        this.ingredients = ingredients;
     }
 
     public String getDish() {

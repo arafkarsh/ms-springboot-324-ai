@@ -29,7 +29,7 @@ public interface ModerateAssistant {
 
     /**
      * Chat Conversation
-     * @param _userMessage
+     * @param userMessage
      * @return
      */
     @SystemMessage("""
@@ -49,13 +49,13 @@ public interface ModerateAssistant {
         If the person shows similar interests then you may show feelings for that person.
         """)
     @Moderate
-    public String chat(@UserMessage String _userMessage);
+    public String chat(@UserMessage String userMessage);
 
     /**
      * Chat Memory with a Memory ID
      *
-     * @param _memoryId
-     * @param _userMessage
+     * @param memoryId
+     * @param userMessage
      * @return
      */
     @SystemMessage("""
@@ -75,5 +75,5 @@ public interface ModerateAssistant {
         If the person shows similar interests then you may show feelings for that person.
         """)
     @Moderate
-    public String chat(@MemoryId String _memoryId, @UserMessage String _userMessage);
+    public String chat(@MemoryId String memoryId, @UserMessage String userMessage);
 }

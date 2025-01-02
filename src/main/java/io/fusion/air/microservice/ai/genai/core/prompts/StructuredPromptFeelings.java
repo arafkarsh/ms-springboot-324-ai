@@ -35,12 +35,12 @@ public class StructuredPromptFeelings {
     private final String content;
 
     /**
-     * @param _feeling
-     * @param _content
+     * @param feeling
+     * @param content
      */
-    public StructuredPromptFeelings(String _feeling, String _content) {
-        this.feeling = _feeling;
-        this.content = _content;
+    public StructuredPromptFeelings(String feeling, String content) {
+        this.feeling = feeling;
+        this.content = content;
     }
 
     public String getFeeling() {

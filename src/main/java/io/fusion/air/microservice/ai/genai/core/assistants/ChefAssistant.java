@@ -27,15 +27,15 @@ public interface ChefAssistant {
 
     /**
      *  Create Recipe from the Ingredients
-     * @param _ingredients
+     * @param ingredients
      * @return
      */
-    public Recipe createRecipeFrom(String... _ingredients);
+    public Recipe createRecipeFrom(String... ingredients);
 
     /**
      * Create Recipe using a Structured Prompt
-     * @param _prompt
+     * @param promptRecipe
      * @return
      */
-    public Recipe createRecipe(StructuredPromptRecipe _prompt);
+    public Recipe createRecipe(StructuredPromptRecipe promptRecipe);
 }

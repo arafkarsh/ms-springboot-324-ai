@@ -15,6 +15,7 @@ import io.fusion.air.microservice.ai.genai.core.prompts.StructuredPromptPatientI
 import io.fusion.air.microservice.ai.genai.core.prompts.StructuredPromptPatientName;
 import io.fusion.air.microservice.ai.genai.utils.AiBeans;
 import io.fusion.air.microservice.ai.genai.utils.AiConstants;
+import io.fusion.air.microservice.utils.Std;
 import org.springframework.stereotype.Service;
 
 /**
@@ -39,11 +40,11 @@ public class RAGHealthCareService implements HealthCareAssistant {
 
     /**
      * Create RAG HealthCare Service
-     * @param _groupName
-     * @param _modelName
+     * @param groupName
+     * @param modelName
      */
-    public RAGHealthCareService(String _groupName, String _modelName) {
-        model = createLanguageModel( _groupName,  _modelName);
+    public RAGHealthCareService(String groupName, String modelName) {
+        model = createLanguageModel( groupName,  modelName);
         assistant = RAGHealthCareBuilder.createHealthCareAssistant( model);
     }
 
@@ -78,92 +79,94 @@ public class RAGHealthCareService implements HealthCareAssistant {
 
     /**
      * Return the User Query
-     * @param _userQuery
+     * @param uQuery
      * @return
      */
-    private PatientRequest analyzeTheQuery(String _userQuery) {
-        String patientName = null, patientId = null, userQuery = null;
+    private PatientRequest analyzeTheQuery(String uQuery) {
+        String patientName = null;
+        String patientId = null;
+        String userQuery = null;
         // Extract Patient Name
-        Patient patient = patientNameExtractor(_userQuery);
+        Patient patient = patientNameExtractor(uQuery);
         if(patient.isValid()) {
             patientName = patient.toString();
             userQuery = getPatientPrompt(patient).text();
-            System.out.println(">> Patient:"+patientName+" << "+userQuery);
-            // return  getPatientPrompt(patient).text();
+            Std.println(">> Patient:"+patientName+" << "+userQuery);
         } else {
             // Extract Patient ID
-            long patientLongId = patientIdExtractor(_userQuery);
+            long patientLongId = patientIdExtractor(uQuery);
             if (patientLongId > 0) {
                 patientId = "" + patientLongId;
                 userQuery = getPatientIdPrompt(patientLongId).text();
-                System.out.println(">> Patient:"+patientId+" << "+userQuery);
-                // return  getPatientIdPrompt(patientId ).text();
+                Std.println(">> Patient:"+patientId+" << "+userQuery);
             }
         }
         // If UserQuery is still NULL then check for special commands starting with [P:
         if(userQuery == null) {
-            userQuery = getDiagnosisQuery(_userQuery);
+            userQuery = getDiagnosisQuery(uQuery);
         }
         return new PatientRequest(patientName, patientId, userQuery) ;
     }
 
     /**
      * Get the Patient
-     * @param _request
+     * @param request
      * @return
      */
-    private Patient patientNameExtractor(String _request) {
+    private Patient patientNameExtractor(String request) {
         // Create Chat Language Model - Open AI GPT 3.5 Turbo
-        ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_3_5_TURBO);
-        PatientDataExtractorAssistant extractor = AiServices.create(PatientDataExtractorAssistant.class, model);
-        Patient patient = extractor.extractPatientNameFrom(_request);
+        ChatLanguageModel clModel = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_3_5_TURBO);
+        PatientDataExtractorAssistant extractor = AiServices.create(PatientDataExtractorAssistant.class, clModel);
+        Patient patient = extractor.extractPatientNameFrom(request);
         if(patient.isValid()) {
-            AiBeans.printResult(_request, patient.toString());
+            AiBeans.printResult(request, patient.toString());
         }
         return patient;
     }
 
     /**
      * Extract Patient ID
-     * @param _request
+     * @param request
      * @return
      */
-    private long patientIdExtractor(String _request) {
+    private long patientIdExtractor(String request) {
         PatientDataExtractorAssistant extractor = AiServices.create(PatientDataExtractorAssistant.class, model);
         long patientId = -1;
-        try { patientId = extractor.extractPatientId(_request); } catch (NumberFormatException e) {}
+        try { patientId = extractor.extractPatientId(request); } catch (NumberFormatException e) {
+            // Nothing to Print
+        }
         if(patientId > 0) {
-            AiBeans.printResult(_request, "" + patientId);
+            AiBeans.printResult(request, "" + patientId);
         }
         return patientId;
     }
 
     /**
      * Return Patient Prompt
-     * @param _patient
+     * @param patient
      * @return
      */
-    private Prompt getPatientPrompt(Patient _patient) {
-        return StructuredPromptProcessor.toPrompt(new StructuredPromptPatientName(_patient.toString()));
+    private Prompt getPatientPrompt(Patient patient) {
+        return StructuredPromptProcessor.toPrompt(new StructuredPromptPatientName(patient.toString()));
     }
 
     /**
      * Return the Patient Id Prompt
-     * @param _patientId
+     * @param patientId
      * @return
      */
-    private Prompt getPatientIdPrompt(long _patientId) {
-        return StructuredPromptProcessor.toPrompt(new StructuredPromptPatientId(_patientId));
+    private Prompt getPatientIdPrompt(long patientId) {
+        return StructuredPromptProcessor.toPrompt(new StructuredPromptPatientId(patientId));
     }
 
     /**
      * Return User Query
-     * @param _userQuery
+     * @param userQuery
      * @return
      */
-    private String getDiagnosisQuery(String _userQuery) {
-        if (_userQuery.startsWith("[P: ") || _userQuery.startsWith("[p: ")) {
-            String[] input = _userQuery.split(":");
+    private String getDiagnosisQuery(String userQuery) {
+        if (userQuery.startsWith("[P: ") || userQuery.startsWith("[p: ")) {
+            String[] input = userQuery.split(":");
             // Input Array
             String[] ia = input[1].split(",");
             if (ia.length == 2) {
@@ -171,68 +174,68 @@ public class RAGHealthCareService implements HealthCareAssistant {
                 StructuredPromptDiagnosisDetails details = new StructuredPromptDiagnosisDetails(ia[0], ia[1]);
                 // Created Prompt
                 Prompt prompt = StructuredPromptProcessor.toPrompt(details);
-                _userQuery = prompt.text();
+                userQuery = prompt.text();
             } else {
                 // Structured Prompt
                 StructuredPromptDiagnosisSummary summary = new StructuredPromptDiagnosisSummary(ia[0]);
                 // Created Prompt
                 Prompt prompt = StructuredPromptProcessor.toPrompt(summary);
-                _userQuery = prompt.text();
+                userQuery = prompt.text();
             }
         }
-        return _userQuery;
+        return userQuery;
     }
 
     /**
      * Return Chat Language Model
-     * @param _groupName
-     * @param _modelName
+     * @param groupName
+     * @param modelName
      * @return
      */
-    private  ChatLanguageModel createLanguageModel(String _groupName, String _modelName) {
-        ChatLanguageModel model = null;
+    private  ChatLanguageModel createLanguageModel(String groupName, String modelName) {
+        ChatLanguageModel clModel = null;
         // If Not Valid Go with the default Model OpenAI - GPT 3.5 Turbo
-        if(!isValidModel(_groupName ,_modelName)) {
-            model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_3_5_TURBO);
-            AiBeans.printModelDetails(_groupName, AiConstants.GPT_3_5_TURBO);
+        if(!isValidModel(groupName ,modelName)) {
+            clModel = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_3_5_TURBO);
+            AiBeans.printModelDetails(groupName, AiConstants.GPT_3_5_TURBO);
         } else {
             // IF Valid and If Open AI then go with GPT 3.5 Turbo
-            if(_groupName.equalsIgnoreCase(AiConstants.LLM_OPENAI)) {
-                model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_3_5_TURBO);
-                AiBeans.printModelDetails(_groupName, AiConstants.GPT_3_5_TURBO);
+            if(groupName.equalsIgnoreCase(AiConstants.LLM_OPENAI)) {
+                clModel = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_3_5_TURBO);
+                AiBeans.printModelDetails(groupName, AiConstants.GPT_3_5_TURBO);
             } else {
                 // Else Any other
-                model = getChatLanguageModel( _groupName,  _modelName);
-                AiBeans.printModelDetails(_groupName, _modelName);
+                clModel = getChatLanguageModel( groupName,  modelName);
+                AiBeans.printModelDetails(groupName, modelName);
             }
         }
-        return model;
+        return clModel;
     }
 
     /**
      * Returns ChatLanguageModel based on the LLM Group
-     * @param _groupName
-     * @param _modelName
+     * @param groupName
+     * @param modelName
      * @return
      */
-    private ChatLanguageModel getChatLanguageModel(String _groupName, String _modelName) {
-        switch(_groupName) {
-            case AiConstants.LLM_ANTHROPIC: return AiBeans.getChatLanguageModelAnthropic(_modelName);
-            case AiConstants.LLM_OLLAMA: return AiBeans.getChatLanguageModelLlama(_modelName);
-            case AiConstants.LLM_VERTEX: return AiBeans.getChatLanguageModelGoogle(_modelName);
+    private ChatLanguageModel getChatLanguageModel(String groupName, String modelName) {
+        switch(groupName) {
+            case AiConstants.LLM_ANTHROPIC: return AiBeans.getChatLanguageModelAnthropic(modelName);
+            case AiConstants.LLM_VERTEX: return AiBeans.getChatLanguageModelGoogle(modelName);
+            case AiConstants.LLM_OLLAMA:
+                // Fall Thru to the default
+            default:
+                return AiBeans.getChatLanguageModelLlama(modelName);
         }
-        return AiBeans.getChatLanguageModelOpenAi(_modelName);
     }
 
     /**
      * Checks if the Group and Model Name are valid
-     * @param _groupName
-     * @param _modelName
+     * @param groupName
+     * @param modelName
      * @return
      */
-    private boolean isValidModel(String _groupName, String _modelName) {
-        if(_groupName == null) { return false; }
-        if(_modelName == null) { return false; }
-        return true;
+    private boolean isValidModel(String groupName, String modelName) {
+        return (groupName != null && modelName != null);
     }
 }

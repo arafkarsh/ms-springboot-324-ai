@@ -30,17 +30,17 @@ public interface SentimentAssistant {
 
     /**
      * Analyze Sentiment of a Text
-     * @param _text
+     * @param text
      * @return
      */
     @UserMessage("Analyze sentiment of {{it}}")
-    public Sentiment analyzeSentimentOf(String _text);
+    public Sentiment analyzeSentimentOf(String text);
 
     /**
      * Returns True if the Sentiment is Positive
-     * @param _text
+     * @param text
      * @return
      */
     @UserMessage("Does {{it}} have a positive sentiment?")
-    public boolean isPositive(String _text);
+    public boolean isPositive(String text);
 }

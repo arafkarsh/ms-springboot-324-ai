@@ -431,7 +431,9 @@ public class AiBeans {
             Std.println("Sleeping for "+seconds+" Seconds to avoid per minute rate limit issues with Claude LLM...");
             Thread.sleep(Duration.ofSeconds(seconds));
         } catch (InterruptedException e) {
-            // Nothing to print
+            Std.println("Sleep Interrupted... "+e.getMessage());
+            /* Clean up whatever needs to be handled before interrupting  */
+            Thread.currentThread().interrupt();
         }
     }
 }

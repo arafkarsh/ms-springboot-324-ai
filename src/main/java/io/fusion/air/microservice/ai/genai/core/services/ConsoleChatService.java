@@ -32,10 +32,10 @@ public class ConsoleChatService implements Assistant {
     @Override
     public String chat(String userMessage) {
         if (userMessage.startsWith("IMAGE: ")) {
-            String query = userMessage.replaceAll("IMAGE:", "");
+            String query = userMessage.replace("IMAGE:", "");
             return ImageBuilder.downloadImage(ImageBuilder.createImage(query));
         } else if (userMessage.startsWith("CUSTOM: ")) {
-            String query = userMessage.replaceAll("CUSTOM:", "");
+            String query = userMessage.replace("CUSTOM:", "");
             return CustomDataAnalyzer.processFile(query, false);
         } else if (userMessage.startsWith("[P1")) {
             return TemplateManager.structuredTemplate(userMessage, false);
