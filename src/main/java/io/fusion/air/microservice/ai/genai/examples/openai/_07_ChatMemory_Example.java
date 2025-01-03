@@ -38,6 +38,7 @@ import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 import io.fusion.air.microservice.ai.genai.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.genai.utils.AiBeans;
 import io.fusion.air.microservice.ai.genai.utils.AiConstants;
+import io.fusion.air.microservice.utils.Std;
 
 import java.util.List;
 
@@ -51,9 +52,9 @@ public class _07_ChatMemory_Example {
 
     /**
      * Chat Memory Conversation
-     * @param _model
+     * @param model
      */
-    public static void chatMemoryConversations(ChatLanguageModel _model) {
+    public static void chatMemoryConversations(ChatLanguageModel model) {
         Tokenizer tokenizer = new OpenAiTokenizer(AiConstants.getOpenAIDefaultModel());
         ChatMemory chatMemory = TokenWindowChatMemory.withMaxTokens(2000, tokenizer);
 
@@ -75,7 +76,7 @@ public class _07_ChatMemory_Example {
                         Answer short in three to five lines maximum.
                  """);
         chatMemory.add(userMessage1);
-        Response<AiMessage> response1 = _model.generate(chatMemory.messages());
+        Response<AiMessage> response1 = model.generate(chatMemory.messages());
         chatMemory.add(response1.content());
         // Print Result
         AiBeans.printResult(userMessage1.text(), response1.content().text());
@@ -87,7 +88,7 @@ public class _07_ChatMemory_Example {
                 Be short, 10 lines of code maximum.
                 """);
         chatMemory.add(userMessage2);
-        Response<AiMessage> response2 = _model.generate(chatMemory.messages());
+        Response<AiMessage> response2 = model.generate(chatMemory.messages());
         chatMemory.add(response2.content());
         // Print Result
         AiBeans.printResult(userMessage2.text(), response2.content().text());
@@ -95,11 +96,11 @@ public class _07_ChatMemory_Example {
 
     /**
      * Chat Memory with Multiple Users
-     * @param _model
+     * @param model
      */
-    public static void chatMemoryWithMultipleUsers(ChatLanguageModel _model) {
+    public static void chatMemoryWithMultipleUsers(ChatLanguageModel model) {
         Assistant assistant = AiServices.builder(Assistant.class)
-                .chatLanguageModel(_model)
+                .chatLanguageModel(model)
                 .chatMemoryProvider(memoryId -> MessageWindowChatMemory.withMaxMessages(10))
                 .build();
 
@@ -122,38 +123,38 @@ public class _07_ChatMemory_Example {
     /**
      * In Memory Embedding Example
      */
-    private static void inMemoryEmbeddingExample(String _data1, String _data2, String _request) {
+    private static void inMemoryEmbeddingExample(String data1, String data2, String request) {
         InMemoryEmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
         EmbeddingModel embeddingModel = new AllMiniLmL6V2EmbeddingModel();
         // Set Data 1
-        TextSegment segment1 = TextSegment.from(_data1);
+        TextSegment segment1 = TextSegment.from(data1);
         Embedding embedding1 = embeddingModel.embed(segment1).content();
         embeddingStore.add(embedding1, segment1);
         // Set Data 2
-        TextSegment segment2 = TextSegment.from(_data2);
+        TextSegment segment2 = TextSegment.from(data2);
         Embedding embedding2 = embeddingModel.embed(segment2).content();
         embeddingStore.add(embedding2, segment2);
         // Embed Query Request
-        Embedding queryEmbedding = embeddingModel.embed(_request).content();
+        Embedding queryEmbedding = embeddingModel.embed(request).content();
         List<EmbeddingMatch<TextSegment>> relevant = embeddingStore.findRelevant(queryEmbedding, 1);
         EmbeddingMatch<TextSegment> embeddingMatch = relevant.get(0);
         // Show the Score and Matched Response
-        System.out.println("--[Data]-----------------------------------------------------------");
-        System.out.println("Data 1: "+_data1);
-        System.out.println("Data 2: "+_data2);
-        AiBeans.printResult(_request,
+        Std.println("--[Data]-----------------------------------------------------------");
+        Std.println("Data 1: "+data1);
+        Std.println("Data 2: "+data2);
+        AiBeans.printResult(request,
                 "Score:  "+embeddingMatch.score()
                           +"\nResult: "+embeddingMatch.embedded().text());
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args)  {
         // Create Chat Language Model - Open AI GPT 4o
         ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
         AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_4o);
         // Chat Memory Conversations
-        // chatMemoryConversations(model);
+        chatMemoryConversations(model);
         // Chat Memory with Multiple user
-        // chatMemoryWithMultipleUsers(model);
+        chatMemoryWithMultipleUsers(model);
         // InMemory Embedding Example
         inMemoryEmbeddingExample(
                 "I like football, Chess, Tennis and Cricket. However, I like Cricket most!",

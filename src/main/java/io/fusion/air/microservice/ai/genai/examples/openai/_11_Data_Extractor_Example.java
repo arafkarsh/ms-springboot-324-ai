@@ -24,11 +24,13 @@ import io.fusion.air.microservice.ai.genai.core.assistants.ChefAssistant;
 import io.fusion.air.microservice.ai.genai.core.assistants.DataExtractorAssistant;
 import io.fusion.air.microservice.ai.genai.utils.AiBeans;
 import io.fusion.air.microservice.ai.genai.utils.AiConstants;
+import io.fusion.air.microservice.utils.Std;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import static io.fusion.air.microservice.ai.genai.utils.SampleConstants.ERROR_MESSAGE;
 import static java.util.Arrays.asList;
 
 /**
@@ -56,7 +58,7 @@ public class _11_Data_Extractor_Example {
         AiBeans.printResult(request, "Number = "+intNumber);
     }
 
-    public static void DateTimeExtractor(DataExtractorAssistant extractor ) {
+    public static void dateTimeExtractor(DataExtractorAssistant extractor ) {
         // Extract Date and Time
         StringBuilder sb = new StringBuilder();
         String request = """
@@ -87,13 +89,13 @@ public class _11_Data_Extractor_Example {
     public static void complexPojoExtractor(ChatLanguageModel model) {
         ChefAssistant chefAssistant = AiServices.create(ChefAssistant.class, model);
         Recipe recipe = chefAssistant.createRecipeFrom("cucumber", "tomato", "feta", "onion", "olives", "lemon");
-        System.out.println(recipe);
+        Std.println(recipe);
 
         StructuredPromptRecipe recipe2 = new StructuredPromptRecipe("oven dish",
                 asList("cucumber", "tomato", "feta", "onion", "olives", "potatoes") );
 
         Recipe anotherRecipe = chefAssistant.createRecipe(recipe2);
-        System.out.println(anotherRecipe);
+        Std.println(anotherRecipe);
     }
 
     public static void main(String[] args) {
@@ -103,38 +105,34 @@ public class _11_Data_Extractor_Example {
         // Data Extractor
         DataExtractorAssistant extractor = AiServices.create(DataExtractorAssistant.class, model);
         try {
-            System.out.println("Number Extractor =================================================");
+            Std.println("Number Extractor =================================================");
             // Extract Numbers
             numberExtractor(extractor);
         } catch (Exception e) {
-            System.out.println("Error: "+e.getMessage());
-            // e.printStackTrace();
+            Std.println(ERROR_MESSAGE+e.getMessage());
         }
         try {
-            System.out.println("Date & Time Extractor =============================================");
+            Std.println("Date & Time Extractor =============================================");
             // Extract Date and Time
-            DateTimeExtractor(extractor);
+            dateTimeExtractor(extractor);
         } catch (Exception e) {
-            System.out.println("Error: "+e.getMessage());
-            // e.printStackTrace();
+            Std.println(ERROR_MESSAGE+e.getMessage());
         }
         try {
             // Works with GPT 3.5 Turbo and Not with GPT 4o
-            System.out.println("Pojo Extractor ====================================================");
+            Std.println("Pojo Extractor ====================================================");
             // POJO Person Extractor
-            pojoExtractor(extractor);;
+            pojoExtractor(extractor);
         } catch (Exception e) {
-            System.out.println("Error: "+e.getMessage());
-            // e.printStackTrace();
+            Std.println(ERROR_MESSAGE+e.getMessage());
         }
         try {
             // Works with GPT 3.5 Turbo and Not with GPT 4o
-            System.out.println("Complex Pogo Extractor ============================================");
+            Std.println("Complex Pogo Extractor ============================================");
             // Complex Pojo Extractor with Descriptions (rules)
             complexPojoExtractor(model);
         } catch (Exception e) {
-            System.out.println("Error: "+e.getMessage());
-            // e.printStackTrace();
+            Std.println(ERROR_MESSAGE+e.getMessage());
         }
     }
 }

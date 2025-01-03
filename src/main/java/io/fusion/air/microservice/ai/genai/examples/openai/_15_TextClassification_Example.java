@@ -53,7 +53,7 @@ public class _15_TextClassification_Example {
      * @param args
      * @throws Exception
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         classifyText( "Hey I am looking for my package?");
         classifyText( "What is the process for requesting a refund?");

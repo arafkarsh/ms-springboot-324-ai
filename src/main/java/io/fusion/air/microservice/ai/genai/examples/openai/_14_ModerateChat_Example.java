@@ -23,8 +23,6 @@ import io.fusion.air.microservice.ai.genai.core.assistants.ModerateAssistant;
 import io.fusion.air.microservice.ai.genai.utils.AiBeans;
 import io.fusion.air.microservice.ai.genai.utils.AiConstants;
 
-import static java.time.Duration.ofSeconds;
-
 /**
  * Chat Memory Examples
  * @author: Araf Karsh Hamid
@@ -35,26 +33,25 @@ public class _14_ModerateChat_Example {
 
     /**
      * Moderate Conversation
-     * @param _model
-     * @param _request
+     * @param chatLanguageModel
+     * @param request
      */
-    private static void moderationTest(ChatLanguageModel _model, String _request) {
+    private static void moderationTest(ChatLanguageModel chatLanguageModel, String request) {
         OpenAiModerationModel moderationModel = AiBeans.getOpenAiModerationModel();
         ModerateAssistant assistant = AiServices.builder(ModerateAssistant.class)
-                .chatLanguageModel(_model)
+                .chatLanguageModel(chatLanguageModel)
                 .moderationModel(moderationModel)
                 .build();
         String response = "";
         try {
-            response = assistant.chat(_request);
+            response = assistant.chat(request);
         } catch (ModerationException e) {
             response = "Error: "+e.getMessage()+".\nIf you continue in this mindset, then I need to inform the authorities.";
-            // System.out.println("Error: "+e.getMessage());
         }
-        AiBeans.printResult(_request, response);
+        AiBeans.printResult(request, response);
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         // Create Chat Language Model - Open AI GPT 4o
         ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
         AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_4o);
