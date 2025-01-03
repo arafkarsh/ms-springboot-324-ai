@@ -102,7 +102,7 @@ public class _07_ChatMemory_Example {
 
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args)  {
         // Create Chat Language Model Google Gemma
         ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_GEMMA);
         AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_GEMMA);
