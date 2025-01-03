@@ -24,6 +24,7 @@ import io.fusion.air.microservice.ai.genai.core.models.Recipe;
 import io.fusion.air.microservice.ai.genai.core.prompts.StructuredPromptRecipe;
 import io.fusion.air.microservice.ai.genai.utils.AiBeans;
 import io.fusion.air.microservice.ai.genai.utils.AiConstants;
+import io.fusion.air.microservice.utils.Std;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -45,6 +46,8 @@ import static java.util.Arrays.asList;
  */
 public class _11_Data_Extractor_Example {
 
+    public static final String ERROR_MESSAGE = "Error: ";
+
     public static void numberExtractor(DataExtractorAssistant extractor ) {
         // Extract Numbers
         String request = """
@@ -57,7 +60,7 @@ public class _11_Data_Extractor_Example {
         AiBeans.sleep(55);
     }
 
-    public static void DateTimeExtractor(DataExtractorAssistant extractor ) {
+    public static void dateTimeExtractor(DataExtractorAssistant extractor ) {
         // Extract Date and Time
         StringBuilder sb = new StringBuilder();
         String request = """
@@ -93,14 +96,14 @@ public class _11_Data_Extractor_Example {
     public static void complexPojoExtractor(ChatLanguageModel model) {
         ChefAssistant chefAssistant = AiServices.create(ChefAssistant.class, model);
         Recipe recipe = chefAssistant.createRecipeFrom("cucumber", "tomato", "feta", "onion", "olives", "lemon");
-        System.out.println(recipe);
+        Std.println(recipe);
         AiBeans.sleep(55);
 
         StructuredPromptRecipe recipe2 = new StructuredPromptRecipe("oven dish",
                 asList("cucumber", "tomato", "feta", "onion", "olives", "potatoes") );
 
         Recipe anotherRecipe = chefAssistant.createRecipe(recipe2);
-        System.out.println(anotherRecipe);
+        Std.println(anotherRecipe);
         AiBeans.sleep(55);
     }
 
@@ -111,36 +114,32 @@ public class _11_Data_Extractor_Example {
         // Create Data Extractor
         DataExtractorAssistant extractor = AiServices.create(DataExtractorAssistant.class, model);
         try {
-            System.out.println("Number Extractor =================================================");
+            Std.println("Number Extractor =================================================");
             // Extract Numbers
             numberExtractor(extractor);
         } catch (Exception e) {
-            System.out.println("Error: "+e.getMessage());
-            // e.printStackTrace();
+            Std.println(ERROR_MESSAGE+e.getMessage());
         }
         try {
-            System.out.println("Date & Time Extractor =============================================");
+            Std.println("Date & Time Extractor =============================================");
             // Extract Date and Time
-            DateTimeExtractor(extractor);
+            dateTimeExtractor(extractor);
         } catch (Exception e) {
-            System.out.println("Error: "+e.getMessage());
-            // e.printStackTrace();
+            Std.println(ERROR_MESSAGE+e.getMessage());
         }
         try {
-            System.out.println("Pojo Extractor ====================================================");
+            Std.println("Pojo Extractor ====================================================");
             // POJO Person Extractor
              pojoExtractor(extractor);
         } catch (Exception e) {
-            System.out.println("Error: "+e.getMessage());
-            // e.printStackTrace();
+            Std.println(ERROR_MESSAGE+e.getMessage());
         }
         try {
-            System.out.println("Complex Pogo Extractor ============================================");
+            Std.println("Complex Pogo Extractor ============================================");
             // Complex Pojo Extractor with Descriptions (rules)
             complexPojoExtractor(model);
         } catch (Exception e) {
-            System.out.println("Error: "+e.getMessage());
-            // e.printStackTrace();
+            Std.println(ERROR_MESSAGE+e.getMessage());
         }
     }
 }

@@ -41,6 +41,13 @@ import static java.util.Arrays.asList;
  */
 public class TemplateManager {
 
+    public static final String OVEN_DISH = "oven dish";
+    public static final String DISH_TYPE = "DishType";
+    public static final String INGREDIENTS = "Ingredients";
+    public static final String INVALID_INPUTS = "Invalid Inputs";
+    public static final String RECIPE = "cucumber, potato, tomato, red meat, olives, olive oil";
+
+
     private TemplateManager() {}
 
     /**
@@ -58,7 +65,7 @@ public class TemplateManager {
      */
     public static String structuredTemplate(String data, boolean printResult) {
         if(data == null) {
-            return "Invalid Inputs";
+            return INVALID_INPUTS;
         }
         String[] dArray = data.split(":");
         ChatLanguageModel model = new AiBeans()
@@ -116,8 +123,8 @@ public class TemplateManager {
      */
     public static String simplePrompt() {
         Map<String, Object> params = new HashMap<>();
-        params.put("DishType", "oven dish");
-        params.put("Ingredients", "cucumber, potato, tomato, red meat, olives, olive oil");
+        params.put(DISH_TYPE, OVEN_DISH);
+        params.put(INGREDIENTS, RECIPE);
         ChatLanguageModel model = new AiBeans()
                 .createChatLanguageModelOpenAi(AiConstants.getOpenAIDefaultModel());
         return simplePrompt(params, model);
@@ -130,8 +137,8 @@ public class TemplateManager {
      */
     public static String simplePrompt(ChatLanguageModel model) {
         Map<String, Object> params = new HashMap<>();
-        params.put("DishType", "oven dish");
-        params.put("Ingredients", "cucumber, potato, tomato, red meat, olives, olive oil");
+        params.put(DISH_TYPE, OVEN_DISH);
+        params.put(INGREDIENTS, RECIPE);
         return simplePrompt(params, model);
     }
 
@@ -176,8 +183,8 @@ public class TemplateManager {
      */
     public static String complexPrompt() {
         Map<String, Object> params = new HashMap<>();
-        params.put("DishType", "oven dish");
-        params.put("Ingredients", "cucumber, potato, tomato, red meat, olives, olive oil");
+        params.put(DISH_TYPE, OVEN_DISH);
+        params.put(INGREDIENTS, RECIPE);
         return complexPrompt(params);
     }
 
@@ -188,8 +195,8 @@ public class TemplateManager {
      */
     public static String complexPrompt(ChatLanguageModel model) {
         Map<String, Object> params = new HashMap<>();
-        params.put("DishType", "oven dish");
-        params.put("Ingredients", "cucumber, potato, tomato, red meat, olives, olive oil");
+        params.put(DISH_TYPE, OVEN_DISH);
+        params.put(INGREDIENTS, RECIPE);
         return complexPrompt(params, model);
     }
 
@@ -214,7 +221,7 @@ public class TemplateManager {
      */
     public static String complexPrompt(Map<String, Object> params, ChatLanguageModel model) {
         if(params == null || params.size() == 0 || model == null) {
-            return "Invalid Inputs";
+            return INVALID_INPUTS;
         }
         // Complex Template
         String template = """
@@ -268,19 +275,21 @@ public class TemplateManager {
                 
                         Review Conclusion: ...
                 """;
-        PromptTemplate promptTemplate = PromptTemplate.from(template);
         // Apply Template to the Prompt
-        // Map<String, Object> params = new HashMap<>();
-        // params.put("movie", _movieName);
-         // promptTemplate.apply(params);
-        return promptTemplate;
+        /**
+         PromptTemplate promptTemplate = PromptTemplate.from(template);
+         Map<String, Object> params = new HashMap<>();
+         params.put("movie", _movieName);
+          promptTemplate.apply(params);
+         */
+        return PromptTemplate.from(template);
     }
 
     /**
      * Structured Prompt Example - Recipe
      */
     public static String structuredPromptRecipe() {
-        return structuredPromptRecipe("oven dish", "cucumber, potato, tomato, red meat, olives, olive oil");
+        return structuredPromptRecipe(OVEN_DISH, RECIPE);
     }
 
     /**
@@ -289,8 +298,7 @@ public class TemplateManager {
      * @return
      */
     public static String structuredPromptRecipe(ChatLanguageModel model) {
-        return structuredPromptRecipe("oven dish",
-                "cucumber, potato, tomato, red meat, olives, olive oil", model, true);
+        return structuredPromptRecipe(OVEN_DISH, RECIPE, model, true);
     }
 
     /**
@@ -318,7 +326,7 @@ public class TemplateManager {
     public static String structuredPromptRecipe(String dish, String ingredients,
                                                 ChatLanguageModel model, boolean printResult) {
         if(dish == null || ingredients == null || model == null) {
-            return "Invalid Inputs";
+            return INVALID_INPUTS;
         }
         // Structured Prompt
         StructuredPromptRecipe recipePrompt = new StructuredPromptRecipe(dish, asList(ingredients));

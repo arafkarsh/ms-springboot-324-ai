@@ -108,7 +108,7 @@ public class _07_ChatMemory_Example {
 
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         // Create Chat Language Model - Anthropic Claude 3 Haiku
         ChatLanguageModel model = AiBeans.getChatLanguageModelAnthropic(AiConstants.ANTHROPIC_CLAUDE_3_HAIKU);
         AiBeans.printModelDetails(AiConstants.LLM_ANTHROPIC, AiConstants.ANTHROPIC_CLAUDE_3_HAIKU);
