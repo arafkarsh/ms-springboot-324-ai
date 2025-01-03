@@ -24,6 +24,7 @@ import io.fusion.air.microservice.ai.genai.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.genai.core.services.ChatMemoryFileStore;
 import io.fusion.air.microservice.ai.genai.utils.AiBeans;
 import io.fusion.air.microservice.ai.genai.utils.AiConstants;
+import io.fusion.air.microservice.utils.Std;
 
 /**
  * Chat Memory Persistent Store Example.
@@ -36,7 +37,7 @@ import io.fusion.air.microservice.ai.genai.utils.AiConstants;
 public class _12_Persistent_ChatMemory_Store_Example {
 
     public static Assistant setupContext(ChatLanguageModel model ) {
-        System.out.println("Setup in Progress.... ");
+        Std.println("Setup in Progress.... ");
         // Create a File-based Persistent Store.
         ChatMemoryFileStore chatFileStore = new ChatMemoryFileStore();
         // Create Chat Memory Provider with the Persistent Store
@@ -52,7 +53,7 @@ public class _12_Persistent_ChatMemory_Store_Example {
                 .chatLanguageModel(model)
                 .chatMemoryProvider(chatMemoryProvider)
                 .build();
-        System.out.println("Setup Completed...");
+        Std.println("Setup Completed...");
         return assistant;
     }
 

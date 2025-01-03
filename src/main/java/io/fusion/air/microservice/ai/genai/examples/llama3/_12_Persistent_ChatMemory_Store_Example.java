@@ -72,7 +72,7 @@ public class _12_Persistent_ChatMemory_Store_Example {
 
     public static void main(String[] args) {
         // Create Chat Language Model llama3
-        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_LLAMA3);;
+        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_LLAMA3);
         AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_LLAMA3);
         // Create Assistant - Setup the Context
         Assistant assistant = setupContext(model);

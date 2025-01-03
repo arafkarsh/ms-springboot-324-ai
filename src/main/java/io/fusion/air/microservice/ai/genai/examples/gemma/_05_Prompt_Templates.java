@@ -19,6 +19,7 @@ import dev.langchain4j.model.chat.ChatLanguageModel;
 import io.fusion.air.microservice.ai.genai.core.services.TemplateManager;
 import io.fusion.air.microservice.ai.genai.utils.AiBeans;
 import io.fusion.air.microservice.ai.genai.utils.AiConstants;
+import io.fusion.air.microservice.utils.Std;
 
 
 /**
@@ -35,13 +36,13 @@ public class _05_Prompt_Templates {
         ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_GEMMA);
         AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_GEMMA);
 
-        System.out.println("Prompt Example 1 >>--------------------------------------------");
+        Std.println("Prompt Example 1 >>--------------------------------------------");
         TemplateManager.simplePrompt(model);
-        System.out.println("Prompt Example 2 >>--------------------------------------------");
+        Std.println("Prompt Example 2 >>--------------------------------------------");
         TemplateManager.complexPrompt(model);
-        System.out.println("Prompt Example 3 >>--------------------------------------------");
+        Std.println("Prompt Example 3 >>--------------------------------------------");
         TemplateManager.structuredPromptRecipe(model);
-        System.out.println("Prompt Example 4 >>--------------------------------------------");
+        Std.println("Prompt Example 4 >>--------------------------------------------");
         TemplateManager.structuredTemplate(
                 "[P1","oven dish, cucumber, potato, tomato, red meat, olives, olive oil",
                 model

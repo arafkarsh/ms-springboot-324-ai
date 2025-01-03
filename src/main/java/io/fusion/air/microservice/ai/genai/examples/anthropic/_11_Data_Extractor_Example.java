@@ -30,6 +30,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import static io.fusion.air.microservice.ai.genai.utils.SampleConstants.ERROR_MESSAGE;
 import static java.util.Arrays.asList;
 
 /**
@@ -45,8 +46,6 @@ import static java.util.Arrays.asList;
  * @date:
  */
 public class _11_Data_Extractor_Example {
-
-    public static final String ERROR_MESSAGE = "Error: ";
 
     public static void numberExtractor(DataExtractorAssistant extractor ) {
         // Extract Numbers

@@ -19,6 +19,7 @@ import dev.langchain4j.model.chat.ChatLanguageModel;
 import io.fusion.air.microservice.ai.genai.core.assistants.HAL9000Assistant;
 import io.fusion.air.microservice.ai.genai.utils.AiBeans;
 import io.fusion.air.microservice.ai.genai.utils.AiConstants;
+import io.fusion.air.microservice.utils.Std;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -40,48 +41,47 @@ public class _02_Complex_World {
         complexWorld1(hal9k);
         complexWorld2(hal9k);
         complexWorld3(hal9k);
-        // validateCalc();
     }
 
     /**
      * Example 1
-     * @param _hal9k
+     * @param hal9K
      */
-    public static void complexWorld1(HAL9000Assistant _hal9k) {
-        interact(_hal9k, "What is the square root of 144233377?");
-        interact(_hal9k, "Capitalize every third letter except the sixth letter: abcdefghjiklmnop");
+    public static void complexWorld1(HAL9000Assistant hal9K) {
+        interact(hal9K, "What is the square root of 144233377?");
+        interact(hal9K, "Capitalize every third letter except the sixth letter: abcdefghjiklmnop");
     }
 
     /**
      * Example 2
-     * @param _hal9k
+     * @param hal9K
      */
-    public static void complexWorld2(HAL9000Assistant _hal9k) {
-        interact(_hal9k, "What are the hours between 06:00 on 7 Feb 1970 and 11:00 on 02 Jun 1980?");
-        interact(_hal9k, "What is the sum of all the digits in the previous question? Is that a Prime Number?");
-        interact(_hal9k, "What are the hours between 11:00 on 2 Jun 1980 and 12:00 on 11 Mar 2024?");
+    public static void complexWorld2(HAL9000Assistant hal9K) {
+        interact(hal9K, "What are the hours between 06:00 on 7 Feb 1970 and 11:00 on 02 Jun 1980?");
+        interact(hal9K, "What is the sum of all the digits in the previous question? Is that a Prime Number?");
+        interact(hal9K, "What are the hours between 11:00 on 2 Jun 1980 and 12:00 on 11 Mar 2024?");
         validateCalc();
-        System.out.println("--------------------------------------------------------------");
+        Std.println("--------------------------------------------------------------");
     }
 
     /**
      * Example 3
-     * @param _hal9k
+     * @param hal9K
      */
-    public static void complexWorld3(HAL9000Assistant _hal9k) {
-        interact(_hal9k, "Explain French Revolution in details with critical events.");
+    public static void complexWorld3(HAL9000Assistant hal9K) {
+        interact(hal9K, "Explain French Revolution in details with critical events.");
     }
 
     /**
      * Interact with HAL9000Assistant Ai Assistant
-     * @param _hal9k
-     * @param _userMessage
+     * @param hal9K
+     * @param userMessage
      */
-    private static void interact(HAL9000Assistant _hal9k, String _userMessage) {
-        System.out.println("[Human]: " + _userMessage);
-        String response = _hal9k.chat(_userMessage);
-        System.out.println("[HAL9K]: " + response);
-        System.out.println("--------------------------------------------------------------");
+    private static void interact(HAL9000Assistant hal9K, String userMessage) {
+        Std.println("[Human]: " + userMessage);
+        String response = hal9K.chat(userMessage);
+        Std.println("[HAL9K]: " + response);
+        Std.println("--------------------------------------------------------------");
     }
 
     /**
@@ -98,39 +98,39 @@ public class _02_Complex_World {
         long sumTotal2 = sumOfDigits(hoursBetween2);
 
         // Output the result
-        System.out.println(
+        Std.println(
                 "Actual Hours between: 1970-02-07T06:00 & 1980-06-02T11:00 => " + hoursBetween
                         + "  Sum = "+sumTotal+ " Is prime = "+isPrime(sumTotal) + ", Days = "+hoursBetween / 24);
-        System.out.println(
+        Std.println(
                 "Actual Hours between: 1980-06-02T11:00 & 2024-03-11T12:00 => " + hoursBetween2
                         + " Sum = "+sumTotal2+ " Is prime = "+isPrime(sumTotal2) + ", Days = "+hoursBetween2 / 24);
     }
 
     /**
      * Sum Digits
-     * @param _number
+     * @param number
      * @return
      */
-    private static long sumOfDigits(long _number) {
+    private static long sumOfDigits(long number) {
         long sum = 0;
-        while (_number > 0) {
-            sum += _number % 10;
-            _number /= 10;
+        while (number > 0) {
+            sum += number % 10;
+            number /= 10;
         }
         return sum;
     }
 
     /**
      * Find Prime
-     * @param _number
+     * @param number
      * @return
      */
-    private static boolean isPrime(long _number) {
-        if (_number <= 1) {
+    private static boolean isPrime(long number) {
+        if (number <= 1) {
             return false;
         }
-        for (int i = 2; i <= Math.sqrt(_number); i++) {
-            if (_number % i == 0) {
+        for (int i = 2; i <= Math.sqrt(number); i++) {
+            if (number % i == 0) {
                 return false;
             }
         }

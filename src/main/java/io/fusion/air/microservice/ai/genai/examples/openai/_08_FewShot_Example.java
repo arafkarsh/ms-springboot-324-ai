@@ -66,18 +66,18 @@ public class _08_FewShot_Example {
 
     /**
      * Send the Message
-     * @param _model
-     * @param _request
+     * @param model
+     * @param request
      * @return
      */
-    public static String sendChatMessage(ChatLanguageModel _model, String _request) {
+    public static String sendChatMessage(ChatLanguageModel model, String request) {
         // Adding user message
-        ChatMessage request = UserMessage.from(_request);
-        fewShotHistory.add(request);
+        ChatMessage chatMessage = UserMessage.from(request);
+        fewShotHistory.add(chatMessage);
         // Response from Ai
-        Response<AiMessage> response = _model.generate(fewShotHistory);
+        Response<AiMessage> response = model.generate(fewShotHistory);
         // Print Result
-        AiBeans.printResult(request.text(), response.content().text());
+        AiBeans.printResult(chatMessage.text(), response.content().text());
         return response.content().text();
     }
 

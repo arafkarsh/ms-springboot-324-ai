@@ -26,12 +26,10 @@ import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 import io.fusion.air.microservice.ai.genai.utils.AiBeans;
 import io.fusion.air.microservice.ai.genai.utils.AiConstants;
 import dev.langchain4j.model.huggingface.HuggingFaceEmbeddingModel;
+import io.fusion.air.microservice.utils.Std;
 
 import static java.time.Duration.ofSeconds;
 import java.util.List;
-
-import static dev.langchain4j.data.message.UserMessage.userMessage;
-
 /**
  * Chat Memory Examples
  * @author: Araf Karsh Hamid
@@ -43,26 +41,26 @@ public class _13_Embedding_Example {
     /**
      * In Memory Embedding Example
      */
-    private static void inMemoryEmbeddingExample(String _data1, String _data2, String _request) {
+    private static void inMemoryEmbeddingExample(String data1, String data2, String request) {
         InMemoryEmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
         EmbeddingModel embeddingModel = new AllMiniLmL6V2EmbeddingModel();
         // Set Data 1
-        TextSegment segment1 = TextSegment.from(_data1);
+        TextSegment segment1 = TextSegment.from(data1);
         Embedding embedding1 = embeddingModel.embed(segment1).content();
         embeddingStore.add(embedding1, segment1);
         // Set Data 2
-        TextSegment segment2 = TextSegment.from(_data2);
+        TextSegment segment2 = TextSegment.from(data2);
         Embedding embedding2 = embeddingModel.embed(segment2).content();
         embeddingStore.add(embedding2, segment2);
         // Embed Query Request
-        Embedding queryEmbedding = embeddingModel.embed(_request).content();
+        Embedding queryEmbedding = embeddingModel.embed(request).content();
         List<EmbeddingMatch<TextSegment>> relevant = embeddingStore.findRelevant(queryEmbedding, 1);
         EmbeddingMatch<TextSegment> embeddingMatch = relevant.get(0);
         // Show the Score and Matched Response
-        System.out.println("--[Data]-----------------------------------------------------------");
-        System.out.println("Data 1: "+_data1);
-        System.out.println("Data 2: "+_data2);
-        AiBeans.printResult(_request,
+        Std.println("--[Data]-----------------------------------------------------------");
+        Std.println("Data 1: "+data1);
+        Std.println("Data 2: "+data2);
+        AiBeans.printResult(request,
                 "Score:  "+embeddingMatch.score()
                           +"\nResult: "+embeddingMatch.embedded().text());
     }
@@ -82,7 +80,7 @@ public class _13_Embedding_Example {
         AiBeans.printResult(request, response.toString());
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         // Create Chat Language Model - Open AI GPT 4o
         ChatLanguageModel model = AiBeans.getChatLanguageModelOpenAi(AiConstants.GPT_4o);
         AiBeans.printModelDetails(AiConstants.LLM_OPENAI, AiConstants.GPT_4o);

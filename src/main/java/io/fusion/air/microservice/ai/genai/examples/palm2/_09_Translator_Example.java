@@ -52,7 +52,6 @@ public class _09_Translator_Example {
                 """;
 
         List<String> bulletPoints = utils.summarize(request, 5);
-        // bulletPoints.forEach(System.out::println);
         AiBeans.printResult(request, bulletPoints.toString());
 
     }

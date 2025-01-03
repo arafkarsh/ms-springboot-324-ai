@@ -23,6 +23,7 @@ import io.fusion.air.microservice.ai.genai.core.assistants.Assistant;
 import io.fusion.air.microservice.ai.genai.core.tools.CalculatorTool;
 import io.fusion.air.microservice.ai.genai.utils.AiBeans;
 import io.fusion.air.microservice.ai.genai.utils.AiConstants;
+import io.fusion.air.microservice.utils.Std;
 
 /**
  * @author: Araf Karsh Hamid
@@ -50,11 +51,11 @@ public class _06_Tools_Example {
 
         String question1 = "What is the square root of the sum of the numbers of letters in the words \"Hello\" and \"my Fusion world\"?";
         String answer1 = assistant.chat(question1);
-        System.out.println(answer1);
+        Std.println(answer1);
         // The square root of the sum of the number of letters in the words "hello" and "world" is approximately 4.47.
         String question2 = "What is the sum of the numbers of letters in the words \"Hello\" and \"my Fusion world\"?";
         String answer2 = assistant.chat(question2);
-        System.out.println(answer2);
+        Std.println(answer2);
 
     }
 }

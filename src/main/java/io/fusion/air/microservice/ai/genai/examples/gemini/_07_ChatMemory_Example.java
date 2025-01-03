@@ -102,7 +102,7 @@ public class _07_ChatMemory_Example {
 
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args)  {
         // Create Chat Language Model - Google Gemini 1.5 Pro
         ChatLanguageModel model = AiBeans.getChatLanguageModelGoogle(AiConstants.GOOGLE_GEMINI_PRO);
         AiBeans.printModelDetails(AiConstants.LLM_VERTEX, AiConstants.GOOGLE_GEMINI_PRO);
