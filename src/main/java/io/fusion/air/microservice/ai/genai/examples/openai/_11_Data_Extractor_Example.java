@@ -30,7 +30,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import static io.fusion.air.microservice.ai.genai.utils.SampleConstants.ERROR_MESSAGE;
+import static io.fusion.air.microservice.ai.genai.utils.AiUtils.ERROR_MESSAGE;
 import static java.util.Arrays.asList;
 
 /**

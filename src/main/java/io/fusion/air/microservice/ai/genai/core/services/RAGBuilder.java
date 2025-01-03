@@ -87,6 +87,8 @@ import static java.util.Arrays.asList;
  */
 public class RAGBuilder {
 
+    public static final String OZAZO_CAR_RENTAL_FILE = "ozazo-car-rental-services.txt";
+
     private RAGBuilder() {}
 
     /**
@@ -369,7 +371,7 @@ public class RAGBuilder {
         ContentRetriever biographyCR = createContentRetriever(biographyES, embeddingModel);
         // Create Embedding Store for Car Rental Service
         EmbeddingStore<TextSegment> rentalES =
-                createEmbeddingStore("ozazo-car-rental-services.txt", embeddingModel);
+                createEmbeddingStore(OZAZO_CAR_RENTAL_FILE, embeddingModel);
         //Content Retriever for Car Rental Service.
         ContentRetriever rentalCR = createContentRetriever(rentalES, embeddingModel);
         // Let's create a query router.
@@ -407,7 +409,7 @@ public class RAGBuilder {
         EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
         // Create Embedding Store for Car Rental Service
         EmbeddingStore<TextSegment> rentalES =
-                createEmbeddingStore("ozazo-car-rental-services.txt", embeddingModel);
+                createEmbeddingStore(OZAZO_CAR_RENTAL_FILE, embeddingModel);
         //Content Retriever for Car Rental Service.
         ContentRetriever rentalCR = createContentRetriever(rentalES, embeddingModel);
         // To register and get a free API key for Cohere, please visit the following link:
@@ -449,7 +451,7 @@ public class RAGBuilder {
         EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
         // Create Embedding Store for Car Rental Service
         EmbeddingStore<TextSegment> rentalES =
-                createEmbeddingStore("ozazo-car-rental-services.txt", embeddingModel);
+                createEmbeddingStore(OZAZO_CAR_RENTAL_FILE, embeddingModel);
         //Content Retriever for Car Rental Service.
         ContentRetriever rentalCR = createContentRetriever(rentalES, embeddingModel);
         // Each retrieved segment should include "file_name" and "index" metadata values in the prompt
@@ -493,7 +495,7 @@ public class RAGBuilder {
         ContentRetriever biographyCR = createContentRetriever(biographyES, embeddingModel);
         // Create Embedding Store for Car Rental Service
         EmbeddingStore<TextSegment> rentalES =
-                createEmbeddingStore("ozazo-car-rental-services.txt", embeddingModel);
+                createEmbeddingStore(OZAZO_CAR_RENTAL_FILE, embeddingModel);
         //Content Retriever for Car Rental Service.
         ContentRetriever rentalCR = createContentRetriever(rentalES, embeddingModel);
 
@@ -530,7 +532,7 @@ public class RAGBuilder {
         EmbeddingModel embeddingModel = new BgeSmallEnV15QuantizedEmbeddingModel();
         // Create Embedding Store for Car Rental Service
         EmbeddingStore<TextSegment> rentalES =
-                createEmbeddingStore("ozazo-car-rental-services.txt", embeddingModel);
+                createEmbeddingStore(OZAZO_CAR_RENTAL_FILE, embeddingModel);
         //Content Retriever for Car Rental Service.
         ContentRetriever rentalCR = createContentRetriever(rentalES, embeddingModel);
 
