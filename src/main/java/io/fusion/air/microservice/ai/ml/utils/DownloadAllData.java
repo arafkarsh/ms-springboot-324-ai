@@ -15,6 +15,7 @@
  */
 package io.fusion.air.microservice.ai.ml.utils;
 
+import io.fusion.air.microservice.utils.Std;
 import org.apache.commons.io.FilenameUtils;
 import org.nd4j.common.resources.Downloader;
 
@@ -46,46 +47,46 @@ public class DownloadAllData {
         String defaultwordVectorsPath = FilenameUtils.concat(System.getProperty("user.home"), "dl4j-examples-data/w2vec300");
         String md5w2vec = "1c892c4707a8a1a508b01a01735c0339";
         if (!new File(defaultwordVectorsPath).exists()) {
-            System.out.println("Creating Directory >> "+defaultwordVectorsPath);
+            Std.println("Creating Directory >> "+defaultwordVectorsPath);
             new File(defaultwordVectorsPath).mkdirs();
         }
         wordVectorsPath = new File(defaultwordVectorsPath, "GoogleNews-vectors-negative300.bin.gz").getAbsolutePath();
         if (new File(wordVectorsPath).exists()) {
-            System.out.println("\n\tGoogleNews-vectors-negative300.bin.gz file found at path: " + defaultwordVectorsPath);
-            System.out.println("\tChecking md5 of existing file..");
+            Std.println("\n\tGoogleNews-vectors-negative300.bin.gz file found at path: " + defaultwordVectorsPath);
+            Std.println("\tChecking md5 of existing file..");
             if (Downloader.checkMD5OfFile(md5w2vec, new File(wordVectorsPath))) {
-                System.out.println("\tExisting file hash matches.");
+                Std.println("\tExisting file hash matches.");
                 return;
             } else {
-                System.out.println("\tExisting file hash doesn't match. Retrying download...");
+                Std.println("\tExisting file hash doesn't match. Retrying download...");
             }
         } else {
-            System.out.println("\n\tNo previous download of GoogleNews-vectors-negative300.bin.gz found at path: " + defaultwordVectorsPath);
+            Std.println("\n\tNo previous download of GoogleNews-vectors-negative300.bin.gz found at path: " + defaultwordVectorsPath);
         }
-        System.out.println("\tWARNING: GoogleNews-vectors-negative300.bin.gz is a 1.5GB file.");
-        System.out.println("Starting model download (1.5GB!)...");
+        Std.println("\tWARNING: GoogleNews-vectors-negative300.bin.gz is a 1.5GB file.");
+        Std.println("Starting model download (1.5GB!)...");
         Downloader.download("Word2Vec",
                 new URL("https://dl4jdata.blob.core.windows.net/resources/wordvectors/GoogleNews-vectors-negative300.bin.gz"),
                 new File(wordVectorsPath), md5w2vec, 5);
-        System.out.println("Successfully downloaded word2vec model to " + wordVectorsPath);
+        Std.println("Successfully downloaded word2vec model to " + wordVectorsPath);
     }
 
     /**
      * Download All DL4J Sample Data
      */
     public static void  downloadSampleData() throws Exception {
-        System.out.println("IRISDATA > "+DownloaderUtility.IRISDATA.download());
-        System.out.println("ANIMALS > "+DownloaderUtility.ANIMALS.download());
-        System.out.println("ANOMALYSEQUENCEDATA > "+DownloaderUtility.ANOMALYSEQUENCEDATA.download());
-        System.out.println("CAPTCHAIMAGE > "+DownloaderUtility.CAPTCHAIMAGE.download());
-        System.out.println("CLASSIFICATIONDATA > "+DownloaderUtility.CLASSIFICATIONDATA.download());
-        System.out.println("DATAEXAMPLES > "+DownloaderUtility.DATAEXAMPLES.download());
-        System.out.println("LOTTERYDATA > "+DownloaderUtility.LOTTERYDATA.download());
-        System.out.println("NEWSDATA > "+DownloaderUtility.NEWSDATA.download());
-        System.out.println("NLPDATA > "+DownloaderUtility.NLPDATA.download());
-        System.out.println("PREDICTGENDERDATA > "+DownloaderUtility.PREDICTGENDERDATA.download());
-        System.out.println("STYLETRANSFER > "+DownloaderUtility.STYLETRANSFER.download());
-        System.out.println("VIDEOEXAMPLE > "+DownloaderUtility.VIDEOEXAMPLE.download());
+        Std.println("IRISDATA > "+DownloaderUtility.IRISDATA.download());
+        Std.println("ANIMALS > "+DownloaderUtility.ANIMALS.download());
+        Std.println("ANOMALYSEQUENCEDATA > "+DownloaderUtility.ANOMALYSEQUENCEDATA.download());
+        Std.println("CAPTCHAIMAGE > "+DownloaderUtility.CAPTCHAIMAGE.download());
+        Std.println("CLASSIFICATIONDATA > "+DownloaderUtility.CLASSIFICATIONDATA.download());
+        Std.println("DATAEXAMPLES > "+DownloaderUtility.DATAEXAMPLES.download());
+        Std.println("LOTTERYDATA > "+DownloaderUtility.LOTTERYDATA.download());
+        Std.println("NEWSDATA > "+DownloaderUtility.NEWSDATA.download());
+        Std.println("NLPDATA > "+DownloaderUtility.NLPDATA.download());
+        Std.println("PREDICTGENDERDATA > "+DownloaderUtility.PREDICTGENDERDATA.download());
+        Std.println("STYLETRANSFER > "+DownloaderUtility.STYLETRANSFER.download());
+        Std.println("VIDEOEXAMPLE > "+DownloaderUtility.VIDEOEXAMPLE.download());
     }
 
     /**

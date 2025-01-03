@@ -17,6 +17,7 @@ package io.fusion.air.microservice.ai.ml.supervised.classification;
 
 import io.fusion.air.microservice.ai.ml.utils.DownloaderUtility;
 // Deep Learning 4 J
+import io.fusion.air.microservice.utils.Std;
 import org.datavec.api.records.reader.RecordReader;
 import org.datavec.api.records.reader.impl.csv.CSVRecordReader;
 import org.datavec.api.split.FileSplit;
@@ -97,7 +98,7 @@ public class _01_Iris_Example {
      */
     private static RecordReader loadData() throws Exception {
         // Step 1: Loading the Dataset:
-        System.out.println("Step 1: Load Data >> iris.txt .....  AND Return RecordReader.");
+        Std.println("Step 1: Load Data >> iris.txt .....  AND Return RecordReader.");
         int numLinesToSkip = 0;
         char delimiter = ',';
         RecordReader recordReader = new CSVRecordReader(numLinesToSkip, delimiter);
@@ -117,7 +118,7 @@ public class _01_Iris_Example {
     private static SplitTestAndTrain getAllData(RecordReader recordReader, double splitPercentage) {
         // Step 2: Split and Train Data
         //  Converts the parsed data into DataSet objects and splits the dataset into training and testing sets.
-        System.out.println("Step 2: Convert Data >> iris .....  AND Split into Training ("+(splitPercentage*100)+"%) and Test Data");
+        Std.println("Step 2: Convert Data >> iris .....  AND Split into Training ("+(splitPercentage*100)+"%) and Test Data");
         // 5 values in each row of the iris.txt CSV: 4 input features followed by an integer label (class) index.
         // Labels are the 5th value (index 4) in each row
         int labelIndex = 4;
@@ -155,7 +156,7 @@ public class _01_Iris_Example {
      */
     private static DataNormalization normalizeData(DataSet trainingData, DataSet testData) {
         // Step 3: Data Normalization
-        System.out.println("Step 3: Normalize Data >> iris .....  Training and Test Data");
+        Std.println("Step 3: Normalize Data >> iris .....  Training and Test Data");
         // Creates an instance of a standard normalizer which standardizes the data (zero mean and unit variance).
         DataNormalization normalizer = new NormalizerStandardize();
         // Computes the mean and standard deviation from the training data. This step collects the
@@ -184,7 +185,7 @@ public class _01_Iris_Example {
      * @return
      */
     private static MultiLayerConfiguration createMultiModelConfig() {
-        System.out.println("Step 4: Setup Model Configuration >> iris .....  Input Layer, 2 Hidden Layer (3 Neurons), Output Layer (3 Neurons)");
+        Std.println("Step 4: Setup Model Configuration >> iris .....  Input Layer, 2 Hidden Layer (3 Neurons), Output Layer (3 Neurons)");
         final int numInputs = 4; // The number of input features for each sample in the Iris dataset (sepal length, sepal width, petal length, petal width).
         int outputNum = 3;       // The number of output classes in the Iris dataset (Setosa, Versicolor, Virginica).
         long seed = 6;             // A seed value for random number generation, ensuring reproducibility of the results.
@@ -242,7 +243,7 @@ public class _01_Iris_Example {
             MultiLayerConfiguration conf,  DataSet trainingData, int iterations, int iterationListenerScore) {
         // Step 5: Run the model
         // Model Initialization and Training:
-        System.out.println("Step 5: Run Model >> iris .....  "+iterations+" iterations with the training data set");
+        Std.println("Step 5: Run Model >> iris .....  "+iterations+" iterations with the training data set");
         // This line creates a new instance of a MultiLayerNetwork using the configuration conf which was previously
         // defined (this config would specify the architecture, activation functions, loss functions, etc. of the neural network).
         MultiLayerNetwork model = new MultiLayerNetwork(conf);
@@ -274,12 +275,12 @@ public class _01_Iris_Example {
     private static void evaluateModel(MultiLayerNetwork model, DataSet testData) {
         // Evaluates the model’s performance on the test data and logs the evaluation statistics.
         // Evaluate the model on the test set
-        System.out.println("Step 6: Evaluate Model >> iris .....  with Test data and print stats");
+        Std.println("Step 6: Evaluate Model >> iris .....  with Test data and print stats");
         Evaluation eval = new Evaluation(3);
         INDArray output = model.output(testData.getFeatures());
         eval.eval(testData.getLabels(), output);
-        System.out.println("Step 6: Results:\n"+eval.stats());
-        System.out.println("Training Process Completed...... >>>>>>> ------------------------------");
+        Std.println("Step 6: Results:\n"+eval.stats());
+        Std.println("Training Process Completed...... >>>>>>> ------------------------------");
     }
 
     /**
@@ -291,7 +292,6 @@ public class _01_Iris_Example {
     private static void predictFlowerClass(
             double[] newFlowerFeatures, DataNormalization normalizer, MultiLayerNetwork model) {
         // Convert the features to an INDArray (required by DL4J)
-        // INDArray input = Nd4j.create(newFlowerFeatures);
         INDArray input = Nd4j.create(newFlowerFeatures).reshape(1, -1);  // Reshape to [1, 4]
         // Assume `normalizer` was previously fitted on the training data
         normalizer.transform(input);
@@ -303,6 +303,6 @@ public class _01_Iris_Example {
         String[] classLabels = {"Setosa", "Versicolor", "Virginica"};
         String predictedLabel = classLabels[predictedClass];
         // Print the predicted label
-        System.out.println("Input = "+Arrays.toString(newFlowerFeatures)+" >> Predicted Label: " + predictedLabel);
+        Std.println("Input = "+Arrays.toString(newFlowerFeatures)+" >> Predicted Label: " + predictedLabel);
     }
 }

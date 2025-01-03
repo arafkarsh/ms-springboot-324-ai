@@ -15,6 +15,7 @@
  */
 package io.fusion.air.microservice.ai.ml.utils;
 
+import io.fusion.air.microservice.utils.Std;
 import org.apache.commons.io.FilenameUtils;
 import org.nd4j.common.resources.Downloader;
 
@@ -134,9 +135,9 @@ public enum DownloaderUtility {
         }
         int downloadRetries = 7;
         if (!new File(dataPathLocal).exists() || new File(dataPathLocal).list().length == 0) {
-            System.out.println("_______________________________________________________________________");
-            System.out.println("Downloading data (" + DATA_SIZE + ") and extracting to \n\t" + dataPathLocal);
-            System.out.println("_______________________________________________________________________");
+            Std.println("_______________________________________________________________________");
+            Std.println("Downloading data (" + DATA_SIZE + ") and extracting to \n\t" + dataPathLocal);
+            Std.println("_______________________________________________________________________");
             Downloader.downloadAndExtract("files",
                     new URL(dataURL),
                     new File(downloadPath),
@@ -144,9 +145,9 @@ public enum DownloaderUtility {
                     MD5,
                     downloadRetries);
         } else {
-            System.out.println("_______________________________________________________________________");
-            System.out.println("Example data present in \n\t" + dataPathLocal);
-            System.out.println("_______________________________________________________________________");
+            Std.println("_______________________________________________________________________");
+            Std.println("Example data present in \n\t" + dataPathLocal);
+            Std.println("_______________________________________________________________________");
         }
         return dataPathLocal;
     }

@@ -7,4 +7,7 @@ package io.fusion.air.microservice.ai.ml.nn.rnn;
  */
 public class _01_SentimentAnalysis_Example {
 
+    public static void main(String[] args) {
+        System.out.println("Sentiment Analysis Example... <wip> ");
+    }
 }

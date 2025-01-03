@@ -15,6 +15,7 @@
  */
 package io.fusion.air.microservice.ai.ml.supervised.classification;
 
+import io.fusion.air.microservice.utils.Std;
 import org.deeplearning4j.datasets.iterator.impl.MnistDataSetIterator;
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
@@ -28,8 +29,6 @@ import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
 import org.nd4j.linalg.learning.config.Nesterovs;
 import org.nd4j.linalg.lossfunctions.LossFunctions.LossFunction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -72,7 +71,7 @@ public class _02_Multi_Layered_Perceptron_Example {
         //	•	Image Size: Each image is a 28x28 pixel square, making for a total of 784 pixels per image.
         //	•	Grayscale: Each pixel is represented by an integer value between 0 (black) and 255 (white).
         // Step 1:
-        System.out.println("Step 1: Create DataSetIterators For Training and Test Data... ");
+        Std.println("Step 1: Create DataSetIterators For Training and Test Data... ");
         int batchSize = 128;    // batch size for each epoch
         int rngSeed = 123;      // random number seed for reproducibility
         //Get the DataSetIterators:
@@ -112,7 +111,7 @@ public class _02_Multi_Layered_Perceptron_Example {
      * @return
      */
     private static MultiLayerConfiguration createMultiModelConfig(int rngSeed, int batchSize) {
-        System.out.println("Step 2: Create Multi Layer Configuration... ");
+        Std.println("Step 2: Create Multi Layer Configuration... ");
         // To Create 784 Neuron Input layer
         final int numRows = 28;
         final int numColumns = 28;
@@ -156,13 +155,13 @@ public class _02_Multi_Layered_Perceptron_Example {
      */
     private static MultiLayerNetwork createAndRunMultiLayerNetworkModel(
             MultiLayerConfiguration conf, DataSetIterator mnistTrain, int scoreIterations) {
-        System.out.println("Step 3: Create the Multi Layer Network Model...  Iterations = "+scoreIterations);
+        Std.println("Step 3: Create the Multi Layer Network Model...  Iterations = "+scoreIterations);
         int numEpochs = 15; // number of epochs to perform
         MultiLayerNetwork model = new MultiLayerNetwork(conf);
         model.init();
         // Print the score with every (100) iteration
         model.setListeners(new ScoreIterationListener(scoreIterations));
-        System.out.println("Step 4: Train the mode for Epochs =  "+numEpochs);
+        Std.println("Step 4: Train the mode for Epochs =  "+numEpochs);
         model.fit(mnistTrain, numEpochs);
         return model;
     }
@@ -174,9 +173,9 @@ public class _02_Multi_Layered_Perceptron_Example {
      * @param mnistTest
      */
     private static void evaluateModel(MultiLayerNetwork model, DataSetIterator mnistTest) {
-        System.out.println("Step 5: Evaluate the Model .... ");
+        Std.println("Step 5: Evaluate the Model .... ");
         Evaluation eval = model.evaluate(mnistTest);
-        System.out.println("Step 5: Results:\n"+eval.stats());
-        System.out.println("Training Process Completed...... >>>>>>> ------------------------------");
+        Std.println("Step 5: Results:\n"+eval.stats());
+        Std.println("Training Process Completed...... >>>>>>> ------------------------------");
     }
 }
