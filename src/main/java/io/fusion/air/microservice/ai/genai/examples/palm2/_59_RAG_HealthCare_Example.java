@@ -45,7 +45,6 @@ public class _59_RAG_HealthCare_Example {
         AiBeans.printModelDetails(AiConstants.LLM_VERTEX, AiConstants.GOOGLE_PALM_CHAT_BISON);
         // Create the Assistant
         // Setting up the Gen AI Context with Open AI LLM, and RAG
-        // HealthCareAssistant assistant = RAGHealthCareBuilder.createHealthCareAssistant(model);
         HealthCareAssistant assistant = new RAGHealthCareService(AiConstants.LLM_OPENAI, AiConstants.GPT_4o);
         // Start the Conversation with iCare Health Care Diagnosis Service ChatBot
         // - Hi
