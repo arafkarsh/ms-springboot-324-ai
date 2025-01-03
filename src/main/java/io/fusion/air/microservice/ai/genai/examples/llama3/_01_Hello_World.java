@@ -28,7 +28,7 @@ public class _01_Hello_World {
 
     public static void main(String[] args) {
         // Create Chat Language Model llama3
-        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_LLAMA3);;
+        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_LLAMA3);
         String request = "Explain French Revolution";
         String response = model.generate(request);
         AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_LLAMA3);

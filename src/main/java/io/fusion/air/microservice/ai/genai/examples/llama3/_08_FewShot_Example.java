@@ -66,22 +66,22 @@ public class _08_FewShot_Example {
 
     /**
      * Send the Message
-     * @param _request
+     * @param request
      */
-    public static String sendChatMessage(ChatLanguageModel model, String _request) {
+    public static String sendChatMessage(ChatLanguageModel model, String request) {
         // Adding user message
-        ChatMessage request = UserMessage.from(_request);
-        fewShotHistory.add(request);
+        ChatMessage chatMessage = UserMessage.from(request);
+        fewShotHistory.add(chatMessage);
         // Response from Ai
         Response<AiMessage> response = model.generate(fewShotHistory);
         // Print Result
-        AiBeans.printResult(request.text(), response.content().text());
+        AiBeans.printResult(chatMessage.text(), response.content().text());
         return response.content().text();
     }
 
     public static void main(String[] args) {
         // Create Chat Language Model llama3
-        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_LLAMA3);;
+        ChatLanguageModel model = AiBeans.getChatLanguageModelLlama(AiConstants.OLLAMA_LLAMA3);
         AiBeans.printModelDetails(AiConstants.LLM_OLLAMA, AiConstants.OLLAMA_LLAMA3);
         // Build Chat Context
         buildContext();
