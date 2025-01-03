@@ -21,8 +21,8 @@ import io.fusion.air.microservice.ai.genai.utils.AiBeans;
 import io.fusion.air.microservice.ai.genai.utils.AiConstants;
 import io.fusion.air.microservice.utils.Std;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
+import static io.fusion.air.microservice.ai.genai.utils.AiUtils.*;
+
 
 /**
  * @author: Araf Karsh Hamid
@@ -82,58 +82,5 @@ public class _02_Complex_World {
         String response = hal9K.chat(userMessage);
         Std.println("[HAL9K]: " + response);
         Std.println("--------------------------------------------------------------");
-    }
-
-    /**
-     * Validate the Hours Calculation
-     */
-    private static void validateCalc() {
-        LocalDateTime startTime = LocalDateTime.of(1970, 2, 7, 6, 0);
-        LocalDateTime endTime = LocalDateTime.of(1980, 6, 2, 11, 0);
-        LocalDateTime endTime2 = LocalDateTime.of(2024, 3, 11, 12, 0);
-        // Calculate the difference in hours
-        long hoursBetween = ChronoUnit.HOURS.between(startTime, endTime);
-        long hoursBetween2 = ChronoUnit.HOURS.between(endTime, endTime2);
-        long sumTotal = sumOfDigits(hoursBetween);
-        long sumTotal2 = sumOfDigits(hoursBetween2);
-
-        // Output the result
-        Std.println(
-                "Actual Hours between: 1970-02-07T06:00 & 1980-06-02T11:00 => " + hoursBetween
-                        + "  Sum = "+sumTotal+ " Is prime = "+isPrime(sumTotal) + ", Days = "+hoursBetween / 24);
-        Std.println(
-                "Actual Hours between: 1980-06-02T11:00 & 2024-03-11T12:00 => " + hoursBetween2
-                        + " Sum = "+sumTotal2+ " Is prime = "+isPrime(sumTotal2) + ", Days = "+hoursBetween2 / 24);
-    }
-
-    /**
-     * Sum Digits
-     * @param number
-     * @return
-     */
-    private static long sumOfDigits(long number) {
-        long sum = 0;
-        while (number > 0) {
-            sum += number % 10;
-            number /= 10;
-        }
-        return sum;
-    }
-
-    /**
-     * Find Prime
-     * @param number
-     * @return
-     */
-    private static boolean isPrime(long number) {
-        if (number <= 1) {
-            return false;
-        }
-        for (int i = 2; i <= Math.sqrt(number); i++) {
-            if (number % i == 0) {
-                return false;
-            }
-        }
-        return true;
     }
 }
