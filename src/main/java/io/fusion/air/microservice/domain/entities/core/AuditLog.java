@@ -79,6 +79,7 @@ public class AuditLog  {
      * Default System Audit Log
      */
     public AuditLog() {
+        // nothing to instantiate
     }
 
     /**
